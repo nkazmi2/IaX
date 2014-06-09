@@ -4,6 +4,7 @@ Created on Tue May 27 10:30:07 2014
 
 @author: Nova
 """
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -86,7 +87,7 @@ radius  = 50.0 #pixels
 #isocrones on a website - metalicty and age(?) , pick filters (ACS)
 """
 ##################### 2008ha ######################
-#"""
+"""
 name     = 'sn2008ha_new.phot'
 
 # Magnitude of the Milkyway Galaxy 
@@ -101,8 +102,8 @@ dmod    = 31.50
 # Actual X & Y pixel coordinates of sn
 xsn     = 1726.352
 ysn     = 3172.530
-radius  = 100.0 #pixels
-#"""
+radius  = 50.0 #pixels
+"""
 ##################### 2010ae ######################
 """
 name     = 'sn2010ae_new.phot'
@@ -122,7 +123,7 @@ ysn     = 1931.995
 radius  = 50.0 #pixels
 """
 ##################### 2010el ######################
-"""    
+#"""    
 name     = 'sn2010el_new.phot'
     
 # Magnitude of the Milkyway Galaxy 
@@ -138,7 +139,7 @@ dmod    = 29.99
 xsn     = 2418.859
 ysn     = 1570.826
 radius  = 50.0 #pixels
-"""
+#"""
 ###################################################    
 ######### Open and read in the data file ##########
 
@@ -210,12 +211,16 @@ cut1 = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3))
 cut2 = np.where((star <= 2) & (snr625 >= 3) & (snr814 >= 3))
 # cut 3 object, SNR, f435w and f555w, and position 
 cut3 = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
-# cut 3 object, SNR, f435w and f555w, and position 
+# cut 4 object, SNR, f435w and f555w, and position 
 cut4 = np.where((star <= 2) & (snr625 >= 3) & (snr814 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
-# cut 3 object, SNR, f435w and f555w, and position 
+# cut 5 object, SNR, f435w and f555w, and position 
 cut5 = np.where((star == 1) & (snr435 >= 4) & (snr555 >= 4) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
-# cut 3 object, SNR, f435w and f555w, and position 
+# cut 6 object, SNR, f435w and f555w, and position 
 cut6 = np.where((star == 1) & (snr625 >= 4) & (snr814 >= 4) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+# cut 7 object, SNR, f435w and f555w, and position 
+cut7 = np.where((star == 1) & (snr435 >= 5) & (snr555 >= 5) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+# cut 8 object, SNR, f435w and f555w, and position 
+cut8 = np.where((star == 1) & (snr625 >= 5) & (snr814 >= 5) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
 
 ################################################### 
 ############ Save good arrays to a file ###########
@@ -243,21 +248,29 @@ with open(title+'F435W_F555W_g6.csv', 'wb') as f:
     writer = csv.writer(f)
     writer.writerows(izip(xcoord[good]+.5,ycoord[good]+.5))
     
-with open(title+'F435W_F555W_3.csv', 'wb') as f:
+with open(title+'F435W_F555W_snr3.csv', 'wb') as f:
     writer = csv.writer(f)
     writer.writerows(izip(xcoord[cut3]+.5,ycoord[cut3]+.5))
 
-with open(title+'F625W_F814W_3.csv', 'wb') as g:
+with open(title+'F625W_F814W_snr3.csv', 'wb') as g:
     writer = csv.writer(g)  
     writer.writerows(izip(xcoord[cut4]+.5,ycoord[cut4]+.5))
     
-with open(title+'F435W_F555W_4.csv', 'wb') as f:
+with open(title+'F435W_F555W_snr4.csv', 'wb') as f:
     writer = csv.writer(f)
     writer.writerows(izip(xcoord[cut5]+.5,ycoord[cut5]+.5))
 
-with open(title+'F625W_F814W_4.csv', 'wb') as g:
+with open(title+'F625W_F814W_snr4.csv', 'wb') as g:
     writer = csv.writer(g)  
     writer.writerows(izip(xcoord[cut6]+.5,ycoord[cut6]+.5))
+    
+with open(title+'F435W_F555W_snr5.csv', 'wb') as f:
+    writer = csv.writer(f)
+    writer.writerows(izip(xcoord[cut7]+.5,ycoord[cut7]+.5))
+
+with open(title+'F625W_F814W_snr5.csv', 'wb') as g:
+    writer = csv.writer(g)  
+    writer.writerows(izip(xcoord[cut8]+.5,ycoord[cut8]+.5))
     
 #with open(title+'coord.csv', 'wb') as f:
 #    writer = csv.writer(f)
