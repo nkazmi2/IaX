@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import csv
 from itertools import izip
+import pickle
 
 ################################################### 
 ############### declared variables ################
@@ -87,7 +88,7 @@ radius  = 50.0 #pixels
 #isocrones on a website - metalicty and age(?) , pick filters (ACS)
 """
 ##################### 2008ha ######################
-"""
+#"""
 name     = 'sn2008ha_new.phot'
 
 # Magnitude of the Milkyway Galaxy 
@@ -103,7 +104,7 @@ dmod    = 31.50
 xsn     = 1726.352
 ysn     = 3172.530
 radius  = 50.0 #pixels
-"""
+#"""
 ##################### 2010ae ######################
 """
 name     = 'sn2010ae_new.phot'
@@ -120,10 +121,10 @@ dmod    = 30.58
 # Actual X & Y pixel coordinates of sn
 xsn     = 1796.640
 ysn     = 1931.995
-radius  = 50.0 #pixels
+radius  = 30.0 #pixels
 """
 ##################### 2010el ######################
-#"""    
+"""    
 name     = 'sn2010el_new.phot'
     
 # Magnitude of the Milkyway Galaxy 
@@ -139,7 +140,7 @@ dmod    = 29.99
 xsn     = 2418.859
 ysn     = 1570.826
 radius  = 50.0 #pixels
-#"""
+"""
 ###################################################    
 ######### Open and read in the data file ##########
 
@@ -204,24 +205,27 @@ f814Abs = f814mag - dmod - ACS814
 print "Applying contrains to SN Data..."
 
 # good is a cut of the object type and the "overall" SNR
-good = np.where((star <= 2) & (SNR >= 6) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius))
+#good = np.where((star <= 2) & (SNR >= 6) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius))
 # cut 1 chooses the object, SNR, and SNR for f435w and f555w
-cut1 = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3))
+#cut1 = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3))
 # cut 2 chooses the object, SNR, and SNR for f625w and f814w
-cut2 = np.where((star <= 2) & (snr625 >= 3) & (snr814 >= 3))
+#cut2 = np.where((star <= 2) & (snr625 >= 3) & (snr814 >= 3))
 # cut 3 object, SNR, f435w and f555w, and position 
-cut3 = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut2 = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
 # cut 4 object, SNR, f435w and f555w, and position 
-cut4 = np.where((star <= 2) & (snr625 >= 3) & (snr814 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut3 = np.where((star <= 2) & (snr625 >= 3) & (snr814 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
 # cut 5 object, SNR, f435w and f555w, and position 
-cut5 = np.where((star == 1) & (snr435 >= 4) & (snr555 >= 4) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut4 = np.where((star <= 2) & (snr435 >= 4) & (snr555 >= 4) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
 # cut 6 object, SNR, f435w and f555w, and position 
-cut6 = np.where((star == 1) & (snr625 >= 4) & (snr814 >= 4) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut5 = np.where((star <= 2) & (snr625 >= 4) & (snr814 >= 4) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
 # cut 7 object, SNR, f435w and f555w, and position 
-cut7 = np.where((star == 1) & (snr435 >= 5) & (snr555 >= 5) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut6 = np.where((star <= 2) & (snr435 >= 5) & (snr555 >= 5) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
 # cut 8 object, SNR, f435w and f555w, and position 
-cut8 = np.where((star == 1) & (snr625 >= 5) & (snr814 >= 5) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut7 = np.where((star <= 2) & (snr625 >= 5) & (snr814 >= 5) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
 
+#print len(f625Abs[cut3])
+#print len(f625Abs[cut5])
+#print len(f625Abs[cut7])
 ################################################### 
 ############ Save good arrays to a file ###########
 #print "Testing repeated values..." 
@@ -242,43 +246,44 @@ cut8 = np.where((star == 1) & (snr625 >= 5) & (snr814 >= 5) & ((((xsn - xcoord)*
 #writer.writerows(izip(xcoord[how != True],ycoord[how != True]))
 #writer.writerows(izip(y[how != True],v[how != True]))
 
+print "Pickling!"
+
+snr435_555_4 = (f435Abs[cut4],f555Abs[cut4])
+pickle.dump(snr435_555_4, open( title+'f435f555_4.p', "wb" ) )
+snr625_814_4 = (f625Abs[cut5],f814Abs[cut5])
+pickle.dump(snr625_814_4, open( title+'f625f814_4.p', "wb" ) )
+snr435_555_5 = (f435Abs[cut6],f555Abs[cut6])
+pickle.dump(snr435_555_4, open( title+'f435f555_5.p', "wb" ) )
+snr625_814_5 = (f625Abs[cut7],f814Abs[cut7])
+pickle.dump(snr625_814_4, open( title+'f625f814_5.p', "wb" ) )
+
+print "Pickled."
+"""
 print "Open file to save contrained data..."
 
-with open(title+'F435W_F555W_g6.csv', 'wb') as f:
-    writer = csv.writer(f)
-    writer.writerows(izip(xcoord[good]+.5,ycoord[good]+.5))
-    
-with open(title+'F435W_F555W_snr3.csv', 'wb') as f:
-    writer = csv.writer(f)
-    writer.writerows(izip(xcoord[cut3]+.5,ycoord[cut3]+.5))
-
-with open(title+'F625W_F814W_snr3.csv', 'wb') as g:
-    writer = csv.writer(g)  
-    writer.writerows(izip(xcoord[cut4]+.5,ycoord[cut4]+.5))
-    
 with open(title+'F435W_F555W_snr4.csv', 'wb') as f:
     writer = csv.writer(f)
-    writer.writerows(izip(xcoord[cut5]+.5,ycoord[cut5]+.5))
+    writer.writerows(izip(xcoord[cut4]+.5,ycoord[cut4]+.5))
 
 with open(title+'F625W_F814W_snr4.csv', 'wb') as g:
     writer = csv.writer(g)  
-    writer.writerows(izip(xcoord[cut6]+.5,ycoord[cut6]+.5))
+    writer.writerows(izip(xcoord[cut5]+.5,ycoord[cut5]+.5))
     
 with open(title+'F435W_F555W_snr5.csv', 'wb') as f:
     writer = csv.writer(f)
-    writer.writerows(izip(xcoord[cut7]+.5,ycoord[cut7]+.5))
+    writer.writerows(izip(xcoord[cut6]+.5,ycoord[cut6]+.5))
 
 with open(title+'F625W_F814W_snr5.csv', 'wb') as g:
     writer = csv.writer(g)  
-    writer.writerows(izip(xcoord[cut8]+.5,ycoord[cut8]+.5))
-    
+    writer.writerows(izip(xcoord[cut7]+.5,ycoord[cut7]+.5))
+"""
 #with open(title+'coord.csv', 'wb') as f:
 #    writer = csv.writer(f)
 #    writer.writerows(izip(xcoord[cut3],ycoord[cut3]))    
 #    writer.writerows(izip(xcoord[cut4],ycoord[cut4]))
 #    #writer.writerows(izip(xcoord[cut3],ycoord[cut3],chi435[cut3],SNR[cut3],CHI[cut3],SNR[cut4],f435Abs[cut3],f555Abs[cut3],f435mag[cut3],f555mag[cut3],chi435[cut3],chi555[cut3],snr435[cut3],snr555[cut3],xcoord[cut4],ycoord[cut4],chi625[cut4],SNR[cut4],CHI[cut4],SNR[cut4],f625Abs[cut4],f814Abs[cut4],f625mag[cut4],f814mag[cut4],chi625[cut4],chi814[cut4],snr625[cut4],snr814[cut4]))
 #print "Saveing file "+title+"coord.csv"
-    
+"""   
 print "Saving file " + title + "F435W_F555W.csv & " + title + "F625W_F814W.csv and all others"
 
 ################################################### 
@@ -295,7 +300,9 @@ c1plt = plt.subplot2grid((2,2), (0,0), colspan = 2)
 plt.gca().invert_yaxis()
 plt.xlabel("F435W - F555W",fontdict = font)
 plt.ylabel("F555W",fontdict = font)
-c1plt.scatter(np.subtract(f435Abs[cut3], f555Abs[cut3]),f555Abs[cut3], c="b",marker='o')
+#c1plt.scatter(np.subtract(f435Abs[cut2], f555Abs[cut2]),f555Abs[cut2], c="g",marker='8')
+c1plt.scatter(np.subtract(f435Abs[cut4], f555Abs[cut4]),f555Abs[cut4], c="b",marker='p')
+c1plt.scatter(np.subtract(f435Abs[cut6], f555Abs[cut6]),f555Abs[cut6], c="r",marker='v')
 #c1plt.scatter(np.subtract(f625Abs[cut4], f814Abs[cut4]),f625Abs[cut4], c="r",marker='o')
 #c1plt.scatter(np.subtract(f435Abs[check], f555Abs[check]),f435Abs[check],c="g",marker='o')
 #c1plt.scatter(np.subtract(f435mag[cut3], f555mag[cut3]),f435mag[cut3], c="r",marker='o')
@@ -308,10 +315,13 @@ c2plt = plt.subplot2grid((2,2), (1,0), colspan = 2)
 plt.gca().invert_yaxis()
 plt.xlabel("F625W - F814W",fontdict = font)
 plt.ylabel("F625W",fontdict = font)
-c2plt.scatter(np.subtract(f625Abs[cut4], f814Abs[cut4]),f625Abs[cut4], c="r",marker='o')
+#c2plt.scatter(np.subtract(f625Abs[cut3], f814Abs[cut3]),f625Abs[cut3], c="g",marker='8')
+c2plt.scatter(np.subtract(f625Abs[cut5], f814Abs[cut5]),f625Abs[cut5], c="b",marker='p')
+c2plt.scatter(np.subtract(f625Abs[cut7], f814Abs[cut7]),f625Abs[cut7], c="r",marker='v')
 #c2plt.scatter(np.subtract(f625mag[cut4], f814mag[cut4]),f625mag[cut4], c="r",marker='o')
 
 #plt.legend((c1plt,c2plt),('R = 30 pixels','R = 30 pixels'))
 print "Save and show CMDs..."
 plt.savefig(title+"_limits.png")
 #plt.show()
+"""
