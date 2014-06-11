@@ -185,6 +185,7 @@ chi814  = data[:,57]
 xcoord  = data[:, 2]
 ycoord  = data[:, 3]
 
+
 #checking lengths of data
 #print len(data)      #156557 number of lines 
 #print len(data[10])  #271, the is the columns 
@@ -208,24 +209,30 @@ print "Applying contrains to SN Data..."
 #good = np.where((star <= 2) & (SNR >= 6) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius))
 # cut 1 chooses the object, SNR, and SNR for f435w and f555w
 #cut1 = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3))
-# cut 2 chooses the object, SNR, and SNR for f625w and f814w
 #cut2 = np.where((star <= 2) & (snr625 >= 3) & (snr814 >= 3))
-# cut 3 object, SNR, f435w and f555w, and position 
-cut2 = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
-# cut 4 object, SNR, f435w and f555w, and position 
-cut3 = np.where((star <= 2) & (snr625 >= 3) & (snr814 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
-# cut 5 object, SNR, f435w and f555w, and position 
-cut4 = np.where((star <= 2) & (snr435 >= 4) & (snr555 >= 4) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
-# cut 6 object, SNR, f435w and f555w, and position 
-cut5 = np.where((star <= 2) & (snr625 >= 4) & (snr814 >= 4) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
-# cut 7 object, SNR, f435w and f555w, and position 
-cut6 = np.where((star <= 2) & (snr435 >= 5) & (snr555 >= 5) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
-# cut 8 object, SNR, f435w and f555w, and position 
-cut7 = np.where((star <= 2) & (snr625 >= 5) & (snr814 >= 5) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
 
-#print len(f625Abs[cut3])
-#print len(f625Abs[cut5])
-#print len(f625Abs[cut7])
+# cuts even : object, SNR, f435w and f555w, and position 
+cut2  = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut4  = np.where((star <= 2) & (snr435 >= 4) & (snr555 >= 4) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut6  = np.where((star <= 2) & (snr435 >= 5) & (snr555 >= 5) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut8  = np.where((star <= 2) & (snr435 >= 6) & (snr555 >= 6) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut10 = np.where((star <= 2) & (snr435 >= 7) & (snr555 >= 7) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut12 = np.where((star <= 2) & (snr435 >= 8) & (snr555 >= 8) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+
+# cuts odd : object, SNR, f625w and f814w, and position 
+cut3  = np.where((star <= 2) & (snr625 >= 3) & (snr814 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut5  = np.where((star <= 2) & (snr625 >= 4) & (snr814 >= 4) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut7  = np.where((star <= 2) & (snr625 >= 5) & (snr814 >= 5) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut9  = np.where((star <= 2) & (snr625 >= 6) & (snr814 >= 6) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut11 = np.where((star <= 2) & (snr625 >= 7) & (snr814 >= 7) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+cut13 = np.where((star <= 2) & (snr625 >= 8) & (snr814 >= 8) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)) 
+
+#print len(chi435[cut9])
+#print len(chi625[cut11])
+#print chi814[cut13]
+print np.subtract(f625mag[cut5], f814mag[cut5])
+print xcoord[cut5]
+print ycoord[cut5]
 ################################################### 
 ############ Save good arrays to a file ###########
 #print "Testing repeated values..." 
@@ -245,7 +252,7 @@ cut7 = np.where((star <= 2) & (snr625 >= 5) & (snr814 >= 5) & ((((xsn - xcoord)*
 #print len(xcoord[cut4]), len(xcoord[how])
 #writer.writerows(izip(xcoord[how != True],ycoord[how != True]))
 #writer.writerows(izip(y[how != True],v[how != True]))
-
+"""
 print "Pickling!"
 
 snr435_555_4 = (f435Abs[cut4],f555Abs[cut4])
@@ -256,8 +263,22 @@ snr435_555_5 = (f435Abs[cut6],f555Abs[cut6])
 pickle.dump(snr435_555_4, open( title+'f435f555_5.p', "wb" ) )
 snr625_814_5 = (f625Abs[cut7],f814Abs[cut7])
 pickle.dump(snr625_814_4, open( title+'f625f814_5.p', "wb" ) )
+snr435_555_6 = (f435Abs[cut8],f555Abs[cut8])
+pickle.dump(snr435_555_6, open( title+'f435f555_6.p', "wb" ) )
+snr625_814_6 = (f625Abs[cut9],f814Abs[cut9])
+pickle.dump(snr625_814_6, open( title+'f625f814_6.p', "wb" ) )
+snr435_555_7 = (f435Abs[cut10],f555Abs[cut10])
+pickle.dump(snr435_555_7, open( title+'f435f555_7.p', "wb" ) )
+snr625_814_7 = (f625Abs[cut11],f814Abs[cut11])
+pickle.dump(snr625_814_7, open( title+'f625f814_7.p', "wb" ) )
+snr435_555_8 = (f435Abs[cut12],f555Abs[cut12])
+pickle.dump(snr435_555_8, open( title+'f435f555_8.p', "wb" ) )
+snr625_814_8 = (f625Abs[cut13],f814Abs[cut13])
+pickle.dump(snr625_814_8, open( title+'f625f814_8.p', "wb" ) )
+
 
 print "Pickled."
+"""
 """
 print "Open file to save contrained data..."
 
@@ -303,7 +324,7 @@ plt.ylabel("F555W",fontdict = font)
 #c1plt.scatter(np.subtract(f435Abs[cut2], f555Abs[cut2]),f555Abs[cut2], c="g",marker='8')
 c1plt.scatter(np.subtract(f435Abs[cut4], f555Abs[cut4]),f555Abs[cut4], c="b",marker='p')
 c1plt.scatter(np.subtract(f435Abs[cut6], f555Abs[cut6]),f555Abs[cut6], c="r",marker='v')
-#c1plt.scatter(np.subtract(f625Abs[cut4], f814Abs[cut4]),f625Abs[cut4], c="r",marker='o')
+#c1plt.scatter(np.subtract(f435Abs[cut4], f555Abs[cut4]),f555Abs[cut4], c="r",marker='o')
 #c1plt.scatter(np.subtract(f435Abs[check], f555Abs[check]),f435Abs[check],c="g",marker='o')
 #c1plt.scatter(np.subtract(f435mag[cut3], f555mag[cut3]),f435mag[cut3], c="r",marker='o')
 

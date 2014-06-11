@@ -7,14 +7,14 @@ Created on Tue May 27 14:14:02 2014
 Read in the data, check which columns are which
 """
 import numpy as np
-"""
+#"""
 # Looking at new.phot.columns files
 f = open('sn2010el_new.phot.columns','r')
 info = f.read()
 f.close()
 print info
-"""
 #"""
+"""
 # Looking at Isochrone files
 f   = open('Z017Y26.dat')
 row = []
@@ -32,4 +32,4 @@ print row[:][7]
 print row[:][8]
 print row[:][9]
 print row[:][10]
-#"""
+"""
