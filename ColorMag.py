@@ -72,7 +72,7 @@ font = {'family' : 'serif',
 ################################################### 
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
-"""
+#"""
 name     = 'sn2008ge_new.phot' 
 
 # Magnitude of the Milkyway Galaxy 
@@ -91,9 +91,9 @@ radius  = 50.0 #pixels
 
 #metalicity (?)
 #isocrones on a website - metalicty and age(?) , pick filters (ACS)
-"""
-##################### 2008ha ######################
 #"""
+##################### 2008ha ######################
+"""
 name     = 'sn2008ha_new.phot'
 
 # Magnitude of the Milkyway Galaxy 
@@ -109,7 +109,7 @@ dmod    = 31.64 #31.50
 xsn     = 1726.352
 ysn     = 3172.530
 radius  = 50.0 #pixels
-#"""
+"""
 ##################### 2010ae ######################
 """
 name     = 'sn2010ae_new.phot'
