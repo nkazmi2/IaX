@@ -87,7 +87,8 @@ dmod    = 31.27
 # Actual X & Y pixel coordinates of sn
 xsn     = 3247.539
 ysn     = 3419.971
-radius  = 50.0 #pixels
+#radius  = 50.0 #pixels
+radius = 36.1008 # .0005014deg, Radius_phy = 90,001.307 au 
 
 #metalicity (?)
 #isocrones on a website - metalicty and age(?) , pick filters (ACS)
@@ -108,7 +109,8 @@ dmod    = 31.64 #31.50
 # Actual X & Y pixel coordinates of sn
 xsn     = 1726.352
 ysn     = 3172.530
-radius  = 50.0 #pixels
+#radius  = 50.0 #pixels
+radius = 32.4 # .00045 deg, Radius_phy = 90,000.006 au
 """
 ##################### 2010ae ######################
 """
@@ -126,7 +128,8 @@ dmod    = 30.58
 # Actual X & Y pixel coordinates of sn
 xsn     = 1796.640
 ysn     = 1931.995
-radius  = 30.0 #pixels
+#radius  = 30.0 #pixels
+radius = 49.4712 # .0006871, Radius_phy = 90,010.1 au
 """
 ##################### 2010el ######################
 """    
@@ -144,7 +147,8 @@ dmod    = 29.99
 # Actual X & Y pixel coordinates of sn
 xsn     = 2418.859
 ysn     = 1570.826
-radius  = 50.0 #pixels
+#radius  = 50.0 #pixels
+radius = 65.0016 # .0009028, Radius_phy = 90,009.184 au
 """
 ###################################################    
 ######### Open and read in the data file ##########

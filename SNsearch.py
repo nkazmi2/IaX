@@ -7,55 +7,109 @@ Created on Mon Jun 16 10:34:33 2014
 
 from astropy.io import fits
 import numpy as np
+import os
 
-#'sn2008ge_f555w_lacosmic.fits'
-#'sn2008ge_f625w_lacosmic.fits'
-#'sn2008ge_f814w_lacosmic.fits'
+######################## Functions ##############################
 
-image = fits.open('sn2008ge_f435w_lacosmic.fits',mode='copyonwrite', memmap=True)
+def savefig(f,quadrant):
+    for k in range(len(quadrant)):
+        if (os.path.isfile(f[:-13] + str(k+1) + ".fits") == True ):
+            os.remove(f[:-13] + str(k+1) + ".fits")
+        elif (os.path.isfile(f[:-13] + str(k+1) + ".fits") == False ): 
+            fits.writeto(f[:-13] + str(k+1) + ".fits", quadrant[k])
 
-#print image.info()
+###################### Variable ################################
+
+title = ['sn2008ge_f435w_lacosmic.fits', 'sn2008ge_f555w_lacosmic.fits', 
+         'sn2008ge_f625w_lacosmic.fits', 'sn2008ge_f814w_lacosmic.fits']
+
+###################### Main Code ###############################  
+
+for m in range(len(title)):
+    bx = []
+    dx = []
+    ax = []
+    cx = []
+    quadrant = []
+    
+    image = fits.open(title[m],mode='copyonwrite', memmap=True)
+    
+    name = image[0].header['targname']
+    header = image.info() 
+    scidata = image[0].data 
+
+    ############### Crop and subtract ###############
+    for n in range(150):
+        for p in range(200):   
+             bx.append(scidata[3370-n][3400+p])
+             dx.append(scidata[3370+n][3400-p])
+    for i in range(110):
+        for j in range(175):
+            ax.append(scidata[3370+i][3400+j])
+            cx.append(scidata[3370-i][3400-j])  
+
+    b = np.reshape( bx , (150,200) )
+    d = np.reshape( dx , (150,200) )          
+    a = np.reshape( ax , (110,175) )
+    c = np.reshape( cx , (110,175) )
+
+    quad2 = b - d
+    quad4 = d - b
+    
+    quad1 = a - c
+    quad3 = c - a
+    
+    ############### Save the images ################
+    quadrant = [quad1,quad2,quad3,quad4]
+    savefig(title[m],quadrant)
+    
+
+"""
+print image.info()
 header = image.info() # I think this is the header
 scidata = image[0].data # scidata is the image, pixel is a location
-#print np.shape(scidata)
+print np.shape(scidata)
 cent = scidata[3356][3381] # what I chose to be center
 
-bx = []
-dx = []
-for i in range(200):
+for i in range(150):
     for j in range(200):
-            bx.append(scidata[3356-i][3381+j])
-            dx.append(scidata[3356+i][3381-j])
-b = np.reshape(bx, (200,200))
+            bx.append(scidata[3370-i][3400+j])
+            dx.append(scidata[3370+i][3400-j])
+for i in range(110):
+    for j in range(175):
+            ax.append(scidata[3370+i][3400+j])
+            cx.append(scidata[3370-i][3400-j])           
+            
+b = np.reshape(bx, (150,200))
+d = np.reshape(dx, (150,200))
+a = np.reshape(ax, (110,175))
+c = np.reshape(cx, (110,175))
 
-"""
-for i in range(330):
-    for j in range(330):
-            dx.append(scidata[3382+i][3409-j])
-"""
-d = np.reshape(dx, (200,200))
-block2 = b - d
-block4 = d - b
-####################################################
-ax = []
-cx = []
-for i in range(175):
-    for j in range(110):
-            ax.append(scidata[3356+i][3381+j])
-            cx.append(scidata[3356-i][3381-j])
-a = np.reshape(ax, (175,110))
+quad2 = b - d
+quad4 = d - b
+quad1 = a - c
+quad3 = c - a
 
-"""
-for i in range(175):
-    for j in range(110):
-            cx.append(scidata[3382-i][3409-j])
-"""
-c = np.reshape(cx, (175,110))
+quadrant = [quad1,quad2,quad3,quad4]
+savefig(f,quadrant)
 
-block1 = a - c
-block3 = c - a
-
-fits.writeto("tos1.fits", block1, header)
-fits.writeto("tos2.fits", block2, header)
-fits.writeto("tos3.fits", block3, header)
-fits.writeto("tos4.fits", block4, header)
+if (os.path.isfile(f[:-13] + "1.fits") == True ):
+    os.remove(f[:-13] + "1.fits")
+elif (os.path.isfile(f[:-13] + "1.fits") == False ): 
+    fits.writeto(f[:-13] + "1.fits", quad1)
+    
+if (os.path.isfile(f[:-13] + "2.fits") == True ):
+    os.remove(f[:-13] + "2.fits")
+elif (os.path.isfile(f[:-13] + "1.fits") == False ): 
+    fits.writeto(f[:-13] + "2.fits", quad2)
+    
+if (os.path.isfile(f[:-13] + "3.fits") == True ):
+    os.remove(f[:-13] + "3.fits")
+elif (os.path.isfile(f[:-13] + "1.fits") == False ):    
+    fits.writeto(f[:-13] + "3.fits", quad3)
+    
+if (os.path.isfile(f[:-13] + "4.fits") == True ):
+    os.remove(f[:-13] + "4.fits")
+elif (os.path.isfile(f[:-13] + "1.fits") == False ): 
+    fits.writeto(f[:-13] + "4.fits", quad4)
+"""
