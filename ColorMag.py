@@ -273,7 +273,7 @@ if (special == 'cluster'):
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
             ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
             (snr625 >= 3) & (snr814 >= 3))
-else:
+"""else:
     # cuts even : object, SNR, f435w and f555w, and position 
     #cut1  = np.where((star <= 2) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius))
     cut2  = np.where((star <= 2) & ((snr435 >= 3) & (snr555 >= 3))   &
@@ -311,7 +311,7 @@ else:
     cut13 = np.where((star <= 2) & ((snr625 >= 8) | (snr814 >= 8))   & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius) &
             (snr625 >= 3) & (snr814 >= 3))   
-
+"""
 ################################################### 
 ############ Save good arrays to a file ###########
 
@@ -342,7 +342,7 @@ snr435_555_5 = ( f435Abs[cut6],f555Abs[cut6],(unc435[cut6]**2 + unc555[cut6]**2)
 pickle.dump( snr435_555_5, open( title+'f435f555_5.p', "wb" ) )
 snr625_814_5 = ( f625Abs[cut7],f814Abs[cut7],(unc625[cut7]**2 + unc814[cut7]**2)**.5 )
 pickle.dump( snr625_814_5, open( title+'f625f814_5.p', "wb" ) )
-
+"""
 snr435_555_6 = ( f435Abs[cut8],f555Abs[cut8],(unc435[cut8]**2 + unc555[cut8]**2)**.5 )
 pickle.dump( snr435_555_6, open( title+'f435f555_6.p', "wb" ) )
 snr625_814_6 = ( f625Abs[cut9],f814Abs[cut9],(unc625[cut9]**2 + unc814[cut9]**2)**.5 )
@@ -357,10 +357,10 @@ snr435_555_8 = ( f435Abs[cut12],f555Abs[cut12],(unc435[cut12]**2 + unc555[cut12]
 pickle.dump( snr435_555_8, open( title+'f435f555_8.p', "wb" ) )
 snr625_814_8 = ( f625Abs[cut13],f814Abs[cut13],(unc625[cut13]**2 + unc814[cut13]**2)**.5 )
 pickle.dump( snr625_814_8, open( title+'f625f814_8.p', "wb" ) )
-
+"""
 print "Pickled."
-
-print "Open file to save contrained data..."
+"""
+print "Open file to save coordinate data..."
 
 with open(title+'F435W_F555W_snr3.csv', 'wb') as f:
     writer = csv.writer(f)
@@ -388,7 +388,7 @@ with open(title+'F625W_F814W_snr5.csv', 'wb') as g:
 
 
 print "Saving file " + title + "F435W_F555W_*.csv & " + title + "F625W_F814W_*.csv and all others"
-
+"""
 ################################################### 
 ############ Make scatter plots for CMD ###########
 """
