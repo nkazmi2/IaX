@@ -15,6 +15,8 @@ import pickle
 ################################################### 
 ############### declared variables ################
 
+special = []
+
 data    = []
 
 star    = [] # Column 11 the object type
@@ -114,6 +116,14 @@ radius  = 32.4 # .00045 deg, Radius_phy = 90,000.006 au
 special = 'cluster'
 xclust  = 1716.352
 yclust  = 3163.780
+
+bad  = []
+badX = []
+badY = []
+bad  = np.array(np.loadtxt(name[:-8]+'questionable.txt'))
+#bad = np.recfromcsv(filename, names=['a','a','a'])
+badX = bad[:,0] - .5
+badY = bad[:,1] - .5
 #"""
 ##################### 2010ae ######################
 """
@@ -160,8 +170,7 @@ print "Opening file: ", name
 
 photfile = open(name,'r')
 
-if name.endswith('new.phot'):
-    title = name[:-8]
+title = name[:-8]
 
 ################################################### 
 ######## append data from file to an array ########
@@ -176,7 +185,7 @@ print "Organizing ", name, " information..."
 
 data    = np.array(data)
 data    = data.astype(float)
-
+"""
 star    = data[:,10] # type
 SNR     = data[:, 5] # general signal to noise
 CHI     = data[:, 4] # general chi for fit 
@@ -200,7 +209,7 @@ chi435  = data[:,18] # Chi for fit
 chi555  = data[:,31] 
 chi625  = data[:,44] 
 chi814  = data[:,57]
-
+"""
 xcoord  = data[:, 2]
 ycoord  = data[:, 3]
 
@@ -210,14 +219,14 @@ ycoord  = data[:, 3]
 
 ################################################### 
 ########### Calculate Absolute Magnitude ##########
-
+"""
 print "Calculating Absolute Magnitude..."
  
 f435Abs = f435mag - dmod - ACS435
 f555Abs = f555mag - dmod - ACS555
 f625Abs = f625mag - dmod - ACS625
 f814Abs = f814mag - dmod - ACS814 
-
+"""
 ################################################### 
 ##### Find correct color magnitudes make cuts #####
 
@@ -228,52 +237,64 @@ if (special == 'cluster'):
     #        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius))
     cut2  = np.where((star <= 2) & ((snr435 >= 3) & (snr555 >= 3))       &
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8)) 
+            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8))# &
+            #((xcoord != badX) | (ycoord != badY))) 
     cut4  = np.where((star <= 2) & ((snr435 >= 4) | (snr555 >= 4))       & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
             ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr435 >= 3) & (snr555 >= 3))
+            (snr435 >= 3) & (snr555 >= 3)                               )# &
+            #((xcoord != badX) | (ycoord != badY))) 
     cut6  = np.where((star <= 2) & ((snr435 >= 5) | (snr555 >= 5))       & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
             ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr435 >= 3) & (snr555 >= 3))
+            (snr435 >= 3) & (snr555 >= 3)                                &
+            ((xcoord != badX) | (ycoord != badY))) 
     cut8  = np.where((star <= 2) & ((snr435 >= 6) | (snr555 >= 6))       & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
             ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr435 >= 3) & (snr555 >= 3))
+            (snr435 >= 3) & (snr555 >= 3)                                &
+            ((xcoord != badX) | (ycoord != badY)))  
     cut10 = np.where((star <= 2) & ((snr435 >= 7) | (snr555 >= 7))       & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
             ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr435 >= 3) & (snr555 >= 3))
+            (snr435 >= 3) & (snr555 >= 3)                                &
+            ((xcoord != badX) | (ycoord != badY))) 
     cut12 = np.where((star <= 2) & ((snr435 >= 8) | (snr555 >= 8))       & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
             ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr435 >= 3) & (snr555 >= 3))
+            (snr435 >= 3) & (snr555 >= 3)                                &
+             ((xcoord != badX) | (ycoord != badY))) 
     #       cuts odd : object, SNR, f625w and f814w, and position 
     cut3  = np.where((star <= 2) & ((snr625 >= 3) & (snr814 >= 3))       & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8))
+            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+            ((xcoord != badX)| (ycoord != badY))) 
     cut5  = np.where((star <= 2) & ((snr625 >= 4) | (snr814 >= 4))       & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
             ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr625 >= 3) & (snr814 >= 3))
+            (snr625 >= 3) & (snr814 >= 3)                                &
+            ((xcoord != badX) | (ycoord != badY))) 
     cut7  = np.where((star <= 2) & ((snr625 >= 5) | (snr814 >= 5))       & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
             ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr625 >= 3) & (snr814 >= 3))
+            (snr625 >= 3) & (snr814 >= 3)                                &
+            ((xcoord != badX) | (ycoord != badY))) 
     cut9  = np.where((star <= 2) & ((snr625 >= 6) | (snr814 >= 6))       & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
             ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr625 >= 3) & (snr814 >= 3))
+            (snr625 >= 3) & (snr814 >= 3)                                &
+            ((xcoord != badX) | (ycoord != badY)))  
     cut11 = np.where((star <= 2) & ((snr625 >= 7) | (snr814 >= 7))       & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
             ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr625 >= 3) & (snr814 >= 3))
+            (snr625 >= 3) & (snr814 >= 3)                                &
+            ((xcoord != badX) | (ycoord != badY))) 
     cut13 = np.where((star <= 2) & ((snr625 >= 8) | (snr814 >= 8))       & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
             ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr625 >= 3) & (snr814 >= 3))
-"""else:
+            (snr625 >= 3) & (snr814 >= 3)                                &
+            ((xcoord != badX) | (ycoord != badY)))  
+else:
     # cuts even : object, SNR, f435w and f555w, and position 
     #cut1  = np.where((star <= 2) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius))
     cut2  = np.where((star <= 2) & ((snr435 >= 3) & (snr555 >= 3))   &
@@ -311,6 +332,20 @@ if (special == 'cluster'):
     cut13 = np.where((star <= 2) & ((snr625 >= 8) | (snr814 >= 8))   & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius) &
             (snr625 >= 3) & (snr814 >= 3))   
+
+#eep = np.where(xcoord[:] == badX[:])
+#print xcoord[eep]
+#print xcoord
+#print badX
+#art = np.where(ycoord[:] == badY[:])
+#print ycoord[art]
+#print ycoord
+#print badY
+
+print xcoord[cut4]
+print badX
+
+
 """
 ################################################### 
 ############ Save good arrays to a file ###########
@@ -342,7 +377,7 @@ snr435_555_5 = ( f435Abs[cut6],f555Abs[cut6],(unc435[cut6]**2 + unc555[cut6]**2)
 pickle.dump( snr435_555_5, open( title+'f435f555_5.p', "wb" ) )
 snr625_814_5 = ( f625Abs[cut7],f814Abs[cut7],(unc625[cut7]**2 + unc814[cut7]**2)**.5 )
 pickle.dump( snr625_814_5, open( title+'f625f814_5.p', "wb" ) )
-"""
+
 snr435_555_6 = ( f435Abs[cut8],f555Abs[cut8],(unc435[cut8]**2 + unc555[cut8]**2)**.5 )
 pickle.dump( snr435_555_6, open( title+'f435f555_6.p', "wb" ) )
 snr625_814_6 = ( f625Abs[cut9],f814Abs[cut9],(unc625[cut9]**2 + unc814[cut9]**2)**.5 )
@@ -357,9 +392,9 @@ snr435_555_8 = ( f435Abs[cut12],f555Abs[cut12],(unc435[cut12]**2 + unc555[cut12]
 pickle.dump( snr435_555_8, open( title+'f435f555_8.p', "wb" ) )
 snr625_814_8 = ( f625Abs[cut13],f814Abs[cut13],(unc625[cut13]**2 + unc814[cut13]**2)**.5 )
 pickle.dump( snr625_814_8, open( title+'f625f814_8.p', "wb" ) )
-"""
+
 print "Pickled."
-"""
+
 print "Open file to save coordinate data..."
 
 with open(title+'F435W_F555W_snr3.csv', 'wb') as f:
@@ -387,7 +422,7 @@ with open(title+'F625W_F814W_snr5.csv', 'wb') as g:
     writer.writerows(izip(xcoord[cut7]+.5,ycoord[cut7]+.5))
 
 
-print "Saving file " + title + "F435W_F555W_*.csv & " + title + "F625W_F814W_*.csv and all others"
+print "Saving file " + title + "F435W_F555W_*.csv & " + title + "F625W_F814W_*.csv"
 """
 ################################################### 
 ############ Make scatter plots for CMD ###########
