@@ -40,7 +40,15 @@ snr555  = [] # Column 33 SNR for F555W
 snr625  = [] # Column 46 SNR for F625W
 snr814  = [] # Column 59 SNR for F814W
 
+snr435_555_3 = []
+snr625_814_3 = []
+snr435_555_4 = []
+snr625_814_4 = []
+snr435_555_5 = []
+snr625_814_5 = []
+
 good    = []
+radius  = []
 
 # arrays after the respective cuts
 
@@ -90,8 +98,7 @@ dmod    = 31.27
 xsn     = 3247.539
 ysn     = 3419.971
 #radius  = 50.0 #pixels
-radius = 36.1008 # .0005014deg, Radius_phy = 90,001.307 au 
-
+radius = 36.1008 # theta = .0005014 deg, phys radius =  1566.443 au, distance = 17.95e7 pc
 #metalicity (?)
 #isocrones on a website - metalicty and age(?) , pick filters (ACS)
 """
@@ -111,8 +118,10 @@ dmod    = 31.64 #31.50
 # Actual X & Y pixel coordinates of sn
 xsn     = 1726.352
 ysn     = 3172.530
-#radius  = 50.0 #pixels
-radius  = 32.4 # .00045 deg, Radius_phy = 90,000.006 au
+
+#radius  = 32.4   theta = .00045 deg, phys radius = 1570.796 au, distance = 20e7 pc
+#radius = 41.25  theta = .0057  deg, phys radius = 2000 au    , distance = 20e7 pc
+radius = [32.4, 41.25]
 special = 'cluster'
 xclust  = 1716.352
 yclust  = 3163.780
@@ -142,7 +151,7 @@ dmod    = 30.58
 xsn     = 1796.640
 ysn     = 1931.995
 #radius  = 30.0 #pixels
-radius = 49.4712 # .0006871, Radius_phy = 90,010.1 au
+radius = 49.4712 # theta = .0006871 deg, phys radius = 1570.972 au, distance = 13.1e7 pc
 """
 ##################### 2010el ######################
 """    
@@ -161,7 +170,7 @@ dmod    = 29.99
 xsn     = 2418.859
 ysn     = 1570.826
 #radius  = 50.0 #pixels
-radius = 65.0016 # .0009028, Radius_phy = 90,009.184 au
+radius = 65.0016 # theta = .0009028 deg, phys radius = 1570.95 au distance = 9.97e7 pc
 """
 ###################################################    
 ######### Open and read in the data file ##########
@@ -185,7 +194,7 @@ print "Organizing ", name, " information..."
 
 data    = np.array(data)
 data    = data.astype(float)
-"""
+
 star    = data[:,10] # type
 SNR     = data[:, 5] # general signal to noise
 CHI     = data[:, 4] # general chi for fit 
@@ -209,7 +218,7 @@ chi435  = data[:,18] # Chi for fit
 chi555  = data[:,31] 
 chi625  = data[:,44] 
 chi814  = data[:,57]
-"""
+
 xcoord  = data[:, 2]
 ycoord  = data[:, 3]
 
@@ -219,82 +228,92 @@ ycoord  = data[:, 3]
 
 ################################################### 
 ########### Calculate Absolute Magnitude ##########
-"""
+
 print "Calculating Absolute Magnitude..."
  
 f435Abs = f435mag - dmod - ACS435
 f555Abs = f555mag - dmod - ACS555
 f625Abs = f625mag - dmod - ACS625
 f814Abs = f814mag - dmod - ACS814 
-"""
+
 ################################################### 
 ##### Find correct color magnitudes make cuts #####
+cut435555 = []
+cut625814 = []
 
 print "Applying contrains to SN Data..."
-if (special == 'cluster'):
-    # cuts even : object, SNR, f435w and f555w, and position 
-    #cut1  = np.where((star <= 2) & 
-    #        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius))
-    cut2  = np.where((star <= 2) & ((snr435 >= 3) & (snr555 >= 3))       &
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8))# &
-            #((xcoord != badX) | (ycoord != badY))) 
-    cut4  = np.where((star <= 2) & ((snr435 >= 4) | (snr555 >= 4))       & 
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr435 >= 3) & (snr555 >= 3)                               )# &
-            #((xcoord != badX) | (ycoord != badY))) 
-    cut6  = np.where((star <= 2) & ((snr435 >= 5) | (snr555 >= 5))       & 
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr435 >= 3) & (snr555 >= 3)                                &
-            ((xcoord != badX) | (ycoord != badY))) 
-    cut8  = np.where((star <= 2) & ((snr435 >= 6) | (snr555 >= 6))       & 
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr435 >= 3) & (snr555 >= 3)                                &
-            ((xcoord != badX) | (ycoord != badY)))  
-    cut10 = np.where((star <= 2) & ((snr435 >= 7) | (snr555 >= 7))       & 
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr435 >= 3) & (snr555 >= 3)                                &
-            ((xcoord != badX) | (ycoord != badY))) 
-    cut12 = np.where((star <= 2) & ((snr435 >= 8) | (snr555 >= 8))       & 
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr435 >= 3) & (snr555 >= 3)                                &
-             ((xcoord != badX) | (ycoord != badY))) 
-    #       cuts odd : object, SNR, f625w and f814w, and position 
-    cut3  = np.where((star <= 2) & ((snr625 >= 3) & (snr814 >= 3))       & 
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            ((xcoord != badX)| (ycoord != badY))) 
-    cut5  = np.where((star <= 2) & ((snr625 >= 4) | (snr814 >= 4))       & 
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr625 >= 3) & (snr814 >= 3)                                &
-            ((xcoord != badX) | (ycoord != badY))) 
-    cut7  = np.where((star <= 2) & ((snr625 >= 5) | (snr814 >= 5))       & 
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr625 >= 3) & (snr814 >= 3)                                &
-            ((xcoord != badX) | (ycoord != badY))) 
-    cut9  = np.where((star <= 2) & ((snr625 >= 6) | (snr814 >= 6))       & 
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr625 >= 3) & (snr814 >= 3)                                &
-            ((xcoord != badX) | (ycoord != badY)))  
-    cut11 = np.where((star <= 2) & ((snr625 >= 7) | (snr814 >= 7))       & 
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr625 >= 3) & (snr814 >= 3)                                &
-            ((xcoord != badX) | (ycoord != badY))) 
-    cut13 = np.where((star <= 2) & ((snr625 >= 8) | (snr814 >= 8))       & 
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
-            ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
-            (snr625 >= 3) & (snr814 >= 3)                                &
-            ((xcoord != badX) | (ycoord != badY)))  
-else:
+for m in range(4,9):
+    for i in range(len(radius)):
+        if (special == 'cluster'):
+        # cuts even : object, SNR, f435w and f555w, and position 
+        #cut2  = np.where((star <= 2) & ((snr435 >= 3) & (snr555 >= 3))       &
+        #        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+        #        ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8))# &
+                #((xcoord != badX) | (ycoord != badY))) 
+            cut435555.append(np.where((star <= 2) & ((snr435 >= m) | (snr555 >= m))  & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                (snr435 >= 3) & (snr555 >= 3)                               ))# &
+                #((xcoord != badX) | (ycoord != badY))) 
+            cut625814.append(np.where((star <= 2) & ((snr625 >= m) | (snr814 >= m))  & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                (snr625 >= 3) & (snr814 >= 3)                               ))# &
+                #((xcoord != badX) | (ycoord != badY))) 
+        """
+        cut6  = np.where((star <= 2) & ((snr435 >= 5) | (snr555 >= 5))       & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                (snr435 >= 3) & (snr555 >= 3)                                &
+                ((xcoord != badX) | (ycoord != badY))) 
+        cut8  = np.where((star <= 2) & ((snr435 >= 6) | (snr555 >= 6))       & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                (snr435 >= 3) & (snr555 >= 3)                                &
+                ((xcoord != badX) | (ycoord != badY)))  
+        cut10 = np.where((star <= 2) & ((snr435 >= 7) | (snr555 >= 7))       & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                (snr435 >= 3) & (snr555 >= 3)                                &
+                ((xcoord != badX) | (ycoord != badY))) 
+        cut12 = np.where((star <= 2) & ((snr435 >= 8) | (snr555 >= 8))       & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                (snr435 >= 3) & (snr555 >= 3)                                &
+                ((xcoord != badX) | (ycoord != badY))) 
+        
+                #       cuts odd : object, SNR, f625w and f814w, and position 
+        cut3  = np.where((star <= 2) & ((snr625 >= 3) & (snr814 >= 3))       & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                ((xcoord != badX)| (ycoord != badY))) 
+        cut5  = np.where((star <= 2) & ((snr625 >= 4) | (snr814 >= 4))       & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                (snr625 >= 3) & (snr814 >= 3)                                &
+                ((xcoord != badX) | (ycoord != badY))) 
+        cut7  = np.where((star <= 2) & ((snr625 >= 5) | (snr814 >= 5))       & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                (snr625 >= 3) & (snr814 >= 3)                                &
+                ((xcoord != badX) | (ycoord != badY))) 
+        cut9  = np.where((star <= 2) & ((snr625 >= 6) | (snr814 >= 6))       & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                (snr625 >= 3) & (snr814 >= 3)                                &
+                ((xcoord != badX) | (ycoord != badY)))  
+        cut11 = np.where((star <= 2) & ((snr625 >= 7) | (snr814 >= 7))       & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                (snr625 >= 3) & (snr814 >= 3)                                &
+                ((xcoord != badX) | (ycoord != badY))) 
+        cut13 = np.where((star <= 2) & ((snr625 >= 8) | (snr814 >= 8))       & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+                (snr625 >= 3) & (snr814 >= 3)                                &
+                ((xcoord != badX) | (ycoord != badY)))          
+        """
+"""else:
     # cuts even : object, SNR, f435w and f555w, and position 
     #cut1  = np.where((star <= 2) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius))
     cut2  = np.where((star <= 2) & ((snr435 >= 3) & (snr555 >= 3))   &
@@ -332,7 +351,7 @@ else:
     cut13 = np.where((star <= 2) & ((snr625 >= 8) | (snr814 >= 8))   & 
             ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius) &
             (snr625 >= 3) & (snr814 >= 3))   
-
+"""
 #eep = np.where(xcoord[:] == badX[:])
 #print xcoord[eep]
 #print xcoord
@@ -342,59 +361,93 @@ else:
 #print ycoord
 #print badY
 
-print xcoord[cut4]
-print badX
-
-
+#print xcoord
+#print badX
 """
+for i in range(len(xcoord)):
+    print "here"
+    for j in range(len(badX)):
+        print "now here"
+        if xcoord[i] == badX[j]:
+            print "now now here"
+            print i
+"""
+
+
 ################################################### 
 ############ Save good arrays to a file ###########
-
+# Number is weird :( I'd prefer
 print "Pickling!"
+snr435_555 = []
+snr625_814 = [] 
+o = 3
+q = 3   
+for n in range(len(cut435555)):
+    o += 1
+    snr435_555.append(( f435Abs[cut435555[n]],f555Abs[cut435555[n]], 
+                       unc555[cut435555[n]],
+                        (unc435[cut435555[n]]**2 + unc555[cut435555[n]]**2)**.5 ))
+    if (n % 2 == 0) : 
+        #pickle.dump( snr435_555[n], open( title+'f435f555_'+ str(radius[0]) +'_' + str(abs(n-(o))) + '.p', "wb" ) )
+        pickle.dump( snr435_555[n], open( title+'f435f555_r1_' + str(abs(n-(o))) + '.p', "wb" ) )
+    elif (n % 2 != 0):
+        o += 1
+        pickle.dump( snr435_555[n], open( title+'f435f555_r2_' + str(abs((n)-(o)+1)) + '.p', "wb" ) )
+        #pickle.dump( snr435_555[n], open( title+'f435f555_'+ str(radius[1]) +'_' + str(abs((n)-(o)+1)) + '.p', "wb" ) )
+
+for p in range(len(cut625814)):  
+    q += 1
+    snr625_814.append(( f625Abs[cut625814[p]],f814Abs[cut625814[p]], 
+                       unc625[cut625814[p]],
+                        (unc625[cut625814[p]]**2 + unc814[cut625814[p]]**2)**.5 ))
+    if (p % 2 == 0) :  
+        pickle.dump( snr625_814[p], open( title+'f625f814_r1_' + str(abs(p-(q))) + '.p', "wb" ) )
+        #pickle.dump( snr625_814[p], open( title+'f625f814_' + str(radius[0]) +'_' + str(abs(p-(q))) + '.p', "wb" ) )
+    elif (p % 2 != 0):
+        q += 1
+        pickle.dump( snr625_814[p], open( title+'f625f814_r2_' + str(abs((p)-(q)+1)) + '.p', "wb" ) )    
+        #pickle.dump( snr625_814[p], open( title+'f625f814_' + str(radius[1]) +'_' + str(abs((p)-(q)+1)) + '.p', "wb" ) )
+    
+print "Pickled."
 
 #snr435_555 = ( f435Abs[cut1],f555Abs[cut1],(unc435[cut1]**2 + unc555[cut1]**2)**.5 )
 #pickle.dump( snr435_555, open( title+'f435f555.p', "wb" ) )
 #snr625_814 = ( f625Abs[cut1],f814Abs[cut1],(unc625[cut1]**2 + unc814[cut1]**2)**.5 )
 #pickle.dump( snr625_814, open( title+'f625f814.p', "wb" ) )
-snr435_555_3 = []
-snr625_814_3 = []
-snr435_555_4 = []
-snr625_814_4 = []
-snr435_555_5 = []
-snr625_814_5 = []
-
-snr435_555_3 = ( f435Abs[cut2],f555Abs[cut2],(unc435[cut2]**2 + unc555[cut2]**2)**.5 )
+"""
+snr435_555_3 = ( f435Abs[cut2],f555Abs[cut2],unc555[cut2],(unc435[cut2]**2 + unc555[cut2]**2)**.5 )
 pickle.dump( snr435_555_3, open( title+'f435f555_3.p', "wb" ) )
-snr625_814_3 = ( f625Abs[cut3],f814Abs[cut3],(unc625[cut3]**2 + unc814[cut3]**2)**.5 )
+snr625_814_3 = ( f625Abs[cut3],f814Abs[cut3],unc625[cut3],(unc625[cut3]**2 + unc814[cut3]**2)**.5 )
 pickle.dump( snr625_814_3, open( title+'f625f814_3.p', "wb" ) )
 
-snr435_555_4 = ( f435Abs[cut4],f555Abs[cut4],(unc625[cut4]**2 + unc814[cut4]**2)**.5 )
+snr435_555_4 = ( f435Abs[cut4],f555Abs[cut4],unc814[cut4],(unc625[cut4]**2 + unc814[cut4]**2)**.5 )
 pickle.dump( snr435_555_4, open( title+'f435f555_4.p', "wb" ) )
-snr625_814_4 = ( f625Abs[cut5],f814Abs[cut5],(unc625[cut5]**2 + unc814[cut5]**2)**.5 )
+snr625_814_4 = ( f625Abs[cut5],f814Abs[cut5],unc625[cut5],(unc625[cut5]**2 + unc814[cut5]**2)**.5 )
 pickle.dump( snr625_814_4, open( title+'f625f814_4.p', "wb" ) )
 
-snr435_555_5 = ( f435Abs[cut6],f555Abs[cut6],(unc435[cut6]**2 + unc555[cut6]**2)**.5 )
+snr435_555_5 = ( f435Abs[cut6],f555Abs[cut6],unc555[cut6],(unc435[cut6]**2 + unc555[cut6]**2)**.5 )
 pickle.dump( snr435_555_5, open( title+'f435f555_5.p', "wb" ) )
-snr625_814_5 = ( f625Abs[cut7],f814Abs[cut7],(unc625[cut7]**2 + unc814[cut7]**2)**.5 )
+snr625_814_5 = ( f625Abs[cut7],f814Abs[cut7],unc625[cut7],(unc625[cut7]**2 + unc814[cut7]**2)**.5 )
 pickle.dump( snr625_814_5, open( title+'f625f814_5.p', "wb" ) )
 
-snr435_555_6 = ( f435Abs[cut8],f555Abs[cut8],(unc435[cut8]**2 + unc555[cut8]**2)**.5 )
+snr435_555_6 = ( f435Abs[cut8],f555Abs[cut8],unc555[cut8],(unc435[cut8]**2 + unc555[cut8]**2)**.5 )
 pickle.dump( snr435_555_6, open( title+'f435f555_6.p', "wb" ) )
-snr625_814_6 = ( f625Abs[cut9],f814Abs[cut9],(unc625[cut9]**2 + unc814[cut9]**2)**.5 )
+snr625_814_6 = ( f625Abs[cut9],f814Abs[cut9],unc625[cut9],(unc625[cut9]**2 + unc814[cut9]**2)**.5 )
 pickle.dump( snr625_814_6, open( title+'f625f814_6.p', "wb" ) )
 
-snr435_555_7 = ( f435Abs[cut10],f555Abs[cut10],(unc435[cut10]**2 + unc555[cut10]**2)**.5 )
+snr435_555_7 = ( f435Abs[cut10],f555Abs[cut10],unc555[cut10],(unc435[cut10]**2 + unc555[cut10]**2)**.5 )
 pickle.dump( snr435_555_7, open( title+'f435f555_7.p', "wb" ) )
-snr625_814_7 = ( f625Abs[cut11],f814Abs[cut11],(unc625[cut11]**2 + unc814[cut11]**2)**.5 )
+snr625_814_7 = ( f625Abs[cut11],f814Abs[cut11],unc625[cut11]**2,(unc625[cut11]**2 + unc814[cut11]**2)**.5 )
 pickle.dump( snr625_814_7, open( title+'f625f814_7.p', "wb" ) )
 
-snr435_555_8 = ( f435Abs[cut12],f555Abs[cut12],(unc435[cut12]**2 + unc555[cut12]**2)**.5 )
+snr435_555_8 = ( f435Abs[cut12],f555Abs[cut12],unc555[cut12],(unc435[cut12]**2 + unc555[cut12]**2)**.5 )
 pickle.dump( snr435_555_8, open( title+'f435f555_8.p', "wb" ) )
-snr625_814_8 = ( f625Abs[cut13],f814Abs[cut13],(unc625[cut13]**2 + unc814[cut13]**2)**.5 )
+snr625_814_8 = ( f625Abs[cut13],f814Abs[cut13],unc625[cut13],(unc625[cut13]**2 + unc814[cut13]**2)**.5 )
 pickle.dump( snr625_814_8, open( title+'f625f814_8.p', "wb" ) )
 
 print "Pickled."
-
+"""
+"""
 print "Open file to save coordinate data..."
 
 with open(title+'F435W_F555W_snr3.csv', 'wb') as f:

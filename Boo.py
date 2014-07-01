@@ -4,6 +4,35 @@ Created on Fri May 30 09:58:19 2014
 
 @author: Nova
 """
+
+import pickle
+title      = 'SN08ha'
+radius     = [32.4, 41.25]
+f435f555 = []
+f435f555 = pickle.load(open( "sn2008ha_f435f555_r1*", "rb" ))
+print f435f555
+#f625f814_4 = pickle.load(open( "sn2008ha_f625f814_r1_4.p", "rb" ))
+#f435f555_5 = pickle.load(open( "sn2008ha_f435f555_r1_5.p", "rb" ))
+#f625f814_5 = pickle.load(open( "sn2008ha_f625f814_r1_5.p", "rb" ))
+#f435f555_6 = pickle.load(open( "sn2008ha_f435f555_r1_6.p", "rb" ))
+#f625f814_6 = pickle.load(open( "sn2008ha_f625f814_r1_6.p", "rb" ))
+#f435f555_7 = pickle.load(open( "sn2008ha_f435f555_r1_7.p", "rb" ))
+#f625f814_7 = pickle.load(open( "sn2008ha_f625f814_r1_7.p", "rb" ))
+#f435f555_8 = pickle.load(open( "sn2008ha_f435f555_r1_8.p", "rb" ))
+#f625f814_8 = pickle.load(open( "sn2008ha_f625f814_r1_8.p", "rb" ))
+
+    
+"""
+i = 3
+for n in range(10): 
+    i += 1
+    if (n % 2 == 0): 
+        print abs(n-(i))
+    elif (n % 2 != 0):
+        i += 1
+        print abs((n)-(i)+1)
+"""
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -23,6 +52,7 @@ font = {'family' : 'serif',
         'weight' : 'normal',
         'size'   : 10,
         } 
+"""
 #####################################################################
 
 #name = []
@@ -42,10 +72,10 @@ row = []
 row = [f.readline().strip().split() for i in range(16776)]
 row = np.array(row)
 """
-d = []
+#d = []
 
-d.append(np.loadtxt('Z017Y26.dat'))
-d = np.array(d)
+#d.append(np.loadtxt('Z017Y26.dat'))
+#d = np.array(d)
 """
 for i in range(11,16776):#16765L, 21L
     d.append(row[:][i])
@@ -53,14 +83,14 @@ d = np.array(d)
 """
 #print d
 #print np.shape(d) #(1L, 16776L, 21L)
-Length = 16776
-logAGE = []
-F435W = []
-F555W = []
+#Length = 16776
+#logAGE = []
+#F435W = []
+#F555W = []
 
-logAGE = d[:,:,0]
-F435W  = d[:,:,7]
-F555W  = d[:,:,10]
+#logAGE = d[:,:,0]
+#F435W  = d[:,:,7]
+#F555W  = d[:,:,10]
 
 
 
@@ -161,14 +191,14 @@ F555W  = d[:,:,10]
 #f555Abs = []
 #for i in range(len(data[:,10])):
 #     f555Abs.append(float(data[i,10]) - dmod - ACS555)
-
+"""
 age7   = np.where((d[:,:,0] >= 7.0) & (d[:,:,0] < 8.5))
 age75   = np.where((d[:,:,0] >= 7.5) & (d[:,:,0] < 8.0))
 age8   = np.where((d[:,:,0] >= 8.0) & (d[:,:,0] < 9.0))
 age9   = np.where((d[:,:,0] >= 9.0) & (d[:,:,0] < 10.0))
 age10  = np.where((d[:,:,0] >= 10.0) & (d[:,:,0] < 10.3))
 age103 = np.where((d[:,:,0] == 10.3))
-
+"""
 """
 diff = []
 for i in range(Length):
@@ -196,7 +226,7 @@ print diff
 #     f555Abs5.append(float(data5[i,10]) - dmod - ACS555)
 
 #####################################################################
-
+"""
 print "Begin plotting Isochrones..."
 h = [5, 5] # height of the plotted figure
 plt.figure(num = 1, dpi = 100, figsize = [6, np.sum(h)], facecolor = 'w')
@@ -224,6 +254,7 @@ c1plt.legend(loc=4, borderaxespad=0.)
 plt.title('CMD for Z = 0.017, Y = 0.26')
 print "Save and show Isochrones..."
 plt.savefig("Test.png")
+"""
 """
 # c1 refers to the cut1
 c1plt = plt.subplot2grid((2,2), (0,0), colspan = 2)
