@@ -140,8 +140,8 @@ badX = []
 badY = []
 bad  = np.array(np.loadtxt(name[:-8]+'questionable.txt'))
 #bad = np.recfromcsv(filename, names=['a','a','a'])
-badX = bad[:,0] - .5
-badY = bad[:,1] - .5
+badX = (bad[:,0] - .5)
+badY = (bad[:,1] - .5)
 #"""
 ##################### 2010ae ######################
 """
@@ -233,17 +233,98 @@ ycoord  = data[:, 3]
 
 ################################################### 
 ########### Calculate Absolute Magnitude ##########
-
+"""
 print "Calculating Absolute Magnitude..."
  
 f435Abs = f435mag - dmod - ACS435
 f555Abs = f555mag - dmod - ACS555
 f625Abs = f625mag - dmod - ACS625
 f814Abs = f814mag - dmod - ACS814 
-
+"""
 ################################################### 
 ##### Find correct color magnitudes make cuts #####
 
+"""
+16039   X
+18300   X
+21901   X
+22885   X
+23143   X
+44710   X
+50120   X
+61659
+105833
+Testing bad Y values
+222
+16039   X
+18300   X
+21239
+21901   X
+22885   X
+23143   X
+27300
+43644
+44710   X
+50120   X
+60012
+71374
+142123
+"""
+badpos = []
+cut    = []
+
+for i in range(len(xcoord)):
+    for j in range(len(badX)):
+        if (xcoord[i] == badX[j]) & (ycoord[i] == badY[j]):
+            badpos.append(i)     
+
+#print xcoord[badpos]
+
+cut  = np.where((star <= 2) & ((snr625 >= 4) | (snr814 >= 4))      & 
+    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[0])    & 
+    ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8)   &
+    (snr625 >= 3) & (snr814 >= 3) & (badpos))
+
+print xcoord[cut]
+"""
+1732.34  1732.34  
+1699.28  
+1749.32  1749.32
+1751.97  1751.97
+1687.82  
+1703.94  1703.94
+1717.56  1717.56
+1745.46
+1753.85  1753.85
+1724.89  1724.89  
+1703.65  
+1754.54  1754.54
+1763.66  
+1751.75  1751.75
+1729.74  1729.74
+1689.06 
+        
+        
+1734.14  
+1746.72  
+1739.32  
+1735.71  
+1730.86  
+1732.02  
+1742.74
+"""
+
+#cut4  = np.where((star <= 2) & ((snr435 >= 4) | (snr555 >= 4))       & 
+#              ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)     & 
+#              ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8) &
+#             (snr435 >= 3) & (snr555 >= 3))
+#print np.shape(xcoord[cut])
+
+#cut.append(badpos)
+
+#print xcoord[cut]
+
+"""
 print "Applying contrains to SN Data..."
 for m in range(4,9):
     for i in range(len(radius)):
@@ -267,10 +348,10 @@ for m in range(4,9):
                 ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])         & 
                 (snr625 >= 3) & (snr814 >= 3)                                   ))# &
                 #((xcoord != badX) | (ycoord != badY))) 
- 
+"""
 ################################################### 
 ############ Save good arrays to a file ###########
-# Number is weird :( I'd prefer
+"""
 print "Pickling!"
 
 for n in range(len(cut435555)):
@@ -300,6 +381,7 @@ for p in range(len(cut625814)):
         #pickle.dump( snr625_814[p], open( title+'f625f814_' + str(radius[1]) +'_' + str(abs((p)-(q)+1)) + '.p', "wb" ) )
     
 print "Pickled."
+"""
 """
 print "Open file to save coordinate data..."
 

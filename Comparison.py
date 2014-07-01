@@ -105,41 +105,6 @@ for i in range(4,9):
     f435f555_2.append(pickle.load(open('sn2008ha_f435f555_r2_'+ str(i) +'.p', 'rb')))    
     f625f814_2.append(pickle.load(open('sn2008ha_f625f814_r2_'+ str(i) +'.p', 'rb')))
 #"""
-"""  
-f435f555_4   = pickle.load(open( "sn2008ha_f435f555_r1_4.p", "rb" ))
-f625f814_4   = pickle.load(open( "sn2008ha_f625f814_r1_4.p", "rb" ))
-f435f555_5   = pickle.load(open( "sn2008ha_f435f555_r1_5.p", "rb" ))
-f625f814_5   = pickle.load(open( "sn2008ha_f625f814_r1_5.p", "rb" ))
-f435f555_4_2 = pickle.load(open( "sn2008ha_f435f555_r2_4.p", "rb" ))
-f625f814_4_2 = pickle.load(open( "sn2008ha_f625f814_r2_4.p", "rb" ))
-f435f555_5_2 = pickle.load(open( "sn2008ha_f435f555_r2_5.p", "rb" ))
-f625f814_5_2 = pickle.load(open( "sn2008ha_f625f814_r2_5.p", "rb" ))  
-#f435f555_3 = pickle.load(open( "sn2008ha_f435f555.p"  , "rb" ))
-#f625f814_3 = pickle.load(open( "sn2008ha_f625f814.p"  , "rb" ))
-f435f555_4 = pickle.load(open( "sn2008ha_f435f555_r1_4.p", "rb" ))
-f625f814_4 = pickle.load(open( "sn2008ha_f625f814_r1_4.p", "rb" ))
-f435f555_5 = pickle.load(open( "sn2008ha_f435f555_r1_5.p", "rb" ))
-f625f814_5 = pickle.load(open( "sn2008ha_f625f814_r1_5.p", "rb" ))
-f435f555_6 = pickle.load(open( "sn2008ha_f435f555_r1_6.p", "rb" ))
-f625f814_6 = pickle.load(open( "sn2008ha_f625f814_r1_6.p", "rb" ))
-f435f555_7 = pickle.load(open( "sn2008ha_f435f555_r1_7.p", "rb" ))
-f625f814_7 = pickle.load(open( "sn2008ha_f625f814_r1_7.p", "rb" ))
-f435f555_8 = pickle.load(open( "sn2008ha_f435f555_r1_8.p", "rb" ))
-f625f814_8 = pickle.load(open( "sn2008ha_f625f814_r1_8.p", "rb" ))
-
-
-f435f555_4_2 = pickle.load(open( "sn2008ha_f435f555_r2_4.p", "rb" ))
-f625f814_4_2 = pickle.load(open( "sn2008ha_f625f814_r2_4.p", "rb" ))
-f435f555_5_2 = pickle.load(open( "sn2008ha_f435f555_r2_5.p", "rb" ))
-f625f814_5_2 = pickle.load(open( "sn2008ha_f625f814_r2_5.p", "rb" ))
-f435f555_6_2 = pickle.load(open( "sn2008ha_f435f555_r2_6.p", "rb" ))
-f625f814_6_2 = pickle.load(open( "sn2008ha_f625f814_r2_6.p", "rb" ))
-f435f555_7_2 = pickle.load(open( "sn2008ha_f435f555_r2_7.p", "rb" ))
-f625f814_7_2 = pickle.load(open( "sn2008ha_f625f814_r2_7.p", "rb" ))
-f435f555_8_2 = pickle.load(open( "sn2008ha_f435f555_r2_8.p", "rb" ))
-f625f814_8_2 = pickle.load(open( "sn2008ha_f625f814_r2_8.p", "rb" ))
-"""
-
 """
 title      = 'SN10ae'
 radius     = [49.4712,62.9816]
@@ -209,57 +174,21 @@ c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],
 ###########################################################################
 
 for i in range(start,end):
-        c1plt.errorbar(np.subtract(f435f555_1[i][0],   f435f555_1[i][1]),   f435f555_1[i][1], 
-                       f435f555_1[i][2],   f435f555_1[i][3], fmt=None, ecolor="k", marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_1[i][0],   f435f555_1[i][1]),   f435f555_1[i][1],   
-                      label = 'S/N ' + str(snt) +' Radius ' + str(radius[0]),  c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
-        c1plt.errorbar(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   f435f555_2[i][1], 
-                      f435f555_2[i][2],   f435f555_2[i][3], fmt=None, marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   f435f555_2[i][1],
-                      label = 'S/N ' + str(snt) +' Radius ' + str(radius[1]),  c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
+        c1plt.errorbar(np.subtract(f435f555_1[i][0],   f435f555_1[i][1]),  
+                       f435f555_1[i][1], f435f555_1[i][2],   f435f555_1[i][3],
+                         fmt=None, ecolor="k", marker=None, mew=0 )
+        c1plt.scatter(np.subtract(f435f555_1[i][0],   f435f555_1[i][1]),   
+                      f435f555_1[i][1], label = 'S/N ' + str(snt) +' Radius ' + str(radius[0]),  
+                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
+        c1plt.errorbar(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
+                       f435f555_2[i][1], f435f555_2[i][2],   f435f555_2[i][3], 
+                        fmt=None, marker=None, mew=0 )
+        c1plt.scatter(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
+                      f435f555_2[i][1], label = 'S/N ' + str(snt) +' Radius ' + str(radius[1]),  
+                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
         snt += 1
 
-
-"""
-print np.shape(f435f555_1)
-print np.shape(f435f555_1[0])
-print np.shape(f435f555_1[1])
-print np.shape(f435f555_1[2])
-print np.shape(f435f555_1[3])
-print np.shape(f435f555_1[4])
-print np.shape(f435f555_2)
-print np.shape(f435f555_2[0])
-print np.shape(f435f555_2[1][0])
-print np.shape(f435f555_2[1])
-print np.shape(f435f555_2[2])
-print np.shape(f435f555_2[3])
-print np.shape(f435f555_2[4])
-c1plt.errorbar(np.subtract(f435f555_1[0][0],   f435f555_1[0][1]),   f435f555_1[0][1], 
-              f435f555_1[0][2],   f435f555_1[0][3], fmt=None, ecolor="b", marker=None, mew=0 )
-c1plt.scatter(np.subtract(f435f555_1[0][0],   f435f555_1[0][1]),   f435f555_1[0][1],   
-              label = 'S/N 4, Radius ' + str(radius[0]),  c="w",marker='D')
-c1plt.errorbar(np.subtract(f435f555_1[1][0],   f435f555_1[1][1]),   f435f555_1[1][1], 
-              f435f555_1[1][2],   f435f555_1[1][3], fmt=None, ecolor="b", marker=None, mew=0 )
-c1plt.scatter(np.subtract(f435f555_1[1][0],   f435f555_1[1][1]),   f435f555_1[1][1],   
-              label = 'S/N 5, Radius ' + str(radius[0]),  c="b",marker='D')
-
-c1plt.errorbar(np.subtract(f435f555_2[0][0],   f435f555_2[0][1]),   f435f555_2[0][1], 
-              f435f555_2[0][2],   f435f555_2[0][3], fmt=None, ecolor="k", marker=None, mew=0 )
-c1plt.scatter(np.subtract(f435f555_2[0][0],   f435f555_2[0][1]),   f435f555_2[0][1],   
-              label = 'S/N 4, Radius ' + str(radius[1]),  c="w",marker='D')
-c1plt.errorbar(np.subtract(f435f555_2[1][0],   f435f555_2[1][1]),   f435f555_2[1][1], 
-              f435f555_2[1][2],   f435f555_2[1][3], fmt=None, ecolor="k", marker=None, mew=0 )
-c1plt.scatter(np.subtract(f435f555_2[1][0],   f435f555_2[1][1]),   f435f555_2[1][1],   
-              label = 'S/N 5, Radius ' + str(radius[1]),  c="b",marker='D')
-"""
-#c1plt.errorbar(np.subtract(f435f555_8[0],   f435f555_8[1]),   f435f555_8[1], 
-#              f435f555_8[2],   f435f555_8[3], fmt=None, ecolor="b", marker=None, mew=0 )
-#c1plt.scatter(np.subtract(f435f555_8[0],   f435f555_8[1]),   f435f555_8[1],   
-#              label = 'S/N 8, Radius ' + radius,  c="w",marker='D')
-###########################################################################              
-#####c1plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,ncol=2, mode="expand", borderaxespad=0.1)
-#c1plt.legend(loc=4, borderaxespad=0.)
-#c1plt.legend(bbox_to_anchor=(.85, .7), loc=2, borderaxespad=0.)
+###########################################################################      
 l = plt.legend(prop = {'family' : 'serif'},loc=4)
 l.draw_frame(False)
 ########################################################################### 
@@ -299,53 +228,21 @@ c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],
 ###########################################################################
            
 for k in range(start,end):
-        c2plt.errorbar(np.subtract(f625f814_1[k][0],   f625f814_1[k][1]),   f625f814_1[k][1], 
-                       f625f814_1[k][2],   f625f814_1[k][3], fmt=None, ecolor="k", marker=None, mew=0 )
+        c2plt.errorbar(np.subtract(f625f814_1[k][0],   f625f814_1[k][1]),   
+                       f625f814_1[k][1], f625f814_1[k][2],   f625f814_1[k][3], 
+                        fmt=None, ecolor="k", marker=None, mew=0 )
         c2plt.scatter(np.subtract(f625f814_1[k][0],   f625f814_1[k][1]),   f625f814_1[k][1],   
-                      label = 'S/N ' + str(snb) +' Radius ' + str(radius[0]),  c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
-        c2plt.errorbar(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   f625f814_2[k][1], 
-                      f625f814_2[k][2],   f625f814_2[k][3], fmt=None, marker=None, mew=0 )
+                      label = 'S/N ' + str(snb) +' Radius ' + str(radius[0]),  
+                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
+        c2plt.errorbar(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   
+                       f625f814_2[k][1], f625f814_2[k][2],   f625f814_2[k][3], 
+                        fmt=None, marker=None, mew=0 )
         c2plt.scatter(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   f625f814_2[k][1],
-                      label = 'S/N ' + str(snb) +' Radius ' + str(radius[1]),  c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
+                      label = 'S/N ' + str(snb) +' Radius ' + str(radius[1]),  
+                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
         snb += 1
-"""
-c2plt.errorbar(np.subtract(f625f814_4_2[0],   f625f814_4_2[1]),   f625f814_4_2[1], 
-              f625f814_4_2[2],   f625f814_4_2[3], fmt=None, ecolor="b", marker=None, mew=0 )
-c2plt.scatter(np.subtract(f625f814_4[0],   f625f814_4[1]),   f625f814_4[1],   
-              label = 'S/N 4, Radius ' + str(radius),  c="w",marker='D')
-c2plt.errorbar(np.subtract(f625f814_5_2[0],   f625f814_5_2[1]),   f625f814_5_2[1], 
-              f625f814_5_2[2],   f625f814_5_2[3], fmt=None, marker=None, mew=0 )
-c2plt.scatter(np.subtract(f625f814_5_2[0],   f625f814_5_2[1]),   f625f814_5_2[1], 
-              label = 'S/N 5, Radius ' + str(radius),  c="b",marker='D')
-"""
-#c2plt.errorbar(np.subtract(f625f814_6[0],   f625f814_6[1]),   f625f814_6[1], 
-#              f625f814_6[2],   f625f814_6[3], fmt=None, marker=None, mew=0 )
-#c2plt.scatter(np.subtract(f625f814_6[0],   f625f814_6[1]),   f625f814_6[1],   
-#              label = 'S/N 6, Radius ' + radius,  c="w",marker='D')
-#c2plt.errorbar(np.subtract(f625f814_7[0],   f625f814_7[1]),   f625f814_7[1], 
-#              f625f814_7[2],   f625f814_7[3], fmt=None, marker=None, mew=0 )
-#c2plt.scatter(np.subtract(f625f814_7[0],   f625f814_7[1]),   f625f814_7[1],   
-#              label = 'S/N 7, Radius ' + radius,  c="w",marker='D')
-#c2plt.errorbar(np.subtract(f625f814_8[0],   f625f814_8[1]),   f625f814_8[1], 
-#              f625f814_8[2],   f625f814_8[3], fmt=None, marker=None, mew=0 )
-#c2plt.scatter(np.subtract(f625f814_8[0],   f625f814_8[1]),   f625f814_8[1],   
-#              label = 'S/N 8, Radius ' + radius,  c="w",marker='D')
+
 ###########################################################################
-#c2plt.plot(np.subtract(F625W[age7],   F814W[age7]),   F814W[age7],   
-#              label = 'Log(Age) >= 7.0 & < 7.5',  c="w")#,marker='o')
-#c2plt.plot(np.subtract(F625W[age758],  F814W[age758]),  F814W[age758],  
-#              label = 'Log(Age) >= 7.5 & < 8.0',  c="m",marker='o' )
-#c2plt.plot(np.subtract(F625W[age8],   F814W[age8]),   F814W[age8],   
-#              label = 'Log(Age) >= 8.0 & < 9.0',  c="b")#,marker='o')
-#c2plt.plot(np.subtract(F625W[age9],   F814W[age9]),   F814W[age9],   
-#              label = 'Log(Age) >= 9.0 & < 10.0', c="g")#,marker='o')
-#c2plt.plot(np.subtract(F625W[age10],  F814W[age10]),  F814W[age10],  
-#              label = 'Log(Age) >= 10.0 & < 10.3',c="y")#,marker='o')
-#c2plt.plot(np.subtract(F625W[age103], F814W[age103]), F814W[age103], 
-#              label = 'Log(Age) == 10.3 & < 7.5', c="r")#,marker='o')
-###########################################################################
-#c2plt.legend(loc=4, borderaxespad=0.)
-#c2plt.legend(bbox_to_anchor=(.85, .7), loc=2, borderaxespad=0.)
 l = plt.legend(prop = {'family' : 'serif'},loc=4)
 l.draw_frame(False)
 ########################################################################### 
@@ -354,4 +251,4 @@ c2plt.set_ylim(bottom=ybotmax, top=ybotmin)
 
 print "Save and show plot : " + title + '_' + 'Z' + name[1:-7]+ '_Comparison.png'
 
-plt.savefig(title + '_' + 'Z' + name[1:-7]+ '_Comparisonip.png')
+plt.savefig(title + '_' + 'Z' + name[1:-7]+ '_Comparisonkl.png')
