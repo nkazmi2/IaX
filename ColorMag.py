@@ -207,7 +207,7 @@ data    = data.astype(float)
 star    = data[:,10] # type
 SNR     = data[:, 5] # general signal to noise
 CHI     = data[:, 4] # general chi for fit 
-
+"""
 f435mag = data[:,15] # instramental VEGAMAG magnitude
 f555mag = data[:,28]
 f625mag = data[:,41]
@@ -217,17 +217,17 @@ unc435  = data[:,17] # uncertainty
 unc555  = data[:,30]
 unc625  = data[:,43]
 unc814  = data[:,56]
-
+"""
 snr435  = data[:,19] # signal to noise
 snr555  = data[:,32]
 snr625  = data[:,45]
 snr814  = data[:,58]
-
+"""
 chi435  = data[:,18] # Chi for fit
 chi555  = data[:,31] 
 chi625  = data[:,44] 
 chi814  = data[:,57]
-
+"""
 xcoord  = data[:, 2]
 ycoord  = data[:, 3]
 
@@ -272,19 +272,55 @@ Testing bad Y values
 """
 badpos = []
 cut    = []
-
+cutorig= []
+cutrem = []
 for i in range(len(xcoord)):
     for j in range(len(badX)):
         if (xcoord[i] == badX[j]) & (ycoord[i] == badY[j]):
             badpos.append(i)     
 
 #print xcoord[badpos]
+for i in range(len(badpos)):
+    cutorig  = np.where((star <= 2) & ((snr625 >= 4) | (snr814 >= 4))      & 
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[0])    & 
+        ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8)   &
+        (snr625 >= 3) & (snr814 >= 3) )
+for i in range(len(badpos)):
+    cut  = np.where((star <= 2) & ((snr625 >= 4) | (snr814 >= 4))      & 
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[0])    & 
+        ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8)   &
+        (snr625 >= 3) & (snr814 >= 3) & ((xcoord == badX[i]) & (ycoord == badY[i])))
 
-cut  = np.where((star <= 2) & ((snr625 >= 4) | (snr814 >= 4))      & 
-    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[0])    & 
-    ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8)   &
-    (snr625 >= 3) & (snr814 >= 3) & (badpos))
+for i in range(len(badpos)):
+    cutrem  = np.where((star <= 2) & ((snr625 >= 4) | (snr814 >= 4))      & 
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[0])    & 
+        ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8)   &
+        (snr625 >= 3) & (snr814 >= 3) & ((xcoord != badX[i]) & (ycoord != badY[i])))
+#print xcoord[cut & badpos]
 
+"""
+def all(iterable):
+    print "Testing all"
+    for element in iterable:
+        if not element:
+            return False
+    return True
+
+def any(iterable):
+    print "Testing any"
+    for element in iterable:
+        if element:
+            return True
+    return False
+    
+all(badpos)
+any(badpos)
+"""
+#badpos = np.where((xcoord == badX) & (ycoord == badY))
+#badpos = np.array(badpos,dtype=np.int64)
+print xcoord[badpos]
+print xcoord[cutorig]
+print xcoord[cutrem]
 print xcoord[cut]
 """
 1732.34  1732.34  
