@@ -69,7 +69,7 @@ age103  = np.where((d[:,:,0] == 10.3))
 
 #####################################################################
 start      = 0 # starts at S/N 4
-end        = 2 # ends at S/N 5
+end        = 1 # end = 2 goes to S/N 5
 snt        = 4
 snb        = 4
 f435f555_1 = []
@@ -91,7 +91,7 @@ for i in range(4,9):
     f625f814_2.append(pickle.load(open('sn2008ge_f625f814_r2_'+ str(i) +'.p', 'rb')))
 
 """
-#"""
+"""
 
 title      = 'SN08ha'
 radius     = [32.4, 41.25]
@@ -104,7 +104,7 @@ for i in range(4,9):
     f625f814_1.append(pickle.load(open('sn2008ha_f625f814_r1_'+ str(i) +'.p', 'rb')))    
     f435f555_2.append(pickle.load(open('sn2008ha_f435f555_r2_'+ str(i) +'.p', 'rb')))    
     f625f814_2.append(pickle.load(open('sn2008ha_f625f814_r2_'+ str(i) +'.p', 'rb')))
-#"""
+"""
 """
 title      = 'SN10ae'
 radius     = [49.4712,62.9816]
@@ -119,7 +119,7 @@ for i in range(4,9):
     f625f814_2.append(pickle.load(open('sn2010ae_f625f814_r2_'+ str(i) +'.p', 'rb')))
 
 """
-"""
+#"""
 title      = 'SN10el'
 radius     = [65.0016,82.7545]
 ytopmax    = -1.0
@@ -131,7 +131,7 @@ for i in range(4,9):
     f625f814_1.append(pickle.load(open('sn2010el_f625f814_r1_'+ str(i) +'.p', 'rb')))    
     f435f555_2.append(pickle.load(open('sn2010el_f435f555_r2_'+ str(i) +'.p', 'rb')))    
     f625f814_2.append(pickle.load(open('sn2010el_f625f814_r2_'+ str(i) +'.p', 'rb')))
-"""
+#"""
 #####################################################################
 
 print "Begin plotting Isochrones..."
@@ -153,20 +153,20 @@ plt.ylabel("F555W",fontdict = font)
 #           'g:', label = 'Log(Age) = 7.2')
 #c1plt.plot(np.subtract(F435W[age73],  F555W[age73]),  F555W[age73],  
 #           'c-', label = 'Log(Age) = 7.3')
-c1plt.plot(np.subtract(F435W[age74],  F555W[age74]),  F555W[age74],  
-           'b:' , label = 'Log(Age) = 7.4')
-c1plt.plot(np.subtract(F435W[age75],  F555W[age75]),  F555W[age75],  
-           'c-.', label = 'Log(Age) = 7.5')
-c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
-           'r--', label = 'Log(Age) = 7.6')
-#c1plt.plot(np.subtract(F435W[age77],  F555W[age77]),  F555W[age77],  
-#           'y-' , label = 'Log(Age) = 7.7')
-#c1plt.plot(np.subtract(F435W[age78],  F555W[age78]),  F555W[age78],  
-#           'g:' , label = 'Log(Age) = 7.8')
-#c1plt.plot(np.subtract(F435W[age79],  F555W[age79]),  F555W[age79],  
-#           'c-.', label = 'Log(Age) = 7.9') 
-#c1plt.plot(np.subtract(F435W[age80],  F555W[age80]),  F555W[age80],  
-#           'b:' , label = 'Log(Age) = 8.0')  
+#c1plt.plot(np.subtract(F435W[age74],  F555W[age74]),  F555W[age74],  
+#           'b:' , label = 'Log(Age) = 7.4')
+#c1plt.plot(np.subtract(F435W[age75],  F555W[age75]),  F555W[age75],  
+#           'c-.', label = 'Log(Age) = 7.5')
+#c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
+#           'r--', label = 'Log(Age) = 7.6')
+c1plt.plot(np.subtract(F435W[age77],  F555W[age77]),  F555W[age77],  
+           'y-' , label = 'Log(Age) = 7.7')
+c1plt.plot(np.subtract(F435W[age78],  F555W[age78]),  F555W[age78],  
+           'g:' , label = 'Log(Age) = 7.8')
+c1plt.plot(np.subtract(F435W[age79],  F555W[age79]),  F555W[age79],  
+           'c-.', label = 'Log(Age) = 7.9') 
+c1plt.plot(np.subtract(F435W[age80],  F555W[age80]),  F555W[age80],  
+           'b:' , label = 'Log(Age) = 8.0')  
 #c1plt.plot(np.subtract(F435W[age10],  F555W[age10]),  F555W[age10],  
 #           label = 'Log(Age) >= 10.0 & < 10.3',c="y")#,marker='o')
 #c1plt.plot(np.subtract(F435W[age103], F555W[age103]), F555W[age103], 
@@ -180,12 +180,12 @@ for i in range(start,end):
         c1plt.scatter(np.subtract(f435f555_1[i][0],   f435f555_1[i][1]),   
                       f435f555_1[i][1], label = 'S/N ' + str(snt) +' Radius ' + str(radius[0]),  
                         c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
-        c1plt.errorbar(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
-                       f435f555_2[i][1], f435f555_2[i][2],   f435f555_2[i][3], 
-                        fmt=None, marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
-                      f435f555_2[i][1], label = 'S/N ' + str(snt) +' Radius ' + str(radius[1]),  
-                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
+#        c1plt.errorbar(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
+#                       f435f555_2[i][1], f435f555_2[i][2],   f435f555_2[i][3], 
+#                        fmt=None, marker=None, mew=0 )
+#        c1plt.scatter(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
+#                      f435f555_2[i][1], label = 'S/N ' + str(snt) +' Radius ' + str(radius[1]),  
+#                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
         snt += 1
 
 ###########################################################################      
@@ -211,20 +211,20 @@ plt.ylabel("F625W",fontdict = font)
 #           'g:', label = 'Log(Age) = 7.2')
 #c2plt.plot(np.subtract(F625W[age73],  F814W[age73]),  F814W[age73],  
 #           'c-', label = 'Log(Age) = 7.3')
-c2plt.plot(np.subtract(F625W[age74],  F814W[age74]),  F814W[age74],  
-           'b:' , label = 'Log(Age) = 7.4')
-c2plt.plot(np.subtract(F625W[age75],  F814W[age75]),  F814W[age75],  
-           'c-.', label = 'Log(Age) = 7.5')
-c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],  
-           'r--', label = 'Log(Age) = 7.6')
-#c2plt.plot(np.subtract(F625W[age77],  F814W[age77]),  F814W[age77],  
-#           'y-' , label = 'Log(Age) = 7.7')
-#c2plt.plot(np.subtract(F625W[age78],  F814W[age78]),  F814W[age78],  
-#           'g:' , label = 'Log(Age) = 7.8')
-#c2plt.plot(np.subtract(F625W[age79],  F814W[age79]),  F814W[age79],  
-#           'c-.', label = 'Log(Age) = 7.9') 
-#c2plt.plot(np.subtract(F625W[age80],  F814W[age80]),  F814W[age80],  
-#           'b:' , label = 'Log(Age) = 8.0')  
+#c2plt.plot(np.subtract(F625W[age74],  F814W[age74]),  F814W[age74],  
+#           'b:' , label = 'Log(Age) = 7.4')
+#c2plt.plot(np.subtract(F625W[age75],  F814W[age75]),  F814W[age75],  
+#           'c-.', label = 'Log(Age) = 7.5')
+#c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],  
+#           'r--', label = 'Log(Age) = 7.6')
+c2plt.plot(np.subtract(F625W[age77],  F814W[age77]),  F814W[age77],  
+           'y-' , label = 'Log(Age) = 7.7')
+c2plt.plot(np.subtract(F625W[age78],  F814W[age78]),  F814W[age78],  
+           'g:' , label = 'Log(Age) = 7.8')
+c2plt.plot(np.subtract(F625W[age79],  F814W[age79]),  F814W[age79],  
+           'c-.', label = 'Log(Age) = 7.9') 
+c2plt.plot(np.subtract(F625W[age80],  F814W[age80]),  F814W[age80],  
+           'b:' , label = 'Log(Age) = 8.0')  
 ###########################################################################
            
 for k in range(start,end):
@@ -234,12 +234,12 @@ for k in range(start,end):
         c2plt.scatter(np.subtract(f625f814_1[k][0],   f625f814_1[k][1]),   f625f814_1[k][1],   
                       label = 'S/N ' + str(snb) +' Radius ' + str(radius[0]),  
                         c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
-        c2plt.errorbar(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   
-                       f625f814_2[k][1], f625f814_2[k][2],   f625f814_2[k][3], 
-                        fmt=None, marker=None, mew=0 )
-        c2plt.scatter(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   f625f814_2[k][1],
-                      label = 'S/N ' + str(snb) +' Radius ' + str(radius[1]),  
-                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
+#        c2plt.errorbar(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   
+#                       f625f814_2[k][1], f625f814_2[k][2],   f625f814_2[k][3], 
+#                        fmt=None, marker=None, mew=0 )
+#        c2plt.scatter(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   f625f814_2[k][1],
+#                      label = 'S/N ' + str(snb) +' Radius ' + str(radius[1]),  
+#                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
         snb += 1
 
 ###########################################################################
@@ -251,4 +251,4 @@ c2plt.set_ylim(bottom=ybotmax, top=ybotmin)
 
 print "Save and show plot : " + title + '_' + 'Z' + name[1:-7]+ '_Comparison.png'
 
-plt.savefig(title + '_' + 'Z' + name[1:-7]+ '_Comparisonkl.png')
+plt.savefig(title + '_' + 'Z' + name[1:-7]+ '_Comparison_newcut.png')
