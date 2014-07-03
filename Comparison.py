@@ -29,7 +29,7 @@ font = {'family' : 'serif',
 #####################################################################
 
 d = []
-name = 'Z017Y26.dat'
+name = 'Z020Y26.dat'
 d.append(np.loadtxt(name))
 d = np.array(d)
 
@@ -68,8 +68,8 @@ age10   = np.where((d[:,:,0] >= 10.0) & (d[:,:,0] < 10.3))
 age103  = np.where((d[:,:,0] == 10.3))
 
 #####################################################################
-start      = 0 # starts at S/N 4
-end        = 1 # end = 2 goes to S/N 5
+start      = 0 # start = 0 starts at S/N 4
+end        = 2 # end = 2 goes to S/N 5
 snt        = 4
 snb        = 4
 f435f555_1 = []
@@ -77,12 +77,12 @@ f625f814_1 = []
 f435f555_2 = []
 f625f814_2 = []
 
-"""
+""" 7.1 - > 7.4
 title      = 'SN08ge'
-radius     = [36.1008,46.0927]
-ytopmax    = -2.0
+radius     = [1566.443,2000]
+ytopmax    = -4.0
 ytopmin    = -9.0
-ybotmax    = -3.0
+ybotmax    = -4.0
 ybotmin    = -9.0
 for i in range(4,9):
     f435f555_1.append(pickle.load(open('sn2008ge_f435f555_r1_'+ str(i) +'.p', 'rb')))    
@@ -91,10 +91,10 @@ for i in range(4,9):
     f625f814_2.append(pickle.load(open('sn2008ge_f625f814_r2_'+ str(i) +'.p', 'rb')))
 
 """
-"""
+""" 7.4 -> 7.6
 
 title      = 'SN08ha'
-radius     = [32.4, 41.25]
+radius     = [1570.796,2000]
 ytopmax    = -2.0
 ytopmin    = -8.0
 ybotmax    = -2.0
@@ -105,9 +105,9 @@ for i in range(4,9):
     f435f555_2.append(pickle.load(open('sn2008ha_f435f555_r2_'+ str(i) +'.p', 'rb')))    
     f625f814_2.append(pickle.load(open('sn2008ha_f625f814_r2_'+ str(i) +'.p', 'rb')))
 """
-"""
+""" 7.3 -> 7.7
 title      = 'SN10ae'
-radius     = [49.4712,62.9816]
+radius     = [1570.972,2000]
 ytopmax    = -1.0
 ytopmin    = -11.0
 ybotmax    = -4.0
@@ -119,9 +119,9 @@ for i in range(4,9):
     f625f814_2.append(pickle.load(open('sn2010ae_f625f814_r2_'+ str(i) +'.p', 'rb')))
 
 """
-#"""
+#""" 7.7 -> 8.0
 title      = 'SN10el'
-radius     = [65.0016,82.7545]
+radius     = [1570.95,2000]
 ytopmax    = -1.0
 ytopmin    = -6.0
 ybotmax    = -1.0
@@ -178,14 +178,14 @@ for i in range(start,end):
                        f435f555_1[i][1], f435f555_1[i][2],   f435f555_1[i][3],
                          fmt=None, ecolor="k", marker=None, mew=0 )
         c1plt.scatter(np.subtract(f435f555_1[i][0],   f435f555_1[i][1]),   
-                      f435f555_1[i][1], label = 'S/N ' + str(snt) +' Radius ' + str(radius[0]),  
+                      f435f555_1[i][1], label = 'S/N ' + str(snt) +' Radius ' + str(radius[0]) + " AU",  
                         c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
-#        c1plt.errorbar(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
-#                       f435f555_2[i][1], f435f555_2[i][2],   f435f555_2[i][3], 
-#                        fmt=None, marker=None, mew=0 )
-#        c1plt.scatter(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
-#                      f435f555_2[i][1], label = 'S/N ' + str(snt) +' Radius ' + str(radius[1]),  
-#                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
+        c1plt.errorbar(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
+                       f435f555_2[i][1], f435f555_2[i][2],   f435f555_2[i][3], 
+                        fmt=None, marker=None, mew=0 )
+        c1plt.scatter(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
+                      f435f555_2[i][1], label = 'S/N ' + str(snt) +' Radius ' + str(radius[1]) + " AU",  
+                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
         snt += 1
 
 ###########################################################################      
@@ -232,14 +232,14 @@ for k in range(start,end):
                        f625f814_1[k][1], f625f814_1[k][2],   f625f814_1[k][3], 
                         fmt=None, ecolor="k", marker=None, mew=0 )
         c2plt.scatter(np.subtract(f625f814_1[k][0],   f625f814_1[k][1]),   f625f814_1[k][1],   
-                      label = 'S/N ' + str(snb) +' Radius ' + str(radius[0]),  
+                      label = 'S/N ' + str(snb) +' Radius ' + str(radius[0]) + " AU",  
                         c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
-#        c2plt.errorbar(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   
-#                       f625f814_2[k][1], f625f814_2[k][2],   f625f814_2[k][3], 
-#                        fmt=None, marker=None, mew=0 )
-#        c2plt.scatter(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   f625f814_2[k][1],
-#                      label = 'S/N ' + str(snb) +' Radius ' + str(radius[1]),  
-#                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
+        c2plt.errorbar(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   
+                       f625f814_2[k][1], f625f814_2[k][2],   f625f814_2[k][3], 
+                        fmt=None, marker=None, mew=0 )
+        c2plt.scatter(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   f625f814_2[k][1],
+                      label = 'S/N ' + str(snb) +' Radius ' + str(radius[1]) + " AU",  
+                        c=random.choice(['w','g', 'r', 'c', 'm', 'b', 'k']),marker='D')
         snb += 1
 
 ###########################################################################
@@ -251,4 +251,4 @@ c2plt.set_ylim(bottom=ybotmax, top=ybotmin)
 
 print "Save and show plot : " + title + '_' + 'Z' + name[1:-7]+ '_Comparison.png'
 
-plt.savefig(title + '_' + 'Z' + name[1:-7]+ '_Comparison_newcut.png')
+plt.savefig(title + '_' + 'Z' + name[1:-7]+ '_Comparison.png')
