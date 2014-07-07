@@ -31,10 +31,13 @@ def savefig(f,box,combo,header):
         
 def newCoord():
     print "here!"
+    name = ['sn2008ge_F435W_F555W_snr4.csv','sn2008ge_F625W_F814W_snr4.csv']
+    """
     name = ['sn2008ge_F435W_F555W_snr3.csv','sn2008ge_F435W_F555W_snr4.csv',
             'sn2008ge_F435W_F555W_snr5.csv',
             'sn2008ge_F625W_F814W_snr3.csv','sn2008ge_F625W_F814W_snr4.csv',
             'sn2008ge_F625W_F814W_snr5.csv']
+    """
     newxcoord = []
     newycoord = []
     data      = []
