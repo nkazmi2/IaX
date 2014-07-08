@@ -147,30 +147,43 @@ plt.ylabel("F555W",fontdict = font)
     
 #c1plt.plot(np.subtract(F435W[age70],  F555W[age70]),  F555W[age70],  
 #           'r--', label = 'Log(Age) = 7.0')
-#c1plt.plot(np.subtract(F435W[age71],  F555W[age71]),  F555W[age71],  
-#           'y-', label = 'Log(Age) = 7.1')
-#c1plt.plot(np.subtract(F435W[age72],  F555W[age72]),  F555W[age72],  
-#           'g:', label = 'Log(Age) = 7.2')
-#c1plt.plot(np.subtract(F435W[age73],  F555W[age73]),  F555W[age73],  
-#           'c-', label = 'Log(Age) = 7.3')
-#c1plt.plot(np.subtract(F435W[age74],  F555W[age74]),  F555W[age74],  
-#           'b:' , label = 'Log(Age) = 7.4')
-#c1plt.plot(np.subtract(F435W[age75],  F555W[age75]),  F555W[age75],  
-#           'c-.', label = 'Log(Age) = 7.5')
-#c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
-#           'r--', label = 'Log(Age) = 7.6')
-c1plt.plot(np.subtract(F435W[age77],  F555W[age77]),  F555W[age77],  
+if (title == 'SN08ge'):
+    c1plt.plot(np.subtract(F435W[age71],  F555W[age71]),  F555W[age71],  
+           'y-', label = 'Log(Age) = 7.1')
+    c1plt.plot(np.subtract(F435W[age72],  F555W[age72]),  F555W[age72],  
+           'g:', label = 'Log(Age) = 7.2')
+    c1plt.plot(np.subtract(F435W[age73],  F555W[age73]),  F555W[age73],  
+           'c-', label = 'Log(Age) = 7.3')
+    c1plt.plot(np.subtract(F435W[age74],  F555W[age74]),  F555W[age74],  
+           'b:' , label = 'Log(Age) = 7.4')
+elif (title == 'SN08ha'):          
+    c1plt.plot(np.subtract(F435W[age74],  F555W[age74]),  F555W[age74],  
+           'b:' , label = 'Log(Age) = 7.4')
+    c1plt.plot(np.subtract(F435W[age75],  F555W[age75]),  F555W[age75],  
+           'c-.', label = 'Log(Age) = 7.5')
+    c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
+           'r--', label = 'Log(Age) = 7.6')
+elif (title == 'SN10ae'):  
+    c1plt.plot(np.subtract(F435W[age73],  F555W[age73]),  F555W[age73],  
+           'c-', label = 'Log(Age) = 7.3')
+    c1plt.plot(np.subtract(F435W[age74],  F555W[age74]),  F555W[age74],  
+           'b:' , label = 'Log(Age) = 7.4')
+    c1plt.plot(np.subtract(F435W[age75],  F555W[age75]),  F555W[age75],  
+           'c-.', label = 'Log(Age) = 7.5')
+    c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
+           'r--', label = 'Log(Age) = 7.6') 
+    c1plt.plot(np.subtract(F435W[age77],  F555W[age77]),  F555W[age77],  
            'y-' , label = 'Log(Age) = 7.7')
-c1plt.plot(np.subtract(F435W[age78],  F555W[age78]),  F555W[age78],  
+elif (title == 'SN10el'):  
+    c1plt.plot(np.subtract(F435W[age77],  F555W[age77]),  F555W[age77],  
+           'y-' , label = 'Log(Age) = 7.7')
+    c1plt.plot(np.subtract(F435W[age78],  F555W[age78]),  F555W[age78],  
            'g:' , label = 'Log(Age) = 7.8')
-c1plt.plot(np.subtract(F435W[age79],  F555W[age79]),  F555W[age79],  
+    c1plt.plot(np.subtract(F435W[age79],  F555W[age79]),  F555W[age79],  
            'c-.', label = 'Log(Age) = 7.9') 
-c1plt.plot(np.subtract(F435W[age80],  F555W[age80]),  F555W[age80],  
+    c1plt.plot(np.subtract(F435W[age80],  F555W[age80]),  F555W[age80],  
            'b:' , label = 'Log(Age) = 8.0')  
-#c1plt.plot(np.subtract(F435W[age10],  F555W[age10]),  F555W[age10],  
-#           label = 'Log(Age) >= 10.0 & < 10.3',c="y")#,marker='o')
-#c1plt.plot(np.subtract(F435W[age103], F555W[age103]), F555W[age103], 
-#           label = 'Log(Age) == 10.3 & < 7.5', c="r")#,marker='o')
+
 ###########################################################################
 
 for i in range(start,end):
@@ -205,26 +218,43 @@ plt.xlabel("F625W - F814W",fontdict = font)
 plt.ylabel("F625W",fontdict = font)
 #c2plt.plot(np.subtract(F625W[age70],  F814W[age70]),  F814W[age70],  
 #           'r--', label = 'Log(Age) = 7.0')
-#c2plt.plot(np.subtract(F625W[age71],  F814W[age71]),  F814W[age71],  
-#           'y-', label = 'Log(Age) = 7.1')
-#c2plt.plot(np.subtract(F625W[age72],  F814W[age72]),  F814W[age72],  
-#           'g:', label = 'Log(Age) = 7.2')
-#c2plt.plot(np.subtract(F625W[age73],  F814W[age73]),  F814W[age73],  
-#           'c-', label = 'Log(Age) = 7.3')
-#c2plt.plot(np.subtract(F625W[age74],  F814W[age74]),  F814W[age74],  
-#           'b:' , label = 'Log(Age) = 7.4')
-#c2plt.plot(np.subtract(F625W[age75],  F814W[age75]),  F814W[age75],  
-#           'c-.', label = 'Log(Age) = 7.5')
-#c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],  
-#           'r--', label = 'Log(Age) = 7.6')
-c2plt.plot(np.subtract(F625W[age77],  F814W[age77]),  F814W[age77],  
+if (title == 'SN08ge'):
+    c2plt.plot(np.subtract(F625W[age71],  F814W[age71]),  F814W[age71],  
+           'y-', label = 'Log(Age) = 7.1')
+    c2plt.plot(np.subtract(F625W[age72],  F814W[age72]),  F814W[age72],  
+           'g:', label = 'Log(Age) = 7.2')
+    c2plt.plot(np.subtract(F625W[age73],  F814W[age73]),  F814W[age73],  
+           'c-', label = 'Log(Age) = 7.3')
+    c2plt.plot(np.subtract(F625W[age74],  F814W[age74]),  F814W[age74],  
+           'b:' , label = 'Log(Age) = 7.4')
+elif (title == 'SN08ha'):   
+    c2plt.plot(np.subtract(F625W[age74],  F814W[age74]),  F814W[age74],  
+           'b:' , label = 'Log(Age) = 7.4')
+    c2plt.plot(np.subtract(F625W[age75],  F814W[age75]),  F814W[age75],  
+           'c-.', label = 'Log(Age) = 7.5')
+    c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],  
+           'r--', label = 'Log(Age) = 7.6')
+elif (title == 'SN10ae'):
+    c2plt.plot(np.subtract(F625W[age73],  F814W[age73]),  F814W[age73],  
+           'c-', label = 'Log(Age) = 7.3')
+    c2plt.plot(np.subtract(F625W[age74],  F814W[age74]),  F814W[age74],  
+           'b:' , label = 'Log(Age) = 7.4')
+    c2plt.plot(np.subtract(F625W[age75],  F814W[age75]),  F814W[age75],  
+           'c-.', label = 'Log(Age) = 7.5')
+    c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],  
+           'r--', label = 'Log(Age) = 7.6')
+    c2plt.plot(np.subtract(F625W[age77],  F814W[age77]),  F814W[age77],  
            'y-' , label = 'Log(Age) = 7.7')
-c2plt.plot(np.subtract(F625W[age78],  F814W[age78]),  F814W[age78],  
+elif (title == 'SN10el'):  
+    c2plt.plot(np.subtract(F625W[age77],  F814W[age77]),  F814W[age77],  
+           'y-' , label = 'Log(Age) = 7.7')
+    c2plt.plot(np.subtract(F625W[age78],  F814W[age78]),  F814W[age78],  
            'g:' , label = 'Log(Age) = 7.8')
-c2plt.plot(np.subtract(F625W[age79],  F814W[age79]),  F814W[age79],  
+    c2plt.plot(np.subtract(F625W[age79],  F814W[age79]),  F814W[age79],  
            'c-.', label = 'Log(Age) = 7.9') 
-c2plt.plot(np.subtract(F625W[age80],  F814W[age80]),  F814W[age80],  
+    c2plt.plot(np.subtract(F625W[age80],  F814W[age80]),  F814W[age80],  
            'b:' , label = 'Log(Age) = 8.0')  
+
 ###########################################################################
            
 for k in range(start,end):

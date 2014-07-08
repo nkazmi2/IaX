@@ -130,7 +130,7 @@ def main():
         savefig(title[m],box,combo,header)
 
 newCoord()  
-main()    
+#main()    
         #quadrant = [quad1,quad2,quad3,quad4] 
     #quadrant = np.arange((quad2+quad1),(400,300))
     #savefig(title[m],quadrant)
