@@ -8,18 +8,40 @@ Created on Fri May 30 09:58:19 2014
 import pickle
 #import glob
 import numpy as np
-title      = 'SN08ha'
-radius     = [32.4, 41.25]
-f435f555_1 = []
-f625f814_1 = []
-f435f555_2 = []
-f625f814_2 = []
-for i in range(4,9):
-    f435f555_1.append(pickle.load(open('sn2008ha_f435f555_r1_'+ str(i) +'.p', 'rb')))    
-    f625f814_1.append(pickle.load(open('sn2008ha_f625f814_r1_'+ str(i) +'.p', 'rb')))    
-    f435f555_2.append(pickle.load(open('sn2008ha_f435f555_r2_'+ str(i) +'.p', 'rb')))    
-    f625f814_2.append(pickle.load(open('sn2008ha_f625f814_r2_'+ str(i) +'.p', 'rb')))
-    
+title = 'sn2008ha'
+catalog = []
+catalog = pickle.load(open(title + '_List.p', 'rb'))
+
+#print np.shape(catalog)
+
+"""
+print catalog[0]
+print catalog[1]
+print catalog[2]
+print catalog[3]
+print catalog[4]
+print catalog[5]
+print catalog[6]
+print catalog[7]
+print catalog[8]
+print catalog[9]
+print catalog[10]
+print catalog[11]
+print catalog[12]
+print catalog[13]
+print catalog[14]
+print catalog[15]
+print catalog[16]
+print catalog[17]
+print catalog[18]
+print catalog[19]
+
+"""
+
+
+
+
+
 
 #f625f814_4 = pickle.load(open( "sn2008ha_f625f814_r1_4.p", "rb" ))
 #f435f555_5 = pickle.load(open( "sn2008ha_f435f555_r1_5.p", "rb" ))
