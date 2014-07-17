@@ -30,7 +30,7 @@ font = {'family' : 'serif',
 
 d = []
 name = 'Z020Y26.dat'
-d.append(np.loadtxt(name))
+d.append(np.loadtxt('Metallicity/'+name))
 d = np.array(d)
 
 #print d
@@ -69,7 +69,7 @@ age103  = np.where((d[:,:,0] == 10.3))
 
 #####################################################################
 start      = 0 # start = 0 starts at S/N 4
-end        = 2 # end = 2 goes to S/N 5
+end        = 1 # end = 2 goes to S/N 5
 snt        = 4
 snb        = 4
 f435f555_1 = []
@@ -85,13 +85,13 @@ ytopmin    = -9.0
 ybotmax    = -4.0
 ybotmin    = -9.0
 for i in range(4,9):
-    f435f555_1.append(pickle.load(open('sn2008ge_f435f555_r1_'+ str(i) +'.p', 'rb')))    
-    f625f814_1.append(pickle.load(open('sn2008ge_f625f814_r1_'+ str(i) +'.p', 'rb')))    
-    f435f555_2.append(pickle.load(open('sn2008ge_f435f555_r2_'+ str(i) +'.p', 'rb')))    
-    f625f814_2.append(pickle.load(open('sn2008ge_f625f814_r2_'+ str(i) +'.p', 'rb')))
+    f435f555_1.append(pickle.load(open('SN2008GE/sn2008ge_f435f555_r1_'+ str(i) +'.p', 'rb')))    
+    f625f814_1.append(pickle.load(open('SN2008GE/sn2008ge_f625f814_r1_'+ str(i) +'.p', 'rb')))    
+    f435f555_2.append(pickle.load(open('SN2008GE/sn2008ge_f435f555_r2_'+ str(i) +'.p', 'rb')))    
+    f625f814_2.append(pickle.load(open('SN2008GE/sn2008ge_f625f814_r2_'+ str(i) +'.p', 'rb')))
 
 """
-""" 7.4 -> 7.6
+#""" 7.4 -> 7.6
 
 title      = 'SN08ha'
 radius     = [1570.796,2000]
@@ -100,11 +100,11 @@ ytopmin    = -8.0
 ybotmax    = -2.0
 ybotmin    = -9.0
 for i in range(4,9):
-    f435f555_1.append(pickle.load(open('sn2008ha_f435f555_r1_'+ str(i) +'.p', 'rb')))    
-    f625f814_1.append(pickle.load(open('sn2008ha_f625f814_r1_'+ str(i) +'.p', 'rb')))    
-    f435f555_2.append(pickle.load(open('sn2008ha_f435f555_r2_'+ str(i) +'.p', 'rb')))    
-    f625f814_2.append(pickle.load(open('sn2008ha_f625f814_r2_'+ str(i) +'.p', 'rb')))
-"""
+    f435f555_1.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_r1_'+ str(i) +'.p', 'rb')))    
+    f625f814_1.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_r1_'+ str(i) +'.p', 'rb')))    
+    f435f555_2.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_r2_'+ str(i) +'.p', 'rb')))    
+    f625f814_2.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_r2_'+ str(i) +'.p', 'rb')))
+#"""
 """ 7.3 -> 7.7
 title      = 'SN10ae'
 radius     = [1570.972,2000]
@@ -113,13 +113,13 @@ ytopmin    = -11.0
 ybotmax    = -4.0
 ybotmin    = -9.0
 for i in range(4,9):
-    f435f555_1.append(pickle.load(open('sn2010ae_f435f555_r1_'+ str(i) +'.p', 'rb')))    
-    f625f814_1.append(pickle.load(open('sn2010ae_f625f814_r1_'+ str(i) +'.p', 'rb')))    
-    f435f555_2.append(pickle.load(open('sn2010ae_f435f555_r2_'+ str(i) +'.p', 'rb')))    
-    f625f814_2.append(pickle.load(open('sn2010ae_f625f814_r2_'+ str(i) +'.p', 'rb')))
+    f435f555_1.append(pickle.load(open('SN2010AE/sn2010ae_f435f555_r1_'+ str(i) +'.p', 'rb')))    
+    f625f814_1.append(pickle.load(open('SN2010AE/sn2010ae_f625f814_r1_'+ str(i) +'.p', 'rb')))    
+    f435f555_2.append(pickle.load(open('SN2010AE/sn2010ae_f435f555_r2_'+ str(i) +'.p', 'rb')))    
+    f625f814_2.append(pickle.load(open('SN2010AE/sn2010ae_f625f814_r2_'+ str(i) +'.p', 'rb')))
 
 """
-#""" 7.7 -> 8.0
+""" 7.7 -> 8.0
 title      = 'SN10el'
 radius     = [1570.95,2000]
 ytopmax    = -1.0
@@ -127,11 +127,11 @@ ytopmin    = -6.0
 ybotmax    = -1.0
 ybotmin    = -6.0
 for i in range(4,9):
-    f435f555_1.append(pickle.load(open('sn2010el_f435f555_r1_'+ str(i) +'.p', 'rb')))    
-    f625f814_1.append(pickle.load(open('sn2010el_f625f814_r1_'+ str(i) +'.p', 'rb')))    
-    f435f555_2.append(pickle.load(open('sn2010el_f435f555_r2_'+ str(i) +'.p', 'rb')))    
-    f625f814_2.append(pickle.load(open('sn2010el_f625f814_r2_'+ str(i) +'.p', 'rb')))
-#"""
+    f435f555_1.append(pickle.load(open('SN2010EL/sn2010el_f435f555_r1_'+ str(i) +'.p', 'rb')))    
+    f625f814_1.append(pickle.load(open('SN2010EL/sn2010el_f625f814_r1_'+ str(i) +'.p', 'rb')))    
+    f435f555_2.append(pickle.load(open('SN2010EL/sn2010el_f435f555_r2_'+ str(i) +'.p', 'rb')))    
+    f625f814_2.append(pickle.load(open('SN2010EL/sn2010el_f625f814_r2_'+ str(i) +'.p', 'rb')))
+"""
 #####################################################################
 
 print "Begin plotting Isochrones..."
@@ -281,4 +281,4 @@ c2plt.set_ylim(bottom=ybotmax, top=ybotmin)
 
 print "Save and show plot : " + title + '_' + 'Z' + name[1:-7]+ '_Comparison.png'
 
-plt.savefig(title + '_' + 'Z' + name[1:-7]+ '_Comparison.png')
+plt.savefig('Figures/'+title + '_' + 'Z' + name[1:-7]+ '_Comparison.png')

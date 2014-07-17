@@ -11,12 +11,11 @@ import matplotlib.gridspec as gridspec
 import csv
 from itertools import izip
 import pickle
-
+import pyregion
 ################################################### 
 ############### declared variables ################
 
 special = []
-
 data    = []
 
 star    = [] # Column 11 the object type
@@ -82,6 +81,8 @@ font = {'family' : 'serif',
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
 """
+
+folder   = "SN2008GE"
 name     = 'sn2008ge_new.phot' 
 
 # Magnitude of the Milkyway Galaxy 
@@ -89,22 +90,25 @@ ACS435   = 0.046 #F435W
 ACS555   = 0.036 #F555W	
 ACS625   = 0.028 #F625W	
 ACS814   = 0.020 #F814W	
+MW       = 0.011
+Host     = 0.0
 
 # Median (redshift independent) distance modulus of host galaxy
-dmod    = 31.27 
+dmod     = 31.27 
 
 # Actual X & Y pixel coordinates of sn
-xsn     = 3247.539
-ysn     = 3419.971
+xsn      = 3247.539
+ysn      = 3419.971
 #radius  = 50.0 #pixels
-radius  = [36.1008,46.0927]
-#radius = 36.1008 # theta = .0005014 deg, phys radius =  1566.443 au, distance = 17.95e7 pc
+radius   = [36.1008,46.0927]
+#radius  = 36.1008 # theta = .0005014 deg, phys radius =  1566.443 au, distance = 17.95e7 pc
 
-special = 'sn08ge'
+special  = 'sn08ge'
 
 """
 ##################### 2008ha ######################
-"""
+#"""
+folder   = "SN2008HA"
 name     = 'sn2008ha_new.phot'
 
 # Magnitude of the Milkyway Galaxy 
@@ -112,24 +116,27 @@ ACS435   = 0.284 #F435W
 ACS555   = 0.219 #F555W	
 ACS625   = 0.174 #F625W	
 ACS814   = 0.120 #F814W	
-
+MW       = 0.07
+Host     = 0.0
 # Median (redshift independent) distance modulus of host galaxy
-dmod    = 31.64 #31.50 # value I got from NED
+dmod     = 31.64 #31.50 # value I got from NED
 
 # Actual X & Y pixel coordinates of sn
-xsn     = 1726.352
-ysn     = 3172.530
+xsn      = 1726.352
+ysn      = 3172.530
 
-#radius = 32.4   theta = .00045 deg, phys radius = 1570.796 au, distance = 20e7 pc
-#radius = 41.25  theta = .0057  deg, phys radius = 2000 au    , distance = 20e7 pc
-radius  = [32.4, 41.2531]
-special = 'sn08ha'
-xclust  = 1716.352
-yclust  = 3163.780
+#radius  = 32.4   theta = .00045 deg, phys radius = 1570.796 au, distance = 20e7 pc
+#radius  = 41.25  theta = .0057  deg, phys radius = 2000 au    , distance = 20e7 pc
+radius   = [32.4, 41.2531]
+special  = 'sn08ha'
+xclust   = 1716.352
+yclust   = 3163.780
 
-"""
+#"""
 ##################### 2010ae ######################
 """
+
+folder   = "SN2010AE"
 name     = 'sn2010ae_new.phot'
 
 # Magnitude of the Milkyway Galaxy m is low(?) .1sol
@@ -137,20 +144,24 @@ ACS435   = 0.509 #F435W
 ACS555   = 0.394 #F555W	
 ACS625   = 0.313 #F625W	
 ACS814   = 0.215 #F814W	
+MW       = 0.124
+Host     = 0.5
 
 # Median (redshift independent) distance modulus of host galaxy
-dmod    = 30.58 
+dmod     = 30.58 
 
 # Actual X & Y pixel coordinates of sn
-xsn     = 1796.640
-ysn     = 1931.995
+xsn      = 1796.640
+ysn      = 1931.995
 #radius  = 30.0 #pixels
-radius = [49.4712,62.9816] # theta = .0006871 deg, phys radius = 1570.972 au, distance = 13.1e7 pc
+radius   = [49.4712,62.9816] # theta = .0006871 deg, phys radius = 1570.972 au, distance = 13.1e7 pc
 
-special = 'sn10ae'
+special  = 'sn10ae'
 """
 ##################### 2010el ######################
-#"""    
+"""    
+
+folder   = "SN2010EL"
 name     = 'sn2010el_new.phot'
     
 # Magnitude of the Milkyway Galaxy 
@@ -158,24 +169,26 @@ ACS435   = 0.033 #F435W
 ACS555   = 0.025 #F555W	
 ACS625   = 0.020 #F625W	
 ACS814   = 0.014 #F814W	
+MW       = 0.008
+Host     = 0.8
 
 # Median (redshift independent) distance modulus of host galaxy
-dmod    = 29.99 
+dmod     = 29.99 
 
 # Actual X & Y pixel coordinates of sn
-xsn     = 2418.859
-ysn     = 1570.826
+xsn      = 2418.859
+ysn      = 1570.826
 #radius  = 50.0 #pixels
-radius = [65.0016,82.7545] # theta = .0009028 deg, phys radius = 1570.95 au distance = 9.97e7 pc
+radius   = [65.0016,82.7545] # theta = .0009028 deg, phys radius = 1570.95 au distance = 9.97e7 pc
 
-special = 'sn10el'
-#"""
+special  = 'sn10el'
+"""
 ###################################################    
 ######### Open and read in the data file ##########
 
-print "Opening file: ", name
+print "Opening file: ",name
 
-photfile = open(name,'r')
+photfile = open(folder + '/' + name,'r')
 
 title = name[:-8]
 
@@ -225,10 +238,10 @@ ycoord  = data[:, 3]
 
 print "Calculating Absolute Magnitude..."
  
-f435Abs = f435mag - dmod - ACS435
-f555Abs = f555mag - dmod - ACS555
-f625Abs = f625mag - dmod - ACS625
-f814Abs = f814mag - dmod - ACS814 
+f435Abs = f435mag - dmod - ACS435 - MW - Host
+f555Abs = f555mag - dmod - ACS555 - MW - Host
+f625Abs = f625mag - dmod - ACS625 - MW - Host
+f814Abs = f814mag - dmod - ACS814 - MW - Host
 
 ################################################### 
 ########### Deal with bad points ##########
@@ -236,10 +249,10 @@ f814Abs = f814mag - dmod - ACS814
 bad  = []
 badX = []
 badY = []
-bad  = np.array(np.loadtxt(name[:-8]+'questionable.txt'))
-#bad = np.recfromcsv(filename, names=['a','a','a'])
-badX = (bad[:,0] - .5)
-badY = (bad[:,1] - .5)
+#bad  = np.array(np.loadtxt(folder +'/'+ name[:-8]+'questionable.txt'))
+bad  = np.array(np.loadtxt(folder +'/'+ name[:-8]+'questionable.reg'))
+badX = (bad[:,0])
+badY = (bad[:,1])
 
 ################################################### 
 ##### Find correct color magnitudes make cuts #####
@@ -252,9 +265,9 @@ for m in range(4,9):
         #for w in range(len(badX)):
         if (special == 'sn08ha'):
             cut435555.append(np.where((star <= 2) & ((snr435 >= m) | (snr555 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])          & 
-                    ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8)         &
-                    (snr435 >= 3) & (snr555 >= 3) 
+                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
+                    ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8)     &
+                    (snr435 >= 3) & (snr555 >= 3)                     
                     & ((xcoord != badX[0])  & (ycoord != badY[0]))
                     & ((xcoord != badX[1])  & (ycoord != badY[1]))
                     & ((xcoord != badX[2])  & (ycoord != badY[2]))
@@ -268,7 +281,7 @@ for m in range(4,9):
                     & ((xcoord != badX[10]) & (ycoord != badY[10]))
                     & ((xcoord != badX[11]) & (ycoord != badY[11]))
                     & ((xcoord != badX[12]) & (ycoord != badY[12]))
-                    & ((xcoord != badX[13]) & (ycoord != badY[13]))                    
+                    & ((xcoord != badX[13]) & (ycoord != badY[13]))
                     & ((xcoord != badX[14]) & (ycoord != badY[14]))
                     & ((xcoord != badX[15]) & (ycoord != badY[15]))
                     & ((xcoord != badX[16]) & (ycoord != badY[16]))
@@ -277,13 +290,15 @@ for m in range(4,9):
                     & ((xcoord != badX[19]) & (ycoord != badY[19]))
                     & ((xcoord != badX[20]) & (ycoord != badY[20]))
                     & ((xcoord != badX[21]) & (ycoord != badY[21]))
-                    & ((xcoord != badX[22]) & (ycoord != badY[22]))                    
+                    & ((xcoord != badX[22]) & (ycoord != badY[22]))
                     & ((xcoord != badX[23]) & (ycoord != badY[23]))
+                    & ((xcoord != badX[24]) & (ycoord != badY[24]))
+                    & ((xcoord != badX[25]) & (ycoord != badY[25]))
                     ))
             cut625814.append(np.where((star <= 2) & ((snr625 >= m) | (snr814 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])          & 
-                    ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8)         &
-                    (snr625 >= 3) & (snr814 >= 3)    
+                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
+                    ((((xcoord - xclust)**2 + (ycoord - yclust)**2)**.5) >= 4.8)     &
+                    (snr625 >= 3) & (snr814 >= 3) 
                     & ((xcoord != badX[0])  & (ycoord != badY[0]))
                     & ((xcoord != badX[1])  & (ycoord != badY[1]))
                     & ((xcoord != badX[2])  & (ycoord != badY[2]))
@@ -297,7 +312,7 @@ for m in range(4,9):
                     & ((xcoord != badX[10]) & (ycoord != badY[10]))
                     & ((xcoord != badX[11]) & (ycoord != badY[11]))
                     & ((xcoord != badX[12]) & (ycoord != badY[12]))
-                    & ((xcoord != badX[13]) & (ycoord != badY[13]))                    
+                    & ((xcoord != badX[13]) & (ycoord != badY[13]))
                     & ((xcoord != badX[14]) & (ycoord != badY[14]))
                     & ((xcoord != badX[15]) & (ycoord != badY[15]))
                     & ((xcoord != badX[16]) & (ycoord != badY[16]))
@@ -306,12 +321,14 @@ for m in range(4,9):
                     & ((xcoord != badX[19]) & (ycoord != badY[19]))
                     & ((xcoord != badX[20]) & (ycoord != badY[20]))
                     & ((xcoord != badX[21]) & (ycoord != badY[21]))
-                    & ((xcoord != badX[22]) & (ycoord != badY[22]))                    
+                    & ((xcoord != badX[22]) & (ycoord != badY[22]))
                     & ((xcoord != badX[23]) & (ycoord != badY[23]))
+                    & ((xcoord != badX[24]) & (ycoord != badY[24]))
+                    & ((xcoord != badX[25]) & (ycoord != badY[25]))
                     ))
         elif (special == 'sn08ge'):
             cut435555.append(np.where((star <= 2) & ((snr435 >= m) | (snr555 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])          & 
+                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
                     (snr435 >= 3) & (snr555 >= 3) 
                     & ((xcoord != badX[0])  & (ycoord != badY[0]))
                     & ((xcoord != badX[1])  & (ycoord != badY[1]))
@@ -324,7 +341,7 @@ for m in range(4,9):
                     & ((xcoord != badX[8])  & (ycoord != badY[8]))
                     ))
             cut625814.append(np.where((star <= 2) & ((snr625 >= m) | (snr814 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])          & 
+                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
                     (snr625 >= 3) & (snr814 >= 3)  
                     & ((xcoord != badX[0])  & (ycoord != badY[0]))
                     & ((xcoord != badX[1])  & (ycoord != badY[1]))
@@ -338,7 +355,7 @@ for m in range(4,9):
                     ))
         elif (special == 'sn10ae'):
             cut435555.append(np.where((star <= 2) & ((snr435 >= m) | (snr555 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])          & 
+                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
                     (snr435 >= 3) & (snr555 >= 3) 
                     & ((xcoord != badX[0])  & (ycoord != badY[0]))
                     & ((xcoord != badX[1])  & (ycoord != badY[1]))
@@ -353,7 +370,7 @@ for m in range(4,9):
                     & ((xcoord != badX[10]) & (ycoord != badY[10]))
                     & ((xcoord != badX[11]) & (ycoord != badY[11]))
                     & ((xcoord != badX[12]) & (ycoord != badY[12]))
-                    & ((xcoord != badX[13]) & (ycoord != badY[13]))                    
+                    & ((xcoord != badX[13]) & (ycoord != badY[13]))
                     & ((xcoord != badX[14]) & (ycoord != badY[14]))
                     & ((xcoord != badX[15]) & (ycoord != badY[15]))
                     & ((xcoord != badX[16]) & (ycoord != badY[16]))
@@ -365,32 +382,9 @@ for m in range(4,9):
                     & ((xcoord != badX[22]) & (ycoord != badY[22]))
                     & ((xcoord != badX[23]) & (ycoord != badY[23]))
                     & ((xcoord != badX[24]) & (ycoord != badY[24]))
-                    & ((xcoord != badX[25]) & (ycoord != badY[25]))
-                    & ((xcoord != badX[26]) & (ycoord != badY[26]))
-                    & ((xcoord != badX[27]) & (ycoord != badY[27]))
-                    & ((xcoord != badX[28]) & (ycoord != badY[28]))
-                    & ((xcoord != badX[29]) & (ycoord != badY[29]))
-                    & ((xcoord != badX[30]) & (ycoord != badY[30]))
-                    & ((xcoord != badX[31]) & (ycoord != badY[31]))
-                    & ((xcoord != badX[32]) & (ycoord != badY[32]))
-                    & ((xcoord != badX[33]) & (ycoord != badY[33]))                    
-                    & ((xcoord != badX[34]) & (ycoord != badY[34]))
-                    & ((xcoord != badX[35]) & (ycoord != badY[35]))
-                    & ((xcoord != badX[36]) & (ycoord != badY[36]))
-                    & ((xcoord != badX[37]) & (ycoord != badY[37]))
-                    & ((xcoord != badX[38]) & (ycoord != badY[38]))
-                    & ((xcoord != badX[39]) & (ycoord != badY[39]))
-                    & ((xcoord != badX[40]) & (ycoord != badY[40]))
-                    & ((xcoord != badX[41]) & (ycoord != badY[41]))
-                    & ((xcoord != badX[42]) & (ycoord != badY[42]))
-                    & ((xcoord != badX[43]) & (ycoord != badY[43]))                    
-                    & ((xcoord != badX[44]) & (ycoord != badY[44]))
-                    & ((xcoord != badX[45]) & (ycoord != badY[45]))
-                    & ((xcoord != badX[46]) & (ycoord != badY[46]))
-                    & ((xcoord != badX[47]) & (ycoord != badY[47]))
                     ))
             cut625814.append(np.where((star <= 2) & ((snr625 >= m) | (snr814 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])          & 
+                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
                     (snr625 >= 3) & (snr814 >= 3) 
                     & ((xcoord != badX[0])  & (ycoord != badY[0]))
                     & ((xcoord != badX[1])  & (ycoord != badY[1]))
@@ -405,7 +399,7 @@ for m in range(4,9):
                     & ((xcoord != badX[10]) & (ycoord != badY[10]))
                     & ((xcoord != badX[11]) & (ycoord != badY[11]))
                     & ((xcoord != badX[12]) & (ycoord != badY[12]))
-                    & ((xcoord != badX[13]) & (ycoord != badY[13]))                    
+                    & ((xcoord != badX[13]) & (ycoord != badY[13]))
                     & ((xcoord != badX[14]) & (ycoord != badY[14]))
                     & ((xcoord != badX[15]) & (ycoord != badY[15]))
                     & ((xcoord != badX[16]) & (ycoord != badY[16]))
@@ -417,33 +411,10 @@ for m in range(4,9):
                     & ((xcoord != badX[22]) & (ycoord != badY[22]))
                     & ((xcoord != badX[23]) & (ycoord != badY[23]))
                     & ((xcoord != badX[24]) & (ycoord != badY[24]))
-                    & ((xcoord != badX[25]) & (ycoord != badY[25]))
-                    & ((xcoord != badX[26]) & (ycoord != badY[26]))
-                    & ((xcoord != badX[27]) & (ycoord != badY[27]))
-                    & ((xcoord != badX[28]) & (ycoord != badY[28]))
-                    & ((xcoord != badX[29]) & (ycoord != badY[29]))
-                    & ((xcoord != badX[30]) & (ycoord != badY[30]))
-                    & ((xcoord != badX[31]) & (ycoord != badY[31]))
-                    & ((xcoord != badX[32]) & (ycoord != badY[32]))
-                    & ((xcoord != badX[33]) & (ycoord != badY[33]))                    
-                    & ((xcoord != badX[34]) & (ycoord != badY[34]))
-                    & ((xcoord != badX[35]) & (ycoord != badY[35]))
-                    & ((xcoord != badX[36]) & (ycoord != badY[36]))
-                    & ((xcoord != badX[37]) & (ycoord != badY[37]))
-                    & ((xcoord != badX[38]) & (ycoord != badY[38]))
-                    & ((xcoord != badX[39]) & (ycoord != badY[39]))
-                    & ((xcoord != badX[40]) & (ycoord != badY[40]))
-                    & ((xcoord != badX[41]) & (ycoord != badY[41]))
-                    & ((xcoord != badX[42]) & (ycoord != badY[42]))
-                    & ((xcoord != badX[43]) & (ycoord != badY[43]))                    
-                    & ((xcoord != badX[44]) & (ycoord != badY[44]))
-                    & ((xcoord != badX[45]) & (ycoord != badY[45]))
-                    & ((xcoord != badX[46]) & (ycoord != badY[46]))
-                    & ((xcoord != badX[47]) & (ycoord != badY[47]))
                     ))
         elif (special == 'sn10el'):
             cut435555.append(np.where((star <= 2) & ((snr435 >= m) | (snr555 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])          & 
+                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
                     (snr435 >= 3) & (snr555 >= 3) 
                     & ((xcoord != badX[0])  & (ycoord != badY[0]))
                     & ((xcoord != badX[1])  & (ycoord != badY[1]))
@@ -458,7 +429,7 @@ for m in range(4,9):
                     & ((xcoord != badX[10]) & (ycoord != badY[10]))
                     & ((xcoord != badX[11]) & (ycoord != badY[11]))
                     & ((xcoord != badX[12]) & (ycoord != badY[12]))
-                    & ((xcoord != badX[13]) & (ycoord != badY[13]))                    
+                    & ((xcoord != badX[13]) & (ycoord != badY[13]))
                     & ((xcoord != badX[14]) & (ycoord != badY[14]))
                     & ((xcoord != badX[15]) & (ycoord != badY[15]))
                     & ((xcoord != badX[16]) & (ycoord != badY[16]))
@@ -478,7 +449,7 @@ for m in range(4,9):
                     & ((xcoord != badX[30]) & (ycoord != badY[30]))
                     & ((xcoord != badX[31]) & (ycoord != badY[31]))
                     & ((xcoord != badX[32]) & (ycoord != badY[32]))
-                    & ((xcoord != badX[33]) & (ycoord != badY[33]))                    
+                    & ((xcoord != badX[33]) & (ycoord != badY[33]))
                     & ((xcoord != badX[34]) & (ycoord != badY[34]))
                     & ((xcoord != badX[35]) & (ycoord != badY[35]))
                     & ((xcoord != badX[36]) & (ycoord != badY[36]))
@@ -488,7 +459,7 @@ for m in range(4,9):
                     & ((xcoord != badX[40]) & (ycoord != badY[40]))
                     & ((xcoord != badX[41]) & (ycoord != badY[41]))
                     & ((xcoord != badX[42]) & (ycoord != badY[42]))
-                    & ((xcoord != badX[43]) & (ycoord != badY[43]))                    
+                    & ((xcoord != badX[43]) & (ycoord != badY[43]))
                     & ((xcoord != badX[44]) & (ycoord != badY[44]))
                     & ((xcoord != badX[45]) & (ycoord != badY[45]))
                     & ((xcoord != badX[46]) & (ycoord != badY[46]))
@@ -497,28 +468,9 @@ for m in range(4,9):
                     & ((xcoord != badX[49]) & (ycoord != badY[49]))
                     & ((xcoord != badX[50]) & (ycoord != badY[50]))
                     & ((xcoord != badX[51]) & (ycoord != badY[51]))
-                    & ((xcoord != badX[52]) & (ycoord != badY[52]))
-                    & ((xcoord != badX[53]) & (ycoord != badY[53]))
-                    & ((xcoord != badX[54]) & (ycoord != badY[54]))
-                    & ((xcoord != badX[55]) & (ycoord != badY[55]))
-                    & ((xcoord != badX[56]) & (ycoord != badY[56]))
-                    & ((xcoord != badX[57]) & (ycoord != badY[57]))
-                    & ((xcoord != badX[58]) & (ycoord != badY[58]))
-                    & ((xcoord != badX[59]) & (ycoord != badY[59]))
-                    & ((xcoord != badX[60]) & (ycoord != badY[60]))
-                    & ((xcoord != badX[61]) & (ycoord != badY[61]))
-                    & ((xcoord != badX[62]) & (ycoord != badY[62]))
-                    & ((xcoord != badX[63]) & (ycoord != badY[63]))                    
-                    & ((xcoord != badX[64]) & (ycoord != badY[64]))
-                    & ((xcoord != badX[65]) & (ycoord != badY[65]))
-                    & ((xcoord != badX[66]) & (ycoord != badY[66]))
-                    & ((xcoord != badX[67]) & (ycoord != badY[67]))
-                    & ((xcoord != badX[68]) & (ycoord != badY[68]))
-                    & ((xcoord != badX[69]) & (ycoord != badY[69]))
-                    & ((xcoord != badX[70]) & (ycoord != badY[70]))
                     ))
             cut625814.append(np.where((star <= 2) & ((snr625 >= m) | (snr814 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])          & 
+                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
                     (snr625 >= 3) & (snr814 >= 3) 
                     & ((xcoord != badX[0])  & (ycoord != badY[0]))
                     & ((xcoord != badX[1])  & (ycoord != badY[1]))
@@ -533,7 +485,7 @@ for m in range(4,9):
                     & ((xcoord != badX[10]) & (ycoord != badY[10]))
                     & ((xcoord != badX[11]) & (ycoord != badY[11]))
                     & ((xcoord != badX[12]) & (ycoord != badY[12]))
-                    & ((xcoord != badX[13]) & (ycoord != badY[13]))                    
+                    & ((xcoord != badX[13]) & (ycoord != badY[13]))
                     & ((xcoord != badX[14]) & (ycoord != badY[14]))
                     & ((xcoord != badX[15]) & (ycoord != badY[15]))
                     & ((xcoord != badX[16]) & (ycoord != badY[16]))
@@ -553,7 +505,7 @@ for m in range(4,9):
                     & ((xcoord != badX[30]) & (ycoord != badY[30]))
                     & ((xcoord != badX[31]) & (ycoord != badY[31]))
                     & ((xcoord != badX[32]) & (ycoord != badY[32]))
-                    & ((xcoord != badX[33]) & (ycoord != badY[33]))                    
+                    & ((xcoord != badX[33]) & (ycoord != badY[33]))
                     & ((xcoord != badX[34]) & (ycoord != badY[34]))
                     & ((xcoord != badX[35]) & (ycoord != badY[35]))
                     & ((xcoord != badX[36]) & (ycoord != badY[36]))
@@ -563,7 +515,7 @@ for m in range(4,9):
                     & ((xcoord != badX[40]) & (ycoord != badY[40]))
                     & ((xcoord != badX[41]) & (ycoord != badY[41]))
                     & ((xcoord != badX[42]) & (ycoord != badY[42]))
-                    & ((xcoord != badX[43]) & (ycoord != badY[43]))                    
+                    & ((xcoord != badX[43]) & (ycoord != badY[43]))
                     & ((xcoord != badX[44]) & (ycoord != badY[44]))
                     & ((xcoord != badX[45]) & (ycoord != badY[45]))
                     & ((xcoord != badX[46]) & (ycoord != badY[46]))
@@ -572,29 +524,32 @@ for m in range(4,9):
                     & ((xcoord != badX[49]) & (ycoord != badY[49]))
                     & ((xcoord != badX[50]) & (ycoord != badY[50]))
                     & ((xcoord != badX[51]) & (ycoord != badY[51]))
-                    & ((xcoord != badX[52]) & (ycoord != badY[52]))
-                    & ((xcoord != badX[53]) & (ycoord != badY[53]))
-                    & ((xcoord != badX[54]) & (ycoord != badY[54]))
-                    & ((xcoord != badX[55]) & (ycoord != badY[55]))
-                    & ((xcoord != badX[56]) & (ycoord != badY[56]))
-                    & ((xcoord != badX[57]) & (ycoord != badY[57]))
-                    & ((xcoord != badX[58]) & (ycoord != badY[58]))
-                    & ((xcoord != badX[59]) & (ycoord != badY[59]))
-                    & ((xcoord != badX[60]) & (ycoord != badY[60]))
-                    & ((xcoord != badX[61]) & (ycoord != badY[61]))
-                    & ((xcoord != badX[62]) & (ycoord != badY[62]))
-                    & ((xcoord != badX[63]) & (ycoord != badY[63]))                    
-                    & ((xcoord != badX[64]) & (ycoord != badY[64]))
-                    & ((xcoord != badX[65]) & (ycoord != badY[65]))
-                    & ((xcoord != badX[66]) & (ycoord != badY[66]))
-                    & ((xcoord != badX[67]) & (ycoord != badY[67]))
-                    & ((xcoord != badX[68]) & (ycoord != badY[68]))
-                    & ((xcoord != badX[69]) & (ycoord != badY[69]))
-                    & ((xcoord != badX[70]) & (ycoord != badY[70]))
                     ))
+
+#xcoord  = np.array(xcoord)
+#ycoord  = np.array(ycoord)
+#np.savetxt(title + '435555.txt', np.c_[xcoord[cut435555[1]] ,ycoord[cut435555[1]]],fmt = "%1.2f")
+#np.savetxt(title + '625814.txt', np.c_[xcoord[cut625814[1]] ,ycoord[cut625814[1]]],fmt = "%1.2f")
 ################################################### 
 ############ Save good arrays to a file ###########
 
+#print np.subtract(f435Abs[cut435555[0]] , f555Abs[cut435555[0]])
+#print xcoord[cut435555[0]]
+#print ycoord[cut435555[0]]
+
+#print np.subtract(f435Abs[cut435555[1]] , f555Abs[cut435555[1]])
+#print xcoord[cut435555[1]]
+#print ycoord[cut435555[1]]
+
+#print np.subtract(f435Abs[cut435555[2]] , f555Abs[cut435555[2]])
+#print xcoord[cut435555[2]]
+#print ycoord[cut435555[2]]
+
+#print np.subtract(f435Abs[cut435555[3]] , f555Abs[cut435555[3]])
+#print xcoord[cut435555[3]]
+#print ycoord[cut435555[3]]
+
+"""
 print "Pickling!"
 
 o = 3
@@ -607,10 +562,10 @@ for n in range(len(cut435555)):
                         (unc435[cut435555[n]]**2 + unc555[cut435555[n]]**2)**.5 ))
     if (n % 2 == 0) : 
         #pickle.dump( snr435_555[n], open( title+'f435f555_'+ str(radius[0]) +'_' + str(abs(n-(o))) + '.p', "wb" ) )
-        pickle.dump( snr435_555[n], open( title+'f435f555_r1_' + str(abs(n-(o))) + '.p', "wb" ) )
+        pickle.dump( snr435_555[n], open(folder +'/'+ title+'f435f555_r1_' + str(abs(n-(o))) + '.p', "wb" ) )
     elif (n % 2 != 0):
         o += 1
-        pickle.dump( snr435_555[n], open( title+'f435f555_r2_' + str(abs((n)-(o)+1)) + '.p', "wb" ) )
+        pickle.dump( snr435_555[n], open(folder+'/'+ title+'f435f555_r2_' + str(abs((n)-(o)+1)) + '.p', "wb" ) )
         #pickle.dump( snr435_555[n], open( title+'f435f555_'+ str(radius[1]) +'_' + str(abs((n)-(o)+1)) + '.p', "wb" ) )
 
 for p in range(len(cut625814)):  
@@ -620,18 +575,97 @@ for p in range(len(cut625814)):
                         (unc625[cut625814[p]]**2 + unc814[cut625814[p]]**2)**.5 ))
     if (p % 2 == 0) :  
         #print title+'f625f814_r1_' + str(abs(p-(q))) + '.p'
-        pickle.dump( snr625_814[p], open( title+'f625f814_r1_' + str(abs(p-(q))) + '.p', "wb" ) )
+        pickle.dump( snr625_814[p], open(folder +'/'+ title+'f625f814_r1_' + str(abs(p-(q))) + '.p', "wb" ) )
         #pickle.dump( snr625_814[p], open( title+'f625f814_' + str(radius[0]) +'_' + str(abs(p-(q))) + '.p', "wb" ) )
     elif (p % 2 != 0):
         q += 1
         #print title+'f625f814_r2_' + str(abs((p)-(q)+1)) + '.p'
-        pickle.dump( snr625_814[p], open( title+'f625f814_r2_' + str(abs((p)-(q)+1)) + '.p', "wb" ) )    
+        pickle.dump( snr625_814[p], open(folder +'/'+ title+'f625f814_r2_' + str(abs((p)-(q)+1)) + '.p', "wb" ) )    
         #pickle.dump( snr625_814[p], open( title+'f625f814_' + str(radius[1]) +'_' + str(abs((p)-(q)+1)) + '.p', "wb" ) )
     
 print "Pickled."
+"""
+"""
+cat = []
+cat.append(('Object', 'X pix', 'Y pix', 
+            'S/N 435', 'S/N 555', 'S/N 625', 'S/N 814',
+            'Mag 435', 'Mag 555', 'Mag 625', 'Mag 814',
+            'AbsMag 435', 'AbsMag 555', 'AbsMag 625', 'AbsMag 814',
+              star[cut435555[0]]   ,xcoord[cut435555[0]] ,ycoord[cut435555[0]],
+              snr435[cut435555[0]] ,snr555[cut435555[0]] ,
+              snr625[cut435555[0]] ,snr814[cut435555[0]] ,
+              f435mag[cut435555[0]],f555mag[cut435555[0]],
+              f625mag[cut435555[0]],f814mag[cut435555[0]],
+              f435Abs[cut435555[0]],f555Abs[cut435555[0]],
+              f625Abs[cut435555[0]],f814Abs[cut435555[0]],
+              #unc435[cut435555[0]] ,unc555[cut435555[0]] ,
+              #unc625[cut435555[0]] ,unc814[cut435555[0]] ,
+            'Object', 'X pix', 'Y pix', 
+            'S/N 435', 'S/N 555', 'S/N 625', 'S/N 814',
+            'Mag 435', 'Mag 555', 'Mag 625', 'Mag 814',
+            'AbsMag 435', 'AbsMag 555', 'AbsMag 625', 'AbsMag 814',
+              star[cut625814[0]]   ,xcoord[cut625814[0]] ,ycoord[cut625814[0]],
+              snr435[cut625814[0]] ,snr555[cut625814[0]] ,
+              snr625[cut625814[0]] ,snr814[cut625814[0]] ,
+              f435mag[cut625814[0]],f555mag[cut625814[0]],
+              f625mag[cut625814[0]],f814mag[cut625814[0]],
+              f435Abs[cut625814[0]],f555Abs[cut625814[0]],
+              f625Abs[cut625814[0]],f814Abs[cut625814[0]],
+              #unc435[cut625814[0]] ,unc555[cut625814[0]] ,
+              #unc625[cut625814[0]] ,unc814[cut625814[0]]
+              ))
+pickle.dump(cat, open(title + 'List.p', 'wb'))
+"""
+"""
+star    = np.array(star)
+
+f435Abs = np.array(f435Abs)
+f555Abs = np.array(f555Abs)
+f625Abs = np.array(f625Abs)
+f814Abs = np.array(f814Abs)
+
+f435mag = np.array(f435mag)
+f555mag = np.array(f555mag)
+f625mag = np.array(f625mag) 
+f814mag = np.array(f814mag) 
+
+snr435  = np.array(snr435)
+snr555  = np.array(snr555)
+snr625  = np.array(snr625)
+snr814  = np.array(snr814)
+
+xcoord  = np.array(xcoord)
+ycoord  = np.array(ycoord)
+
+cattxt = []
+
+
+np.savetxt(title + 'list_435555.txt', np.c_[star[cut435555[1]],
+           xcoord[cut435555[1]] ,ycoord[cut435555[1]] ,
+           snr435[cut435555[1]] ,snr555[cut435555[1]] ,
+           snr625[cut435555[1]] ,snr814[cut435555[1]] ,
+           f435mag[cut435555[1]],f555mag[cut435555[1]],
+           f625mag[cut435555[1]],f814mag[cut435555[1]],
+           f435Abs[cut435555[1]],f555Abs[cut435555[1]],
+           f625Abs[cut435555[1]],f814Abs[cut435555[1]]],
+           fmt = "%1.2f",header = 'Object  XPix YPix S/N435 S/N555' +
+           ' S/N625 S/N814 Apar435 Apar555 Apar625 Apar814' +
+           ' Abs435 Abs555 Abs625 Abs814', delimiter = '\t')
+
+np.savetxt(title + 'list_625814.txt',np.c_[star[cut625814[1]],
+           xcoord[cut625814[1]] ,ycoord[cut625814[1]] ,
+           snr435[cut625814[1]] ,snr555[cut625814[1]] ,
+           snr625[cut625814[1]] ,snr814[cut625814[1]] ,
+           f435mag[cut625814[1]],f555mag[cut625814[1]],
+           f625mag[cut625814[1]],f814mag[cut625814[1]],
+           f435Abs[cut625814[1]],f555Abs[cut625814[1]],
+           f625Abs[cut625814[1]],f814Abs[cut625814[1]]],
+           fmt = "%1.2f", header = 'Object  XPix YPix S/N435 S/N555' +
+           ' S/N625 S/N814 Apar435 Apar555 Apar625 Apar814' +
+           ' Abs435 Abs555 Abs625 Abs814',delimiter = '\t')
 
 """
-
+"""
 print "Open file to save coordinate data..."
 
 #with open(title+'F435W_F555W_snr3.csv', 'wb') as f:
