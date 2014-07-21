@@ -81,8 +81,7 @@ font = {'family' : 'serif',
 ################################################### 
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
-"""
-
+#"""
 folder   = "SN2008GE"
 name     = 'sn2008ge_new.phot' 
 
@@ -100,15 +99,15 @@ dmod     = 31.27
 # Actual X & Y pixel coordinates of sn
 xsn      = 3247.539
 ysn      = 3419.971
-#radius  = 50.0 #pixels
-radius   = [36.1008,46.0927]
-#radius  = 36.1008 # theta = .0005014 deg, phys radius =  1566.443 au, distance = 17.95e7 pc
-
+#radius   = 50.0 #pixels
+#radius   = [36.1008,46.0927]
+#radius   = 36.1008 # theta = .0005014 deg, phys radius =  1566.443 au, distance = 17.95e7 pc
+radius   = [100]
 special  = 'sn08ge'
 
-"""
-##################### 2008ha ######################
 #"""
+##################### 2008ha ######################
+"""
 folder   = "SN2008HA"
 name     = 'sn2008ha_new.phot'
 
@@ -134,7 +133,7 @@ special  = 'sn08ha'
 xclust   = 1716.352
 yclust   = 3163.780
 
-#"""
+"""
 ##################### 2010ae ######################
 """
 
@@ -181,8 +180,8 @@ dmod     = 29.99
 xsn      = 2418.859
 ysn      = 1570.826
 #radius  = 50.0 #pixels
-radius   = [65.0016,82.7545] # theta = .0009028 deg, phys radius = 1570.95 au distance = 9.97e7 pc
-
+#radius   = [65.0016,82.7545] # theta = .0009028 deg, phys radius = 1570.95 au distance = 9.97e7 pc
+radius   = [100]
 special  = 'sn10el'
 """
 ###################################################    
@@ -311,7 +310,8 @@ cut = []
 cut.append(np.where((star <= 2) & (((snr435 >= 3) | (snr555 >= 3)) 
                 | ((snr625 >= 3) | (snr814 >= 3)))
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[0])))
-first = np.c_[xcoord[cut435555[0]]+.5 ,ycoord[cut435555[0]]+.5]
+                
+first = np.c_[xcoord[cut[0]]+.5 ,ycoord[cut[0]]+.5]
 np.savetxt(folder +'/'+ title + 'all.txt', first,fmt = "%1.2f")
 ############ Save coordinates to a file ###########
 """
