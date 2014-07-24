@@ -1,57 +1,56 @@
 # Region file format: DS9 version 4.1
-# 
-global color=cyan dashlist=8 3 width=1 font="helvetica 10 normal" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
-
-image; circle(	3345.95 3406.10		,2)
-circle(	3341.16 3397.11		,2)
-circle(	3335.05 3399.18		,2)
-circle(	3330.25 3407.70		,2)
-circle(	3335.45 3383.49		,2)
-circle(	3327.12 3402.07		,2)
-circle(	3330.55 3389.34		,2)
-circle(	3316.83 3407.75		,2)
-circle(	3345.85 3439.78		,2)
-circle(	3321.37 3389.16		,2)
-circle(	3328.35 3374.74		,2)
-circle(	3329.72 3441.38		,2)
-circle(	3303.87 3413.47		,2)
-circle(	3308.08 3395.78		,2)
-circle(	3315.04 3380.66		,2)
-circle(	3339.99 3451.18		,2)
-circle(	3305.97 3387.41		,2)
-circle(	3322.34 3416.75		,2)
-circle(	3320.18 3419.16		,2)
-circle(	3325.55 3448.80		,2)
-circle(	3294.75 3401.64		,2)
-circle(	3324.36 3464.06		,2)
-circle(	3302.58 3420.17		,2)
-circle(	3252.39 3427.19		,2)
-circle(	3248.21 3417.33		,2)
-circle(	3262.93 3434.92		,2)
-circle(	3246.47 3404.77		,2)
-circle(	3240.11 3434.78		,2)
-circle(	3295.22 3380.62		,2)
-circle(	3237.20 3423.49		,2)
-circle(	3245.21 3432.41		,2)
-circle(	3257.31 3451.47		,2)
-circle(	3250.37 3402.65		,2)
-circle(	3249.58 3443.61		,2)
-circle(	3295.96 3430.44		,2)
-circle(	3242.57 3392.41		,2)
-circle(	3253.07 3443.02		,2)
-circle(	3245.32 3449.49		,2)
-circle(	3257.44 3407.38		,2)
-circle(	3272.43 3443.63		,2)
-circle(	3292.00 3446.23		,2)
-circle(	3288.69 3416.88		,2)
-circle(	3275.79 3450.32		,2)
-circle(	3234.08 3412.22		,2)
-circle(	3270.96 3462.07		,2)
-circle(	3232.80 3400.02		,2)
-circle(	3274.81 3428.29		,2)
-circle(	3201.28 3411.32		,2)
-circle(	3269.20 3419.22		,2)
-circle(	3259.99 3391.18		,2)
-circle(	3228.64 3504.70		,2)
-circle(	3168.82 3440.92		,2)
-circle(	3288.62 3449.21		,2)
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+image
+circle(3345.9673,3406.129,2) # color=cyan font="helvetica 10 normal"
+circle(3341.1382,3397.1299,2) # color=yellow font="helvetica 10 normal"
+circle(3335.0561,3399.1471,2) # color=yellow font="helvetica 10 normal"
+circle(3330.2304,3407.7161,2) # color=yellow font="helvetica 10 normal"
+circle(3335.4392,3383.5231,2) # color=yellow font="helvetica 10 normal"
+circle(3327.1398,3402.1007,2) # color=cyan font="helvetica 10 normal"
+circle(3330.5647,3389.356,2) # color=yellow font="helvetica 10 normal"
+circle(3316.8103,3407.7187,2) # color=yellow font="helvetica 10 normal"
+circle(3345.8292,3439.753,2) # color=cyan font="helvetica 10 normal"
+circle(3321.3927,3389.1418,2) # color=yellow font="helvetica 10 normal"
+circle(3328.3413,3374.7405,2) # color=cyan font="helvetica 10 normal"
+circle(3329.706,3441.4122,2) # color=cyan font="helvetica 10 normal"
+circle(3303.874,3413.4812,2) # color=yellow font="helvetica 10 normal"
+circle(3308.0704,3395.7684,2) # color=cyan font="helvetica 10 normal"
+circle(3315.0189,3380.647,2) # color=yellow font="helvetica 10 normal"
+circle(3339.9903,3451.2022,2) # color=cyan font="helvetica 10 normal"
+circle(3305.9931,3387.4168,2) # color=cyan font="helvetica 10 normal"
+circle(3322.3635,3416.7176,2) # color=yellow font="helvetica 10 normal"
+circle(3320.1916,3419.166,2) # color=cyan font="helvetica 10 normal"
+circle(3325.5558,3448.829,2) # color=cyan font="helvetica 10 normal"
+circle(3294.748,3401.6749,2) # color=yellow font="helvetica 10 normal"
+circle(3324.3519,3464.0932,2) # color=yellow font="helvetica 10 normal"
+circle(3302.5718,3420.1774,2) # color=yellow font="helvetica 10 normal"
+circle(3252.3681,3427.1705,2) # color=cyan font="helvetica 10 normal"
+circle(3248.2148,3417.3072,2) # color=cyan font="helvetica 10 normal"
+circle(3262.9415,3434.9447,2) # color=cyan font="helvetica 10 normal"
+circle(3246.4748,3404.7795,2) # color=yellow font="helvetica 10 normal"
+circle(3240.1078,3434.8046,2) # color=yellow font="helvetica 10 normal"
+circle(3295.2268,3380.6508,2) # color=yellow font="helvetica 10 normal"
+circle(3237.2094,3423.5011,2) # color=cyan font="helvetica 10 normal"
+circle(3245.2245,3432.4278,2) # color=cyan font="helvetica 10 normal"
+circle(3257.2964,3451.5057,2) # color=cyan font="helvetica 10 normal"
+circle(3250.3846,3402.6189,2) # color=yellow font="helvetica 10 normal"
+circle(3249.5711,3443.587,2) # color=yellow font="helvetica 10 normal"
+circle(3295.9602,3430.4746,2) # color=cyan font="helvetica 10 normal"
+circle(3242.5625,3392.3962,2) # color=yellow font="helvetica 10 normal"
+circle(3253.0467,3443.0104,2) # color=cyan font="helvetica 10 normal"
+circle(3245.324,3449.4918,2) # color=cyan font="helvetica 10 normal"
+circle(3257.4334,3407.3696,2) # color=cyan font="helvetica 10 normal"
+circle(3272.4531,3443.655,2) # color=cyan font="helvetica 10 normal"
+circle(3292.0047,3446.2434,2) # color=cyan font="helvetica 10 normal"
+circle(3288.6683,3416.868,2) # color=cyan font="helvetica 10 normal"
+circle(3275.7852,3450.3504,2) # color=cyan font="helvetica 10 normal"
+circle(3234.0697,3412.1977,2) # color=cyan font="helvetica 10 normal"
+circle(3270.9599,3462.0872,2) # color=cyan font="helvetica 10 normal"
+circle(3232.8125,3400.0299,2) # color=yellow font="helvetica 10 normal"
+circle(3274.8158,3428.3185,2) # color=yellow font="helvetica 10 normal"
+circle(3201.2916,3411.3391,2) # color=cyan font="helvetica 10 normal"
+circle(3269.2143,3419.2475,2) # color=yellow font="helvetica 10 normal"
+circle(3259.989,3391.1692,2) # color=yellow font="helvetica 10 normal"
+circle(3228.6303,3504.7186,2) # color=yellow font="helvetica 10 normal"
+circle(3168.8078,3440.9362,2) # color=yellow font="helvetica 10 normal"
+circle(3288.626,3449.196,2) # color=cyan font="helvetica 10 normal"

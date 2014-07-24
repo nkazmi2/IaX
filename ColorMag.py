@@ -56,6 +56,10 @@ f814Abs = [] # Absolute F814W Magnitudes
 
 cut435555  = []
 cut625814  = []
+cut435555r1= []
+cut625814r1= []
+cut435555r2= []
+cut625814r2= []
 
 snr435_555 = []
 snr625_814 = [] 
@@ -81,7 +85,7 @@ font = {'family' : 'serif',
 ################################################### 
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
-#"""
+"""
 folder   = "SN2008GE"
 name     = 'sn2008ge_new.phot' 
 
@@ -105,9 +109,9 @@ ysn      = 3419.971
 radius   = [100]
 special  = 'sn08ge'
 
-#"""
-##################### 2008ha ######################
 """
+##################### 2008ha ######################
+#"""
 folder   = "SN2008HA"
 name     = 'sn2008ha_new.phot'
 
@@ -128,12 +132,12 @@ ysn      = 3172.530
 #radius  = 32.4   theta = .00045 deg, phys radius = 1570.796 au, distance = 20e7 pc
 #radius  = 41.25  theta = .0057  deg, phys radius = 2000 au    , distance = 20e7 pc
 #radius   = [32.4, 41.2531]
-radius   = [100]
+radius   = [50,100]
 special  = 'sn08ha'
 xclust   = 1716.352
 yclust   = 3163.780
 
-"""
+#"""
 ##################### 2010ae ######################
 """
 
@@ -235,16 +239,31 @@ ycoord  = data[:, 3]
 
 ################################################### 
 ########### Calculate Absolute Magnitude ##########
-"""
+
 print "Calculating Absolute Magnitude..."
  
 f435Abs = f435mag - dmod - ACS435 - MW - Host
 f555Abs = f555mag - dmod - ACS555 - MW - Host
 f625Abs = f625mag - dmod - ACS625 - MW - Host
 f814Abs = f814mag - dmod - ACS814 - MW - Host
-"""
+
 ################################################### 
 ########### Deal with bad points ##########
+
+
+r = pyregion.open(folder + '/sn2008ha_prog_play.reg')
+save = []
+badX = []
+badY = []
+
+for i in range(len(r)):
+    r1 = pyregion.ShapeList(r[i].attr[1].get("color"))
+    if (r1[0] == 'c'):
+        save.append(i) 
+for j in range(len(save)):
+    badX.append(r[save[j]].coord_list[0] - .5)
+    badY.append(r[save[j]].coord_list[1] - .5)
+
 """
 bad  = []
 badX = []
@@ -262,59 +281,64 @@ badY = bad[:][1]
 # somehow need to get around this :/
 
 print "Applying contrains to SN Data..."
-"""
+snr = []
+rad = []
 for m in range(3,6):
-    print m
     for i in range(len(radius)):
-        print i
-        #for w in range(len(badX)):
-        if (special == 'sn08ha'):
-            cut435555.append(np.where((star <= 2) &# ((snr435 >= m) | (snr555 >= m)) & 
+        cut435555.append(np.where((star <= 2) & ((snr435 >= m) | (snr555 >= m)) & 
                     ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     &
-                    (snr435 >= 3) & (snr555 >= 3)))# & 
-                    #list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-            cut625814.append(np.where((star <= 2) & #((snr625 >= m) | (snr814 >= m)) & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     &
-                    (snr625 >= 3) & (snr814 >= 3)))# & 
-                    #list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-        elif (special == 'sn08ge'):
-            cut435555.append(np.where((star <= 2) & ((snr435 >= m) | (snr555 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
                     (snr435 >= 3) & (snr555 >= 3) & 
                     list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-            cut625814.append(np.where((star <= 2) & ((snr625 >= m) | (snr814 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
+        cut625814.append(np.where((star <= 2) & ((snr625 >= m) | (snr814 >= m)) & 
+                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
                     (snr625 >= 3) & (snr814 >= 3)  & 
                     list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-        elif (special == 'sn10ae'):
-            cut435555.append(np.where((star <= 2) & ((snr435 >= m) | (snr555 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
-                    (snr435 >= 3) & (snr555 >= 3)& 
-                    list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-            cut625814.append(np.where((star <= 2) & ((snr625 >= m) | (snr814 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
-                    (snr625 >= 3) & (snr814 >= 3) & 
-                    list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-        elif (special == 'sn10el'):
-            cut435555.append(np.where((star <= 2) & ((snr435 >= m) | (snr555 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
-                    (snr435 >= 3) & (snr555 >= 3) & 
-                    list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-            cut625814.append(np.where((star <= 2) & ((snr625 >= m) | (snr814 >= m))  & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])      & 
-                    (snr625 >= 3) & (snr814 >= 3) & 
-                    list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
+        rad.append(i)
+        snr.append(m)
+################################################### 
+############ Save good arrays to a file ###########
+print "Pickling!"
 
-"""
-cut = []
-cut.append(np.where((star <= 2) & (((snr435 >= 3) | (snr555 >= 3)) 
-                | ((snr625 >= 3) | (snr814 >= 3)))
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[0])))
-                
-first = np.c_[xcoord[cut[0]]+.5 ,ycoord[cut[0]]+.5]
-np.savetxt(folder +'/'+ title + 'all.txt', first,fmt = "%1.2f")
+for n in range(len(cut435555)):
+    snr435_555.append(( f435Abs[cut435555[n]],f555Abs[cut435555[n]], 
+                       unc555[cut435555[n]],
+                        (unc435[cut435555[n]]**2 + unc555[cut435555[n]]**2)**.5 ))
+    snr625_814.append(( f625Abs[cut625814[n]],f814Abs[cut625814[n]], 
+                       unc625[cut625814[n]],
+                        (unc625[cut625814[n]]**2 + unc814[cut625814[n]]**2)**.5 ))
+    pickle.dump( snr435_555[n], open(folder + '/' + title + 'f4355555_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+    pickle.dump( snr625_814[n], open(folder + '/' + title + 'f625f814_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+
+print "Pickled."
+
 ############ Save coordinates to a file ###########
 """
+print "Saving Coordinate files"
+circ = []
+comm = []
+clos = []
+#cut  = []
+#cut.append(np.where((star <= 2) & (((snr435 >= 3) | (snr555 >= 3)) 
+#                | ((snr625 >= 3) | (snr814 >= 3)))
+#                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[0])))
+             
+#first = np.c_[xcoord[cut[0]]+.5 ,ycoord[cut[0]]+.5]
+
+for i in range(len(xcoord[cut435555[0]])):
+    circ.append('circle(')
+    comm.append(',')
+    clos.append(',2)')
+        
+np.savetxt(folder +'/'+ title + 'temp.reg', np.c_[circ,xcoord[cut435555[0]]+.5,comm,ycoord[cut435555[0]]+.5,clos],fmt = "%s",
+               header ='# Region file format: DS9 version 4.1 #', 
+               comments = 'global color=cyan dashlist=8 3 width=1'
+               ' font="helvetica 10 normal" select=1' \
+               ' highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1' \
+               '\nimage;' )
+np.savetxt(folder +'/'+ title + 'all.txt',np.c_[xcoord[cut435555[0]]+.5,ycoord[cut435555[0]]+.5],fmt = "%1.2f")
+print 'Files Saved'
+
+######################
 first = np.c_[xcoord[cut435555[0]]+.5 ,ycoord[cut435555[0]]+.5] #combine to one array
 second= np.c_[xcoord[cut625814[0]]+.5 ,ycoord[cut625814[0]]+.5]
 # More flaws in this, removes too many of the good points :/
@@ -340,44 +364,6 @@ np.savetxt(folder +'/'+ title + '435555.txt', first,fmt = "%1.2f")
 np.savetxt(folder +'/'+ title + '625814.txt', second,fmt = "%1.2f")
 """
 
-################################################### 
-############ Save good arrays to a file ###########
-"""
-print "Pickling!"
-
-o = 3
-q = 3   
-
-for n in range(len(cut435555)):
-    o += 1
-    snr435_555.append(( f435Abs[cut435555[n]],f555Abs[cut435555[n]], 
-                       unc555[cut435555[n]],
-                        (unc435[cut435555[n]]**2 + unc555[cut435555[n]]**2)**.5 ))
-    if (n % 2 == 0) : 
-        #pickle.dump( snr435_555[n], open( title+'f435f555_'+ str(radius[0]) +'_' + str(abs(n-(o))) + '.p', "wb" ) )
-        pickle.dump( snr435_555[n], open(folder +'/'+ title+'f435f555_r1_' + str(abs(n-(o))) + '.p', "wb" ) )
-    elif (n % 2 != 0):
-        o += 1
-        pickle.dump( snr435_555[n], open(folder+'/'+ title+'f435f555_r2_' + str(abs((n)-(o)+1)) + '.p', "wb" ) )
-        #pickle.dump( snr435_555[n], open( title+'f435f555_'+ str(radius[1]) +'_' + str(abs((n)-(o)+1)) + '.p', "wb" ) )
-
-for p in range(len(cut625814)):  
-    q += 1
-    snr625_814.append(( f625Abs[cut625814[p]],f814Abs[cut625814[p]], 
-                       unc625[cut625814[p]],
-                        (unc625[cut625814[p]]**2 + unc814[cut625814[p]]**2)**.5 ))
-    if (p % 2 == 0) :  
-        #print title+'f625f814_r1_' + str(abs(p-(q))) + '.p'
-        pickle.dump( snr625_814[p], open(folder +'/'+ title+'f625f814_r1_' + str(abs(p-(q))) + '.p', "wb" ) )
-        #pickle.dump( snr625_814[p], open( title+'f625f814_' + str(radius[0]) +'_' + str(abs(p-(q))) + '.p', "wb" ) )
-    elif (p % 2 != 0):
-        q += 1
-        #print title+'f625f814_r2_' + str(abs((p)-(q)+1)) + '.p'
-        pickle.dump( snr625_814[p], open(folder +'/'+ title+'f625f814_r2_' + str(abs((p)-(q)+1)) + '.p', "wb" ) )    
-        #pickle.dump( snr625_814[p], open( title+'f625f814_' + str(radius[1]) +'_' + str(abs((p)-(q)+1)) + '.p', "wb" ) )
-    
-print "Pickled."
-"""
 """
 cat = []
 cat.append(('Object', 'X pix', 'Y pix', 
