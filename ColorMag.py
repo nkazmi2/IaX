@@ -97,6 +97,11 @@ ACS814   = 0.020 #F814W
 MW       = 0.011
 Host     = 0.0
 
+H435     = 0 #F435W
+H555     = 0 #F555W	
+H625     = 0 #F625W	
+H814     = 0 #F814W	
+
 # Median (redshift independent) distance modulus of host galaxy
 dmod     = 31.27 
 
@@ -106,12 +111,12 @@ ysn      = 3419.971
 #radius   = 50.0 #pixels
 #radius   = [36.1008,46.0927]
 #radius   = 36.1008 # theta = .0005014 deg, phys radius =  1566.443 au, distance = 17.95e7 pc
-radius   = [100]
+radius   = [16.824,33.4172,50.241] # 730 au, 1450 au, 2180 au
 special  = 'sn08ge'
 
 """
 ##################### 2008ha ######################
-#"""
+"""
 folder   = "SN2008HA"
 name     = 'sn2008ha_new.phot'
 
@@ -122,6 +127,12 @@ ACS625   = 0.174 #F625W
 ACS814   = 0.120 #F814W	
 MW       = 0.07
 Host     = 0.0
+
+H435     = 0 #F435W
+H555     = 0 #F555W	
+H625     = 0 #F625W	
+H814     = 0 #F814W	
+
 # Median (redshift independent) distance modulus of host galaxy
 dmod     = 31.64 #31.50 # value I got from NED
 
@@ -132,12 +143,12 @@ ysn      = 3172.530
 #radius  = 32.4   theta = .00045 deg, phys radius = 1570.796 au, distance = 20e7 pc
 #radius  = 41.25  theta = .0057  deg, phys radius = 2000 au    , distance = 20e7 pc
 #radius   = [32.4, 41.2531]
-radius   = [50,100]
+radius   = [15,30,45] # 727.218 au, 1454.436 au, 2181.654 au
 special  = 'sn08ha'
 xclust   = 1716.352
 yclust   = 3163.780
 
-#"""
+"""
 ##################### 2010ae ######################
 """
 
@@ -152,6 +163,11 @@ ACS814   = 0.215 #F814W
 MW       = 0.124
 Host     = 0.5
 
+H435     = 0 #F435W
+H555     = 0 #F555W	
+H625     = 0 #F625W	
+H814     = 0 #F814W	
+
 # Median (redshift independent) distance modulus of host galaxy
 dmod     = 30.58 
 
@@ -160,12 +176,11 @@ xsn      = 1796.640
 ysn      = 1931.995
 #radius  = 30.0 #pixels
 #radius   = [49.4712,62.9816] # theta = .0006871 deg, phys radius = 1570.972 au, distance = 13.1e7 pc
-radius   = [100]
+radius   = [22.990,45.661,68.649] # 730 au, 1450 au, 2180 au
 special  = 'sn10ae'
 """
 ##################### 2010el ######################
-"""    
-
+#"""    
 folder   = "SN2010EL"
 name     = 'sn2010el_new.phot'
     
@@ -177,6 +192,11 @@ ACS814   = 0.014 #F814W
 MW       = 0.008
 Host     = 0.8
 
+H435     = 3.255 #F435W
+H555     = 2.517 #F555W	
+H625     = 2.001 #F625W	
+H814     = 1.376 #F814W	
+
 # Median (redshift independent) distance modulus of host galaxy
 dmod     = 29.99 
 
@@ -185,9 +205,9 @@ xsn      = 2418.859
 ysn      = 1570.826
 #radius  = 50.0 #pixels
 #radius   = [65.0016,82.7545] # theta = .0009028 deg, phys radius = 1570.95 au distance = 9.97e7 pc
-radius   = [100]
+radius   = [30.2054,60,90.202] # 730 au, 1450 au, 2180 au
 special  = 'sn10el'
-"""
+#"""
 ###################################################    
 ######### Open and read in the data file ##########
 
@@ -242,16 +262,16 @@ ycoord  = data[:, 3]
 
 print "Calculating Absolute Magnitude..."
  
-f435Abs = f435mag - dmod - ACS435 - MW - Host
-f555Abs = f555mag - dmod - ACS555 - MW - Host
-f625Abs = f625mag - dmod - ACS625 - MW - Host
-f814Abs = f814mag - dmod - ACS814 - MW - Host
+f435Abs = f435mag - dmod - ACS435 - MW - Host #- H435
+f555Abs = f555mag - dmod - ACS555 - MW - Host #- H555
+f625Abs = f625mag - dmod - ACS625 - MW - Host #- H625
+f814Abs = f814mag - dmod - ACS814 - MW - Host #- H814
 
 ################################################### 
 ########### Deal with bad points ##########
 
 
-r = pyregion.open(folder + '/sn2008ha_prog_play.reg')
+r = pyregion.open(folder + '/'+ title +'prog.reg')
 save = []
 badX = []
 badY = []
@@ -306,14 +326,13 @@ for n in range(len(cut435555)):
     snr625_814.append(( f625Abs[cut625814[n]],f814Abs[cut625814[n]], 
                        unc625[cut625814[n]],
                         (unc625[cut625814[n]]**2 + unc814[cut625814[n]]**2)**.5 ))
-    pickle.dump( snr435_555[n], open(folder + '/' + title + 'f4355555_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+    pickle.dump( snr435_555[n], open(folder + '/' + title + 'f435f555_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
     pickle.dump( snr625_814[n], open(folder + '/' + title + 'f625f814_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
 
 print "Pickled."
 
 ############ Save coordinates to a file ###########
 """
-print "Saving Coordinate files"
 circ = []
 comm = []
 clos = []
