@@ -4,7 +4,62 @@ Created on Fri May 30 09:58:19 2014
 
 @author: Nova
 """
+import numpy as np
+import pyregion
+###
+"""
+one = np.loadtxt('one.txt')
+two = np.loadtxt('two.txt')
+ich = []
+ich = np.where(list(np.any(x not in two for x in one) and np.any(y not in two for y in one)))
+print one[ich]
+"""
+data = np.loadtxt("../SN2008HA/sn2008ha_new.phot")
+data    = np.array(data)
+data    = data.astype(float)
+star    = data[:,10] # type
+snr435  = data[:,19] # signal to noise
+snr555  = data[:,32]
+snr625  = data[:,45]
+snr814  = data[:,58]
+xcoord  = data[:, 2]
+ycoord  = data[:, 3]
+xsn      = 1726.352
+ysn      = 3172.530
+r = pyregion.open('../SN2008HA/sn2008ha_coord.reg')
+save = []
+X = []
+Y = []
 
+for i in range(len(r)):
+    r1 = pyregion.ShapeList(r[i].attr[1].get("color"))
+    if (r1[0] == 'c'):
+        save.append(i) 
+print len(save)
+for j in range(len(r)):
+    X.append(r[save[j]].coord_list[0] -.5)
+    Y.append(r[save[j]].coord_list[1] -.5)
+#X = (np.around(X, decimals=2))
+#Y = (np.around(Y, decimals=2))
+
+####
+#print len(X), type(X[0])
+#print len(Y), type(Y[0])
+#print len(xcoord), type(xcoord[0])
+#print len(ycoord), type(ycoord[0])
+
+ich = []
+eep = []
+ich = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100) & list(np.any(x not in X for x in xcoord) and np.any(y not in Y for y in ycoord)))
+eep = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3) & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))
+#np.savetxt('test.txt',xcoord[ich],fmt = "%1.4f")
+#np.savetxt('withbad.txt',xcoord[eep],fmt = "%1.4f")
+#np.savetxt('bad.txt',X,fmt = "%1.4f")
+#list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
+print "Filter   ", len(xcoord[ich])
+print "No Filter", len(xcoord[eep])
+
+"""
 import pickle
 #import glob
 import numpy as np
@@ -13,7 +68,7 @@ catalog = []
 catalog = pickle.load(open(title + '_List.p', 'rb'))
 
 #print np.shape(catalog)
-
+"""
 """
 print catalog[0]
 print catalog[1]

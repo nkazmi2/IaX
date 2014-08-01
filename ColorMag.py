@@ -66,7 +66,7 @@ snr625_814 = []
 
 #############################################################
 ################## Changing font parameters #################
-"""
+
 params = {'legend.fontsize': 10, 
           'legend.linewidth': 2,
           'legend.font': 'serif',
@@ -81,7 +81,7 @@ font = {'family' : 'serif',
         'weight' : 'normal',
         'size'   : 10,
         } 
-"""
+
 ################################################### 
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
@@ -116,7 +116,7 @@ special  = 'sn08ge'
 
 """
 ##################### 2008ha ######################
-"""
+#"""
 folder   = "SN2008HA"
 name     = 'sn2008ha_new.phot'
 
@@ -148,7 +148,7 @@ special  = 'sn08ha'
 xclust   = 1716.352
 yclust   = 3163.780
 
-"""
+#"""
 ##################### 2010ae ######################
 """
 
@@ -180,7 +180,7 @@ radius   = [22.990,45.661,68.649] # 730 au, 1450 au, 2180 au
 special  = 'sn10ae'
 """
 ##################### 2010el ######################
-#"""    
+"""    
 folder   = "SN2010EL"
 name     = 'sn2010el_new.phot'
     
@@ -207,7 +207,7 @@ ysn      = 1570.826
 #radius   = [65.0016,82.7545] # theta = .0009028 deg, phys radius = 1570.95 au distance = 9.97e7 pc
 radius   = [30.2054,60,90.202] # 730 au, 1450 au, 2180 au
 special  = 'sn10el'
-#"""
+"""
 ###################################################    
 ######### Open and read in the data file ##########
 
@@ -256,7 +256,6 @@ chi814  = data[:,57]
 
 xcoord  = data[:, 2]
 ycoord  = data[:, 3]
-
 ################################################### 
 ########### Calculate Absolute Magnitude ##########
 
@@ -271,30 +270,33 @@ f814Abs = f814mag - dmod - ACS814 - MW - Host #- H814
 ########### Deal with bad points ##########
 
 
-r = pyregion.open(folder + '/'+ title +'prog.reg')
+identify = pyregion.open(folder + '/'+ title +'prog.reg')
+r = pyregion.open(folder + '/'+ title +'coord.reg')
 save = []
 badX = []
 badY = []
+
+
+fix = []
+for i in range(len(identify)):
+    if (pyregion.ShapeList(identify[i].attr[1].get("color"))  == ['y', 'e', 'l', 'l', 'o', 'w']):
+        fix.append(i)
+        
+for i in range(len(fix)):
+    r[fix[i]].attr[1]["color"] = 'yellow'
 
 for i in range(len(r)):
     r1 = pyregion.ShapeList(r[i].attr[1].get("color"))
     if (r1[0] == 'c'):
         save.append(i) 
+ 
 for j in range(len(save)):
     badX.append(r[save[j]].coord_list[0] - .5)
     badY.append(r[save[j]].coord_list[1] - .5)
 
-"""
-bad  = []
-badX = []
-badY = []
-#bad  = np.array(np.loadtxt(folder +'/'+ name[:-8]+'questionable.txt'))
-#bad  = np.array(np.loadtxt(name[:-8]+'questionable.reg')) -.5
-bad  = np.array(np.loadtxt(folder +'/'+ name[:-8]+'questionable.reg')) -.5
+#badX = np.around(badX, decimals=2)
+#badY = np.around(badY, decimals=2)
 
-badX = bad[:][0]
-badY = bad[:][1]
-"""
 ################################################### 
 ##### Find correct color magnitudes make cuts #####
 # So many for loops @.@ 
@@ -315,8 +317,39 @@ for m in range(3,6):
                     list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
         rad.append(i)
         snr.append(m)
+"""
+h = [2, 5] # height of the plotted figure
+plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
+gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
+
+supe  = plt.subplot2grid((2,2), (0,0), colspan = 1)
+#supe.update(left=0.05, right=0.48, wspace=0.05)
+plt.xlabel("Signal/Noise F435W",fontdict = font)
+plt.ylabel("Magnitude",fontdict = font)
+supe.scatter(snr435[cut435555[2]],f435Abs[cut435555[2]])
+
+sope  = plt.subplot2grid((2,2), (0,1), colspan = 1)
+#sope.update(left=0.05, right=0.48, wspace=0.05)
+plt.xlabel("Signal/Noise F555W",fontdict = font)
+plt.ylabel("Magnitude",fontdict = font)
+sope.scatter(snr555[cut435555[2]],f555Abs[cut435555[2]])
+
+soap  = plt.subplot2grid((2,2), (1,0), colspan = 1)
+#soap.update(left=0.05, right=0.48, wspace=0.05)
+plt.xlabel("Signal/Noise F625W",fontdict = font)
+plt.ylabel("Magnitude",fontdict = font)
+soap.scatter(snr625[cut625814[2]],f625Abs[cut625814[2]])
+
+squid = plt.subplot2grid((2,2), (1,1), colspan = 1)
+#squid.update(left=0.05, right=0.48, wspace=0.05)
+plt.xlabel("Signal/Noise F814W",fontdict = font)
+plt.ylabel("Magnitude",fontdict = font)
+squid.scatter(snr814[cut625814[2]],f814Abs[cut625814[2]])
+plt.savefig("AbsMagSN_.png")    
+"""
 ################################################### 
 ############ Save good arrays to a file ###########
+
 print "Pickling!"
 
 for n in range(len(cut435555)):
@@ -342,7 +375,9 @@ clos = []
 #                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[0])))
              
 #first = np.c_[xcoord[cut[0]]+.5 ,ycoord[cut[0]]+.5]
-
+cut435555.append(np.where((star <= 2) & (((snr435 >= 3) | (snr555 >= 3)) 
+                | ((snr625 >= 3) | (snr814 >= 3)))
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)))
 for i in range(len(xcoord[cut435555[0]])):
     circ.append('circle(')
     comm.append(',')
@@ -356,8 +391,9 @@ np.savetxt(folder +'/'+ title + 'temp.reg', np.c_[circ,xcoord[cut435555[0]]+.5,c
                '\nimage;' )
 np.savetxt(folder +'/'+ title + 'all.txt',np.c_[xcoord[cut435555[0]]+.5,ycoord[cut435555[0]]+.5],fmt = "%1.2f")
 print 'Files Saved'
-
+"""
 ######################
+"""
 first = np.c_[xcoord[cut435555[0]]+.5 ,ycoord[cut435555[0]]+.5] #combine to one array
 second= np.c_[xcoord[cut625814[0]]+.5 ,ycoord[cut625814[0]]+.5]
 # More flaws in this, removes too many of the good points :/

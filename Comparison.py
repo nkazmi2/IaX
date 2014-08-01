@@ -90,7 +90,7 @@ for i in range(3,6):
     f435f555_2.append(pickle.load(open('SN2008GE/sn2008ge_f435f555_sn'+ str(i) +'_rad2.p', 'rb')))    
     f625f814_2.append(pickle.load(open('SN2008GE/sn2008ge_f625f814_sn'+ str(i) +'_rad2.p', 'rb')))
 """
-""" 7.4 -> 7.6
+#""" 7.4 -> 7.6
 title      = 'SN08ha'
 radius     = [727.218,1454.436,2181.654]
 ytopmax    = -2.0
@@ -104,7 +104,8 @@ for i in range(3,6):
     f625f814_1.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad1.p', 'rb')))   
     f435f555_2.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad2.p', 'rb')))    
     f625f814_2.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad2.p', 'rb')))
-"""
+
+#"""
 """ 7.3 -> 7.7
 title      = 'SN10ae'
 radius     = [730,1450,2180]
@@ -121,7 +122,7 @@ for i in range(3,6):
     f625f814_2.append(pickle.load(open('SN2010AE/sn2010ae_f625f814_sn'+ str(i) +'_rad2.p', 'rb')))
 
 """
-#""" 7.7 -> 8.0
+""" 7.7 -> 8.0
 title      = 'SN10el'
 radius     = [730,1450,2180]
 
@@ -129,12 +130,12 @@ ytopmax    = -2.0
 ytopmin    = -8.0
 ybotmax    = -2.0
 ybotmin    = -8.0
-"""
-ytopmax    = -5.0
-ytopmin    = -9.0
-ybotmax    = -5.0
-ybotmin    = -9.0
-"""
+
+#ytopmax    = -5.0
+#ytopmin    = -9.0
+#ybotmax    = -5.0
+#ybotmin    = -9.0
+
 for i in range(3,6):
 
     f435f555_0.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_rad0.p', 'rb')))    
@@ -143,15 +144,15 @@ for i in range(3,6):
     f625f814_1.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_rad1.p', 'rb')))   
     f435f555_2.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_rad2.p', 'rb')))    
     f625f814_2.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_rad2.p', 'rb')))
-    """
-    f435f555_0.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad0.p', 'rb')))    
-    f625f814_0.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad0.p', 'rb')))    
-    f435f555_1.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad1.p', 'rb')))    
-    f625f814_1.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad1.p', 'rb')))   
-    f435f555_2.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad2.p', 'rb')))    
-    f625f814_2.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad2.p', 'rb')))
-    """
-#"""
+
+#    f435f555_0.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad0.p', 'rb')))    
+#    f625f814_0.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad0.p', 'rb')))    
+#    f435f555_1.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad1.p', 'rb')))    
+#    f625f814_1.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad1.p', 'rb')))   
+#    f435f555_2.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad2.p', 'rb')))    
+#    f625f814_2.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad2.p', 'rb')))
+
+"""
 #####################################################################
 
 print "Begin plotting Isochrones..."
@@ -249,6 +250,7 @@ for i in range(start,end):
                         c='k',marker='D')
         snt += 1
 
+#c1plt.fill([3,4,4,3], [2,2,4,4], 'b', alpha=0.2, edgecolor='r')
 ###########################################################################      
 l = plt.legend(prop = {'family' : 'serif'},loc=4)
 l.draw_frame(False)
@@ -348,7 +350,7 @@ for k in range(start,end):
                       label = 'S/N ' + str(snb) +' Radius ' + str(radius[0]) + " AU",  
                         c='k',marker='D')
         snb += 1
-
+#c2plt.fill([3,4,4,3], [2,2,4,4], 'b', alpha=0.2, edgecolor='r')
 ###########################################################################
 l = plt.legend(prop = {'family' : 'serif'},loc=4)
 l.draw_frame(False)
@@ -358,4 +360,4 @@ c2plt.set_ylim(bottom=ybotmax, top=ybotmin)
 
 print "Save and show plot : " + title + '_' + 'Z' + name[1:-7]+ '_Comparison.png'
 
-plt.savefig('Figures/'+title + '_' + 'Z' + name[1:-7]+ '_Comparison_red.png')
+plt.savefig('Figures/'+title + '_' + 'Z' + name[1:-7]+ '_Comparison_check.png')
