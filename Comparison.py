@@ -68,7 +68,7 @@ start      = 0 # start = 0 starts at S/N 3
 end        = 1 # end = 2 goes to S/N 4
 snt        = 3
 snb        = 3
-radius     = [450,750,1000,1500] 
+radius     = [450,750,1000,1500]#,2200] 
 f435f555_0 = []
 f625f814_0 = []
 f435f555_1 = []
@@ -77,6 +77,8 @@ f435f555_2 = []
 f625f814_2 = []
 f435f555_3 = []
 f625f814_3 = []
+f435f555_4 = []
+f625f814_4 = []
 
 """ 7.1 - > 7.4
 title      = 'SN08ge'
@@ -94,7 +96,7 @@ for i in range(3,6):
     f435f555_3.append(pickle.load(open('SN2008GE/sn2008ge_f435f555_sn'+ str(i) +'_rad3.p', 'rb')))    
     f625f814_3.append(pickle.load(open('SN2008GE/sn2008ge_f625f814_sn'+ str(i) +'_rad3.p', 'rb')))
 """
-""" 7.4 -> 7.6
+#""" 7.4 -> 7.6
 title      = 'SN08ha'
 ytopmax    = -2.0
 ytopmin    = -8.0
@@ -109,8 +111,10 @@ for i in range(3,6):
     f625f814_2.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad2.p', 'rb')))
     f435f555_3.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad3.p', 'rb')))    
     f625f814_3.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad3.p', 'rb')))
+    f435f555_4.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad4.p', 'rb')))    
+    f625f814_4.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad4.p', 'rb')))
 
-"""
+#"""
 """ 7.3 -> 7.7
 title      = 'SN10ae'
 ytopmax    = -1.0
@@ -128,7 +132,7 @@ for i in range(3,6):
     f625f814_3.append(pickle.load(open('SN2010AE/sn2010ae_f625f814_sn'+ str(i) +'_rad3.p', 'rb')))
 
 """
-#""" 7.7 -> 8.0
+""" 7.7 -> 8.0
 title      = 'SN10el'
 
 ytopmax    = -2.0
@@ -161,7 +165,7 @@ for i in range(3,6):
 #    f435f555_3.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad3.p', 'rb')))    
 #    f625f814_3.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad3.p', 'rb')))
 
-#"""
+"""
 #####################################################################
 
 print "Begin plotting Isochrones..."
@@ -238,27 +242,33 @@ elif (title == 'SN10el'):
 ###########################################################################
 
 for i in range(start,end):
-        #c1plt.errorbar(np.subtract(f435f555_3[i][0],   f435f555_3[i][1]),   
-        #               f435f555_3[i][1], f435f555_3[i][2],   f435f555_3[i][3], 
+        #c1plt.errorbar(np.subtract(f435f555_4[i][0],   f435f555_4[i][1]),   
+        #               f435f555_4[i][1], f435f555_4[i][2],   f435f555_4[i][3], 
         #                fmt=None, marker=None, mew=0 )
+        #c1plt.scatter(np.subtract(f435f555_4[i][0],   f435f555_4[i][1]),   
+        #              f435f555_4[i][1], label = 'S/N >= ' + str(snt) +' Radius ' + str(radius[4]) + " PC",  
+        #                c='c',marker='D')
+        c1plt.errorbar(np.subtract(f435f555_3[i][0],   f435f555_3[i][1]),   
+                       f435f555_3[i][1], f435f555_3[i][2],   f435f555_3[i][3], 
+                        fmt=None, marker=None, mew=0 )
         c1plt.scatter(np.subtract(f435f555_3[i][0],   f435f555_3[i][1]),   
                       f435f555_3[i][1], label = 'S/N >= ' + str(snt) +' Radius ' + str(radius[3]) + " PC",  
                         c='y',marker='D')
-        #c1plt.errorbar(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
-        #               f435f555_2[i][1], f435f555_2[i][2],   f435f555_2[i][3], 
-        #                fmt=None, marker=None, mew=0 )
+        c1plt.errorbar(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
+                       f435f555_2[i][1], f435f555_2[i][2],   f435f555_2[i][3], 
+                        fmt=None, marker=None, mew=0 )
         c1plt.scatter(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
                       f435f555_2[i][1], label = 'S/N >= ' + str(snt) +' Radius ' + str(radius[2]) + " PC",  
                         c='b',marker='D')
-        #c1plt.errorbar(np.subtract(f435f555_1[i][0],   f435f555_1[i][1]),  
-        #               f435f555_1[i][1], f435f555_1[i][2],   f435f555_1[i][3],
-        #                 fmt=None, ecolor="k", marker=None, mew=0 )
+        c1plt.errorbar(np.subtract(f435f555_1[i][0],   f435f555_1[i][1]),  
+                       f435f555_1[i][1], f435f555_1[i][2],   f435f555_1[i][3],
+                         fmt=None, ecolor="k", marker=None, mew=0 )
         c1plt.scatter(np.subtract(f435f555_1[i][0],   f435f555_1[i][1]),   
                       f435f555_1[i][1], label = 'S/N >= ' + str(snt) +' Radius ' + str(radius[1]) + " PC",  
                         c='r',marker='D')        
-        #c1plt.errorbar(np.subtract(f435f555_0[i][0],   f435f555_0[i][1]),  
-        #               f435f555_0[i][1], f435f555_0[i][2],   f435f555_0[i][3],
-        #                 fmt=None, ecolor="k", marker=None, mew=0 )
+        c1plt.errorbar(np.subtract(f435f555_0[i][0],   f435f555_0[i][1]),  
+                       f435f555_0[i][1], f435f555_0[i][2],   f435f555_0[i][3],
+                         fmt=None, ecolor="k", marker=None, mew=0 )
         c1plt.scatter(np.subtract(f435f555_0[i][0],   f435f555_0[i][1]),   
                       f435f555_0[i][1], label = 'S/N >= ' + str(snt) +' Radius ' + str(radius[0]) + " PC",  
                         c='k',marker='D')
@@ -279,7 +289,7 @@ plt.title(title + ': CMD for Z = 0.' + name[1:-7] + ', Y = 0.' + name[5:-4],
 c2plt = plt.subplot2grid((2,2), (1,0), colspan = 2)
 plt.gca().invert_yaxis()
 plt.xlabel("F625W - F814W",fontdict = font)
-plt.ylabel("F625W",fontdict = font)
+plt.ylabel("F814W",fontdict = font)
 #c2plt.plot(np.subtract(F625W[age70],  F814W[age70]),  F814W[age70],  
 #           'r--', label = 'Log(Age) = 7.0')
 if (title == 'SN08ge'):
@@ -345,27 +355,33 @@ elif (title == 'SN10el'):
 ###########################################################################
            
 for k in range(start,end):
-        #c2plt.errorbar(np.subtract(f625f814_3[k][0],   f625f814_3[k][1]),   
-        #               f625f814_3[k][1], f625f814_3[k][2],   f625f814_3[k][3], 
+        #c2plt.errorbar(np.subtract(f625f814_4[k][0],   f625f814_4[k][1]),   
+        #               f625f814_4[k][1], f625f814_4[k][2],   f625f814_4[k][3], 
         #                fmt=None, marker=None, mew=0 )
+        #c2plt.scatter(np.subtract(f625f814_4[k][0],   f625f814_4[k][1]),   f625f814_4[k][1],
+        #              label = 'S/N >= ' + str(snb) +' Radius ' + str(radius[4]) + " PC",  
+        #                c='c',marker='D')
+        c2plt.errorbar(np.subtract(f625f814_3[k][0],   f625f814_3[k][1]),   
+                       f625f814_3[k][1], f625f814_3[k][2],   f625f814_3[k][3], 
+                        fmt=None, marker=None, mew=0 )
         c2plt.scatter(np.subtract(f625f814_3[k][0],   f625f814_3[k][1]),   f625f814_3[k][1],
                       label = 'S/N >= ' + str(snb) +' Radius ' + str(radius[3]) + " PC",  
                         c='y',marker='D')
-        #c2plt.errorbar(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   
-        #               f625f814_2[k][1], f625f814_2[k][2],   f625f814_2[k][3], 
-        #                fmt=None, marker=None, mew=0 )
+        c2plt.errorbar(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   
+                       f625f814_2[k][1], f625f814_2[k][2],   f625f814_2[k][3], 
+                        fmt=None, marker=None, mew=0 )
         c2plt.scatter(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   f625f814_2[k][1],
                       label = 'S/N >= ' + str(snb) +' Radius ' + str(radius[2]) + " PC",  
                         c='b',marker='D')
-        #c2plt.errorbar(np.subtract(f625f814_1[k][0],   f625f814_1[k][1]),   
-        #               f625f814_1[k][1], f625f814_1[k][2],   f625f814_1[k][3], 
-        #                fmt=None, ecolor="k", marker=None, mew=0 )
+        c2plt.errorbar(np.subtract(f625f814_1[k][0],   f625f814_1[k][1]),   
+                       f625f814_1[k][1], f625f814_1[k][2],   f625f814_1[k][3], 
+                        fmt=None, ecolor="k", marker=None, mew=0 )
         c2plt.scatter(np.subtract(f625f814_1[k][0],   f625f814_1[k][1]),   f625f814_1[k][1],   
                       label = 'S/N >= ' + str(snb) +' Radius ' + str(radius[1]) + " PC",  
                         c='r',marker='D')
-        #c2plt.errorbar(np.subtract(f625f814_0[k][0],   f625f814_0[k][1]),   
-        #               f625f814_0[k][1], f625f814_0[k][2],   f625f814_0[k][3], 
-        #                fmt=None, ecolor="k", marker=None, mew=0 )
+        c2plt.errorbar(np.subtract(f625f814_0[k][0],   f625f814_0[k][1]),   
+                       f625f814_0[k][1], f625f814_0[k][2],   f625f814_0[k][3], 
+                        fmt=None, ecolor="k", marker=None, mew=0 )
         c2plt.scatter(np.subtract(f625f814_0[k][0],   f625f814_0[k][1]),   f625f814_0[k][1],   
                       label = 'S/N >= ' + str(snb) +' Radius ' + str(radius[0]) + " PC",  
                         c='k',marker='D')

@@ -13,30 +13,63 @@ Created on Mon Jun 16 10:34:33 2014
 
 from astropy.io import fits
 import numpy as np
-
 from numpy.linalg import inv
 import Image as pil
 import os
 
-x1 = 300
-y1 = 350
-x2 = 300
-y2 = 350        
-cent1 = 3399.971 #3400.000 #
-cent2 = 3371.539 #3371.000 #
+x1 = 1000
+y1 = 1000
+x2 = 1000
+y2 = 1000  
+ 
+#cent1 = 3399.500 #3399.971 #3400.000 #
+#cent2 = 3371.500 #3371.539 #3371.000 #
 #################################################################
 ######################## Functions ##############################
 #################################################################
 ######################## Save Fits ##############################
+#################################################################
 def savefig(f,box,combo,header):
-    #for k in range(len(quadrant)):
-    #fits.writeto(f[:-13] + "quad_" + str(k+1) + ".fits", quadrant[k] , clobber=True)
-    print "Creating file " + f[:-13] + "residual.fits"
-    fits.writeto(f[:-13]   + "residual.fits", box , header, clobber=True)   
+    ##for k in range(len(quadrant)):
+    ##fits.writeto(f[:-13] + "quad_" + str(k+1) + ".fits", quadrant[k] , clobber=True)
+    #print "Creating file " + f[:-13] + "residual.fits"
+    #fits.writeto(f[:-13]   + "residual.fits", box , header, clobber=True)   
     print "Creating file " + f[:-13] + "fullfig.fits"
-    fits.writeto(f[:-13]   + "fullfig.fits", combo, header, clobber=True)
     
-###################### Coordinates ############################         
+    fits.writeto(f[:-13]   + "subtest_2.fits", combo, header, clobber=True)
+    """    
+    print "Looking at standard dev"
+    
+    cent1 = 3399.00 
+    cent2 = 3371.00
+    one = []
+    two = []
+    the = []
+    fou = []
+    for a in range(100):
+        for b in range(100):
+            one = np.mean(combo[cent1+a][cent2+b])
+            two = np.mean(combo[cent1-a][cent2+b])
+            the = np.mean(combo[cent1-a][cent2-b])
+            fou = np.mean(combo[cent1+a][cent2-b])
+    print one, two, the, fou
+    dip = []
+    ole = []
+    bo  = []
+    ox  = []
+    reg = []
+    ion = []
+    for a in range(100):
+        for b in range(100): 
+            dip.append(np.sqrt((1/100)*(combo[cent1-a][cent2+b]-two)**2))
+            ole.append(np.sqrt((1/100)*(combo[cent1+a][cent2-b]-fou)**2))
+            reg.append(np.sqrt((1/100)*(combo[cent1+a][cent2+b]-one)**2))
+            ion.append(np.sqrt((1/100)*(combo[cent1-a][cent2-b]-the)**2))
+    np.savetxt("Lookat.txt", np.c_[dip,ole,reg,ion])
+    """
+#################################################################
+######################## Coordinates ############################
+#################################################################         
 def newCoord():
     print "Opening coordinate files..."
     name = 'sn2008ge_all.txt'
@@ -49,8 +82,8 @@ def newCoord():
     comm      = []
     #x1 = 300
     #y1 = 350        
-    #cent1 = 3400.000
-    #cent2 = 3371.000
+    cent1 = 3399.00 
+    cent2 = 3371.00
     adj1  = cent2-y1
     adj2  = cent1-x1
     print "Adjusting coordinates..."
@@ -73,13 +106,17 @@ def newCoord():
     print "Done with this bizz-nich"    # truely, I hope no ones reads my code
     
 def main():
+    #######################################################
     ################## File Names #########################
+    #######################################################
 
-    title    = ['sn2008ge_f435w_lacosmic.fits','sn2008ge_f555w_lacosmic.fits',
-                'sn2008ge_f625w_lacosmic.fits', 'sn2008ge_f814w_lacosmic.fits']
+    title    = ['sn2008ge_f814w_lacosmic.fits']
+    #['sn2008ge_f435w_lacosmic.fits','sn2008ge_f555w_lacosmic.fits',
+               # 'sn2008ge_f625w_lacosmic.fits', 'sn2008ge_f814w_lacosmic.fits']
 
+    #######################################################
     ################### Main Code #########################
-
+    #######################################################
     for m in range(len(title)):
         bx = []
         dx = []
@@ -97,11 +134,56 @@ def main():
         scidata = image[0].data 
         
         combo = np.array(scidata)
+        
+        if (title[m] == 'sn2008ge_f814w_lacosmic.fits'):
+            cent1 = 3400.0
+            cent2 = 3371.0
+        else:
+            cent1 = 3399.00 #3399.971 #3400.000 #
+            cent2 = 3371.00 #3371.539 #3371.000 #
+
+        """
+        # Looking at only the center of the galaxy
+        litt1 = 3400.00 - 300 
+        litt2 = 3371.00 - 300
+        bottotop = []
+        toptobot = []
+        for n in range(600):
+            for p in range(600):   
+                bottotop.append(scidata[litt1+n][litt2+p])
+                toptobot.append(scidata[litt1+600-n][litt2+600-p])
+                
+        lay     = np.reshape( bottotop , (600,600) )
+        ers     = np.reshape( toptobot , (600,600) )
+        
+        quad = np.flipud(np.fliplr(np.matrix( ers - lay )))
+        lay = np.matrix(lay)
+        ers = np.matrix(ers)
+        
+        fits.writeto("center.fits", quad, head, clobber=True)
+        fits.writeto("quad2.fits" , lay , head, clobber=True)
+        fits.writeto("quad4.fits" , ers , head, clobber=True)
+        """
         #scidata = np.asmatrix(scidata)
+        #print "Shape   ", np.shape(scidata)
         
-        ############### Crop and subtract ###############
+        #print scidata[cent1][cent2] 
+        scidata[cent1][cent2] = 0
+        #print scidata[cent1][cent2] 
+        #print "Center  ", scidata[cent1][cent2]
+        #print "OrgCen  ", scidata[3400][3371.0]
+        #print "OrgCen  ", scidata[3400][3372.0]
+        #print np.max(scidata)
         
+        #print scidata[np.where(scidata.argmax() == 10689040)]
+        #from numpy import unravel_index
+        #print unravel_index(scidata.argmax(), scidata.shape)
+        ###################################################
+        ############### Crop and subtract #################
+        ###################################################
+
         print "Begin subtraction process..."
+        print "Center Point: (", cent1, ', ' , cent2 ,")"
         for n in range(x1):
             for p in range(y1):   
                 bx.append(scidata[cent1-n][cent2+p])
@@ -116,7 +198,7 @@ def main():
                 cx.append(scidata[cent1-i][cent2-j])
                 #ax.append(scidata[3399.971+i][3371.539+j])
                 #cx.append(scidata[3399.971-i][3371.539-j])  
-                        
+        
         b     = np.reshape( bx , (x1,y1) )
         d     = np.reshape( dx , (x1,y1) )
         
@@ -134,7 +216,9 @@ def main():
         quad4 = np.matrix( b - d )
         quad4 = np.flipud(quad4)
         print "Calculation complete..."
-        ############## Combine the images ##############   
+        ###################################################
+        ############### Combine the images ################
+        ###################################################
         print "Combining pieces..."
         top   = np.hstack([quad2, quad1])    
         bot   = np.hstack([quad3, quad4])
@@ -142,12 +226,12 @@ def main():
     
         for t in range(x1*2):
             for u in range(y1*2):  
-                combo[cent1-x1+t][cent2-y1+u] = box[t,u] # so wrong
-        
-        ############### Save the images ################
-
-        print "Saving figure..."
+                combo[cent1-x1+t][cent2-y1+u] = box[t,u] 
+        ###################################################
+        ################ Save the images ##################
+        ###################################################
+        print "Begin saving figure..."
         savefig(title[m],box,combo,head)
 
-newCoord()  
+#newCoord()  
 main()       

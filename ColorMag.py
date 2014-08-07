@@ -112,7 +112,7 @@ radius   = [10.342,17.24,23.00,34.47] # 450,750,1000,1500
 
 """
 ##################### 2008ha ######################
-"""
+#"""
 folder   = "SN2008HA"
 name     = 'sn2008ha_new.phot'
 
@@ -136,8 +136,8 @@ dmod     = 31.64 #31.50 # value I got from NED
 xsn      = 1726.352
 ysn      = 3172.530
 
-radius   = [9.282,15.469,20.63,30.94] # 450,750,1000,1500
-"""
+radius   = [9.282,15.469,20.63,30.94,45] # 450,750,1000,1500
+#"""
 ##################### 2010ae ######################
 """
 
@@ -167,7 +167,7 @@ ysn      = 1931.995
 radius   = [14.171,23.62,31.50,47.236] # 450,750,1000,1500
 """
 ##################### 2010el ######################
-#"""    
+"""    
 folder   = "SN2010EL"
 name     = 'sn2010el_new.phot'
     
@@ -192,7 +192,7 @@ xsn      = 2418.859
 ysn      = 1570.826
 
 radius   = [18.62,31.03,41.38,62.065] # 450,750,1000,1500
-#"""
+"""
 ###################################################    
 ######### Open and read in the data file ##########
 
@@ -293,8 +293,41 @@ for m in range(3,6):
         rad.append(i)
         snr.append(m)
         
+
 ################################################### 
 ############ Save good arrays to a file ###########
+        
+cat = []
+cat.append(('Object', 'X pix', 'Y pix', 
+            'S/N 435', 'S/N 555', 'S/N 625', 'S/N 814',
+            'Mag 435', 'Mag 555', 'Mag 625', 'Mag 814',
+            'AbsMag 435', 'AbsMag 555', 'AbsMag 625', 'AbsMag 814',
+              star[cut435555[4]]   ,radius[4],
+              xcoord[cut435555[4]] ,ycoord[cut435555[4]],
+              snr435[cut435555[4]] ,snr555[cut435555[4]] ,
+              snr625[cut435555[4]] ,snr814[cut435555[4]] ,
+              f435mag[cut435555[4]],f555mag[cut435555[4]],
+              f625mag[cut435555[4]],f814mag[cut435555[4]],
+              f435Abs[cut435555[4]],f555Abs[cut435555[4]],
+              f625Abs[cut435555[4]],f814Abs[cut435555[4]],
+              #unc435[cut435555[0]] ,unc555[cut435555[0]] ,
+              #unc625[cut435555[0]] ,unc814[cut435555[0]] ,
+            'Object', 'X pix', 'Y pix', 
+            'S/N 435', 'S/N 555', 'S/N 625', 'S/N 814',
+            'Mag 435', 'Mag 555', 'Mag 625', 'Mag 814',
+            'AbsMag 435', 'AbsMag 555', 'AbsMag 625', 'AbsMag 814',
+              star[cut625814[4]]   ,radius[4],
+              xcoord[cut625814[4]] ,ycoord[cut625814[4]],
+              snr435[cut625814[4]] ,snr555[cut625814[4]] ,
+              snr625[cut625814[4]] ,snr814[cut625814[4]] ,
+              f435mag[cut625814[4]],f555mag[cut625814[4]],
+              f625mag[cut625814[4]],f814mag[cut625814[4]],
+              f435Abs[cut625814[4]],f555Abs[cut625814[4]],
+              f625Abs[cut625814[4]],f814Abs[cut625814[4]],
+              #unc435[cut625814[0]] ,unc555[cut625814[0]] ,
+              #unc625[cut625814[0]] ,unc814[cut625814[0]]
+              ))
+pickle.dump(cat, open(title + 'List.p', 'wb'))
 
 print "Pickling!"
 
@@ -395,34 +428,5 @@ np.savetxt(folder +'/'+ title + '435555.txt', first,fmt = "%1.2f")
 np.savetxt(folder +'/'+ title + '625814.txt', second,fmt = "%1.2f")
 """
 
-"""
-cat = []
-cat.append(('Object', 'X pix', 'Y pix', 
-            'S/N 435', 'S/N 555', 'S/N 625', 'S/N 814',
-            'Mag 435', 'Mag 555', 'Mag 625', 'Mag 814',
-            'AbsMag 435', 'AbsMag 555', 'AbsMag 625', 'AbsMag 814',
-              star[cut435555[0]]   ,xcoord[cut435555[0]] ,ycoord[cut435555[0]],
-              snr435[cut435555[0]] ,snr555[cut435555[0]] ,
-              snr625[cut435555[0]] ,snr814[cut435555[0]] ,
-              f435mag[cut435555[0]],f555mag[cut435555[0]],
-              f625mag[cut435555[0]],f814mag[cut435555[0]],
-              f435Abs[cut435555[0]],f555Abs[cut435555[0]],
-              f625Abs[cut435555[0]],f814Abs[cut435555[0]],
-              #unc435[cut435555[0]] ,unc555[cut435555[0]] ,
-              #unc625[cut435555[0]] ,unc814[cut435555[0]] ,
-            'Object', 'X pix', 'Y pix', 
-            'S/N 435', 'S/N 555', 'S/N 625', 'S/N 814',
-            'Mag 435', 'Mag 555', 'Mag 625', 'Mag 814',
-            'AbsMag 435', 'AbsMag 555', 'AbsMag 625', 'AbsMag 814',
-              star[cut625814[0]]   ,xcoord[cut625814[0]] ,ycoord[cut625814[0]],
-              snr435[cut625814[0]] ,snr555[cut625814[0]] ,
-              snr625[cut625814[0]] ,snr814[cut625814[0]] ,
-              f435mag[cut625814[0]],f555mag[cut625814[0]],
-              f625mag[cut625814[0]],f814mag[cut625814[0]],
-              f435Abs[cut625814[0]],f555Abs[cut625814[0]],
-              f625Abs[cut625814[0]],f814Abs[cut625814[0]],
-              #unc435[cut625814[0]] ,unc555[cut625814[0]] ,
-              #unc625[cut625814[0]] ,unc814[cut625814[0]]
-              ))
-pickle.dump(cat, open(title + 'List.p', 'wb'))
-"""
+
+

@@ -9,7 +9,7 @@ Read in the data, check which columns are which
 import numpy as np
 #"""
 # Looking at new.phot.columns files
-f = open('sn2010el_new.phot.columns','r')
+f = open('../SN2010AE/sn2010ae_new.phot.columns','r')
 info = f.read()
 f.close()
 print info
