@@ -16,11 +16,12 @@ import numpy as np
 from numpy.linalg import inv
 import Image as pil
 import os
+import matplotlib.pyplot as plt
 
 x1 = 1000
 y1 = 1000
-x2 = 1000
-y2 = 1000  
+cent1 = 3399.0 # 3400.0 #3399.971 
+cent2 = 3371.0 #3371.539 #
  
 #cent1 = 3399.500 #3399.971 #3400.000 #
 #cent2 = 3371.500 #3371.539 #3371.000 #
@@ -36,36 +37,80 @@ def savefig(f,box,combo,header):
     #fits.writeto(f[:-13]   + "residual.fits", box , header, clobber=True)   
     print "Creating file " + f[:-13] + "fullfig.fits"
     
-    fits.writeto(f[:-13]   + "subtest_2.fits", combo, header, clobber=True)
-    """    
+    #fits.writeto(f[:-13]   + "test8.fits", combo, header, clobber=True)
+    
+    #test1 is code as is
+    #test2 is:        quadI   = np.reshape(scidata[cent1-1:cent1+x1-1,cent2-1:cent2+y1-1], (x1,y1) )
+       # quadII  = np.flipud( np.reshape(scidata[cent1-x1-1:cent1-1,cent2-1:cent2+y1-1], (x1,y1) ) )
+       # quadIII = np.flipud( np.fliplr( np.reshape(scidata[cent1-x1-1:cent1-1,cent2-y1-1:cent2-1], (x1,y1) ) ) )
+       # quadIV  = np.fliplr( np.reshape(scidata[cent1-1:cent1+x1-1,cent2-y1-1:cent2-1], (x1,y1) ) ) 
+
+    #############################################################
+ 
+    mean = np.mean(combo[cent1-150:cent1+150,cent2-150:cent2+150])
+    standme = [] 
+    Xaxis = combo[cent1,cent2-150:cent2+150]
+    Yaxis = combo[cent1-150:cent1+150,cent2]
+    print len(Xaxis)
+    print len(Yaxis)
+    #for a in range(301):
+    #    for b in range(301): 
+    #      standme.append(np.sqrt(float((1/100.0)*(combo[cent1-150+a][cent2-150+b] - mean)**2)))
+    bar = (float((1/100.0)*(combo[cent1,cent2-150:cent2+150] - mean)**2))
+    print len(bar)       
+    #column = np.sqrt(float((1/100.0)*(combo[cent1,cent2-150:cent2+150] - mean)**2))
+    #standme = np.matrix(np.reshape(standme, (301,301)))
+    #plt.scatter(Xaxis,standme)
+    #plt.show()
+    """
     print "Looking at standard dev"
     
-    cent1 = 3399.00 
+    cent1 = 3400.00 
     cent2 = 3371.00
-    one = []
-    two = []
-    the = []
-    fou = []
-    for a in range(100):
-        for b in range(100):
-            one = np.mean(combo[cent1+a][cent2+b])
-            two = np.mean(combo[cent1-a][cent2+b])
-            the = np.mean(combo[cent1-a][cent2-b])
-            fou = np.mean(combo[cent1+a][cent2-b])
-    print one, two, the, fou
-    dip = []
-    ole = []
-    bo  = []
-    ox  = []
-    reg = []
-    ion = []
-    for a in range(100):
-        for b in range(100): 
-            dip.append(np.sqrt((1/100)*(combo[cent1-a][cent2+b]-two)**2))
-            ole.append(np.sqrt((1/100)*(combo[cent1+a][cent2-b]-fou)**2))
-            reg.append(np.sqrt((1/100)*(combo[cent1+a][cent2+b]-one)**2))
-            ion.append(np.sqrt((1/100)*(combo[cent1-a][cent2-b]-the)**2))
-    np.savetxt("Lookat.txt", np.c_[dip,ole,reg,ion])
+    
+    #intens = np.reshape(combo[cent1-150:cent1+150,cent2-150:cent2+150], (300,300) )
+    #meanss = np.mean(intens)
+    #print meanss
+    mean = np.mean(combo[cent1-150:cent1+150,cent2-150:cent2+150])
+    
+    #one = []
+    #two = []
+    #the = []
+    #fou = []
+    #tots = []
+    for a in range(301):
+        for b in range(301):
+            tots = np.mean(combo[cent1-150+a][cent2-150+b])
+            #one = np.mean(combo[cent1+a][cent2+b])
+            #two = np.mean(combo[cent1-a][cent2+b])
+            #the = np.mean(combo[cent1-a][cent2-b])
+            #fou = np.mean(combo[cent1+a][cent2-b])
+    #print one, two, the, fou
+    #print tots
+
+    #dip = []
+    #ole = []
+    #bo  = []
+    #ox  = []
+    #reg = []
+    #ion = []
+    standev = []
+    standme = []
+    for a in range(301):
+        for b in range(301): 
+            standev.append(np.sqrt(float((1/100.0)*(combo[cent1-150+a][cent2-150+b] - tots)**2)))
+            standme.append(np.sqrt(float((1/100.0)*(combo[cent1-150+a][cent2-150+b] - mean)**2)))
+            #box.append(HMM)            
+            #dip.append(np.sqrt((1/100)*(combo[cent1-a][cent2+b]-two)**2))
+            #ole.append(np.sqrt((1/100)*(combo[cent1+a][cent2-b]-fou)**2))
+            #reg.append(np.sqrt((1/100)*(combo[cent1+a][cent2+b]-one)**2))
+            #ion.append(np.sqrt((1/100)*(combo[cent1-a][cent2-b]-the)**2))
+    #print standev
+    #np.savetxt("StDev.txt", np.c_[dip,ole,reg,ion],fmt = "%1.4f")
+    standev = np.matrix(np.reshape(standev, (301,301)))
+    standme = np.matrix(np.reshape(standme, (301,301)))
+    np.savetxt("StDevMean1.txt", standev,fmt = "%1.4f")
+    np.savetxt("StDevMean2.txt", standme,fmt = "%1.4f")
     """
 #################################################################
 ######################## Coordinates ############################
@@ -110,18 +155,16 @@ def main():
     ################## File Names #########################
     #######################################################
 
-    title    = ['sn2008ge_f814w_lacosmic.fits']
+    title    =  ['sn2008ge_f814w_lacosmic.fits']
     #['sn2008ge_f435w_lacosmic.fits','sn2008ge_f555w_lacosmic.fits',
-               # 'sn2008ge_f625w_lacosmic.fits', 'sn2008ge_f814w_lacosmic.fits']
+    #             'sn2008ge_f625w_lacosmic.fits', 'sn2008ge_f814w_lacosmic.fits']
 
+   #
+  
     #######################################################
     ################### Main Code #########################
     #######################################################
     for m in range(len(title)):
-        bx = []
-        dx = []
-        ax = []
-        cx = []
         scidata  = []
         combo    = []
         print "Opening " + title[m]
@@ -131,17 +174,29 @@ def main():
         #name    = image[0].header['targname']
         head  = image[0].header #info() 
 
-        scidata = image[0].data 
+        scidata = image[0].data # takes fits file data and puts it into an array
         
-        combo = np.array(scidata)
+        combo = np.array(scidata) # do I even use this? YES! -.-       
         
-        if (title[m] == 'sn2008ge_f814w_lacosmic.fits'):
-            cent1 = 3400.0
-            cent2 = 3371.0
-        else:
-            cent1 = 3399.00 #3399.971 #3400.000 #
-            cent2 = 3371.00 #3371.539 #3371.000 #
+        print "Establishing quadrants..."
+        #if (title[m] == 'sn2008ge_f814w_lacosmic.fits'):
+        #    cent1 = 3399.0
+        #    cent2 = 3371.0
+        #else:
+        #    cent1 = 3399.0 #3399.971 #3400.000 #
+        #    cent2 = 3371.0 #3371.539 #3371.000 #
+        
+        print "Center Point: (", cent1, ', ' , cent2 ,")"
+        #quad1 = []
+        #quad2 = []
+        #quad3 = []
+        #quad4 = []
+        quadI   = np.reshape(scidata[cent1+1:cent1+x1+1,cent2+1:cent2+y1+1], (x1,y1) )
+        quadII  = np.flipud( np.reshape(scidata[cent1-x1-1:cent1-1,cent2+1:cent2+y1+1], (x1,y1) ) )
+        quadIII = np.flipud( np.fliplr( np.reshape(scidata[cent1-x1-1:cent1-1,cent2-y1-1:cent2-1], (x1,y1) ) ) )
+        quadIV  = np.fliplr( np.reshape(scidata[cent1+1:cent1+x1+1,cent2-y1-1:cent2-1], (x1,y1) ) ) 
 
+        #np.savetxt("HIII0.txt", scidata[3385:3415, 3355:3385],fmt = "%1.4f")
         """
         # Looking at only the center of the galaxy
         litt1 = 3400.00 - 300 
@@ -164,11 +219,12 @@ def main():
         fits.writeto("quad2.fits" , lay , head, clobber=True)
         fits.writeto("quad4.fits" , ers , head, clobber=True)
         """
+        """
         #scidata = np.asmatrix(scidata)
         #print "Shape   ", np.shape(scidata)
         
         #print scidata[cent1][cent2] 
-        scidata[cent1][cent2] = 0
+        #scidata[cent1][cent2] = 0
         #print scidata[cent1][cent2] 
         #print "Center  ", scidata[cent1][cent2]
         #print "OrgCen  ", scidata[3400][3371.0]
@@ -181,7 +237,10 @@ def main():
         ###################################################
         ############### Crop and subtract #################
         ###################################################
-
+        bx = []
+        dx = []
+        ax = []
+        cx = []
         print "Begin subtraction process..."
         print "Center Point: (", cent1, ', ' , cent2 ,")"
         for n in range(x1):
@@ -192,41 +251,46 @@ def main():
                 #dx.append(scidata[3400.000+n][3371.000-p])
                 #bx.append(scidata[3399.971-n][3371.539+p])
                 #dx.append(scidata[3399.971+n][3371.539-p])
+
         for i in range(x2):
             for j in range(y2):
                 ax.append(scidata[cent1+i][cent2+j])
                 cx.append(scidata[cent1-i][cent2-j])
                 #ax.append(scidata[3399.971+i][3371.539+j])
                 #cx.append(scidata[3399.971-i][3371.539-j])  
-        
+
         b     = np.reshape( bx , (x1,y1) )
         d     = np.reshape( dx , (x1,y1) )
-        
+   
         a     = np.reshape( ax , (x2,y2) )
         c     = np.reshape( cx , (x2,y2) )
-                        
-        quad1 = np.matrix( a - c )
-        
-        quad2 = np.matrix( d - b )
+        """
+        print "Begin subtraction process..."
+        quad1 = np.matrix( quadI   - quadIII )
+
+        quad2 = np.matrix( quadIV  - quadII  )
         quad2 = np.fliplr(quad2)
-                        
-        quad3 = np.matrix( c - a ) 
+    
+        quad3 = np.matrix( quadIII - quadI   ) 
         quad3 = np.fliplr(np.flipud(quad3))
                         
-        quad4 = np.matrix( b - d )
+        quad4 = np.matrix( quadII  - quadIV  )
         quad4 = np.flipud(quad4)
+        
         print "Calculation complete..."
         ###################################################
         ############### Combine the images ################
         ###################################################
         print "Combining pieces..."
+        #top   = np.hstack([quadII, quadI])    
+        #bot   = np.hstack([quadIII, quadIV])
         top   = np.hstack([quad2, quad1])    
         bot   = np.hstack([quad3, quad4])
         box   = np.vstack((bot,top))
     
         for t in range(x1*2):
             for u in range(y1*2):  
-                combo[cent1-x1+t][cent2-y1+u] = box[t,u] 
+                combo[cent1-x1+t,cent2-y1+u]= box[t,u] 
         ###################################################
         ################ Save the images ##################
         ###################################################
