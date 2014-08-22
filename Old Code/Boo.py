@@ -5,15 +5,31 @@ Created on Fri May 30 09:58:19 2014
 @author: Nova
 """
 import numpy as np
-import pyregion
-###
+#import pyregion
+
+folder   = "SN2008HA"
+name     = 'sn2008ha_new.phot'
+print "Open file"
+data = np.loadtxt('../' +folder + '/' + name)
+print "Set up array"
+sharp   = data[:, 6]
+roond   = data[:, 7] # round is already a special word
+crowd   = data[:, 9]
+cut = np.where(sharp <= 3)
+DataOut = np.array(np.c_[sharp, sharp[cut],roond[cut],crowd[cut]])
+print DataOut
+print "This is stupid"
+np.savetxt('test.txt', DataOut, fmt = "%1.4f", header ='Sharp Round Crowd')
+
+#data = np.load("../quick_sub.py")
+#print data
 """
-one = np.loadtxt('one.txt')
-two = np.loadtxt('two.txt')
-ich = []
-ich = np.where(list(np.any(x not in two for x in one) and np.any(y not in two for y in one)))
-print one[ich]
-"""
+#one = np.loadtxt('one.txt')
+#two = np.loadtxt('two.txt')
+#ich = []
+#ich = np.where(list(np.any(x not in two for x in one) and np.any(y not in two for y in one)))
+#print one[ich]
+
 data = np.loadtxt("../SN2008HA/sn2008ha_new.phot")
 data    = np.array(data)
 data    = data.astype(float)
@@ -58,7 +74,7 @@ eep = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3) & ((((xsn - xcoord)**
 #list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
 print "Filter   ", len(xcoord[ich])
 print "No Filter", len(xcoord[eep])
-
+"""
 """
 import pickle
 #import glob

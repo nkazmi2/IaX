@@ -127,18 +127,26 @@ circ = []
 comm = []
 clos = []
 
-cut.append(np.where((star <= 2) & (sharp >= 0) &#(crowd <= 1 ) &
+sharpmax = np.mean(sharp) + .5
+sharpmin = np.mean(sharp) - .5
+
+roundmax = np.mean(roond) + 1
+
+cut.append(np.where((star <= 2) & (crowd <= .3 ) & 
+                (sharp <= sharpmax) & (sharp >= sharpmin) & 
+                (roond <= roundmax) & 
                 (((snr435 >= 3) | (snr555 >= 3)) |
                 ((snr625 >= 3) | (snr814 >= 3)))
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)))
+
 for i in range(len(xcoord[cut[0]])):
     circ.append('circle(')
     comm.append(',')
     clos.append(',2)')
         
-np.savetxt(folder +'/'+ title + 'sharp.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
+np.savetxt(folder +'/'+ title + 'filter.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
-               comments = 'global color=yellow dashlist=8 3 width=1'
+               comments = 'global color=red dashlist=8 3 width=1'
                ' font="helvetica 10 normal" select=1' \
                ' highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1' \
                '\nimage;' )

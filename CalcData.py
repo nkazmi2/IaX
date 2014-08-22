@@ -214,6 +214,10 @@ star    = data[:,10] # type
 #SNR     = data[:, 5] # general signal to noise
 #CHI     = data[:, 4] # general chi for fit 
 
+sharp   = data[:, 6]
+roond   = data[:, 7] # round is already a special word
+crowd   = data[:, 9]
+
 f435mag = data[:,15] # instramental VEGAMAG magnitude
 f555mag = data[:,28]
 f625mag = data[:,41]
@@ -280,25 +284,76 @@ for j in range(len(save)):
 print "Applying contrains to SN Data..."
 snr = []
 rad = []
+
+sharpmax = np.mean(sharp) + .5
+sharpmin = np.mean(sharp) - .5
+
+roundmax = np.mean(roond) + 1
+
 for m in range(3,6):
     for i in range(len(radius)):
-        cut435555.append(np.where((star <= 2) & ((snr435 >= m) | (snr555 >= m)) & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     &
-                    (snr435 >= 3) & (snr555 >= 3) & 
-                    list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-        cut625814.append(np.where((star <= 2) & ((snr625 >= m) | (snr814 >= m)) & 
-                    ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
-                    (snr625 >= 3) & (snr814 >= 3)  & 
-                    list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
+        cut435555.append(np.where((star <= 2) & (crowd <= .3 ) & 
+                (sharp <= sharpmax) & (sharp >= sharpmin) & 
+                (roond <= roundmax) & 
+                ((snr435 >= m) | (snr555 >= m)) & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     &
+                (snr435 >= 3) & (snr555 >= 3) & 
+                list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
+        cut625814.append(np.where((star <= 2) & (crowd <= .3 ) & 
+                (sharp <= sharpmax) & (sharp >= sharpmin) & 
+                (roond <= roundmax) & 
+                ((snr625 >= m) | (snr814 >= m)) & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
+                (snr625 >= 3) & (snr814 >= 3)  & 
+                list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
         rad.append(i)
         snr.append(m)
         
 
 ################################################### 
 ############ Save good arrays to a file ###########
+
+
+print "Pickling!"
+
+for n in range(len(cut435555)):
+    snr435_555.append(( f435Abs[cut435555[n]],f555Abs[cut435555[n]], 
+                       unc555[cut435555[n]],
+                        (unc435[cut435555[n]]**2 + unc555[cut435555[n]]**2)**.5 ))
+    snr625_814.append(( f625Abs[cut625814[n]],f814Abs[cut625814[n]], 
+                       unc625[cut625814[n]],
+                        (unc625[cut625814[n]]**2 + unc814[cut625814[n]]**2)**.5 ))
+    pickle.dump( snr435_555[n], open(folder + '/' + title + 'f435f555_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+    pickle.dump( snr625_814[n], open(folder + '/' + title + 'f625f814_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+
+print "Pickled."
+
+print "Save into text file"
+dataOut_1 = np.array(np.c_[star[cut435555[4]]  ,
+    xcoord[cut435555[4]] ,ycoord[cut435555[4]] ,
+    snr435[cut435555[4]] ,snr555[cut435555[4]] ,
+    snr625[cut435555[4]] ,snr814[cut435555[4]] ,
+    f435mag[cut435555[4]],f555mag[cut435555[4]],
+    f625mag[cut435555[4]],f814mag[cut435555[4]],
+    f435Abs[cut435555[4]],f555Abs[cut435555[4]],
+    f625Abs[cut435555[4]],f814Abs[cut435555[4]]])
+np.savetxt(folder +'/'+ title + 'cut435555.txt', dataOut_1 , fmt = "%1.4f",
+    header ='Object Xpix Ypix S/N 435 S/N 555 S/N 625 S/N 814 Mag 435 Mag 555 Mag 625 Mag 814 AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814')
+    
+dataOut_2 = np.array(np.c_[star[cut625814[4]] ,
+    xcoord[cut625814[4]] ,ycoord[cut625814[4]],
+    snr435[cut625814[4]] ,snr555[cut625814[4]] ,
+    snr625[cut625814[4]] ,snr814[cut625814[4]] ,
+    f435mag[cut625814[4]],f555mag[cut625814[4]],
+    f625mag[cut625814[4]],f814mag[cut625814[4]],
+    f435Abs[cut625814[4]],f555Abs[cut625814[4]],
+    f625Abs[cut625814[4]],f814Abs[cut625814[4]]])    
+np.savetxt(folder +'/'+ title + 'cut625814.txt', dataOut_2 , fmt = "%1.4f",
+    header ='Object Xpix Ypix S/N 435 S/N 555 S/N 625 S/N 814 Mag 435 Mag 555 Mag 625 Mag 814 AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814')
         
+"""    
 cat = []
-cat.append(('Object', 'X pix', 'Y pix', 
+cat = ('Object', 'X pix', 'Y pix', 
             'S/N 435', 'S/N 555', 'S/N 625', 'S/N 814',
             'Mag 435', 'Mag 555', 'Mag 625', 'Mag 814',
             'AbsMag 435', 'AbsMag 555', 'AbsMag 625', 'AbsMag 814',
@@ -326,23 +381,10 @@ cat.append(('Object', 'X pix', 'Y pix',
               f625Abs[cut625814[4]],f814Abs[cut625814[4]],
               #unc435[cut625814[0]] ,unc555[cut625814[0]] ,
               #unc625[cut625814[0]] ,unc814[cut625814[0]]
-              ))
-pickle.dump(cat, open(title + 'List.p', 'wb'))
+              )
+np.savetxt(folder +'/'+ title + 'List.txt', cat,fmt = "%s")
 
-print "Pickling!"
-
-for n in range(len(cut435555)):
-    snr435_555.append(( f435Abs[cut435555[n]],f555Abs[cut435555[n]], 
-                       unc555[cut435555[n]],
-                        (unc435[cut435555[n]]**2 + unc555[cut435555[n]]**2)**.5 ))
-    snr625_814.append(( f625Abs[cut625814[n]],f814Abs[cut625814[n]], 
-                       unc625[cut625814[n]],
-                        (unc625[cut625814[n]]**2 + unc814[cut625814[n]]**2)**.5 ))
-    pickle.dump( snr435_555[n], open(folder + '/' + title + 'f435f555_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
-    pickle.dump( snr625_814[n], open(folder + '/' + title + 'f625f814_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
-
-print "Pickled."
-
+""" 
 ############ Save coordinates to a file ###########
 """
 circ = []
