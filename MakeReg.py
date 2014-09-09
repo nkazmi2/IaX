@@ -119,7 +119,6 @@ snr814  = data[:,58]
 xcoord  = data[:, 2]
 ycoord  = data[:, 3]
 
-
 ################################################### 
 ############ Save coordinates to a file ###########
 print "Choppin some SN-suey"
@@ -130,21 +129,24 @@ clos = []
 sharpmax = np.mean(sharp) + .5
 sharpmin = np.mean(sharp) - .5
 
-roundmax = np.mean(roond) + 1
+roundmax = np.mean(roond) + .8
 
-cut.append(np.where((star <= 2) & (crowd <= .3 ) & 
+cut.append(np.where((star <= 2)     & (crowd <= .5 ) & 
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
                 (((snr435 >= 3) | (snr555 >= 3)) |
-                ((snr625 >= 3) | (snr814 >= 3)))
+                ((snr625 >= 3) | (snr814 >= 3))) &
+                (((snr435 <= 30) & (snr555 <= 30)) |
+                ((snr625 <= 30) & (snr814 <= 30)))
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)))
 
+"""
 for i in range(len(xcoord[cut[0]])):
     circ.append('circle(')
     comm.append(',')
     clos.append(',2)')
         
-np.savetxt(folder +'/'+ title + 'filter.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
+np.savetxt(folder +'/'+ title + 'yup.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
                comments = 'global color=red dashlist=8 3 width=1'
                ' font="helvetica 10 normal" select=1' \
@@ -152,3 +154,23 @@ np.savetxt(folder +'/'+ title + 'filter.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,
                '\nimage;' )
 #np.savetxt(folder +'/'+ title + 'all.txt',np.c_[xcoord[cut435555[0]]+.5,ycoord[cut435555[0]]+.5],fmt = "%1.2f")
 print 'Files Saved'
+"""
+
+print "Mean Sharp Value " + title[:-1] + " : " + str(np.mean(sharp) - .5) + " , " + str(np.mean(sharp) + .5)
+print "Sharp : " + str(data[:,20][cut[0]])
+print "Mean Round Value " + title[:-1] + " : " + str(np.mean(roond) + .8)
+print "Round : " + str(data[:,21][cut[0]])
+print "Crowd : " + str(data[:,22][cut[0]])
+"""
+print data[:,33][cut[0]]
+print data[:,34][cut[0]]
+print data[:,35][cut[0]]
+
+print data[:,46][cut[0]]
+print data[:,47][cut[0]] 
+print data[:,58][cut[0]]
+
+print data[:,59][cut[0]]
+print data[:,60][cut[0]]
+print data[:,61][cut[0]]
+"""

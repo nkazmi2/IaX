@@ -136,7 +136,7 @@ dmod     = 31.64 #31.50 # value I got from NED
 xsn      = 1726.352
 ysn      = 3172.530
 
-radius   = [9.282,15.469,20.63,30.94,45] # 450,750,1000,1500
+radius   = [9.282,15.469,20.63,30.94,45] # 450,750,1000,1500,2200
 #"""
 ##################### 2010ae ######################
 """
@@ -164,7 +164,7 @@ dmod     = 30.58
 xsn      = 1796.640
 ysn      = 1931.995
 
-radius   = [14.171,23.62,31.50,47.236] # 450,750,1000,1500
+radius   = [14.171,23.62,31.50,47.236,67.295] # 450,750,1000,1500,2200
 """
 ##################### 2010el ######################
 """    
@@ -191,7 +191,7 @@ dmod     = 29.99
 xsn      = 2418.859
 ysn      = 1570.826
 
-radius   = [18.62,31.03,41.38,62.065] # 450,750,1000,1500
+radius   = [18.62,31.03,41.38,62.065,91.0287] # 450,750,1000,1500,2200
 """
 ###################################################    
 ######### Open and read in the data file ##########
@@ -240,6 +240,8 @@ snr814  = data[:,58]
 
 xcoord  = data[:, 2]
 ycoord  = data[:, 3]
+
+#data.close()
 ################################################### 
 ########### Calculate Absolute Magnitude ##########
 
@@ -253,7 +255,9 @@ f814Abs = f814mag - dmod - ACS814 #- H814
 ################################################### 
 ########### Deal with bad points ##########
 
-identify = pyregion.open(folder + '/'+ title +'prog.reg')
+#identify = pyregion.open(folder + '/'+ title +'prog.reg')
+identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha sn10ae
+#identify = pyregion.open(folder + '/'+ title +'negsnr.reg') #sn08ha
 r = pyregion.open(folder + '/'+ title +'coord.reg')
 save = []
 badX = []
@@ -263,6 +267,8 @@ fix  = []
 for i in range(len(identify)):
     if (pyregion.ShapeList(identify[i].attr[1].get("color"))  == ['y', 'e', 'l', 'l', 'o', 'w']):
         fix.append(i)
+    #yellow is good
+    #cyan is bad
         
 for i in range(len(fix)):
     r[fix[i]].attr[1]["color"] = 'yellow'
@@ -275,7 +281,9 @@ for i in range(len(r)):
 for j in range(len(save)):
     badX.append(r[save[j]].coord_list[0] - .5)
     badY.append(r[save[j]].coord_list[1] - .5)
-
+    
+#identify.close()
+#r.close()
 ################################################### 
 ##### Find correct color magnitudes make cuts #####
 # So many for loops @.@ 
@@ -285,31 +293,51 @@ print "Applying contrains to SN Data..."
 snr = []
 rad = []
 
+print "Mean Sharp Value " + title[:-1] + " : " + str(np.mean(sharp))
+print "Mean Round Value " + title[:-1] + " : " + str(np.mean(roond))
+
 sharpmax = np.mean(sharp) + .5
 sharpmin = np.mean(sharp) - .5
 
-roundmax = np.mean(roond) + 1
+roundmax = np.mean(roond) + .8
 
 for m in range(3,6):
     for i in range(len(radius)):
-        cut435555.append(np.where((star <= 2) & (crowd <= .3 ) & 
+        cut435555.append(np.where((star <= 2)   & (crowd <= .5 ) & 
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
                 ((snr435 >= m) | (snr555 >= m)) & 
-                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     &
-                (snr435 >= 3) & (snr555 >= 3) & 
-                list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-        cut625814.append(np.where((star <= 2) & (crowd <= .3 ) & 
+                (snr435 >= 3) & (snr555 >= 3)  & 
+                ((snr435 <= 30) & (snr555 <= 30) & (snr625 <= 30) & (snr814 <= 30)) & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   ))#   
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
+        cut625814.append(np.where((star <= 2)   & (crowd <= .5 ) & 
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
                 ((snr625 >= m) | (snr814 >= m)) & 
-                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])     & 
-                (snr625 >= 3) & (snr814 >= 3)  & 
-                list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
+                (snr625 >= 3) & (snr814 >= 3)   & 
+                ((snr435 <= 30) & (snr555 <= 30) & (snr625 <= 30) & (snr814 <= 30)) & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   ))#     
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
         rad.append(i)
         snr.append(m)
-        
+"""
+print data[:,22][cut435555[4]]
+print data[:,23][cut435555[4]]
+print data[:,24][cut435555[4]]
 
+print data[:,35][cut435555[4]]
+print data[:,36][cut435555[4]]
+print data[:,37][cut435555[4]]
+
+print data[:,48][cut625814[4]]
+print data[:,49][cut625814[4]]
+print data[:,50][cut625814[4]]
+
+print data[:,61][cut625814[4]]
+print data[:,62][cut625814[4]]
+print data[:,63][cut625814[4]]
+"""
 ################################################### 
 ############ Save good arrays to a file ###########
 
@@ -329,27 +357,41 @@ for n in range(len(cut435555)):
 print "Pickled."
 
 print "Save into text file"
+yax1 = []
+yax2 = []
+#print "top"
+#print f435Abs[cut435555[4]] - f555Abs[cut435555[4]]
+#print "bottom"
+#print f625Abs[cut625814[4]] - f814Abs[cut625814[4]]
 dataOut_1 = np.array(np.c_[star[cut435555[4]]  ,
     xcoord[cut435555[4]] ,ycoord[cut435555[4]] ,
+    (f435Abs[cut435555[4]] - f555Abs[cut435555[4]]),
     snr435[cut435555[4]] ,snr555[cut435555[4]] ,
     snr625[cut435555[4]] ,snr814[cut435555[4]] ,
     f435mag[cut435555[4]],f555mag[cut435555[4]],
     f625mag[cut435555[4]],f814mag[cut435555[4]],
     f435Abs[cut435555[4]],f555Abs[cut435555[4]],
-    f625Abs[cut435555[4]],f814Abs[cut435555[4]]])
-np.savetxt(folder +'/'+ title + 'cut435555.txt', dataOut_1 , fmt = "%1.4f",
-    header ='Object Xpix Ypix S/N 435 S/N 555 S/N 625 S/N 814 Mag 435 Mag 555 Mag 625 Mag 814 AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814')
+    f625Abs[cut435555[4]],f814Abs[cut435555[4]],
+    crowd[cut435555[4]],data[:,22][cut435555[4]],
+    sharp[cut435555[4]],data[:,20][cut435555[4]],
+    roond[cut435555[4]],data[:,21][cut435555[4]]]) 
+np.savetxt(folder +'/'+ title + 'cut435555.txt', dataOut_1 ,delimiter='   ', fmt = "%1.4f",
+    header ='Object Xpix        Ypix        Sub S/N 435 S/N 555 S/N 625 S/N 814 Mag 435 Mag 555 Mag 625 Mag 814 AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 Sub Crowd Sharp Round')
     
 dataOut_2 = np.array(np.c_[star[cut625814[4]] ,
     xcoord[cut625814[4]] ,ycoord[cut625814[4]],
+    (f625Abs[cut625814[4]] - f814Abs[cut625814[4]]),
     snr435[cut625814[4]] ,snr555[cut625814[4]] ,
     snr625[cut625814[4]] ,snr814[cut625814[4]] ,
     f435mag[cut625814[4]],f555mag[cut625814[4]],
     f625mag[cut625814[4]],f814mag[cut625814[4]],
     f435Abs[cut625814[4]],f555Abs[cut625814[4]],
-    f625Abs[cut625814[4]],f814Abs[cut625814[4]]])    
-np.savetxt(folder +'/'+ title + 'cut625814.txt', dataOut_2 , fmt = "%1.4f",
-    header ='Object Xpix Ypix S/N 435 S/N 555 S/N 625 S/N 814 Mag 435 Mag 555 Mag 625 Mag 814 AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814')
+    f625Abs[cut625814[4]],f814Abs[cut625814[4]],
+    crowd[cut625814[4]],data[:,22][cut625814[4]],
+    sharp[cut625814[4]],data[:,20][cut625814[4]],
+    roond[cut625814[4]],data[:,21][cut625814[4]]])    
+np.savetxt(folder +'/'+ title + 'cut625814.txt', dataOut_2 ,delimiter='   ', fmt = "%1.4f",
+    header ='Object Xpix        Ypix        Sub S/N 435 S/N 555 S/N 625 S/N 814 Mag 435 Mag 555 Mag 625 Mag 814 AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 Sub Crowd Sharp Round')
         
 """    
 cat = []
@@ -413,6 +455,7 @@ np.savetxt(folder +'/'+ title + 'temp.reg', np.c_[circ,xcoord[cut435555[0]]+.5,c
 np.savetxt(folder +'/'+ title + 'all.txt',np.c_[xcoord[cut435555[0]]+.5,ycoord[cut435555[0]]+.5],fmt = "%1.2f")
 print 'Files Saved'
 """
+##################################################################
 """
 h = [2, 5] # height of the plotted figure
 plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
@@ -422,25 +465,25 @@ supe  = plt.subplot2grid((2,2), (0,0), colspan = 1)
 #supe.update(left=0.05, right=0.48, wspace=0.05)
 plt.xlabel("Signal/Noise F435W",fontdict = font)
 plt.ylabel("Magnitude",fontdict = font)
-supe.scatter(snr435[cut435555[2]],f435Abs[cut435555[2]])
+supe.scatter(snr435[cut435555[4]],f435Abs[cut435555[4]])
 
 sope  = plt.subplot2grid((2,2), (0,1), colspan = 1)
 #sope.update(left=0.05, right=0.48, wspace=0.05)
 plt.xlabel("Signal/Noise F555W",fontdict = font)
 plt.ylabel("Magnitude",fontdict = font)
-sope.scatter(snr555[cut435555[2]],f555Abs[cut435555[2]])
+sope.scatter(snr555[cut435555[4]],f555Abs[cut435555[4]])
 
 soap  = plt.subplot2grid((2,2), (1,0), colspan = 1)
 #soap.update(left=0.05, right=0.48, wspace=0.05)
 plt.xlabel("Signal/Noise F625W",fontdict = font)
 plt.ylabel("Magnitude",fontdict = font)
-soap.scatter(snr625[cut625814[2]],f625Abs[cut625814[2]])
+soap.scatter(snr625[cut625814[4]],f625Abs[cut625814[4]])
 
 squid = plt.subplot2grid((2,2), (1,1), colspan = 1)
 #squid.update(left=0.05, right=0.48, wspace=0.05)
 plt.xlabel("Signal/Noise F814W",fontdict = font)
 plt.ylabel("Magnitude",fontdict = font)
-squid.scatter(snr814[cut625814[2]],f814Abs[cut625814[2]])
+squid.scatter(snr814[cut625814[4]],f814Abs[cut625814[4]])
 plt.savefig("AbsMagSN_.png")    
 """
 ######################

@@ -4,6 +4,47 @@ Created on Fri May 30 09:58:19 2014
 
 @author: Nova
 """
+#from pylab import *
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d.axes3d import Axes3D
+
+fig = plt.figure(figsize=(10,10))
+
+# `ax` is a 3D-aware axis instance because of the projection='3d' keyword argument to add_subplot
+#ax = fig.add_subplot(1, 1, 1, projection='3d')
+ax = Axes3D(fig)
+
+z = np.linspace(0, 1, 100)
+x = z * np.sin(20 * z)
+y = z * np.cos(20 * z)
+
+c = x + y
+
+ax.scatter(x, y, z, c=c)
+
+#p = ax.plot_surface(X, Y, Z, rstride=4, cstride=4, linewidth=0)
+
+## surface_plot with color grading and color bar
+#ax = fig.add_subplot(1, 2, 2, projection='3d')
+#p = ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+#cb = fig.colorbar(p, shrink=0.5)
+
+""""
+fig = plt.figure()
+ax = fig.add_subplot(111)
+
+t = np.arange(0.0, 5.0, 0.01)
+s = np.cos(2*np.pi*t)
+line, = ax.plot(t, s, lw=2)
+
+ax.annotate('local max', xy=(2, 1), xytext=(3, 1.5),
+            arrowprops=dict(facecolor='black', shrink=0.05),
+            )
+
+ax.set_ylim(-2,2)
+plt.show()
+
 import numpy as np
 #import pyregion
 
@@ -23,6 +64,7 @@ np.savetxt('test.txt', DataOut, fmt = "%1.4f", header ='Sharp Round Crowd')
 
 #data = np.load("../quick_sub.py")
 #print data
+"""
 """
 #one = np.loadtxt('one.txt')
 #two = np.loadtxt('two.txt')
