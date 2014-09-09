@@ -1,0 +1,79 @@
+[10]
+
+A luminous, blue progenitor system for a type-Iax supernova
+
+The leading models for SN Iax are thermonuclear explosions of
+accreting carbon-oxygen white dwarfs (C/O WD) that do not
+completely unbind the star, implying they are “less successful"
+cousins of normal SN Ia, where complete disruption is observed.
+
+SNIax are found preferentially in young, star-forming galaxies
+
+SN2008ge lacks hydrogen/helium, "favours a white dwarf progenitor"
+^is euro spelling preferred in science papers?
+SN2012Z, 2005-2006 & 2010 observations, progenitor could be of
+low luminosity 
+Fig3. SN2012Z CMD, adopting a metallicity of 0.87 solar
+Includes tables of plotted stars and magnitudes
+Figures have reddening vector
+
+[11]
+
+best model for these SNe continues to be a deflagration
+of a C/O white dwarf (WD)
+
+µ = 31.64±0.15 mag and D = 21.3±1.5 Mpc,
+
+Close analysis of 8 stars (without "bias" - what are the biases)
+S1 - s/n of 6.9 in f814w. s/n of 1.8 f625w
+>> Redder and bluer stars, pg 3
+
+There are four scenarios for this source: it is
+unrelated to SN 2008ha, it is emission from the SN itself,
+it is the luminous remnant of the WD progenitor, or it
+is the companion star to the WD.
+^^ daymmnn
+VV oh snap
+(1) S1 is not the companion
+star of in the SN 2008ha progenitor system and the blue
+He-star companion has a luminosity below our current
+limits, (2) S1 was a blue He star and the SN significantly
+altered its appearance (which we consider unlikely), (3)
+the blue emission from the SN 2012Z progenitor system
+was from theWD accretion disk (a super-soft source) and
+the companion star is red and lower luminosity like S1
+(which McCully et al. 2014b consider unlikely), (4) S1 is
+a He red giant, simply a slightly more evolved version of
+the companion star for SN 2012Z, or (5) SNe Iax have a
+variety of progenitor systems.
+
+S1: it is not directly
+related to SN 2008ha, it is the remnant of the WD that
+produced SN 2008ha, or it is the companion star to the
+WD that produced SN 2008ha.
+
+[12]
+longer but surprisingly easier to read
+
+Overall
+the shape of the optical light curves are exceedingly similar, with
+perhaps the only subtle difference being that SN 2012Z appears
+to rise to maximum brightness at a slightly faster rate. This is
+consistent with the 56Ni being distributed somewhat closer to
+the surface, leading to shorter diffusion times.
+
+PDDs are similar to deflagrations, but have a detonation
+phase which produces a layered structure without requiring a
+bound remnant. Because PDD models may vary in the ratio of
+energy released to binding energy (Quimby et al. 2007) they produce
+a wide range of 56Ni masses.
+
+model the
+SN Iax class should aim to provide robust radiative transfer calculations
+in order to compare to the detailed optical and NIR
+spectroscopic sequences now being routinely obtained at both
+early and late phases.
+
+"we attribute the ˜ 7400 °A feature
+to a blend of a handful of lines, including [Ca ii] 7291,
+7324 and [Fe ii[ 7155. Foley et al. (2013)" typos
