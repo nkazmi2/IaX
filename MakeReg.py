@@ -168,7 +168,7 @@ print data[:,35][cut[0]]
 
 print data[:,46][cut[0]]
 print data[:,47][cut[0]] 
-print data[:,58][cut[0]]
+print data[:,48][cut[0]]
 
 print data[:,59][cut[0]]
 print data[:,60][cut[0]]

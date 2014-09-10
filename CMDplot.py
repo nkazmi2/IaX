@@ -100,7 +100,7 @@ for i in range(3,6):
     f435f555_3.append(pickle.load(open('SN2008GE/sn2008ge_f435f555_sn'+ str(i) +'_rad3.p', 'rb')))    
     f625f814_3.append(pickle.load(open('SN2008GE/sn2008ge_f625f814_sn'+ str(i) +'_rad3.p', 'rb')))
 """
-#""" 7.4 -> 7.6
+""" 7.4 -> 7.6
 title      = 'SN08ha'
 ytopmax    = -2.0
 ytopmin    = -6.5
@@ -117,7 +117,7 @@ for i in range(3,6):
     f625f814_3.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad3.p', 'rb')))
     f435f555_4.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad4.p', 'rb')))    
     f625f814_4.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad4.p', 'rb')))
-#"""
+"""
 """ 7.3 -> 7.7
 title      = 'SN10ae'
 ytopmax    = -2.5
@@ -137,13 +137,13 @@ for i in range(3,6):
     f625f814_4.append(pickle.load(open('SN2010AE/sn2010ae_f625f814_sn'+ str(i) +'_rad4.p', 'rb')))
 
 """
-""" 7.7 -> 8.0
+#""" 7.7 -> 8.0
 title      = 'SN10el'
 
 ytopmax    = -1.5
-ytopmin    = -7.0
+ytopmin    = -6.0
 ybotmax    = -2.0
-ybotmin    = -7.5
+ybotmin    = -6.3
 
 #ytopmax    = 0.0
 #ytopmin    = -9.0
@@ -162,18 +162,18 @@ for i in range(3,6):
     f625f814_3.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_rad3.p', 'rb')))   
     f435f555_4.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_rad4.p', 'rb')))     
     f625f814_4.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_rad4.p', 'rb')))   
-    
-    #f435f555_0.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad0.p', 'rb')))    
-    #f625f814_0.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad0.p', 'rb')))    
-    #f435f555_1.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad1.p', 'rb')))    
-    #f625f814_1.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad1.p', 'rb')))   
-    #f435f555_2.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad2.p', 'rb')))    
-    #f625f814_2.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad2.p', 'rb')))  
-    #f435f555_3.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad3.p', 'rb')))    
-    #f625f814_3.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad3.p', 'rb')))
-    #f435f555_4.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad4.p', 'rb')))     
-    #f625f814_4.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad4.p', 'rb')))   
-
+    """
+    f435f555_0.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad0.p', 'rb')))    
+    f625f814_0.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad0.p', 'rb')))    
+    f435f555_1.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad1.p', 'rb')))    
+    f625f814_1.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad1.p', 'rb')))   
+    f435f555_2.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad2.p', 'rb')))    
+    f625f814_2.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad2.p', 'rb')))  
+    f435f555_3.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad3.p', 'rb')))    
+    f625f814_3.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad3.p', 'rb')))
+    f435f555_4.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad4.p', 'rb')))     
+    f625f814_4.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad4.p', 'rb')))   
+    """
 #radius435555 = []
 #radius625814 = []
 #radius435555.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn3_red_rad4.p', 'rb')))     
@@ -182,7 +182,7 @@ for i in range(3,6):
 #A435555 = (round(np.mean((radius435555[start][1]- f435f555_4[start][1])/(radius435555[start][0]-np.subtract(f435f555_4[start][0],f435f555_4[start][1]))),3))
 #A625814 = (round(np.mean((radius625814[start][1]- f625f814_4[start][1])/(radius625814[start][0]-np.subtract(f625f814_4[start][0],f625f814_4[start][1]))),3))
 
-"""
+#"""
 
 ###########################################################################
 print "Begin plotting Isochrones..."
@@ -246,6 +246,11 @@ elif (title == 'SN10el'):
     #plt.annotate('A${_v}}$ = ' + str(A435555), xy=(0.5, -6.5), xytext=(1.1, -5.0),
     #         arrowprops=dict(arrowstyle="->",
     #                        connectionstyle="arc3"),)
+    plt.annotate('', xy=(1.062, -5.717), xycoords = 'data',
+    xytext = (1.8, -3.2), textcoords = 'data',
+    arrowprops = {'arrowstyle':'->'})
+    plt.annotate('A${_v}}$ = 3.4105', xy=(0.2,-5.5), xycoords = 'data',
+    xytext = (2, 3), textcoords = 'offset points')
     """
     c1plt.plot(np.subtract(F435W[age70],  F555W[age70]),  F555W[age70],  
            'r--', label = 'Age = 10$^{7.0}$ yrs')
@@ -369,6 +374,11 @@ elif (title == 'SN10el'):
     #plt.annotate('A${_v}}$ = ' + str(A625814) , xy=(0.5, -7.0), xytext=(1.1, -5.5),
     #         arrowprops=dict(arrowstyle="->",
     #                        connectionstyle="arc3"),)
+    plt.annotate('', xy=(1.375, -5.376), xycoords = 'data',
+    xytext = (2.0, -4), textcoords = 'data',
+    arrowprops = {'arrowstyle':'->'})
+    plt.annotate('A${_v}}$ = 2.2016', xy=(1.2,-3.8), xycoords = 'data',
+    xytext = (2, 3), textcoords = 'offset points')
     """
     c2plt.plot(np.subtract(F625W[age70],  F814W[age70]),  F814W[age70],  
            'r--', label = 'Age = 10$^{7.0}$ yrs')
@@ -438,7 +448,9 @@ c2plt.set_ylim(bottom=ybotmax, top=ybotmin)
 #c2plt.set_xlim(-1.5, 2.5) 
 #gs.tight_layout(w_pad = .5)
 ########################################################################### 
-figname = title + '_' + 'Z' + name[1:-7]+ 'nobadlist_morethan50.png'
-
+plt.tight_layout()
+plt.subplots_adjust(top=0.90)
+########################################################################### 
+figname = title + '_' + 'Z' + name[1:-7]+ 'vector.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname
