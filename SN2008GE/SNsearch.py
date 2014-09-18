@@ -45,8 +45,9 @@ def StandDev(f,combo,header):
     Xaxis = np.std(box, axis=0)
     print Xaxis
     Yaxis = np.std(box, axis=1)
-    plt.scatter()
-    plt.show()
+    print Yaxis
+    #plt.scatter()
+    #plt.show()
     
     """
     fig = plt.figure(figsize=(10,10))
@@ -69,10 +70,10 @@ def main():
     ################## File Names #########################
     #######################################################
 
-    title    =   ['sn2008ge_f814w_lacosmic.fits']
-    #[ 'sn2008ge_f435w_lacosmic.fits','sn2008ge_f555w_lacosmic.fits',
-    #              'sn2008ge_f625w_lacosmic.fits', 'sn2008ge_f814w_lacosmic.fits']
-    
+    title    =      [ 'sn2008ge_f435w_lacosmic.fits','sn2008ge_f555w_lacosmic.fits',
+                  'sn2008ge_f625w_lacosmic.fits', 'sn2008ge_f814w_lacosmic.fits']
+    # ['sn2008ge_f814w_lacosmic.fits']
+
     #######################################################
     ################### Main Code #########################
     #######################################################
@@ -157,18 +158,18 @@ def main():
         subx4 = cenx + 1000 #- 1
         suby4 = ceny + 1000 #- 1
 
-        if (halfx == 1):
-            combo[cenx,suby1:suby4] = 0
-        if (halfy == 1):
-            combo[subx1:subx4,ceny] = 0
+        #if (halfx != 0):
+        #    combo[cenx,suby1:suby4] = 0
+        #if (halfy != 0):
+        #    combo[subx1:subx4,ceny] = 0
         ###################################################
         ################ Save the images ##################
         ###################################################
         print "Begin saving figure..."
-        """
-        plotname = title[m][:-13]   + ".fits"
+        
+        plotname = title[m][:-13]   + "nocolumnrow.fits"
         fits.writeto(plotname, combo, head, clobber=True)
         print "Plotting " + plotname
-        """
-        StandDev(title[m],combo,head)
+        
+        #StandDev(title[m],combo,head)
 main()       

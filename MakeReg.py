@@ -126,41 +126,43 @@ circ = []
 comm = []
 clos = []
 
-sharpmax = np.mean(sharp) + .5
-sharpmin = np.mean(sharp) - .5
+#sharpmax = np.mean(sharp) + .5
+#sharpmin = np.mean(sharp) - .5
+#roundmax = np.mean(roond) + .8
 
-roundmax = np.mean(roond) + .8
-
-cut.append(np.where((star <= 2)     & (crowd <= .5 ) & 
+sharpmax =  .3 
+sharpmin = -.45
+roundmax =  2.0
+cut.append(np.where((star <= 2)     & (crowd <= .43 ) & 
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
                 (((snr435 >= 3) | (snr555 >= 3)) |
                 ((snr625 >= 3) | (snr814 >= 3))) &
                 (((snr435 <= 30) & (snr555 <= 30)) |
                 ((snr625 <= 30) & (snr814 <= 30)))
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)))
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 600)))
 
-"""
+
 for i in range(len(xcoord[cut[0]])):
     circ.append('circle(')
     comm.append(',')
     clos.append(',2)')
         
-np.savetxt(folder +'/'+ title + 'yup.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
+np.savetxt(folder +'/'+ title + 'allsources.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
                comments = 'global color=red dashlist=8 3 width=1'
                ' font="helvetica 10 normal" select=1' \
                ' highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1' \
                '\nimage;' )
-#np.savetxt(folder +'/'+ title + 'all.txt',np.c_[xcoord[cut435555[0]]+.5,ycoord[cut435555[0]]+.5],fmt = "%1.2f")
+#np.savetxt(folder +'/'+ title + 'hiiiii.txt',np.c_[xcoord[cut435555[0]]+.5,ycoord[cut435555[0]]+.5],fmt = "%1.2f")
 print 'Files Saved'
-"""
 
-print "Mean Sharp Value " + title[:-1] + " : " + str(np.mean(sharp) - .5) + " , " + str(np.mean(sharp) + .5)
-print "Sharp : " + str(data[:,20][cut[0]])
-print "Mean Round Value " + title[:-1] + " : " + str(np.mean(roond) + .8)
-print "Round : " + str(data[:,21][cut[0]])
-print "Crowd : " + str(data[:,22][cut[0]])
+
+#print "Mean Sharp Value " + title[:-1] + " : " + str(np.mean(sharp) - .5) + " , " + str(np.mean(sharp) + .5)
+#print "Sharp : " + str(data[:,20][cut[0]])
+#print "Mean Round Value " + title[:-1] + " : " + str(np.mean(roond) + .8)
+#print "Round : " + str(data[:,21][cut[0]])
+#print "Crowd : " + str(data[:,22][cut[0]])
 """
 print data[:,33][cut[0]]
 print data[:,34][cut[0]]

@@ -130,7 +130,7 @@ H625     = 0 #F625W
 H814     = 0 #F814W	
 
 # Median (redshift independent) distance modulus of host galaxy
-dmod     = 31.64 #31.50 # value I got from NED
+dmod     = 31.64 #31.50 is the value I got from NED
 
 # Actual X & Y pixel coordinates of sn
 xsn      = 1726.352
@@ -285,28 +285,26 @@ for j in range(len(save)):
 #r.close()
 ################################################### 
 ##### Find correct color magnitudes make cuts #####
-# So many for loops @.@ 
-# somehow need to get around this :/
 
 print "Applying contrains to SN Data..."
 snr = []
 rad = []
 
-print "Mean Sharp Value " + title[:-1] + " : " + str(np.mean(sharp))
-print "Mean Round Value " + title[:-1] + " : " + str(np.mean(roond))
+#print "Mean Sharp Value " + title[:-1] + " : " + str(np.mean(sharp))
+#print "Mean Round Value " + title[:-1] + " : " + str(np.mean(roond))
 
 # hard contrains because the mean of the list 
 # isn't an accurate way to limit the good values
 # using the contraints from 08ha, I've set
 # the limits for sharp and round
-sharpmax =  .54 #np.mean(sharp) + .5
-sharpmin = -.467#np.mean(sharp) - .5
+sharpmax =  .3 #.54 #np.mean(sharp) + .5
+sharpmin =  -.45#-.467#np.mean(sharp) - .5
 
 roundmax = 2.0 #np.mean(roond) + .8
 
 for m in range(3,6):
     for i in range(len(radius)):
-        cut435555.append(np.where((star <= 2)   & (crowd <= .5 ) & 
+        cut435555.append(np.where((star <= 2)   & (crowd <= .43 ) & 
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
                 ((snr435 >= m) | (snr555 >= m)) & 
@@ -314,7 +312,7 @@ for m in range(3,6):
                 ((snr435 <= 30) & (snr555 <= 30) & (snr625 <= 30) & (snr814 <= 30)) & 
                 ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   #))#   
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-        cut625814.append(np.where((star <= 2)   & (crowd <= .5 ) & 
+        cut625814.append(np.where((star <= 2)   & (crowd <= .43 ) & 
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
                 ((snr625 >= m) | (snr814 >= m)) & 
@@ -324,6 +322,7 @@ for m in range(3,6):
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
         rad.append(i)
         snr.append(m)
+
 """
 print data[:,22][cut435555[4]]
 print data[:,23][cut435555[4]]
@@ -343,8 +342,7 @@ print data[:,63][cut625814[4]]
 """
 ################################################### 
 ############ Save good arrays to a file ###########
-#YOU'RE LOOKING AT SCR CONTRAINTS FOR EACH WAVEBAND - SEE WHAT YOU FIND
-
+################################################### 
 print "Pickling!"
 
 for n in range(len(cut435555)):
@@ -359,6 +357,9 @@ for n in range(len(cut435555)):
 
 print "Pickled."
 
+################################################### 
+############ Save coordinates to a file ###########
+################################################### 
 print "Save into text file"
 yax1 = []
 yax2 = []
@@ -401,6 +402,10 @@ np.savetxt(folder +'/'+ title + 'cut625814.txt', dataOut_2 ,delimiter='   ', fmt
     #'Mag 435 Mag 555 Mag 625 Mag 814 ' \
     '     AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 ' \
     'Sharp Round Crowd')
+
+##################################################################
+########################## SCRAPS ################################
+##################################################################
 """    
 cat = []
 cat = ('Object', 'X pix', 'Y pix', 
@@ -434,9 +439,7 @@ cat = ('Object', 'X pix', 'Y pix',
               )
 np.savetxt(folder +'/'+ title + 'List.txt', cat,fmt = "%s")
 
-""" 
-############ Save coordinates to a file ###########
-"""
+
 circ = []
 comm = []
 clos = []
@@ -462,9 +465,8 @@ np.savetxt(folder +'/'+ title + 'temp.reg', np.c_[circ,xcoord[cut435555[0]]+.5,c
                '\nimage;' )
 np.savetxt(folder +'/'+ title + 'all.txt',np.c_[xcoord[cut435555[0]]+.5,ycoord[cut435555[0]]+.5],fmt = "%1.2f")
 print 'Files Saved'
-"""
-##################################################################
-"""
+
+
 h = [2, 5] # height of the plotted figure
 plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
 gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
@@ -493,9 +495,7 @@ plt.xlabel("Signal/Noise F814W",fontdict = font)
 plt.ylabel("Magnitude",fontdict = font)
 squid.scatter(snr814[cut625814[4]],f814Abs[cut625814[4]])
 plt.savefig("AbsMagSN_.png")    
-"""
-######################
-"""
+
 first = np.c_[xcoord[cut435555[0]]+.5 ,ycoord[cut435555[0]]+.5] #combine to one array
 second= np.c_[xcoord[cut625814[0]]+.5 ,ycoord[cut625814[0]]+.5]
 # More flaws in this, removes too many of the good points :/
