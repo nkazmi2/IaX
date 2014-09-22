@@ -5,7 +5,7 @@ Created on Fri Sep 19 16:06:33 2014
 @author: Nova
 """
 import pyfits
-from astropy.io import fits
+#from astropy.io import fits
 
 def tofits(filename, data, hdr=None,clobber=False):
 
