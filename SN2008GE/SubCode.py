@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Aug 15 22:45:44 2014
-
 @author: Nova
 """
-
-
 from astropy.io import fits
 import numpy as np
 #from numpy.linalg import inv

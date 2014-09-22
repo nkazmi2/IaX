@@ -28,6 +28,7 @@ def main():
         combo    = []
         
         print "Opening " + title[m]
+        ###FIX COORDINATES!!!!
 
         image = fits.open(title[m], mode='copyonwrite', memmap=True)
 
@@ -115,8 +116,10 @@ def main():
         ###################################################
         print "Begin saving figure..."
         
-        plotname = title[m][:-14]   + "_met5.fits"
-        fits.writeto(plotname, combo, head, clobber=True)
+        plotname  = title[m][:-14]   + "_residual.fits"
+        plotname2 = title[m][:-14]   + "_box.fits"
+        #fits.writeto(plotname , combo, head, clobber=True)
+        fits.writeto(plotname2,combo[cen1-500:cen1+500,cen2-500:cen2+500], head, clobber=True)
         print "Plotting " + plotname
-            
+
 main()       
