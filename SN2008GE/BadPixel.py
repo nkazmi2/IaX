@@ -20,8 +20,13 @@ def tofits(filename, data, hdr=None,clobber=False):
 
         hdulist.writeto(filename, clobber=clobber,output_verify='ignore')
 
+title    =  ['sn2008ge_f435w_lacosmic.fits','sn2008ge_f555w_lacosmic.fits',
+             'sn2008ge_f625w_lacosmic.fits', 'sn2008ge_f814w_lacosmic.fits']
 
-hdu = pyfits.open('sn2008ge_f435w_lacosmic.fits')
+for m in range(4):
+    hdu = pyfits.open(title[m])
 
-mask = hdu[0].data == 0
-tofits('sn2008ge_f435w.bpm.fits', mask)
+    mask = hdu[0].data == 0
+    name = title[m][:-14] + '.bpm.fits'
+
+    tofits(name, mask)

@@ -109,8 +109,6 @@ def main():
         if (halfy == 1):
             combo[subx1:subx4,cen2] = 0
             
-        #combo[cen1-1,suby1:suby4] = 0
-        #combo[subx1:subx4,cen2-1] = 0
         ###################################################
         ################ Save the images ##################
         ###################################################
@@ -118,8 +116,8 @@ def main():
         
         plotname  = title[m][:-14]   + "_residual.fits"
         plotname2 = title[m][:-14]   + "_box.fits"
-        #fits.writeto(plotname , combo, head, clobber=True)
+        fits.writeto(plotname , combo, head, clobber=True)
         fits.writeto(plotname2,combo[cen1-500:cen1+500,cen2-500:cen2+500], head, clobber=True)
-        print "Plotting " + plotname
+        print "Plotting " + plotname + " & " + plotname2
 
 main()       

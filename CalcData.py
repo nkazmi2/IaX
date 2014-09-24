@@ -103,7 +103,7 @@ H625     = 0 #F625W
 H814     = 0 #F814W	
 
 # Median (redshift independent) distance modulus of host galaxy
-dmod     = 31.27 
+dmod     = 31.08 #31.27 
 
 # Actual X & Y pixel coordinates of sn
 xsn      = 3247.539
@@ -157,7 +157,7 @@ H625     = 0 #F625W
 H814     = 0 #F814W	
 
 # Median (redshift independent) distance modulus of host galaxy
-dmod     = 30.58 
+dmod     = 30.51 #30.58 
 
 # Actual X & Y pixel coordinates of sn
 xsn      = 1796.640
@@ -184,7 +184,7 @@ H625     = 2.001 #F625W
 H814     = 1.376 #F814W	
 
 # Median (redshift independent) distance modulus of host galaxy
-dmod     = 29.99 
+dmod     = 30.29 #29.99 
 
 # Actual X & Y pixel coordinates of sn
 xsn      = 2418.859
@@ -245,7 +245,7 @@ ycoord  = data[:, 3]
 ########### Calculate Absolute Magnitude ##########
 
 print "Calculating Absolute Magnitude..."
- 
+#dmod = 5*log(D(pc)) - 5
 f435Abs = f435mag - dmod - ACS435 #- H435
 f555Abs = f555mag - dmod - ACS555 #- H555
 f625Abs = f625mag - dmod - ACS625 #- H625
@@ -323,6 +323,33 @@ for m in range(3,6):
         rad.append(i)
         snr.append(m)
 
+
+################################################### 
+############ What am I plotting?        ###########
+###################################################    
+"""
+Xaxis = []
+Xaxis.append((1.0/(814*10**-3),
+              1.0/(625*10**-3),
+              1.0/(555*10**-3),
+              1.0/(435*10**-3)))
+Xaxis = np.reshape(Xaxis,(4,1))     
+
+squid = plt.subplot2grid((1,1), (0,0), colspan = 1)
+h = [2, 5] # height of the plotted figure
+fig = plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
+#fig.subplots_adjust(wspace=.5)
+gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
+
+plt.xlabel(title +" 1/$\lambda \, (\mu m^{-1})$",fontdict = font)
+plt.ylabel("$E (\lambda - V) \, / \, E(B-V)$",fontdict = font)
+squid.plot(Xaxis,[(f814Abs - ACS555)/MW,(f625Abs - ACS555)/MW,(f555Abs - ACS555)/MW,(f435Abs - ACS555)/MW],'-o')
+
+
+plt.tight_layout()
+plt.savefig("Extinction_2.png")    
+plt.show()
+"""
 """
 print data[:,22][cut435555[4]]
 print data[:,23][cut435555[4]]
@@ -339,6 +366,7 @@ print data[:,50][cut625814[4]]
 print data[:,61][cut625814[4]]
 print data[:,62][cut625814[4]]
 print data[:,63][cut625814[4]]
+"""
 """
 ################################################### 
 ############ Save good arrays to a file ###########
@@ -402,7 +430,7 @@ np.savetxt(folder +'/'+ title + 'cut625814.txt', dataOut_2 ,delimiter='   ', fmt
     #'Mag 435 Mag 555 Mag 625 Mag 814 ' \
     '     AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 ' \
     'Sharp Round Crowd')
-
+"""
 ##################################################################
 ########################## SCRAPS ################################
 ##################################################################
