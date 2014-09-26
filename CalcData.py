@@ -124,10 +124,10 @@ ACS814   = 0.120 #F814W
 MW       = 0.07
 Host     = 0.0
 
-H435     = 0 #F435W
-H555     = 0 #F555W	
-H625     = 0 #F625W	
-H814     = 0 #F814W	
+H435     = 1.136 #F435W
+H555     = 0.876 #F555W	
+H625     = 0.696 #F625W	
+H814     = 0.480 #F814W	
 
 # Median (redshift independent) distance modulus of host galaxy
 dmod     = 31.64 #31.50 is the value I got from NED
@@ -151,10 +151,10 @@ ACS814   = 0.215 #F814W
 MW       = 0.124
 Host     = 0.5
 
-H435     = 0 #F435W
-H555     = 0 #F555W	
-H625     = 0 #F625W	
-H814     = 0 #F814W	
+H435     = 2.052 #F435W
+H555     = 1.588 #F555W	
+H625     = 1.262 #F625W	
+H814     = 0.867 #F814W	
 
 # Median (redshift independent) distance modulus of host galaxy
 dmod     = 30.51 #30.58 
