@@ -7,13 +7,13 @@ Created on Tue May 27 14:14:02 2014
 Read in the data, check which columns are which
 """
 import numpy as np
-"""
+
 # Looking at new.phot.columns files
 f = open('../SN2010AE/sn2010ae_new.phot.columns','r')
 info = f.read()
 f.close()
 print info
-"""
+
 """
 # Looking at Isochrone files
 f   = open('../Metallicity/Z0170Y26.dat')

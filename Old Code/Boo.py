@@ -4,10 +4,145 @@ Created on Fri May 30 09:58:19 2014
 
 @author: Nova
 """
+import numpy as np
+
+class Student(object):
+    
+    def __init__(self, name, classes):
+        print "I'm the constructor!"
+        self.name = name
+        self.classes = classes
+        
+    def __str__(self):
+        output = '%s:'%self.name
+        for clas in self.classes:
+            output+=str(clas)
+            if clas != self.classes[-1]:
+                output+=', '
+        return output
+        
+    def getName(self):
+        return self.name
+        
+me = Student('Sean', ['Physics', 'Computer Science', 'Underwater Basket Weaving'])   
+print Student
+"""
+#435 555
+print np.subtract(                    -2.7340,                     -4.4110)
+print np.subtract(np.subtract(-3.8880,-2.7340),np.subtract(-4.6930,-4.4110))
+s1 =  np.subtract(-2.7340,-4.4110) / np.subtract(np.subtract(-3.8880,-2.7340),np.subtract(-4.6930,-4.4110))
+print "Slope : ", s1
+b1 = np.subtract(-4.4110,s1*(np.subtract(-4.4110,-4.6930)))
+print "B-int : ", b1
+#y1 = (s1*(np.subtract(-4.4110,-4.6930))) + b1
+y1 = (s1*2.0) + b1
+print "Y-pt  : ", y1
+print (s1*1.7) + b1
+x1 = np.subtract(-4.4110,b1)/s1
+print "X0-pt : ", x1
+print np.subtract(                    -5.1220,                     -3.7560)
+print np.subtract(np.subtract(-4.4500,-5.1220),np.subtract(-4.0620,-3.7560))
+s2 =  np.subtract(-5.1220,-3.7560)/np.subtract(np.subtract(-4.4500,-5.1220),np.subtract(-4.0620,-3.7560))
+print "Slope : ", s2
+b2 = np.subtract(-3.7560,s2*(np.subtract(-4.0620,-3.7560)))
+print "B-int : ", b2
+#y2 = (s2*(np.subtract(-3.7560,-4.0620))) + b2
+y2 = (s2*2.5) + b2
+print "Y-pt  : ", y2
+print (s2*1.8) + b2
+x2 = np.subtract(-3.7560,b2)/s2
+print "X0-pt : ", x2
+#625 814
+print np.subtract(                     -4.8470,                      -3.6830)
+print np.subtract(np.subtract(-4.3270 ,-4.8470),np.subtract(-3.8980 ,-3.6830))
+s3 =  np.subtract(-4.8470,-3.6830)/np.subtract(np.subtract(-4.3270 ,-4.8470),np.subtract(-3.8980 ,-3.6830))
+print "Slope : ", s3
+b3 = np.subtract(-3.6830,s3*(np.subtract( -3.8980,-3.6830)))
+print "B-int : ", b3
+#y3 = (s3*(np.subtract(-3.6830,-3.8980))) + b3
+y3 = (s3*2.0) + b3
+print "Y-pt  : ", y3
+print (s3*1.7) + b3
+x3 = np.subtract(-3.6830,b3)/s3
+print "X0-pt : ", x3
+
+print np.subtract(                   -4.5880,                       -4.412080)
+print np.subtract(np.subtract(-4.2860,-4.5880),np.subtract(-4.5060 ,-4.412080))
+s4 =  np.subtract(-4.5880,-4.412080)/np.subtract(np.subtract(-4.2860,-4.5880),np.subtract(-4.5060 ,-4.412080))
+print "Slope : ", s4
+b4 = np.subtract(-4.412080,s4*(np.subtract(-4.5060,-4.412080)))
+print "B-int : ", b4
+#y4 = (s4*(np.subtract(-4.412080,-4.5060))) + b4
+y4 = (s4*2.5) + b4
+print "Y-pt  : ", y4
+print (s4*1.8) + b4
+x4 = np.subtract(-4.412080,b4)/s4
+print "X0-pt : ", x4
+"""
+#3.0000   0.8000   3.4000   5.6000   -3.8880   -2.7340   -4.4500   -5.1220
+#5.9000   3.0000   2.5000   1.7000   -4.6930   -4.4110   -4.0620   -3.7560
+#4.4000   4.7000   3.0000   3.5000   -4.3270   -4.8470   -4.2860   -4.5880
+#3.1000   1.7000   3.5000   3.0000   -3.8980   -3.6830   -4.5060   -4.412080
+
+print np.subtract(-4.4110,-3.8880)
+print np.subtract(-4.412080,-4.2860)
+# -3.8880
+# -4.4110
+# -4.2860 
+# -4.412080
+"""
+
+
+from numpy import *
+import pylab
+# data to fit
+x = random.rand(6)
+y = random.rand(6)
+
+# fit the data with a 4th degree polynomial
+z4 = polyfit(x, y, 4) 
+p4 = poly1d(z4) # construct the polynomial 
+
+z5 = polyfit(x, y, 5)
+p5 = poly1d(z5)
+
+xx = linspace(0, 1, 100)
+pylab.plot(x, y, 'o', xx, p4(xx),'-g', xx, p5(xx),'-b')
+pylab.legend(['data to fit', '4th degree poly', '5th degree poly'])
+pylab.axis([0,1,0,1])
+pylab.show()
+
+import numpy
+
+
+import scipy.optimize as optimization
+# Generate artificial data = straight line with a=0 and b=1
+# plus some noise.
+xdata = numpy.array([0.0,1.0,2.0,3.0,4.0,5.0])
+ydata = numpy.array([0.1,0.9,2.2,2.8,3.9,5.1])
+# Initial guess.
+x0    = numpy.array([0.0, 0.0, 0.0])
+sigma = numpy.array([1.0,1.0,1.0,1.0,1.0,1.0])
+
+def func(x, a, b, c):
+    return a + b*x + c*x*x
+
+print optimization.curve_fit(func, xdata, ydata, x0, sigma)
+
 #from pylab import *
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d.axes3d import Axes3D
+#from mpl_toolkits.mplot3d.axes3d import Axes3D
+#import matplotlib.patches as patches
+from matplotlib.patches import Polygon
+ax = plt.gca()
+pts = np.array([[0,0], [4,0], [2,np.sqrt(5**2 - 2**2)]])
+Triangle = Polygon(pts, color='grey', alpha=0.3)
+ax.add_patch(Triangle)
+ax.set_xlim(0,4)
+ax.set_ylim(0,5)
+plt.show()
+
 
 fig = plt.figure(figsize=(10,10))
 
@@ -30,7 +165,6 @@ ax.scatter(x, y, z, c=c)
 #p = ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0, antialiased=False)
 #cb = fig.colorbar(p, shrink=0.5)
 
-""""
 fig = plt.figure()
 ax = fig.add_subplot(111)
 
@@ -64,8 +198,7 @@ np.savetxt('test.txt', DataOut, fmt = "%1.4f", header ='Sharp Round Crowd')
 
 #data = np.load("../quick_sub.py")
 #print data
-"""
-"""
+
 #one = np.loadtxt('one.txt')
 #two = np.loadtxt('two.txt')
 #ich = []
@@ -116,8 +249,7 @@ eep = np.where((star <= 2) & (snr435 >= 3) & (snr555 >= 3) & ((((xsn - xcoord)**
 #list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
 print "Filter   ", len(xcoord[ich])
 print "No Filter", len(xcoord[eep])
-"""
-"""
+
 import pickle
 #import glob
 import numpy as np
@@ -126,8 +258,7 @@ catalog = []
 catalog = pickle.load(open(title + '_List.p', 'rb'))
 
 #print np.shape(catalog)
-"""
-"""
+
 print catalog[0]
 print catalog[1]
 print catalog[2]
@@ -149,13 +280,6 @@ print catalog[17]
 print catalog[18]
 print catalog[19]
 
-"""
-
-
-
-
-
-
 #f625f814_4 = pickle.load(open( "sn2008ha_f625f814_r1_4.p", "rb" ))
 #f435f555_5 = pickle.load(open( "sn2008ha_f435f555_r1_5.p", "rb" ))
 #f625f814_5 = pickle.load(open( "sn2008ha_f625f814_r1_5.p", "rb" ))
@@ -166,8 +290,6 @@ print catalog[19]
 #f435f555_8 = pickle.load(open( "sn2008ha_f435f555_r1_8.p", "rb" ))
 #f625f814_8 = pickle.load(open( "sn2008ha_f625f814_r1_8.p", "rb" ))
 
-    
-"""
 i = 3
 for n in range(10): 
     i += 1
@@ -176,8 +298,7 @@ for n in range(10):
     elif (n % 2 != 0):
         i += 1
         print abs((n)-(i)+1)
-"""
-"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
@@ -197,7 +318,7 @@ font = {'family' : 'serif',
         'weight' : 'normal',
         'size'   : 10,
         } 
-"""
+
 #####################################################################
 
 #name = []
@@ -211,21 +332,21 @@ font = {'family' : 'serif',
 
 # 175 rows, start at 0, the max is at [174]
 # Ignore the first 11 rows
-"""
+
 f   = open('Z017Y26.dat')
 row = []
 row = [f.readline().strip().split() for i in range(16776)]
 row = np.array(row)
-"""
+
 #d = []
 
 #d.append(np.loadtxt('Z017Y26.dat'))
 #d = np.array(d)
-"""
+
 for i in range(11,16776):#16765L, 21L
     d.append(row[:][i])
 d = np.array(d)
-"""
+
 #print d
 #print np.shape(d) #(1L, 16776L, 21L)
 #Length = 16776
@@ -336,15 +457,14 @@ d = np.array(d)
 #f555Abs = []
 #for i in range(len(data[:,10])):
 #     f555Abs.append(float(data[i,10]) - dmod - ACS555)
-"""
+
 age7   = np.where((d[:,:,0] >= 7.0) & (d[:,:,0] < 8.5))
 age75   = np.where((d[:,:,0] >= 7.5) & (d[:,:,0] < 8.0))
 age8   = np.where((d[:,:,0] >= 8.0) & (d[:,:,0] < 9.0))
 age9   = np.where((d[:,:,0] >= 9.0) & (d[:,:,0] < 10.0))
 age10  = np.where((d[:,:,0] >= 10.0) & (d[:,:,0] < 10.3))
 age103 = np.where((d[:,:,0] == 10.3))
-"""
-"""
+
 diff = []
 for i in range(Length):
     diff.append(np.subtract(F435W[i,age], F555W[i,age]))
@@ -352,7 +472,6 @@ print np.shape(diff)
 print len(F555W[age])
 print diff[:][0]
 print diff
-"""
 
 #f555Abs2 = []
 #for i in range(len(data2[:,10])):
@@ -371,7 +490,7 @@ print diff
 #     f555Abs5.append(float(data5[i,10]) - dmod - ACS555)
 
 #####################################################################
-"""
+
 print "Begin plotting Isochrones..."
 h = [5, 5] # height of the plotted figure
 plt.figure(num = 1, dpi = 100, figsize = [6, np.sum(h)], facecolor = 'w')
@@ -399,8 +518,7 @@ c1plt.legend(loc=4, borderaxespad=0.)
 plt.title('CMD for Z = 0.017, Y = 0.26')
 print "Save and show Isochrones..."
 plt.savefig("Test.png")
-"""
-"""
+
 # c1 refers to the cut1
 c1plt = plt.subplot2grid((2,2), (0,0), colspan = 2)
 plt.gca().invert_yaxis()

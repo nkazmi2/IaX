@@ -120,6 +120,36 @@ xcoord  = data[:, 2]
 ycoord  = data[:, 3]
 
 ################################################### 
+################################################### 
+
+#identify = pyregion.open(folder + '/'+ title +'prog.reg')
+identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha sn10ae
+#identify = pyregion.open(folder + '/'+ title +'negsnr.reg') #sn08ha
+r = pyregion.open(folder + '/'+ title +'coord.reg')
+save = []
+badX = []
+badY = []
+fix  = []
+
+for i in range(len(identify)):
+    if (pyregion.ShapeList(identify[i].attr[1].get("color"))  == ['y', 'e', 'l', 'l', 'o', 'w']):
+        fix.append(i)
+    #yellow is good
+    #cyan is bad
+        
+for i in range(len(fix)):
+    r[fix[i]].attr[1]["color"] = 'yellow'
+
+for i in range(len(r)):
+    r1 = pyregion.ShapeList(r[i].attr[1].get("color"))
+    if (r1[0] == 'c'):
+        save.append(i) 
+ 
+for j in range(len(save)):
+    badX.append(r[save[j]].coord_list[0] - .5)
+    badY.append(r[save[j]].coord_list[1] - .5)
+
+################################################### 
 ############ Save coordinates to a file ###########
 print "Choppin some SN-suey"
 circ = []
@@ -140,23 +170,27 @@ cut.append(np.where((star <= 2)     & (crowd <= .43 ) &
                 ((snr625 >= 3) | (snr814 >= 3))) &
                 (((snr435 <= 30) & (snr555 <= 30)) |
                 ((snr625 <= 30) & (snr814 <= 30)))
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 600)))
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100) ))
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
 
-
+f435_3 = np.where(snr435[cut[0]] == 3)
+print snr555[f435_3]
+"""       
 for i in range(len(xcoord[cut[0]])):
     circ.append('circle(')
     comm.append(',')
     clos.append(',2)')
-        
-np.savetxt(folder +'/'+ title + 'allsources.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
+    
+
+np.savetxt(folder +'/'+ title + 'population.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
-               comments = 'global color=red dashlist=8 3 width=1'
+               comments = 'global color=cyan dashlist=8 3 width=1'
                ' font="helvetica 10 normal" select=1' \
                ' highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1' \
                '\nimage;' )
 #np.savetxt(folder +'/'+ title + 'hiiiii.txt',np.c_[xcoord[cut435555[0]]+.5,ycoord[cut435555[0]]+.5],fmt = "%1.2f")
 print 'Files Saved'
-
+"""
 
 #print "Mean Sharp Value " + title[:-1] + " : " + str(np.mean(sharp) - .5) + " , " + str(np.mean(sharp) + .5)
 #print "Sharp : " + str(data[:,20][cut[0]])

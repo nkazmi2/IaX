@@ -7,9 +7,9 @@ Created on Tue May 27 10:30:07 2014
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-import csv
-from itertools import izip
+#import matplotlib.gridspec as gridspec
+#import csv
+#from itertools import izip
 import pickle
 import pyregion
 ################################################### 
@@ -124,17 +124,17 @@ ACS814   = 0.120 #F814W
 MW       = 0.07
 Host     = 0.0
 
-H435     = 1.136 #F435W
-H555     = 0.876 #F555W	
-H625     = 0.696 #F625W	
-H814     = 0.480 #F814W	
+H435     = 0 #F435W
+H555     = 0 #F555W	
+H625     = 0 #F625W	
+H814     = 0 #F814W	
 
 # Median (redshift independent) distance modulus of host galaxy
 dmod     = 31.64 #31.50 is the value I got from NED
 
 # Actual X & Y pixel coordinates of sn
-xsn      = 1726.352
-ysn      = 3172.530
+xsn      = 1736.199
+ysn      = 3171.792
 
 radius   = [9.282,15.469,20.63,30.94,45] # 450,750,1000,1500,2200
 #"""
@@ -160,8 +160,8 @@ H814     = 0.867 #F814W
 dmod     = 30.51 #30.58 
 
 # Actual X & Y pixel coordinates of sn
-xsn      = 1796.640
-ysn      = 1931.995
+xsn      = 1795.3831# 1796.640
+ysn      = 1931.8080# 1931.995
 
 radius   = [14.171,23.62,31.50,47.236,67.295] # 450,750,1000,1500,2200
 """
@@ -246,17 +246,35 @@ ycoord  = data[:, 3]
 
 print "Calculating Absolute Magnitude..."
 #dmod = 5*log(D(pc)) - 5
-f435Abs = f435mag - dmod - ACS435 #- H435
-f555Abs = f555mag - dmod - ACS555 #- H555
-f625Abs = f625mag - dmod - ACS625 #- H625
-f814Abs = f814mag - dmod - ACS814 #- H814
-
+"""
+f435Abs = f435mag - dmod - H435
+f555Abs = f555mag - dmod - H555
+f625Abs = f625mag - dmod - H625
+f814Abs = f814mag - dmod - H814
+"""
+if (folder == "SN2010EL"):        
+    f435Abs = f435mag - dmod - ACS435
+    f555Abs = f555mag - dmod - ACS555
+    f625Abs = f625mag - dmod - ACS625
+    f814Abs = f814mag - dmod - ACS814
+else:
+    f435Abs = f435mag - dmod - ACS435 #- H435
+    f555Abs = f555mag - dmod - ACS555 #- H555
+    f625Abs = f625mag - dmod - ACS625 #- H625
+    f814Abs = f814mag - dmod - ACS814 #- H814
+"""
+else:
+    f435Abs = f435mag - dmod - ACS435 - H435
+    f555Abs = f555mag - dmod - ACS555 - H555
+    f625Abs = f625mag - dmod - ACS625 - H625
+    f814Abs = f814mag - dmod - ACS814 - H814
+"""
 ################################################### 
 ########### Deal with bad points ##########
 
 #identify = pyregion.open(folder + '/'+ title +'prog.reg')
 identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha sn10ae
-#identify = pyregion.open(folder + '/'+ title +'negsnr.reg') #sn08ha
+#identify = pyregion.open(folder + '/'+ title +'test.reg') #sn08ha
 r = pyregion.open(folder + '/'+ title +'coord.reg')
 save = []
 badX = []
@@ -308,78 +326,40 @@ for m in range(3,6):
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
                 ((snr435 >= m) | (snr555 >= m)) & 
-                (snr435 >= 3) & (snr555 >= 3)  & 
+                #(snr435 >= 3) & (snr555 >= 3)  & 
                 ((snr435 <= 30) & (snr555 <= 30) & (snr625 <= 30) & (snr814 <= 30)) & 
-                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   #))#   
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   ))#   
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
         cut625814.append(np.where((star <= 2)   & (crowd <= .43 ) & 
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
                 ((snr625 >= m) | (snr814 >= m)) & 
-                (snr625 >= 3) & (snr814 >= 3)   & 
+                #(snr625 >= 3) & (snr814 >= 3)   & 
                 ((snr435 <= 30) & (snr555 <= 30) & (snr625 <= 30) & (snr814 <= 30)) & 
-                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   #))#     
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   ))#     
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
         rad.append(i)
         snr.append(m)
 
 
-################################################### 
-############ What am I plotting?        ###########
-###################################################    
-"""
-Xaxis = []
-Xaxis.append((1.0/(814*10**-3),
-              1.0/(625*10**-3),
-              1.0/(555*10**-3),
-              1.0/(435*10**-3)))
-Xaxis = np.reshape(Xaxis,(4,1))     
 
-squid = plt.subplot2grid((1,1), (0,0), colspan = 1)
-h = [2, 5] # height of the plotted figure
-fig = plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
-#fig.subplots_adjust(wspace=.5)
-gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
-
-plt.xlabel(title +" 1/$\lambda \, (\mu m^{-1})$",fontdict = font)
-plt.ylabel("$E (\lambda - V) \, / \, E(B-V)$",fontdict = font)
-squid.plot(Xaxis,[(f814Abs - ACS555)/MW,(f625Abs - ACS555)/MW,(f555Abs - ACS555)/MW,(f435Abs - ACS555)/MW],'-o')
-
-
-plt.tight_layout()
-plt.savefig("Extinction_2.png")    
-plt.show()
-"""
-"""
-print data[:,22][cut435555[4]]
-print data[:,23][cut435555[4]]
-print data[:,24][cut435555[4]]
-
-print data[:,35][cut435555[4]]
-print data[:,36][cut435555[4]]
-print data[:,37][cut435555[4]]
-
-print data[:,48][cut625814[4]]
-print data[:,49][cut625814[4]]
-print data[:,50][cut625814[4]]
-
-print data[:,61][cut625814[4]]
-print data[:,62][cut625814[4]]
-print data[:,63][cut625814[4]]
-"""
-"""
 ################################################### 
 ############ Save good arrays to a file ###########
 ################################################### 
+
 print "Pickling!"
 
 for n in range(len(cut435555)):
     snr435_555.append(( f435Abs[cut435555[n]],f555Abs[cut435555[n]], 
                        unc555[cut435555[n]],
-                        (unc435[cut435555[n]]**2 + unc555[cut435555[n]]**2)**.5 ))
-    snr625_814.append(( f625Abs[cut625814[n]],f814Abs[cut625814[n]], 
-                       unc625[cut625814[n]],
-                        (unc625[cut625814[n]]**2 + unc814[cut625814[n]]**2)**.5 ))
+                        ((unc435[cut435555[n]]**2 + unc555[cut435555[n]]**2)**.5 ),
+                        snr435[cut435555[n]], snr555[cut435555[n]],
+                        xcoord[cut435555[n]], ycoord[cut435555[n]] ))
+    snr625_814.append(( f625Abs[cut625814[n]],f814Abs[cut625814[n]],
+                       unc814[cut625814[n]],
+                        ((unc625[cut625814[n]]**2 + unc814[cut625814[n]]**2)**.5 ),
+                        snr625[cut625814[n]], snr814[cut625814[n]],
+                        xcoord[cut625814[n]], ycoord[cut625814[n]] ))
     pickle.dump( snr435_555[n], open(folder + '/' + title + 'f435f555_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
     pickle.dump( snr625_814[n], open(folder + '/' + title + 'f625f814_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
 
@@ -388,6 +368,7 @@ print "Pickled."
 ################################################### 
 ############ Save coordinates to a file ###########
 ################################################### 
+
 print "Save into text file"
 yax1 = []
 yax2 = []
@@ -397,40 +378,42 @@ yax2 = []
 #print f625Abs[cut625814[4]] - f814Abs[cut625814[4]]
 dataOut_1 = np.array(np.c_[star[cut435555[4]]  ,
     xcoord[cut435555[4]] ,ycoord[cut435555[4]] ,
+    (((xsn - xcoord[cut435555[4]])**2 + (ysn - ycoord[cut435555[4]])**2)**.5),
     (f435Abs[cut435555[4]] - f555Abs[cut435555[4]]),
     snr435[cut435555[4]] ,snr555[cut435555[4]] ,
     snr625[cut435555[4]] ,snr814[cut435555[4]] ,
     #f435mag[cut435555[4]],f555mag[cut435555[4]],
     #f625mag[cut435555[4]],f814mag[cut435555[4]],
     f435Abs[cut435555[4]],f555Abs[cut435555[4]],
-    f625Abs[cut435555[4]],f814Abs[cut435555[4]],
-    sharp[cut435555[4]],#data[:,22][cut435555[4]],data[:,33][cut435555[4]],
-    roond[cut435555[4]],#data[:,20][cut435555[4]],data[:,34][cut435555[4]],
-    crowd[cut435555[4]]])#,data[:,21][cut435555[4]],data[:,35][cut435555[4]] 
+    f625Abs[cut435555[4]],f814Abs[cut435555[4]]  ])#   ,
+    #sharp[cut435555[4]],#data[:,22][cut435555[4]],data[:,33][cut435555[4]],
+    #roond[cut435555[4]],#data[:,20][cut435555[4]],data[:,34][cut435555[4]],
+    #crowd[cut435555[4]]])#,data[:,21][cut435555[4]],data[:,35][cut435555[4]] 
 np.savetxt(folder +'/'+ title + 'cut435555.txt', dataOut_1 ,delimiter='   ', fmt = "%1.4f",
-    header ='Object Xpix        Ypix        Sub      S/N 435 S/N 555 S/N 625 S/N 814 ' \
+    header ='Object Xpix        Ypix        DisfromSN   Sub    S/N 435   S/N 555   S/N 625   S/N 814 ' \
     #'Mag 435 Mag 555 Mag 625 Mag 814 ' \
-    '     AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 ' \
-    'Sharp Round Crowd')
+    '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 ' )#    \
+    #'Sharp Round Crowd')
     
 dataOut_2 = np.array(np.c_[star[cut625814[4]] ,
     xcoord[cut625814[4]] ,ycoord[cut625814[4]],
+    (((xsn - xcoord[cut625814[4]])**2 + (ysn - ycoord[cut625814[4]])**2)**.5),
     (f625Abs[cut625814[4]] - f814Abs[cut625814[4]]),
     snr435[cut625814[4]] ,snr555[cut625814[4]] ,
     snr625[cut625814[4]] ,snr814[cut625814[4]] ,
     #f435mag[cut625814[4]],f555mag[cut625814[4]],
     #f625mag[cut625814[4]],f814mag[cut625814[4]],
     f435Abs[cut625814[4]],f555Abs[cut625814[4]],
-    f625Abs[cut625814[4]],f814Abs[cut625814[4]],
-    sharp[cut625814[4]],#data[:,46][cut625814[4]],data[:,59][cut625814[4]],
-    roond[cut625814[4]],#data[:,47][cut625814[4]],data[:,60][cut625814[4]],
-    crowd[cut625814[4]]])#,data[:,48][cut625814[4]],data[:,61][cut625814[4]]    
+    f625Abs[cut625814[4]],f814Abs[cut625814[4]]  ])#   ,
+    #sharp[cut625814[4]],#data[:,46][cut625814[4]],data[:,59][cut625814[4]],
+    #roond[cut625814[4]],#data[:,47][cut625814[4]],data[:,60][cut625814[4]],
+    #crowd[cut625814[4]]])#,data[:,48][cut625814[4]],data[:,61][cut625814[4]]    
 np.savetxt(folder +'/'+ title + 'cut625814.txt', dataOut_2 ,delimiter='   ', fmt = "%1.4f",
-    header ='Object Xpix        Ypix        Sub      S/N 435 S/N 555 S/N 625 S/N 814 ' \
+    header ='Object Xpix        Ypix        DisFromSN   Sub    S/N 435  S/N 555  S/N 625  S/N 814 ' \
     #'Mag 435 Mag 555 Mag 625 Mag 814 ' \
-    '     AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 ' \
-    'Sharp Round Crowd')
-"""
+    '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '   )#    \
+    #'Sharp Round Crowd')
+
 ##################################################################
 ########################## SCRAPS ################################
 ##################################################################
@@ -547,6 +530,51 @@ final = np.array(final)
 np.savetxt(folder +'/'+ title + 'all.txt', final,fmt = "%1.2f")
 np.savetxt(folder +'/'+ title + '435555.txt', first,fmt = "%1.2f")
 np.savetxt(folder +'/'+ title + '625814.txt', second,fmt = "%1.2f")
+
+
+
+################################################### 
+############ What am I plotting?        ###########
+###################################################    
+
+Xaxis = []
+Xaxis.append((1.0/(814*10**-3),
+              1.0/(625*10**-3),
+              1.0/(555*10**-3),
+              1.0/(435*10**-3)))
+Xaxis = np.reshape(Xaxis,(4,1))     
+
+squid = plt.subplot2grid((1,1), (0,0), colspan = 1)
+h = [2, 5] # height of the plotted figure
+fig = plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
+#fig.subplots_adjust(wspace=.5)
+gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
+
+plt.xlabel(title +" 1/$\lambda \, (\mu m^{-1})$",fontdict = font)
+plt.ylabel("$E (\lambda - V) \, / \, E(B-V)$",fontdict = font)
+squid.plot(Xaxis,[(f814Abs - ACS555)/MW,(f625Abs - ACS555)/MW,(f555Abs - ACS555)/MW,(f435Abs - ACS555)/MW],'-o')
+
+
+plt.tight_layout()
+plt.savefig("Extinction_2.png")    
+plt.show()
+
+print data[:,22][cut435555[4]]
+print data[:,23][cut435555[4]]
+print data[:,24][cut435555[4]]
+
+print data[:,35][cut435555[4]]
+print data[:,36][cut435555[4]]
+print data[:,37][cut435555[4]]
+
+print data[:,48][cut625814[4]]
+print data[:,49][cut625814[4]]
+print data[:,50][cut625814[4]]
+
+print data[:,61][cut625814[4]]
+print data[:,62][cut625814[4]]
+print data[:,63][cut625814[4]]
+
 """
 
 
