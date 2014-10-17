@@ -25,7 +25,8 @@ class Student(object):
         return self.name
         
 me = Student('Sean', ['Physics', 'Computer Science', 'Underwater Basket Weaving'])   
-print Student
+print me.getName()
+print str(me)
 """
 #435 555
 print np.subtract(                    -2.7340,                     -4.4110)

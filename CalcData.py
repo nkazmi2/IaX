@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 #import matplotlib.gridspec as gridspec
 #import csv
 #from itertools import izip
+import pandas
 import pickle
 import pyregion
 ################################################### 
@@ -85,9 +86,10 @@ font = {'family' : 'serif',
 ################################################### 
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
-"""
+#"""
 folder   = "SN2008GE"
-name     = 'sn2008ge_new.phot' 
+#name     = 'sn2008ge_new.phot' 
+name     = 'sn2008ge_20141015_final.out'
 
 # Magnitude of the Milkyway Galaxy 
 ACS435   = 0.046 #F435W
@@ -108,11 +110,11 @@ dmod     = 31.08 #31.27
 # Actual X & Y pixel coordinates of sn
 xsn      = 3247.539
 ysn      = 3419.971
-radius   = [10.342,17.24,23.00,34.47] # 450,750,1000,1500
-
-"""
-##################### 2008ha ######################
+#radius   = [10.342,17.24,23.00,34.47,50.556] # 450,750,1000,1500
+radius   = [100,150,200,250,300,350,400,450,500]
 #"""
+##################### 2008ha ######################
+"""
 folder   = "SN2008HA"
 name     = 'sn2008ha_new.phot'
 
@@ -137,7 +139,7 @@ xsn      = 1736.199
 ysn      = 3171.792
 
 radius   = [9.282,15.469,20.63,30.94,45] # 450,750,1000,1500,2200
-#"""
+"""
 ##################### 2010ae ######################
 """
 folder   = "SN2010AE"
@@ -198,7 +200,9 @@ radius   = [18.62,31.03,41.38,62.065,91.0287] # 450,750,1000,1500,2200
 print "Opening file: ",name
 
 print "Extracting ", name, " information..."
-data = np.loadtxt(folder + '/' + name)
+#data = np.loadtxt(folder + '/' + name)
+data = pandas.read_csv(folder + '/' + name,delim_whitespace=True, header=None)
+
 
 title = name[:-8]
 ################################################### 
@@ -252,16 +256,10 @@ f555Abs = f555mag - dmod - H555
 f625Abs = f625mag - dmod - H625
 f814Abs = f814mag - dmod - H814
 """
-if (folder == "SN2010EL"):        
-    f435Abs = f435mag - dmod - ACS435
-    f555Abs = f555mag - dmod - ACS555
-    f625Abs = f625mag - dmod - ACS625
-    f814Abs = f814mag - dmod - ACS814
-else:
-    f435Abs = f435mag - dmod - ACS435 #- H435
-    f555Abs = f555mag - dmod - ACS555 #- H555
-    f625Abs = f625mag - dmod - ACS625 #- H625
-    f814Abs = f814mag - dmod - ACS814 #- H814
+f435Abs = f435mag - dmod - ACS435 #- H435
+f555Abs = f555mag - dmod - ACS555 #- H555
+f625Abs = f625mag - dmod - ACS625 #- H625
+f814Abs = f814mag - dmod - ACS814 #- H814
 """
 else:
     f435Abs = f435mag - dmod - ACS435 - H435
@@ -271,7 +269,7 @@ else:
 """
 ################################################### 
 ########### Deal with bad points ##########
-
+"""
 #identify = pyregion.open(folder + '/'+ title +'prog.reg')
 identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha sn10ae
 #identify = pyregion.open(folder + '/'+ title +'test.reg') #sn08ha
@@ -298,7 +296,7 @@ for i in range(len(r)):
 for j in range(len(save)):
     badX.append(r[save[j]].coord_list[0] - .5)
     badY.append(r[save[j]].coord_list[1] - .5)
-    
+"""    
 #identify.close()
 #r.close()
 ################################################### 
@@ -319,28 +317,52 @@ sharpmax =  .3 #.54 #np.mean(sharp) + .5
 sharpmin =  -.45#-.467#np.mean(sharp) - .5
 
 roundmax = 2.0 #np.mean(roond) + .8
-
+"""
 for m in range(3,6):
     for i in range(len(radius)):
         cut435555.append(np.where((star <= 2)   & (crowd <= .43 ) & 
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
-                ((snr435 >= m) | (snr555 >= m)) & 
-                #(snr435 >= 3) & (snr555 >= 3)  & 
+                #((snr435 >= m) | (snr555 >= m)) & 
+                (snr435 >= 3) & (snr555 >= 3)  & 
+                #(snr435 >= 1) & (snr555 >= 1)  & 
                 ((snr435 <= 30) & (snr555 <= 30) & (snr625 <= 30) & (snr814 <= 30)) & 
-                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   ))#   
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])    ))#   
                 #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
         cut625814.append(np.where((star <= 2)   & (crowd <= .43 ) & 
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
-                ((snr625 >= m) | (snr814 >= m)) & 
-                #(snr625 >= 3) & (snr814 >= 3)   & 
+                #((snr625 >= m) | (snr814 >= m)) & 
+                (snr625 >= 3) & (snr814 >= 3)   & 
+                #(snr625 >= 1) & (snr814 >= 1)   & 
                 ((snr435 <= 30) & (snr555 <= 30) & (snr625 <= 30) & (snr814 <= 30)) & 
                 ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   ))#     
                 #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
         rad.append(i)
         snr.append(m)
-
+"""
+for i in range(len(radius)):
+    cut435555.append(np.where((star <= 2)   & #(crowd <= .43 ) & 
+                #(sharp <= sharpmax) & (sharp >= sharpmin) & 
+                #(roond <= roundmax) & 
+                #((snr435 >= m) | (snr555 >= m)) & 
+                (snr814 >= 10) & (snr814 <= 30) & 
+                #(snr435 >= 3) & (snr555 >= 3)  & 
+                #(snr435 >= 1) & (snr555 >= 1)  & 
+                #((snr435 <= 30) & (snr555 <= 30) & (snr625 <= 30) & (snr814 <= 30)) & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])    ))#   
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
+    cut625814.append(np.where((star <= 2)   & #(crowd <= .43 ) & 
+                #(sharp <= sharpmax) & (sharp >= sharpmin) & 
+                #(roond <= roundmax) & 
+                #((snr625 >= m) | (snr814 >= m)) &     
+                (snr814 >= 10) & (snr814 <= 30) & 
+                #(snr625 >= 3) & (snr814 >= 3)   & 
+                #(snr625 >= 1) & (snr814 >= 1)   & 
+                #((snr435 <= 30) & (snr555 <= 30) & (snr625 <= 30) & (snr814 <= 30)) & 
+                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   ))#     
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
+    rad.append(i)
 
 
 ################################################### 
@@ -360,8 +382,10 @@ for n in range(len(cut435555)):
                         ((unc625[cut625814[n]]**2 + unc814[cut625814[n]]**2)**.5 ),
                         snr625[cut625814[n]], snr814[cut625814[n]],
                         xcoord[cut625814[n]], ycoord[cut625814[n]] ))
-    pickle.dump( snr435_555[n], open(folder + '/' + title + 'f435f555_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
-    pickle.dump( snr625_814[n], open(folder + '/' + title + 'f625f814_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+    #pickle.dump( snr435_555[n], open(folder + '/' + title + 'f435f555_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+    #pickle.dump( snr625_814[n], open(folder + '/' + title + 'f625f814_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+    pickle.dump( snr435_555[n], open(folder + '/' + title + 'f435f555_sn' + str(3) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+    pickle.dump( snr625_814[n], open(folder + '/' + title + 'f625f814_sn' + str(3) + '_rad' + str(rad[n]) + '.p', "wb" ) )
 
 print "Pickled."
 
@@ -530,52 +554,4 @@ final = np.array(final)
 np.savetxt(folder +'/'+ title + 'all.txt', final,fmt = "%1.2f")
 np.savetxt(folder +'/'+ title + '435555.txt', first,fmt = "%1.2f")
 np.savetxt(folder +'/'+ title + '625814.txt', second,fmt = "%1.2f")
-
-
-
-################################################### 
-############ What am I plotting?        ###########
-###################################################    
-
-Xaxis = []
-Xaxis.append((1.0/(814*10**-3),
-              1.0/(625*10**-3),
-              1.0/(555*10**-3),
-              1.0/(435*10**-3)))
-Xaxis = np.reshape(Xaxis,(4,1))     
-
-squid = plt.subplot2grid((1,1), (0,0), colspan = 1)
-h = [2, 5] # height of the plotted figure
-fig = plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
-#fig.subplots_adjust(wspace=.5)
-gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
-
-plt.xlabel(title +" 1/$\lambda \, (\mu m^{-1})$",fontdict = font)
-plt.ylabel("$E (\lambda - V) \, / \, E(B-V)$",fontdict = font)
-squid.plot(Xaxis,[(f814Abs - ACS555)/MW,(f625Abs - ACS555)/MW,(f555Abs - ACS555)/MW,(f435Abs - ACS555)/MW],'-o')
-
-
-plt.tight_layout()
-plt.savefig("Extinction_2.png")    
-plt.show()
-
-print data[:,22][cut435555[4]]
-print data[:,23][cut435555[4]]
-print data[:,24][cut435555[4]]
-
-print data[:,35][cut435555[4]]
-print data[:,36][cut435555[4]]
-print data[:,37][cut435555[4]]
-
-print data[:,48][cut625814[4]]
-print data[:,49][cut625814[4]]
-print data[:,50][cut625814[4]]
-
-print data[:,61][cut625814[4]]
-print data[:,62][cut625814[4]]
-print data[:,63][cut625814[4]]
-
 """
-
-
-
