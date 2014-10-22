@@ -50,8 +50,8 @@ class Star:
 #####################################################################
 ########################### PICK THE SN!! ###########################
 #####################################################################
-title = 'SN08ge'
-#title = 'SN08ha'
+#title = 'SN08ge'
+title = 'SN08ha'
 #title = 'SN10ae'
 #title = 'SN10el'
 
@@ -142,16 +142,16 @@ if (title == 'SN08ge'):
     ybotmax    = -3.5
     ybotmin    = -7.0
     for i in range(3,6):
-        f435f555_0.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad0.p', 'rb')))    
-        f625f814_0.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn'+ str(i) +'_rad0.p', 'rb')))    
-        f435f555_1.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn'+ str(i) +'_rad1.p', 'rb')))    
-        f625f814_1.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn'+ str(i) +'_rad1.p', 'rb')))   
-        f435f555_2.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn'+ str(i) +'_rad2.p', 'rb')))    
-        f625f814_2.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn'+ str(i) +'_rad2.p', 'rb')))  
-        f435f555_3.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn'+ str(i) +'_rad3.p', 'rb')))    
-        f625f814_3.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn'+ str(i) +'_rad3.p', 'rb')))
-        f435f555_4.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn'+ str(i) +'_rad4.p', 'rb')))    
-        f625f814_4.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn'+ str(i) +'_rad4.p', 'rb')))
+        f435f555_0.append(pickle.load(open('SN2008GE/sn2008gef435f555_sn3_rad0.p', 'rb')))    
+        f625f814_0.append(pickle.load(open('SN2008GE/sn2008gef625f814_sn'+ str(i) +'_rad0.p', 'rb')))    
+        f435f555_1.append(pickle.load(open('SN2008GE/sn2008gef435f555_sn'+ str(i) +'_rad1.p', 'rb')))    
+        f625f814_1.append(pickle.load(open('SN2008GE/sn2008gef625f814_sn'+ str(i) +'_rad1.p', 'rb')))   
+        f435f555_2.append(pickle.load(open('SN2008GE/sn2008gef435f555_sn'+ str(i) +'_rad2.p', 'rb')))    
+        f625f814_2.append(pickle.load(open('SN2008GE/sn2008gef625f814_sn'+ str(i) +'_rad2.p', 'rb')))  
+        f435f555_3.append(pickle.load(open('SN2008GE/sn2008gef435f555_sn'+ str(i) +'_rad3.p', 'rb')))    
+        f625f814_3.append(pickle.load(open('SN2008GE/sn2008gef625f814_sn'+ str(i) +'_rad3.p', 'rb')))
+        f435f555_4.append(pickle.load(open('SN2008GE/sn2008gef435f555_sn'+ str(i) +'_rad4.p', 'rb')))    
+        f625f814_4.append(pickle.load(open('SN2008GE/sn2008gef625f814_sn'+ str(i) +'_rad4.p', 'rb')))
         
 elif (title == 'SN08ha'):
     ytopmax    = -3.5
@@ -284,10 +284,9 @@ h = [2, 4] # height of the plotted figure
 fig1 = plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
 gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
 
-#fig1.suptitle(title + ': CMD for Z = 0.' + name[1:-7] + ', Y = 0.' + name[6:-4] + ' S/N >= 3',
-#          fontdict = font, size=15)
-fig1.suptitle('CMD for SN 2008ge SN > 3',
+fig1.suptitle(title + ': CMD for Z = 0.' + name[1:-7] + ', Y = 0.' + name[6:-4] + ' S/N >= 3',
           fontdict = font, size=15)
+
 
 ###########################################################################
 #plots = plt.subplot(gs[0])
@@ -405,34 +404,34 @@ elif (title == 'SN10el'):
 #                        c='r',marker="D")
 
 for i in range(start,end):
-        #c1plt.errorbar(np.subtract(f435f555_4[i][0],   f435f555_4[i][1]),   
-        #               f435f555_4[i][1], f435f555_4[i][2],   f435f555_4[i][3], 
-        #                fmt=None, ecolor="c",  marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_4[i][0],   f435f555_4[i][1]),   
+        c1plt.errorbar(np.subtract(f435f555_4[i][8],   f435f555_4[i][9]),   
+                       f435f555_4[i][1], f435f555_4[i][2],   f435f555_4[i][3], 
+                        fmt=None, ecolor="c",  marker=None, mew=0 )
+        c1plt.scatter(np.subtract(f435f555_4[i][8],   f435f555_4[i][9]),   
                       f435f555_4[i][1], label = 'R = ' + str(radius[4]) + " PC",  
                         c='c',marker='d')
-        #c1plt.errorbar(np.subtract(f435f555_3[i][0],   f435f555_3[i][1]),   
-        #               f435f555_3[i][1], f435f555_3[i][2],   f435f555_3[i][3], 
-        #                fmt=None, ecolor="y",  marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_3[i][0],   f435f555_3[i][1]),   
+        c1plt.errorbar(np.subtract(f435f555_3[i][8],   f435f555_3[i][9]),   
+                       f435f555_3[i][1], f435f555_3[i][2],   f435f555_3[i][3], 
+                        fmt=None, ecolor="y",  marker=None, mew=0 )
+        c1plt.scatter(np.subtract(f435f555_3[i][8],   f435f555_3[i][9]),   
                       f435f555_3[i][1], label = 'R = ' + str(radius[3]) + " PC",  
                         c='y',marker='d')
-        #c1plt.errorbar(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
-        #               f435f555_2[i][1], f435f555_2[i][2],   f435f555_2[i][3], 
-        #                fmt=None, ecolor="b",  marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_2[i][0],   f435f555_2[i][1]),   
+        c1plt.errorbar(np.subtract(f435f555_2[i][8],   f435f555_2[i][9]),   
+                       f435f555_2[i][1], f435f555_2[i][2],   f435f555_2[i][3], 
+                        fmt=None, ecolor="b",  marker=None, mew=0 )
+        c1plt.scatter(np.subtract(f435f555_2[i][8],   f435f555_2[i][9]),   
                       f435f555_2[i][1], label = 'R = ' + str(radius[2]) + " PC",  
                         c='b',marker='d')
-        #c1plt.errorbar(np.subtract(f435f555_1[i][0],   f435f555_1[i][1]),  
-        #               f435f555_1[i][1], f435f555_1[i][2],   f435f555_1[i][3],
-        #                 fmt=None, ecolor="r", marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_1[i][0],   f435f555_1[i][1]),   
+        c1plt.errorbar(np.subtract(f435f555_1[i][8],   f435f555_1[i][9]),  
+                       f435f555_1[i][1], f435f555_1[i][2],   f435f555_1[i][3],
+                         fmt=None, ecolor="r", marker=None, mew=0 )
+        c1plt.scatter(np.subtract(f435f555_1[i][8],   f435f555_1[i][9]),   
                       f435f555_1[i][1], label = 'R = ' + str(radius[1]) + " PC",  
                         c='r',marker='d')        
-        #c1plt.errorbar(np.subtract(f435f555_0[i][0],   f435f555_0[i][1]),  
-        #               f435f555_0[i][1], f435f555_0[i][2],   f435f555_0[i][3],
-        #                 fmt=None, ecolor="k", marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_0[i][0],   f435f555_0[i][1]),   
+        c1plt.errorbar(np.subtract(f435f555_0[i][8],   f435f555_0[i][9]),  
+                       f435f555_0[i][1], f435f555_0[i][2],   f435f555_0[i][3],
+                         fmt=None, ecolor="k", marker=None, mew=0 )
+        c1plt.scatter(np.subtract(f435f555_0[i][8],   f435f555_0[i][9]),   
                       f435f555_0[i][1], label = 'R = ' + str(radius[0]) + " PC",  
                         c='k',marker='d')
         snt += 1
@@ -448,9 +447,9 @@ l = plt.legend(prop = {'family' : 'serif'},loc=4)
 #l = plt.legend(prop = {'family' : 'serif'},loc=1)
 l.draw_frame(False)
 ########################################################################### 
-#c1plt.set_ylim(bottom=ytopmax, top=ytopmin)
-##c1plt.set_xlim(-1.5, 2.5) 
-##p = plt.axhspan(ytopmax, -4, facecolor='g', alpha=0.2)
+c1plt.set_ylim(bottom=ytopmax, top=ytopmin)
+#c1plt.set_xlim(-1.5, 2.5) 
+#p = plt.axhspan(ytopmax, -4, facecolor='g', alpha=0.2)
 ###########################################################################
 
 #c2plt = plt.subplot2grid((2,2), (1,0), colspan = 2)
@@ -570,124 +569,94 @@ elif (title == 'SN10el'):
 #                        c='r',marker="D")
 
 for k in range(start,end):
-        #c2plt.errorbar(np.subtract(f625f814_4[k][0],   f625f814_4[k][1]),   
-        #               f625f814_4[k][1], f625f814_4[k][2],   f625f814_4[k][3], 
-        #                fmt=None, ecolor="c", marker=None, mew=0 )
-        c2plt.scatter(np.subtract(f625f814_4[k][0],   f625f814_4[k][1]),   f625f814_4[k][1],
+        c2plt.errorbar(np.subtract(f625f814_4[k][8],   f625f814_4[k][9]),   
+                       f625f814_4[k][1], f625f814_4[k][2],   f625f814_4[k][3], 
+                        fmt=None, ecolor="c", marker=None, mew=0 )
+        c2plt.scatter(np.subtract(f625f814_4[k][8],   f625f814_4[k][9]),   f625f814_4[k][1],
                       label = 'R = ' + str(radius[4]) + " PC",  #'S/N >= ' + str(snb) +
                         c='c',marker='d')
-        #c2plt.errorbar(np.subtract(f625f814_3[k][0],   f625f814_3[k][1]),   
-        #               f625f814_3[k][1], f625f814_3[k][2],   f625f814_3[k][3], 
-        #                fmt=None, ecolor="y", marker=None, mew=0 )
-        c2plt.scatter(np.subtract(f625f814_3[k][0],   f625f814_3[k][1]),   f625f814_3[k][1],
+        c2plt.errorbar(np.subtract(f625f814_3[k][8],   f625f814_3[k][9]),   
+                       f625f814_3[k][1], f625f814_3[k][2],   f625f814_3[k][3], 
+                        fmt=None, ecolor="y", marker=None, mew=0 )
+        c2plt.scatter(np.subtract(f625f814_3[k][8],   f625f814_3[k][9]),   f625f814_3[k][1],
                       label = 'R = ' + str(radius[3]) + " PC",   #'S/N >= ' + str(snb) +
                         c='y',marker='d')
-        #c2plt.errorbar(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   
-        #               f625f814_2[k][1], f625f814_2[k][2],   f625f814_2[k][3], 
-        #                fmt=None, ecolor="b", marker=None, mew=0 )
-        c2plt.scatter(np.subtract(f625f814_2[k][0],   f625f814_2[k][1]),   f625f814_2[k][1],
+        c2plt.errorbar(np.subtract(f625f814_2[k][8],   f625f814_2[k][9]),   
+                       f625f814_2[k][1], f625f814_2[k][2],   f625f814_2[k][3], 
+                        fmt=None, ecolor="b", marker=None, mew=0 )
+        c2plt.scatter(np.subtract(f625f814_2[k][8],   f625f814_2[k][9]),   f625f814_2[k][1],
                       label = 'R = ' + str(radius[2]) + " PC",   #'S/N >= ' + str(snb) +
                         c='b',marker='d')
-        #c2plt.errorbar(np.subtract(f625f814_1[k][0],   f625f814_1[k][1]),   
-        #               f625f814_1[k][1], f625f814_1[k][2],   f625f814_1[k][3], 
-        #                fmt=None, ecolor="r", marker=None, mew=0 )
-        c2plt.scatter(np.subtract(f625f814_1[k][0],   f625f814_1[k][1]),   f625f814_1[k][1],  #'S/N >= ' + str(snb) +   
+        c2plt.errorbar(np.subtract(f625f814_1[k][8],   f625f814_1[k][9]),   
+                       f625f814_1[k][1], f625f814_1[k][2],   f625f814_1[k][3], 
+                        fmt=None, ecolor="r", marker=None, mew=0 )
+        c2plt.scatter(np.subtract(f625f814_1[k][8],   f625f814_1[k][9]),   f625f814_1[k][1],  #'S/N >= ' + str(snb) +   
                       label ='R = ' + str(radius[1]) + " PC",  
                         c='r',marker='d')
-        #c2plt.errorbar(np.subtract(f625f814_0[k][0],   f625f814_0[k][1]),   
-        #               f625f814_0[k][1], f625f814_0[k][2],   f625f814_0[k][3], 
-        #                fmt=None, ecolor="k", marker=None, mew=0 )
-        c2plt.scatter(np.subtract(f625f814_0[k][0],   f625f814_0[k][1]),   f625f814_0[k][1],   
+        c2plt.errorbar(np.subtract(f625f814_0[k][8],   f625f814_0[k][9]),   
+                       f625f814_0[k][1], f625f814_0[k][2],   f625f814_0[k][3], 
+                        fmt=None, ecolor="k", marker=None, mew=0 )
+        c2plt.scatter(np.subtract(f625f814_0[k][8],   f625f814_0[k][9]),   f625f814_0[k][1],   
                       label = 'R = ' + str(radius[0]) + " PC",   #'S/N >= ' + str(snb) +
                         c='k',marker='d')
         snb += 1
 #c2plt.fill([3,4,4,3], [2,2,4,4], 'b', alpha=0.2, edgecolor='r')
 
 ###########################################################################
-#rect = patches.Rectangle((-2,ybotmax), width=7, height=-1,
-                         #color='grey',
-                         #alpha=0.3)
+
 #This was an iffy move,using the sn =3 of a point that's not plotted, I don't like it
-"""
+
 f555min3    = -4.4110 #555
+#f555min3 this has to be changed
 f555min3435 = -4.6930 
-f435min3    = -3.8880 
-f435min3555 = -2.7340 #555
+f435min3    = -4.5320 #-3.8880  #commented out is sn 435 = 3.0
+f435min3555 = -4.4810 #-2.7340 #555
 
-#print np.subtract(                    -2.7340,                     -4.4110)
-#print np.subtract(np.subtract(-3.8880,-2.7340),np.subtract(-4.6930,-4.4110))
-s1 = np.subtract(-2.7340,-4.4110) / np.subtract(np.subtract(-3.8880,-2.7340),np.subtract(-4.6930,-4.4110))
-b1     = f555min3 - (s1*(np.subtract(-4.4110,-4.6930)))
+s1 = -1 #np.subtract(f435min3555,f555min3 ) / np.subtract(np.subtract(f435min3 ,f435min3555),np.subtract(f555min3435,f555min3 ))
+horz1 = -4.4 #f555min3 
+b1 = horz1 - (s1*(np.subtract(horz1 ,f555min3435)))
 
-ptsR = np.array([[-2,ybotmax],
-                 [-2,f555min3],
-                 [np.subtract(f555min3,b1)/s1,f555min3], #need the x value
-                 [2.0,((2.0*s1)+b1)],  #this is okay              
-                 [2.0,ybotmax]])
+ptsR = np.array([[-2,ytopmax],
+                 [-2,horz1],
+                 [np.subtract(f555min3,b1)/s1,horz1], #need the x value
+                 [2.0,((2.0*s1)+b1)],           
+                 [2.0,ytopmax]])
 polyR = Polygon(ptsR, color='grey', alpha=0.15,closed = True)
 
 c1plt.add_patch(polyR)
 #############
 min3l       = np.where(f625f814_4[0][5] == 3.0)
-f625min3    = -4.2860
-f625min3814 = -4.5880
-
-#top = np.subtract(f625f814_4[0][1][min3l], f625min3814)
-#bottom = np.subtract(np.subtract(f625f814_4[0][0][min3l], f625f814_4[0][1][min3l]) , np.subtract(f625min3, f625min3814))
-#slope  = top/bottom
-#bval   = f625f814_4[0][1][min3l] - (slope*(np.subtract(f625f814_4[0][0][min3l],f625f814_4[0][1][min3l])))
-##print slope, bval
-##s1     = -1.125
-##b1     = f625f814_4[0][1][min3l] - (s1*f625f814_4[0][0][min3l])
-
-#flippt = (np.subtract(f625f814_4[0][1][min3l],bval))/np.abs(slope)
-#toppt  = ((2.5*slope)+bval)
-#print f625f814_4[0][1][min3l] # ymin of s/n = 3
-#print (np.subtract(f625f814_4[0][1][min3l],bval))/np.abs(slope) #flippt  
-#print ((2.5*slope)+bval) #toppt
-#print np.subtract(f625f814_4[0][1][min3l],toppt)/np.subtract(flippt, 2.5) #slope of flippt
-#s2  = np.subtract(f625f814_4[0][1][min3l],toppt)/np.subtract(flippt, 2.5) #slope of flippt
-#print f625f814_4[0][1][min3l] - (s2*f625f814_4[0][0][min3l]) #bvalue
-#b2  = f625f814_4[0][1][min3l] - (s2*f625f814_4[0][0][min3l])
-#print np.subtract(f625f814_4[0][1][min3l],-b2)/s2
-#bad = np.subtract(f625f814_4[0][1][min3l],-b2)/s2
-
-#print np.subtract(                   -4.5880,                       -4.412080)
-#print np.subtract(np.subtract(-4.2860,-4.5880),np.subtract(-4.5060 ,-4.412080))
-s4 =  np.subtract(-4.5880,-4.412080)/np.subtract(np.subtract(-4.2860,-4.5880),np.subtract(-4.5060 ,-4.412080))
-#print "Slope : ", s4
-b4 = np.subtract(-4.412080,s4*(np.subtract(-4.5060,-4.412080)))
-#print "B-int : ", b4
-#y4 = (s4*(np.subtract(-4.412080,-4.5060))) + b4
+#f625f814_4[0][1][min3l] This is what I have to change
+f625min3    = -3.9410#-4.2860 #SN 625 == 3
+f625min3814 = -4.8030#-4.5880
+horz = -4.4#f625f814_4[0][1][min3l]
+s4 = -1 # np.subtract(f625min3814,f625f814_4[0][1][min3l])/np.subtract(np.subtract(f625min3,f625min3814),np.subtract(f625f814_4[0][0][min3l] ,f625f814_4[0][1][min3l]))
+b4 = np.subtract(horz,s4*(np.subtract(f625f814_4[0][0][min3l],horz)))
 y4 = (s4*2.5) + b4
-#print "Y-pt  : ", y4
-#print (s4*1.8) + b4
-x4 = np.subtract(-4.412080,b4)/s4
-#print "X0-pt : ", x4
+x4 = np.subtract(horz,b4)/s4
+
 pts = np.array([[-2,ybotmax],
-                [-2,f625f814_4[0][1][min3l]],
-                [x4,f625f814_4[0][1][min3l]], #need the x value                
-                #[np.subtract(f625f814_4[0][1][min3l],b1)/s1,f625f814_4[0][1][min3l]], #need the x value
-                [2.5,y4],  #this is okay              
+                [-2,horz],
+                [x4,horz], 
+                [2.5,y4],           
                 [2.5,ybotmax]])
 poly = Polygon(pts, color='grey', alpha=0.15,closed = True)
 
 c2plt.add_patch(poly)
-"""
-#c2plt.add_patch(rect)
+
 ###########################################################################
 l = plt.legend(prop = {'family' : 'serif'},loc=4)
 l.draw_frame(False)
 ########################################################################### 
-#c2plt.set_ylim(bottom=ybotmax, top=ybotmin) 
-##c2plt.set_xlim(-1.5, 2.5) 
-##gs.tight_layout(w_pad = .5)
-##p = plt.axhspan(ybotmax, -4, facecolor='g', alpha=0.2)
+c2plt.set_ylim(bottom=ybotmax, top=ybotmin) 
+#c2plt.set_xlim(-1.5, 2.5) 
+#gs.tight_layout(w_pad = .5)
+#p = plt.axhspan(ybotmax, -4, facecolor='g', alpha=0.2)
 ########################################################################### 
 plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'SN_3' + '.png'
+figname = title + '_' + 'delete' + '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname

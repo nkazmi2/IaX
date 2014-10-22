@@ -126,9 +126,8 @@ ycoord  = data[:, 3]
 ################################################### 
 ################################################### 
 """
-#identify = pyregion.open(folder + '/'+ title +'prog.reg')
-identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha sn10ae
-#identify = pyregion.open(folder + '/'+ title +'negsnr.reg') #sn08ha
+identify = pyregion.open(folder + '/'+ title +'prog.reg') #sn08ge
+#identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha
 r = pyregion.open(folder + '/'+ title +'coord.reg')
 save = []
 badX = []
@@ -140,7 +139,7 @@ for i in range(len(identify)):
         fix.append(i)
     #yellow is good
     #cyan is bad
-        
+
 for i in range(len(fix)):
     r[fix[i]].attr[1]["color"] = 'yellow'
 
@@ -164,28 +163,43 @@ clos = []
 #sharpmin = np.mean(sharp) - .5
 #roundmax = np.mean(roond) + .8
 
-sharpmax =  .3 
+"""
+sharpmax = 0.3 
 sharpmin = -.45
-roundmax =  2.0
-cut.append(np.where((star <= 2)  & (snr555 >= 4) ))#   & (crowd <= .43 ) & 
-                #(sharp <= sharpmax) & (sharp >= sharpmin) & 
-                #(roond <= roundmax)  #  & 
-                #(((snr435 >= 3) | (snr555 >= 3)) )#|
-                #((snr625 >= 3) | (snr814 >= 3))) &
-                #(((snr435 <= 30) & (snr555 <= 30)) |
-                #((snr625 <= 30) & (snr814 <= 30))) 
-                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100) ))
+roundmax = 2.0
+crowdmax = 0.43
+
+cut.append(np.where((star <= 2)     & (crowd <= crowdmax) & 
+                (sharp <= sharpmax) & (sharp >= sharpmin) & 
+                (roond <= roundmax) & 
+                (((snr435 >= 3) | (snr555 >= 3)) |
+                ((snr625 >= 3) | (snr814 >= 3))) &
+                (((snr435 <= 30) & (snr555 <= 30)) |
+                ((snr625 <= 30) & (snr814 <= 30)))
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 150)))
+"""
+#""" Sn2008ge testing stuff           
+sharpmax = .5#0.3 
+sharpmin = -.5#-.45
+roundmax = 2.0
+crowdmax = .5#0.43     
+cut.append(np.where((star <= 2)   & (crowd <= crowdmax ) & 
+                (sharp <= sharpmax) & (sharp >= sharpmin) & 
+                #(roond <= roundmax) & 
+                (((snr435 >= 3 ) | (snr555 >= 3 )) | ((snr625 >= 3 ) | (snr814 >= 3 ))) &
+                (((snr435 <= 30) & (snr555 <= 30)) & ((snr625 <= 30) & (snr814 <= 30)))
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 150) )) 
                 #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-   
+#"""
 for i in range(len(xcoord[cut[0]])):
     circ.append('circle(')
     comm.append(',')
     clos.append(',2)')
     
 
-np.savetxt(folder +'/'+ title + '555_4.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
+np.savetxt(folder +'/'+ title + 'coord.reg', np.c_[circ,xcoord[cut[0]]+1,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
-               comments = 'global color=orange dashlist=8 3 width=1'
+               comments = 'global color=cyan dashlist=8 3 width=1'
                ' font="helvetica 10 normal" select=1' \
                ' highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1' \
                '\nimage;' )

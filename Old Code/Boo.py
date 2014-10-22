@@ -4,6 +4,51 @@ Created on Fri May 30 09:58:19 2014
 
 @author: Nova
 """
+import pyregion
+identify = pyregion.open('../SN2008GE/sn2008ge_prog.reg') #sn08ge
+#identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha
+#r = pyregion.open(folder + '/'+ title +'coord.reg')
+r = pyregion.open('../SN2008GE/sn2008ge_20141015_coord2.reg')
+save = []
+badX = []
+badY = []
+fix  = []
+
+for i in range(len(identify)):
+    if (pyregion.ShapeList(identify[i].attr[1].get("color"))  == ['y', 'e', 'l', 'l', 'o', 'w']):
+        fix.append(i)
+
+print len(identify)    
+print len(r)
+print len(fix)
+
+for i in range(len(fix)):
+    r[fix[i]].attr[1]["color"] = 'yellow'
+
+for i in range(len(r)):
+    r1 = pyregion.ShapeList(r[i].attr[1].get("color"))
+    if (r1[0] == 'c'):
+        save.append(i) 
+ 
+for j in range(len(save)):
+    badX.append(r[save[j]].coord_list[0] - .5)
+    badY.append(r[save[j]].coord_list[1] - .5)
+    
+
+"""
+#3.0000   0.8000   3.4000   5.6000   -3.8880   -2.7340   -4.4500   -5.1220
+#5.9000   3.0000   2.5000   1.7000   -4.6930   -4.4110   -4.0620   -3.7560
+#4.4000   4.7000   3.0000   3.5000   -4.3270   -4.8470   -4.2860   -4.5880
+#3.1000   1.7000   3.5000   3.0000   -3.8980   -3.6830   -4.5060   -4.412080
+
+print np.subtract(-4.4110,-3.8880)
+print np.subtract(-4.412080,-4.2860)
+# -3.8880
+# -4.4110
+# -4.2860 
+# -4.412080
+"""
+"""
 import numpy as np
 
 class Student(object):
@@ -27,6 +72,7 @@ class Student(object):
 me = Student('Sean', ['Physics', 'Computer Science', 'Underwater Basket Weaving'])   
 print me.getName()
 print str(me)
+"""
 """
 #435 555
 print np.subtract(                    -2.7340,                     -4.4110)
@@ -79,18 +125,83 @@ print "Y-pt  : ", y4
 print (s4*1.8) + b4
 x4 = np.subtract(-4.412080,b4)/s4
 print "X0-pt : ", x4
-"""
-#3.0000   0.8000   3.4000   5.6000   -3.8880   -2.7340   -4.4500   -5.1220
-#5.9000   3.0000   2.5000   1.7000   -4.6930   -4.4110   -4.0620   -3.7560
-#4.4000   4.7000   3.0000   3.5000   -4.3270   -4.8470   -4.2860   -4.5880
-#3.1000   1.7000   3.5000   3.0000   -3.8980   -3.6830   -4.5060   -4.412080
 
-print np.subtract(-4.4110,-3.8880)
-print np.subtract(-4.412080,-4.2860)
-# -3.8880
-# -4.4110
-# -4.2860 
-# -4.412080
+
+###############################################################################
+#rect = patches.Rectangle((-2,ybotmax), width=7, height=-1,
+                         #color='grey',
+                         #alpha=0.3)
+#This was an iffy move,using the sn =3 of a point that's not plotted, I don't like it
+
+f555min3    = -4.4110 #555
+f555min3435 = -4.6930 
+f435min3    = -3.8880 
+f435min3555 = -2.7340 #555
+
+#print np.subtract(                    -2.7340,                     -4.4110)
+#print np.subtract(np.subtract(-3.8880,-2.7340),np.subtract(-4.6930,-4.4110))
+s1 = np.subtract(-2.7340,-4.4110) / np.subtract(np.subtract(-3.8880,-2.7340),np.subtract(-4.6930,-4.4110))
+b1     = f555min3 - (s1*(np.subtract(-4.4110,-4.6930)))
+
+ptsR = np.array([[-2,ybotmax],
+                 [-2,f555min3],
+                 [np.subtract(f555min3,b1)/s1,f555min3], #need the x value
+                 [2.0,((2.0*s1)+b1)],  #this is okay              
+                 [2.0,ybotmax]])
+polyR = Polygon(ptsR, color='grey', alpha=0.15,closed = True)
+
+c1plt.add_patch(polyR)
+#############
+min3l       = np.where(f625f814_4[0][5] == 3.0)
+f625min3    = -4.2860
+f625min3814 = -4.5880
+
+#top = np.subtract(f625f814_4[0][1][min3l], f625min3814)
+#bottom = np.subtract(np.subtract(f625f814_4[0][0][min3l], f625f814_4[0][1][min3l]) , np.subtract(f625min3, f625min3814))
+#slope  = top/bottom
+#bval   = f625f814_4[0][1][min3l] - (slope*(np.subtract(f625f814_4[0][0][min3l],f625f814_4[0][1][min3l])))
+##print slope, bval
+##s1     = -1.125
+##b1     = f625f814_4[0][1][min3l] - (s1*f625f814_4[0][0][min3l])
+
+#flippt = (np.subtract(f625f814_4[0][1][min3l],bval))/np.abs(slope)
+#toppt  = ((2.5*slope)+bval)
+#print f625f814_4[0][1][min3l] # ymin of s/n = 3
+#print (np.subtract(f625f814_4[0][1][min3l],bval))/np.abs(slope) #flippt  
+#print ((2.5*slope)+bval) #toppt
+#print np.subtract(f625f814_4[0][1][min3l],toppt)/np.subtract(flippt, 2.5) #slope of flippt
+#s2  = np.subtract(f625f814_4[0][1][min3l],toppt)/np.subtract(flippt, 2.5) #slope of flippt
+#print f625f814_4[0][1][min3l] - (s2*f625f814_4[0][0][min3l]) #bvalue
+#b2  = f625f814_4[0][1][min3l] - (s2*f625f814_4[0][0][min3l])
+#print np.subtract(f625f814_4[0][1][min3l],-b2)/s2
+#bad = np.subtract(f625f814_4[0][1][min3l],-b2)/s2
+
+#print np.subtract(                   -4.5880,                       -4.412080)
+#print np.subtract(np.subtract(-4.2860,-4.5880),np.subtract(-4.5060 ,-4.412080))
+s4 =  np.subtract(-4.5880,-4.412080)/np.subtract(np.subtract(-4.2860,-4.5880),np.subtract(-4.5060 ,-4.412080))
+#print "Slope : ", s4
+b4 = np.subtract(-4.412080,s4*(np.subtract(-4.5060,-4.412080)))
+#print "B-int : ", b4
+#y4 = (s4*(np.subtract(-4.412080,-4.5060))) + b4
+y4 = (s4*2.5) + b4
+#print "Y-pt  : ", y4
+#print (s4*1.8) + b4
+x4 = np.subtract(-4.412080,b4)/s4
+#print "X0-pt : ", x4
+pts = np.array([[-2,ybotmax],
+                [-2,f625f814_4[0][1][min3l]],
+                [x4,f625f814_4[0][1][min3l]], #need the x value                
+                #[np.subtract(f625f814_4[0][1][min3l],b1)/s1,f625f814_4[0][1][min3l]], #need the x value
+                [2.5,y4],  #this is okay              
+                [2.5,ybotmax]])
+poly = Polygon(pts, color='grey', alpha=0.15,closed = True)
+
+c2plt.add_patch(poly)
+
+#c2plt.add_patch(rect)
+###############################################################################
+"""
+
 """
 
 
