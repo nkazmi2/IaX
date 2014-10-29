@@ -42,7 +42,7 @@ snt        = 3
 snb        = 3
 #####################################################################
 
-name = 'Z0001Y26.dat'#'Z0170Y26.dat'
+name = 'Z0170Y26.dat' #'Z0001Y26.dat'
 
 d = []
 d.append(np.loadtxt('Metallicity/'+name))
@@ -73,6 +73,7 @@ age73   = np.where((logAGE == 7.3))
 age74   = np.where((logAGE == 7.4))
 age75   = np.where((logAGE == 7.5))
 age76   = np.where((logAGE == 7.6))
+age763   = np.where((logAGE == 7.63))
 age765  = np.where((logAGE == 7.65))
 age77   = np.where((logAGE == 7.7))
 age771  = np.where((logAGE == 7.71))
@@ -117,7 +118,7 @@ if (title == 'SN08ge'):
     #ytopmin    = -9.0
     #ybotmax    = -4.0
     #ybotmin    = -9.0
-    ytopmax    = -1.5
+    ytopmax    = -3.0
     ytopmin    = -5.5
     ybotmax    = -3.0
     ybotmin    = -7.0
@@ -163,16 +164,14 @@ c1plt.yaxis.set_minor_locator(AutoMinorLocator())
 c1plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
-if (title == 'SN08ge'):
-    #c1plt.plot(np.subtract(F435W[age71],  F555W[age71]),  F555W[age71],  
-    #       'y-', label = 'Age = 10$^{7.1}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age72],  F555W[age72]),  F555W[age72],  
-    #       'g:', label = 'Age = 10$^{7.2}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age73],  F555W[age73]),  F555W[age73],  
-    #       'c-', label = 'Age = 10$^{7.3}$ yrs')
-    c1plt.plot(np.subtract(F435W[age773],  F555W[age773]),  F555W[age773],  
-           'r--', label = 'Age = 10$^{7.73}$ yrs')
-    
+"""if (title == 'SN08ge'):
+    c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
+           'b:', label = 'Age = 10$^{7.6}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age765],  F555W[age765]),  F555W[age765],  
+    #       'g:', label = 'Age = 10$^{7.65}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age773],  F555W[age773]),  F555W[age773],  
+    #       'r--', label = 'Age = 10$^{7.73}$ yrs')
+"""    
 for i in range(start,end):
         c1plt.errorbar(np.subtract(f435f555_4[i][8],   f435f555_4[i][9]),   
                        f435f555_4[i][1], f435f555_4[i][2],   f435f555_4[i][3], 
@@ -228,13 +227,14 @@ c2plt.yaxis.set_minor_locator(AutoMinorLocator())
 c2plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
-if (title == 'SN08ge'):
-    #c2plt.plot(np.subtract(F625W[age771],  F814W[age771]),  F814W[age771],  
-    #       'y-' , label = 'Age = 10$^{7.71}$ yrs')  
-    c2plt.plot(np.subtract(F625W[age773],  F814W[age773]),  F814W[age773],  
-           'r--' , label = 'Age = 10$^{7.73}$ yrs')  
-    #c2plt.plot(np.subtract(F625W[age774],  F814W[age774]),  F814W[age774],
-    #       'g-' , label = 'Age = 10$^{7.74}$ yrs')
+"""if (title == 'SN08ge'):    
+    c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],  
+           'b:', label = 'Age = 10$^{7.6}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age765],  F814W[age765]),  F814W[age765],
+    #       'g:' , label = 'Age = 10$^{7.65}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age773],  F814W[age773]),  F814W[age773],  
+    #       'r--' , label = 'Age = 10$^{7.73}$ yrs')  
+"""
 
 for k in range(start,end):
         c2plt.errorbar(np.subtract(f625f814_4[k][8],   f625f814_4[k][9]),   
@@ -271,11 +271,12 @@ for k in range(start,end):
 
 ###########################################################################
 #This was an iffy move,using the sn =3 of a point that's not plotted, I don't like it
-
+c1plt.set_xlim(-1, 3)
+c2plt.set_xlim(-.8, 1.2)
 s1 = -1 
 horz1 = -4.0 
 b1 = -4.0
-x2 = 6
+x2 = 4
 y1 = (s1*x2) + b1
 x1 = 1.5# np.subtract(horz1,b1)/s1
 
@@ -316,6 +317,6 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'sn3'+ '.png'
+figname = title + '_' + 'Noise'+ '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname

@@ -18,14 +18,22 @@ import pyregion
 data    = []
 
 star    = [] # Column 11 the object type
-SNR     = [] # Column 06 the signal to noise
 xcoord  = [] # Column 03 the x pix coordinate
 ycoord  = [] # Column 04 the y pix coordinate
+
+f435mag = [] # Column 16 F435W Apparent Magnitude
+f555mag = [] # Column 29 F555W Apparent Magnitude
+f625mag = [] # Column 42 F625W Apparent Magnitude
+f814mag = [] # Column 55 F814W Apparent Magnitude
 
 snr435  = [] # Column 20 SNR for F435W
 snr555  = [] # Column 33 SNR for F555W
 snr625  = [] # Column 46 SNR for F625W
 snr814  = [] # Column 59 SNR for F814W
+
+sharp   = []
+roond   = [] # round is already a special word
+crowd   = []
 
 # arrays after the respective cuts
 
@@ -115,6 +123,11 @@ sharp   = data[:, 6]
 roond   = data[:, 7] # round is already a special word
 crowd   = data[:, 9]
 
+f435mag = data[:,15] # instramental VEGAMAG magnitude
+f555mag = data[:,28]
+f625mag = data[:,41]
+f814mag = data[:,55]
+
 snr435  = data[:,19] # signal to noise
 snr555  = data[:,32]
 snr625  = data[:,45]
@@ -125,10 +138,10 @@ ycoord  = data[:, 3]
 
 ################################################### 
 ################################################### 
-"""
-identify = pyregion.open(folder + '/'+ title +'prog.reg') #sn08ge
+
+identify = pyregion.open(folder + '/sn2008ge_good3.reg') #sn08ge
 #identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha
-r = pyregion.open(folder + '/'+ title +'coord.reg')
+r = pyregion.open(folder + '/sn2008ge_coord3.reg')
 save = []
 badX = []
 badY = []
@@ -149,9 +162,9 @@ for i in range(len(r)):
         save.append(i) 
  
 for j in range(len(save)):
-    badX.append(r[save[j]].coord_list[0] - .5)
+    badX.append(r[save[j]].coord_list[0] - 1)
     badY.append(r[save[j]].coord_list[1] - .5)
-"""
+
 ################################################### 
 ############ Save coordinates to a file ###########
 print "Choppin some SN-suey"
@@ -179,48 +192,55 @@ cut.append(np.where((star <= 2)     & (crowd <= crowdmax) &
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 150)))
 """
 #""" Sn2008ge testing stuff           
-sharpmax = .5#0.3 
-sharpmin = -.5#-.45
-roundmax = 2.0
-crowdmax = .5#0.43     
-cut.append(np.where((star <= 2)   & (crowd <= crowdmax ) & 
-                (sharp <= sharpmax) & (sharp >= sharpmin) & 
+sharpmax = 0.0#0.3 
+sharpmin = 0.0#-.45
+roundmax = 0.0
+crowdmax = 1.0#0.43     
+cut.append(np.where((star <= 2)   & #(crowd <= crowdmax ) & 
+                #(sharp <= sharpmax) & (sharp >= sharpmin) & 
                 #(roond <= roundmax) & 
-                (((snr435 >= 3 ) | (snr555 >= 3 )) | ((snr625 >= 3 ) | (snr814 >= 3 ))) &
-                (((snr435 <= 30) & (snr555 <= 30)) & ((snr625 <= 30) & (snr814 <= 30)))
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 150) )) 
+                (((snr435 >= 3 ) | (snr555 >= 3 )) | ((snr625 >= 3 ) | (snr814 >= 3 )))               
+                #(((snr435 >= 3 ) | (snr555 >= 3 )) | ((snr625 >= 3 ) | (snr814 >= 3 ))) &(((snr435 >= 8 ) | (snr555 >= 8 )) | ((snr625 >= 8 ) | (snr814 >= 8 )))               
+                & ((snr435 <= 70) & (snr555 <= 70) & (snr625 <= 70) & (snr814 <= 70))
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 200) )) 
                 #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-#"""
+
+print crowd[cut[0]]
+print roond[cut[0]]
+print sharp[cut[0]]
+
 for i in range(len(xcoord[cut[0]])):
     circ.append('circle(')
     comm.append(',')
     clos.append(',2)')
     
 
-np.savetxt(folder +'/'+ title + 'coord.reg', np.c_[circ,xcoord[cut[0]]+1,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
+np.savetxt(folder +'/'+ title + 'test.reg', np.c_[circ,xcoord[cut[0]]+1,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
-               comments = 'global color=cyan dashlist=8 3 width=1'
+               comments = 'global color=magenta dashlist=8 3 width=1'
                ' font="helvetica 10 normal" select=1' \
                ' highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1' \
                '\nimage;' )
-#np.savetxt(folder +'/'+ title + 'hiiiii.txt',np.c_[xcoord[cut435555[0]]+.5,ycoord[cut435555[0]]+.5],fmt = "%1.2f")
 print 'Files Saved'
 
-#print "Mean Sharp Value " + title[:-1] + " : " + str(np.mean(sharp) - .5) + " , " + str(np.mean(sharp) + .5)
-#print "Sharp : " + str(data[:,20][cut[0]])
-#print "Mean Round Value " + title[:-1] + " : " + str(np.mean(roond) + .8)
-#print "Round : " + str(data[:,21][cut[0]])
-#print "Crowd : " + str(data[:,22][cut[0]])
-"""
-print data[:,33][cut[0]]
-print data[:,34][cut[0]]
-print data[:,35][cut[0]]
 
-print data[:,46][cut[0]]
-print data[:,47][cut[0]] 
-print data[:,48][cut[0]]
+print "Make Text File"
 
-print data[:,59][cut[0]]
-print data[:,60][cut[0]]
-print data[:,61][cut[0]]
-"""
+dataOut_1 = np.array(np.c_[star[cut[0]]  ,
+    xcoord[cut[0]] ,ycoord[cut[0]] ,
+    (((xsn - xcoord[cut[0]])**2 + (ysn - ycoord[cut[0]])**2)**.5),
+    (np.subtract(f435mag[cut[0]],f555mag[cut[0]])),
+    snr435[cut[0]] ,snr555[cut[0]] ,
+    snr625[cut[0]] ,snr814[cut[0]] ,
+    f435mag[cut[0]],f555mag[cut[0]],
+    f625mag[cut[0]],f814mag[cut[0]]  ,#])#   ,
+    sharp[cut[0]],#data[:,22][cut[0]],data[:,33][cut[0]],
+    roond[cut[0]],#data[:,20][cut[0]],data[:,34][cut[0]],
+    crowd[cut[0]]])#,data[:,21][cut[0]],data[:,35][cut[0]] 
+np.savetxt(folder +'/'+ title + 'sn3.txt', dataOut_1 ,delimiter='   ', fmt = "%1.4f",
+    header ='Object Xpix        Ypix        DisfromSN   Sub    S/N 435   S/N 555   S/N 625   S/N 814 ' \
+    #'Mag 435 Mag 555 Mag 625 Mag 814 ' \
+    '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '   \
+    'Sharp Round Crowd')
+    
+print "Save into text file"

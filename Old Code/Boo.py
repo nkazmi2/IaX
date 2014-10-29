@@ -4,6 +4,35 @@ Created on Fri May 30 09:58:19 2014
 
 @author: Nova
 """
+import numpy as np
+import matplotlib.pyplot as plt
+#import matplotlib.gridspec as gridspec
+#import csv
+#from itertools import izip
+import pandas
+import pickle
+import pyregion
+
+
+
+""" 
+test = np.where((star <= 2) & (snr814 >= 2.9) & (snr814 <=3.5) &
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))
+print snr814[test]
+print np.mean(f814Abs[test])
+print np.mean(snr814[test])
+
+#3.0000   0.8000   3.4000   5.6000   -3.8880   -2.7340   -4.4500   -5.1220
+#5.9000   3.0000   2.5000   1.7000   -4.6930   -4.4110   -4.0620   -3.7560
+#4.4000   4.7000   3.0000   3.5000   -4.3270   -4.8470   -4.2860   -4.5880
+#3.1000   1.7000   3.5000   3.0000   -3.8980   -3.6830   -4.5060   -4.412080
+
+print np.subtract(-4.4110,-3.8880)
+print np.subtract(-4.412080,-4.2860)
+# -3.8880
+# -4.4110
+# -4.2860 
+# -4.412080
 import pyregion
 identify = pyregion.open('../SN2008GE/sn2008ge_prog.reg') #sn08ge
 #identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha
@@ -33,22 +62,6 @@ for i in range(len(r)):
 for j in range(len(save)):
     badX.append(r[save[j]].coord_list[0] - .5)
     badY.append(r[save[j]].coord_list[1] - .5)
-    
-
-"""
-#3.0000   0.8000   3.4000   5.6000   -3.8880   -2.7340   -4.4500   -5.1220
-#5.9000   3.0000   2.5000   1.7000   -4.6930   -4.4110   -4.0620   -3.7560
-#4.4000   4.7000   3.0000   3.5000   -4.3270   -4.8470   -4.2860   -4.5880
-#3.1000   1.7000   3.5000   3.0000   -3.8980   -3.6830   -4.5060   -4.412080
-
-print np.subtract(-4.4110,-3.8880)
-print np.subtract(-4.412080,-4.2860)
-# -3.8880
-# -4.4110
-# -4.2860 
-# -4.412080
-"""
-"""
 import numpy as np
 
 class Student(object):
@@ -72,8 +85,7 @@ class Student(object):
 me = Student('Sean', ['Physics', 'Computer Science', 'Underwater Basket Weaving'])   
 print me.getName()
 print str(me)
-"""
-"""
+
 #435 555
 print np.subtract(                    -2.7340,                     -4.4110)
 print np.subtract(np.subtract(-3.8880,-2.7340),np.subtract(-4.6930,-4.4110))
@@ -200,9 +212,6 @@ c2plt.add_patch(poly)
 
 #c2plt.add_patch(rect)
 ###############################################################################
-"""
-
-"""
 
 
 from numpy import *

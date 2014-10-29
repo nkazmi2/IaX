@@ -11,8 +11,16 @@ from   itertools import izip
 import pickle
 #####################################################################
 ########################### PICK THE SN!! ###########################
+title = 'SN08ge'
+#title = 'SN08ha'
 #####################################################################
-name = 'Z0046Y26.dat'
+
+if (title == 'SN08ha'):
+    name = 'Z0046Y26.dat'
+    #name = 'Z0384Y26.dat'
+elif (title == 'SN08ge'): 
+    name = 'Z0001Y26.dat'
+    
 d = []
 d.append(np.loadtxt('Metallicity/'+name))
 d = np.array(d)
@@ -81,19 +89,31 @@ f625f814_3 = []
 f435f555_4 = []
 f625f814_4 = []
 
-for i in range(3,6):
-    f435f555_0.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad0.p', 'rb')))    
-    f625f814_0.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad0.p', 'rb')))    
-    f435f555_1.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad1.p', 'rb')))    
-    f625f814_1.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad1.p', 'rb')))   
-    f435f555_2.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad2.p', 'rb')))    
-    f625f814_2.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad2.p', 'rb')))
-    f435f555_3.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad3.p', 'rb')))    
-    f625f814_3.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad3.p', 'rb')))
-    f435f555_4.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad4.p', 'rb')))    
-    f625f814_4.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad4.p', 'rb')))
-
-
+if (title == 'SN08ha'):
+    for i in range(3,6):
+        f435f555_0.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad0.p', 'rb')))    
+        f625f814_0.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad0.p', 'rb')))    
+        f435f555_1.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad1.p', 'rb')))    
+        f625f814_1.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad1.p', 'rb')))   
+        f435f555_2.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad2.p', 'rb')))    
+        f625f814_2.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad2.p', 'rb')))
+        f435f555_3.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad3.p', 'rb')))    
+        f625f814_3.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad3.p', 'rb')))
+        f435f555_4.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad4.p', 'rb')))    
+        f625f814_4.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad4.p', 'rb')))
+elif (title == 'SN08ge'):
+    for i in range(3,6):
+        f435f555_0.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad0.p', 'rb')))    
+        f625f814_0.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad0.p', 'rb')))    
+        f435f555_1.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad1.p', 'rb')))    
+        f625f814_1.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad1.p', 'rb')))   
+        f435f555_2.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad2.p', 'rb')))    
+        f625f814_2.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad2.p', 'rb')))  
+        f435f555_3.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad3.p', 'rb')))    
+        f625f814_3.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad3.p', 'rb')))
+        f435f555_4.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad4.p', 'rb')))    
+        f625f814_4.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad4.p', 'rb')))
+    
 ###############################################################################
 ###############################################################################
 ###############################################################################
@@ -104,6 +124,7 @@ for agesInd in xrange(len(age[0])):
     print "Age 10^7.7" + str(agesInd)
     print "F435W-F555W"
     print "                "
+    """
     ClosInd = []
     for sample in izip(np.subtract(f435f555_0[0][0],f435f555_0[0][1]), f435f555_0[0][1]):
         closestD = -1 
@@ -117,6 +138,7 @@ for agesInd in xrange(len(age[0])):
     ClosInd = np.array(ClosInd)
     func_vals = np.c_[np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]]]
     comp_vals = func_vals[ClosInd]
+    """
     #print "Radius 450pc"
     #print "Chi^2 of 10^7.7" + str(agesInd)
     #print stats.chisquare(np.c_[np.subtract(f435f555_0[0][0],f435f555_0[0][1]), f435f555_0[0][1]],comp_vals)
@@ -191,6 +213,7 @@ for agesInd in xrange(len(age[0])):
     print "                "
     print "F555W - F814W"
     print "                "
+    """
     ClosInd = []
     for sample in izip(np.subtract(f625f814_0[0][0],f625f814_0[0][1]), f625f814_0[0][1]):
         closestD = -1 
@@ -207,6 +230,7 @@ for agesInd in xrange(len(age[0])):
     #print "Radius 450pc"
     #print "Chi^2 of 10^7.7" + str(agesInd)
     #print stats.chisquare(np.c_[np.subtract(f625f814_0[0][0],f625f814_0[0][1]), f625f814_0[0][1]],comp_vals)
+    """    
     ######
     ClosInd = []
     for sample in izip(np.subtract(f625f814_1[0][0],f625f814_1[0][1]), f625f814_1[0][1]):

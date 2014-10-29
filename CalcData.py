@@ -300,13 +300,12 @@ for j in range(len(save)):
 
 sn3 = []
 sn3 = np.where((star <= 2) & (snr555 == 3.0) &
-        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 200))    
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))    
 print "Mean f555w Abs Mag at S/N = 3 : ", np.mean(f555Abs[sn3])
 sn8143 = []
 sn8143 = np.where((star <= 2) & (snr814 == 3.0) &
-        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 200))  
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))  
 print "Mean f814w Abs Mag at S/N = 3 : ", np.mean(f814Abs[sn8143])
-
 print "Applying contrains to SN Data..."
 snr = []
 rad = []
