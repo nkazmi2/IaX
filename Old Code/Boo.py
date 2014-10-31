@@ -4,16 +4,12 @@ Created on Fri May 30 09:58:19 2014
 
 @author: Nova
 """
-import numpy as np
-import matplotlib.pyplot as plt
-#import matplotlib.gridspec as gridspec
-#import csv
-#from itertools import izip
-import pandas
-import pickle
-import pyregion
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Aug 01 13:23:45 2014
 
-
+@author: Nova
+"""
 
 """ 
 test = np.where((star <= 2) & (snr814 >= 2.9) & (snr814 <=3.5) &

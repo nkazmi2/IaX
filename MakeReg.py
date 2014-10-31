@@ -39,31 +39,13 @@ crowd   = []
 
 cut  = []
 
-#############################################################
-################## Changing font parameters #################
-
-params = {'legend.fontsize': 10, 
-          'legend.linewidth': 2,
-          'legend.font': 'serif',
-          'mathtext.default': 'regular', 
-          'xtick.labelsize': 10, 
-          'ytick.labelsize': 10} # changes font size in the plot legend
-
-plt.rcParams.update(params)                             # reset the plot parameters
-
-font = {'family' : 'serif',
-        'color'  : 'black',
-        'weight' : 'normal',
-        'size'   : 10,
-        } 
-
 ################################################### 
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
 #"""
 folder   = "SN2008GE"
-#name     = 'sn2008ge_new.phot' 
-name     = 'sn2008ge_20141015_final.out'
+name     = 'sn2008ge.phot' 
+#name     = 'sn2008ge_20141015_final.out'
 
 # Actual X & Y pixel coordinates of sn
 xsn      = 3247.539
@@ -139,9 +121,9 @@ ycoord  = data[:, 3]
 ################################################### 
 ################################################### 
 
-identify = pyregion.open(folder + '/sn2008ge_good3.reg') #sn08ge
+identify = pyregion.open(folder + '/sn2008ge_sn870.reg') #sn08ge
 #identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha
-r = pyregion.open(folder + '/sn2008ge_coord3.reg')
+r = pyregion.open(folder + '/sn2008ge_sn870.reg')
 save = []
 badX = []
 badY = []
@@ -155,15 +137,16 @@ for i in range(len(identify)):
 
 for i in range(len(fix)):
     r[fix[i]].attr[1]["color"] = 'yellow'
-
+    
 for i in range(len(r)):
     r1 = pyregion.ShapeList(r[i].attr[1].get("color"))
     if (r1[0] == 'c'):
         save.append(i) 
  
 for j in range(len(save)):
-    badX.append(r[save[j]].coord_list[0] - 1)
+    badX.append(r[save[j]].coord_list[0] - .5)
     badY.append(r[save[j]].coord_list[1] - .5)
+
 
 ################################################### 
 ############ Save coordinates to a file ###########
@@ -192,22 +175,34 @@ cut.append(np.where((star <= 2)     & (crowd <= crowdmax) &
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 150)))
 """
 #""" Sn2008ge testing stuff           
-sharpmax = 0.0#0.3 
-sharpmin = 0.0#-.45
-roundmax = 0.0
-crowdmax = 1.0#0.43     
-cut.append(np.where((star <= 2)   & #(crowd <= crowdmax ) & 
-                #(sharp <= sharpmax) & (sharp >= sharpmin) & 
-                #(roond <= roundmax) & 
-                (((snr435 >= 3 ) | (snr555 >= 3 )) | ((snr625 >= 3 ) | (snr814 >= 3 )))               
-                #(((snr435 >= 3 ) | (snr555 >= 3 )) | ((snr625 >= 3 ) | (snr814 >= 3 ))) &(((snr435 >= 8 ) | (snr555 >= 8 )) | ((snr625 >= 8 ) | (snr814 >= 8 )))               
-                & ((snr435 <= 70) & (snr555 <= 70) & (snr625 <= 70) & (snr814 <= 70))
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 200) )) 
-                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
+"""
+sharpmax =  0.663
+sharpmin = -0.792
+roundmax =  2.048
+crowdmax =  0.5
+"""
+sharpmax = 0.163
+sharpmin = -.786
+roundmax = 1.46
+crowdmax = 1.2
 
-print crowd[cut[0]]
-print roond[cut[0]]
-print sharp[cut[0]]
+cut.append(np.where((star <= 2)    & (crowd <= crowdmax ) 
+                & (sharp <= sharpmax) & (sharp >= sharpmin) 
+                & (roond <= roundmax) 
+                & (((snr435 >= 5 ) | (snr555 >= 5 )) | ((snr625 >= 5 ) | (snr814 >= 5 )))
+                 # & (((snr435 >= 3 ) | (snr555 >= 3 )) | ((snr625 >= 3 ) | (snr814 >= 3 ))) &(((snr435 >= 8 ) | (snr555 >= 8 )) | ((snr625 >= 8 ) | (snr814 >= 8 )))               
+                & ((snr435 <= 55) & (snr555 <= 55) & (snr625 <= 55) & (snr814 <= 55))
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 200) #)) 
+                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))  
+
+
+print "Sharp Max: ", np.max(sharp[cut[0]])
+print "Sharp Min: ", np.min(sharp[cut[0]])
+print "SharpMean: ", np.mean(sharp[cut[0]]) 
+print "Round Max: ", np.max(roond[cut[0]])
+print "RoundMean: ", np.mean(roond[cut[0]])
+print "Crowd Max: ", np.max(crowd[cut[0]])
+print "CrowdMean: ", np.mean(crowd[cut[0]])
 
 for i in range(len(xcoord[cut[0]])):
     circ.append('circle(')
@@ -215,14 +210,14 @@ for i in range(len(xcoord[cut[0]])):
     clos.append(',2)')
     
 
-np.savetxt(folder +'/'+ title + 'test.reg', np.c_[circ,xcoord[cut[0]]+1,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
+np.savetxt(folder +'/sn2008ge_five.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
-               comments = 'global color=magenta dashlist=8 3 width=1'
+               comments = 'global color=green dashlist=8 3 width=1'
                ' font="helvetica 10 normal" select=1' \
                ' highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1' \
                '\nimage;' )
 print 'Files Saved'
-
+"""
 
 print "Make Text File"
 
@@ -237,10 +232,11 @@ dataOut_1 = np.array(np.c_[star[cut[0]]  ,
     sharp[cut[0]],#data[:,22][cut[0]],data[:,33][cut[0]],
     roond[cut[0]],#data[:,20][cut[0]],data[:,34][cut[0]],
     crowd[cut[0]]])#,data[:,21][cut[0]],data[:,35][cut[0]] 
-np.savetxt(folder +'/'+ title + 'sn3.txt', dataOut_1 ,delimiter='   ', fmt = "%1.4f",
+np.savetxt(folder +'/'+ title + 'sn5C.txt', dataOut_1 ,delimiter='   ', fmt = "%1.4f",
     header ='Object Xpix        Ypix        DisfromSN   Sub    S/N 435   S/N 555   S/N 625   S/N 814 ' \
     #'Mag 435 Mag 555 Mag 625 Mag 814 ' \
     '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '   \
     'Sharp Round Crowd')
     
 print "Save into text file"
+"""

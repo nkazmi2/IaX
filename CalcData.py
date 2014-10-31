@@ -88,7 +88,8 @@ font = {'family' : 'serif',
 ##################### 2008ge ######################
 #"""
 folder   = "SN2008GE"
-name     = 'sn2008ge_20141015_final.out' #'sn2008ge_new.out'renamed for constistancy 
+name     = 'sn2008ge.phot' 
+#name     = 'sn2008ge_20141015_final.out' #'sn2008ge_new.out'renamed for constistancy 
 
 # Magnitude of the Milkyway Galaxy 
 ACS435   = 0.046 #F435W
@@ -110,7 +111,7 @@ dmod     = 31.08 #31.27
 xsn      = 3247.539
 ysn      = 3419.971
 radius   = [10.342,17.24,23.00,34.47,50.556] # 450,750,1000,1500,2200
-#radius   = [100,150,200,250,300,350,400,450,500]
+#radius   = [10,50,100,150,200]
 #"""
 ##################### 2008ha ######################
 """
@@ -264,9 +265,11 @@ f814Abs = f814mag - dmod - ACS814 - H814
 """
 ################################################### 
 ########### Deal with bad points ##########
-if (folder == "SN2008GE"):
-    identify = pyregion.open(folder + '/sn2008ge_prog2.reg') #sn08ge
-    r = pyregion.open(folder + '/sn2008ge_coord.reg')
+if (folder == "SN2008GE"):   
+    identify = pyregion.open(folder + '/sn2008ge_sn10_goodbad.reg') #sn08ge
+    r = pyregion.open(folder + '/sn2008ge_sn10.reg')
+    #identify = pyregion.open(folder + '/sn2008ge_3good.reg') #sn08ge
+    #r = pyregion.open(folder + '/sn2008ge_coord3.reg')
 else:
     identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha
     r = pyregion.open(folder + '/'+ title +'coord.reg')
@@ -280,7 +283,7 @@ for i in range(len(identify)):
         fix.append(i)
     #yellow is good
     #cyan is bad
-        
+
 for i in range(len(fix)):
     r[fix[i]].attr[1]["color"] = 'yellow'
 
@@ -289,62 +292,48 @@ for i in range(len(r)):
     if (r1[0] == 'c'):
         save.append(i) 
  
-for j in range(len(save)):
-    badX.append(r[save[j]].coord_list[0] - .5)
-    badY.append(r[save[j]].coord_list[1] - .5)
+for j in range(len(save)): 
+    badX.append(r[save[j]].coord_list[0] - 0.5)#badX.append(r[save[j]].coord_list[0] - .5)
+    badY.append(r[save[j]].coord_list[1] - 0.5)
     
 #identify.close()
 #r.close()
 ################################################### 
 ##### Find correct color magnitudes make cuts #####
-
-sn3 = []
-sn3 = np.where((star <= 2) & (snr555 == 3.0) &
-        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))    
-print "Mean f555w Abs Mag at S/N = 3 : ", np.mean(f555Abs[sn3])
-sn8143 = []
-sn8143 = np.where((star <= 2) & (snr814 == 3.0) &
-        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))  
-print "Mean f814w Abs Mag at S/N = 3 : ", np.mean(f814Abs[sn8143])
-print "Applying contrains to SN Data..."
-snr = []
-rad = []
-
-#print "Mean Sharp Value " + title[:-1] + " : " + str(np.mean(sharp))
-#print "Mean Round Value " + title[:-1] + " : " + str(np.mean(roond))
-
 # hard contrains because the mean of the list 
 # isn't an accurate way to limit the good values
 # using the contraints from 08ha, I've set
 # the limits for sharp and round
-sharpmax = 0.3 #.54 #np.mean(sharp) + .5
-sharpmin = -.45#-.467#np.mean(sharp) - .5
-crowdmax = 0.43 
-roundmax = 2.0 #np.mean(roond) + .8
+sharpmax = 0.62# 0.3# 0.663
+sharpmin = -.82#-0.7#-0.792
+roundmax = 1.5# 0.9# 2.048
+crowdmax =  .5# 0.5
 if (folder == "SN2008GE"):
-    for m in range(3,6):
-        for i in range(len(radius)):
-            cut435555.append(np.where((star <= 2)   & (crowd <= crowdmax ) & 
+    #for m in range(3,6):
+        #for i in range(len(radius)):
+    cut435555.append(np.where((star <= 2)   & (crowd <= crowdmax ) & 
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
-                ((snr435 >= m) | (snr555 >= m)) & 
+                #((snr435 >= m) | (snr555 >= m)) & 
                 #(snr435 >= 3) & (snr555 >= 3)  & 
-                ((snr435 >= 0 ) & (snr555 >= 0 )) & 
-                ((snr435 <= 30) & (snr555 <= 30) & (snr625 <= 30) & (snr814 <= 30)) & 
-                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   #))#   
+                #((snr435 >= 0 ) & (snr555 >= 0 )) & 
+                ((snr435 >= 7) & (snr555 >= 7) & (snr625 >= 7) & (snr814 >= 7)) #& 
+                #((snr435 <= 70) & (snr555 <= 70) & (snr625 <= 70) & (snr814 <= 70)) #& 
+                #((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   #))#   
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord)) ))
-            cut625814.append(np.where((star <= 2)   & (crowd <= crowdmax ) & 
+    cut625814.append(np.where((star <= 2)   & (crowd <= crowdmax ) & 
                 (sharp <= sharpmax) & (sharp >= sharpmin) & 
                 (roond <= roundmax) & 
-                ((snr625 >= m) | (snr814 >= m)) & 
-                (snr625 >= 3) & (snr814 >= 3)   &                 
+                #((snr625 >= m) | (snr814 >= m)) & 
+                #(snr625 >= 3) & (snr814 >= 3)   &                 
                 #(snr625 >= 0) & (snr814 >= 0)   & 
                 #((snr435 >= 0 ) & (snr555 >= 0 ) & (snr625 >= 0 ) & (snr814 >= 0 )) & 
-                ((snr435 <= 30) & (snr555 <= 30) & (snr625 <= 30) & (snr814 <= 30)) & 
-                ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   #))#     
+                ((snr435 >= 7) & (snr555 >= 7) & (snr625 >= 7) & (snr814 >= 7)) #& 
+                #((snr435 <= 70) & (snr555 <= 70) & (snr625 <= 70) & (snr814 <= 70)) #& 
+                #((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[i])   #))#     
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
-            rad.append(i)
-            snr.append(m)
+            #rad.append(i)
+            #snr.append(m)
 else:    
     for m in range(3,6):
         for i in range(len(radius)):
@@ -367,6 +356,22 @@ else:
             rad.append(i)
             snr.append(m)
 
+
+sn3 = []
+sn3 = np.where((star <= 2) & (snr555 == 3.0) &
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))    
+print "Mean f555w Abs Mag at S/N = 3 : ", np.mean(f555Abs[sn3])
+sn8143 = []
+sn8143 = np.where((star <= 2) & (snr814 == 3.0) &
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))  
+print "Mean f814w Abs Mag at S/N = 3 : ", np.mean(f814Abs[sn8143])
+print "Applying contrains to SN Data..."
+snr = []
+rad = []
+
+#print "Mean Sharp Value " + title[:-1] + " : " + str(np.mean(sharp))
+#print "Mean Round Value " + title[:-1] + " : " + str(np.mean(roond))
+
 ################################################### 
 ############ Save good arrays to a file ###########
 ################################################### 
@@ -385,15 +390,52 @@ for n in range(len(cut435555)):
                         snr625[cut625814[n]], snr814[cut625814[n]],
                         xcoord[cut625814[n]], ycoord[cut625814[n]], 
                         f625mag[cut625814[n]],f814mag[cut625814[n]] ))
-    pickle.dump( snr435_555[n], open(folder + '/' + title + 'f435f555_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
-    pickle.dump( snr625_814[n], open(folder + '/' + title + 'f625f814_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
-    #pickle.dump( snr435_555[n], open(folder + '/' + title + 'f435f555_sn' + str(3) + '_rad' + str(rad[n]) + '.p', "wb" ) )
-    #pickle.dump( snr625_814[n], open(folder + '/' + title + 'f625f814_sn' + str(3) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+    #pickle.dump( snr435_555[n], open(folder + '/' + title + 'f435f555_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+    #pickle.dump( snr625_814[n], open(folder + '/' + title + 'f625f814_sn' + str(snr[n]) + '_rad' + str(rad[n]) + '.p', "wb" ) )
+    pickle.dump( snr435_555[n], open(folder + '/' + title + '08ge_f435f555_sn' + str(3) + '_rad' + str(0) + '.p', "wb" ) )
+    pickle.dump( snr625_814[n], open(folder + '/' + title + '08ge_f625f814_sn' + str(3) + '_rad' + str(0) + '.p', "wb" ) )
 print "Pickled."
 ################################################### 
 ############ Save coordinates to a file ###########
 ################################################### 
 
+print "Save into text file"
+yax1 = []
+yax2 = []
+dataOut_1 = np.array(np.c_[star[cut435555[0]]  ,
+    xcoord[cut435555[0]] ,ycoord[cut435555[0]] ,
+    (((xsn - xcoord[cut435555[0]])**2 + (ysn - ycoord[cut435555[0]])**2)**.5),
+    (f435Abs[cut435555[0]] - f555Abs[cut435555[0]]),
+    snr435[cut435555[0]] ,snr555[cut435555[0]] ,
+    snr625[cut435555[0]] ,snr814[cut435555[0]] ,
+    f435Abs[cut435555[0]],f555Abs[cut435555[0]],
+    f625Abs[cut435555[0]],f814Abs[cut435555[0]],
+    sharp[cut435555[0]],#data[:,22][cut435555[0]],data[:,33][cut435555[0]],
+    roond[cut435555[0]],#data[:,20][cut435555[0]],data[:,34][cut435555[0]],
+    crowd[cut435555[0]]])#,data[:,21][cut435555[0]],data[:,35][cut435555[0]] 
+np.savetxt(folder +'/'+ title + 'cut435555.txt', dataOut_1 ,delimiter='   ', fmt = "%1.4f",
+    header ='Object Xpix        Ypix        DisfromSN   Sub    S/N 435   S/N 555   S/N 625   S/N 814 ' \
+    #'Mag 435 Mag 555 Mag 625 Mag 814 ' \
+    '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '    \
+    'Sharp Round Crowd')
+    
+dataOut_2 = np.array(np.c_[star[cut625814[0]] ,
+    xcoord[cut625814[0]] ,ycoord[cut625814[0]],
+    (((xsn - xcoord[cut625814[0]])**2 + (ysn - ycoord[cut625814[0]])**2)**.5),
+    (f625Abs[cut625814[0]] - f814Abs[cut625814[0]]),
+    snr435[cut625814[0]] ,snr555[cut625814[0]] ,
+    snr625[cut625814[0]] ,snr814[cut625814[0]] ,
+    f435Abs[cut625814[0]],f555Abs[cut625814[0]],
+    f625Abs[cut625814[0]],f814Abs[cut625814[0]],
+    sharp[cut625814[0]],#data[:,46][cut625814[0]],data[:,59][cut625814[0]],
+    roond[cut625814[0]],#data[:,47][cut625814[0]],data[:,60][cut625814[0]],
+    crowd[cut625814[0]]])#,data[:,48][cut625814[4]],data[:,61][cut625814[4]]    
+np.savetxt(folder +'/'+ title + 'cut625814.txt', dataOut_2 ,delimiter='   ', fmt = "%1.4f",
+    header ='Object Xpix        Ypix        DisFromSN   Sub    S/N 435  S/N 555  S/N 625  S/N 814 ' \
+    #'Mag 435 Mag 555 Mag 625 Mag 814 ' \
+    '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '      \
+    'Sharp Round Crowd')
+"""
 print "Save into text file"
 yax1 = []
 yax2 = []
@@ -410,15 +452,15 @@ dataOut_1 = np.array(np.c_[star[cut435555[4]]  ,
     #f435mag[cut435555[4]],f555mag[cut435555[4]],
     #f625mag[cut435555[4]],f814mag[cut435555[4]],
     f435Abs[cut435555[4]],f555Abs[cut435555[4]],
-    f625Abs[cut435555[4]],f814Abs[cut435555[4]]  ])#   ,
-    #sharp[cut435555[4]],#data[:,22][cut435555[4]],data[:,33][cut435555[4]],
-    #roond[cut435555[4]],#data[:,20][cut435555[4]],data[:,34][cut435555[4]],
-    #crowd[cut435555[4]]])#,data[:,21][cut435555[4]],data[:,35][cut435555[4]] 
+    f625Abs[cut435555[4]],f814Abs[cut435555[4]],
+    sharp[cut435555[4]],#data[:,22][cut435555[4]],data[:,33][cut435555[4]],
+    roond[cut435555[4]],#data[:,20][cut435555[4]],data[:,34][cut435555[4]],
+    crowd[cut435555[4]]])#,data[:,21][cut435555[4]],data[:,35][cut435555[4]] 
 np.savetxt(folder +'/'+ title + 'cut435555.txt', dataOut_1 ,delimiter='   ', fmt = "%1.4f",
     header ='Object Xpix        Ypix        DisfromSN   Sub    S/N 435   S/N 555   S/N 625   S/N 814 ' \
     #'Mag 435 Mag 555 Mag 625 Mag 814 ' \
-    '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 ' )#    \
-    #'Sharp Round Crowd')
+    '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '    \
+    'Sharp Round Crowd')
     
 dataOut_2 = np.array(np.c_[star[cut625814[4]] ,
     xcoord[cut625814[4]] ,ycoord[cut625814[4]],
@@ -429,130 +471,13 @@ dataOut_2 = np.array(np.c_[star[cut625814[4]] ,
     #f435mag[cut625814[4]],f555mag[cut625814[4]],
     #f625mag[cut625814[4]],f814mag[cut625814[4]],
     f435Abs[cut625814[4]],f555Abs[cut625814[4]],
-    f625Abs[cut625814[4]],f814Abs[cut625814[4]]  ])#   ,
-    #sharp[cut625814[4]],#data[:,46][cut625814[4]],data[:,59][cut625814[4]],
-    #roond[cut625814[4]],#data[:,47][cut625814[4]],data[:,60][cut625814[4]],
-    #crowd[cut625814[4]]])#,data[:,48][cut625814[4]],data[:,61][cut625814[4]]    
+    f625Abs[cut625814[4]],f814Abs[cut625814[4]],
+    sharp[cut625814[4]],#data[:,46][cut625814[4]],data[:,59][cut625814[4]],
+    roond[cut625814[4]],#data[:,47][cut625814[4]],data[:,60][cut625814[4]],
+    crowd[cut625814[4]]])#,data[:,48][cut625814[4]],data[:,61][cut625814[4]]    
 np.savetxt(folder +'/'+ title + 'cut625814.txt', dataOut_2 ,delimiter='   ', fmt = "%1.4f",
     header ='Object Xpix        Ypix        DisFromSN   Sub    S/N 435  S/N 555  S/N 625  S/N 814 ' \
     #'Mag 435 Mag 555 Mag 625 Mag 814 ' \
-    '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '   )#    \
-    #'Sharp Round Crowd')
-
-##################################################################
-########################## SCRAPS ################################
-##################################################################
-"""    
-cat = []
-cat = ('Object', 'X pix', 'Y pix', 
-            'S/N 435', 'S/N 555', 'S/N 625', 'S/N 814',
-            'Mag 435', 'Mag 555', 'Mag 625', 'Mag 814',
-            'AbsMag 435', 'AbsMag 555', 'AbsMag 625', 'AbsMag 814',
-              star[cut435555[4]]   ,radius[4],
-              xcoord[cut435555[4]] ,ycoord[cut435555[4]],
-              snr435[cut435555[4]] ,snr555[cut435555[4]] ,
-              snr625[cut435555[4]] ,snr814[cut435555[4]] ,
-              f435mag[cut435555[4]],f555mag[cut435555[4]],
-              f625mag[cut435555[4]],f814mag[cut435555[4]],
-              f435Abs[cut435555[4]],f555Abs[cut435555[4]],
-              f625Abs[cut435555[4]],f814Abs[cut435555[4]],
-              #unc435[cut435555[0]] ,unc555[cut435555[0]] ,
-              #unc625[cut435555[0]] ,unc814[cut435555[0]] ,
-            'Object', 'X pix', 'Y pix', 
-            'S/N 435', 'S/N 555', 'S/N 625', 'S/N 814',
-            'Mag 435', 'Mag 555', 'Mag 625', 'Mag 814',
-            'AbsMag 435', 'AbsMag 555', 'AbsMag 625', 'AbsMag 814',
-              star[cut625814[4]]   ,radius[4],
-              xcoord[cut625814[4]] ,ycoord[cut625814[4]],
-              snr435[cut625814[4]] ,snr555[cut625814[4]] ,
-              snr625[cut625814[4]] ,snr814[cut625814[4]] ,
-              f435mag[cut625814[4]],f555mag[cut625814[4]],
-              f625mag[cut625814[4]],f814mag[cut625814[4]],
-              f435Abs[cut625814[4]],f555Abs[cut625814[4]],
-              f625Abs[cut625814[4]],f814Abs[cut625814[4]],
-              #unc435[cut625814[0]] ,unc555[cut625814[0]] ,
-              #unc625[cut625814[0]] ,unc814[cut625814[0]]
-              )
-np.savetxt(folder +'/'+ title + 'List.txt', cat,fmt = "%s")
-
-
-circ = []
-comm = []
-clos = []
-#cut  = []
-#cut.append(np.where((star <= 2) & (((snr435 >= 3) | (snr555 >= 3)) 
-#                | ((snr625 >= 3) | (snr814 >= 3)))
-#                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius[0])))
-             
-#first = np.c_[xcoord[cut[0]]+.5 ,ycoord[cut[0]]+.5]
-cut435555.append(np.where((star <= 2) & (((snr435 >= 3) | (snr555 >= 3)) 
-                | ((snr625 >= 3) | (snr814 >= 3)))
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)))
-for i in range(len(xcoord[cut435555[0]])):
-    circ.append('circle(')
-    comm.append(',')
-    clos.append(',2)')
-        
-np.savetxt(folder +'/'+ title + 'temp.reg', np.c_[circ,xcoord[cut435555[0]]+.5,comm,ycoord[cut435555[0]]+.5,clos],fmt = "%s",
-               header ='# Region file format: DS9 version 4.1 #', 
-               comments = 'global color=cyan dashlist=8 3 width=1'
-               ' font="helvetica 10 normal" select=1' \
-               ' highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1' \
-               '\nimage;' )
-np.savetxt(folder +'/'+ title + 'all.txt',np.c_[xcoord[cut435555[0]]+.5,ycoord[cut435555[0]]+.5],fmt = "%1.2f")
-print 'Files Saved'
-
-
-h = [2, 5] # height of the plotted figure
-plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
-gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
-
-supe  = plt.subplot2grid((2,2), (0,0), colspan = 1)
-#supe.update(left=0.05, right=0.48, wspace=0.05)
-plt.xlabel("Signal/Noise F435W",fontdict = font)
-plt.ylabel("Magnitude",fontdict = font)
-supe.scatter(snr435[cut435555[4]],f435Abs[cut435555[4]])
-
-sope  = plt.subplot2grid((2,2), (0,1), colspan = 1)
-#sope.update(left=0.05, right=0.48, wspace=0.05)
-plt.xlabel("Signal/Noise F555W",fontdict = font)
-plt.ylabel("Magnitude",fontdict = font)
-sope.scatter(snr555[cut435555[4]],f555Abs[cut435555[4]])
-
-soap  = plt.subplot2grid((2,2), (1,0), colspan = 1)
-#soap.update(left=0.05, right=0.48, wspace=0.05)
-plt.xlabel("Signal/Noise F625W",fontdict = font)
-plt.ylabel("Magnitude",fontdict = font)
-soap.scatter(snr625[cut625814[4]],f625Abs[cut625814[4]])
-
-squid = plt.subplot2grid((2,2), (1,1), colspan = 1)
-#squid.update(left=0.05, right=0.48, wspace=0.05)
-plt.xlabel("Signal/Noise F814W",fontdict = font)
-plt.ylabel("Magnitude",fontdict = font)
-squid.scatter(snr814[cut625814[4]],f814Abs[cut625814[4]])
-plt.savefig("AbsMagSN_.png")    
-
-first = np.c_[xcoord[cut435555[0]]+.5 ,ycoord[cut435555[0]]+.5] #combine to one array
-second= np.c_[xcoord[cut625814[0]]+.5 ,ycoord[cut625814[0]]+.5]
-# More flaws in this, removes too many of the good points :/
-final = np.r_[first,second].tolist()
-
-toRemove = []
-for i, val in enumerate(final):
-    if val in final[i+1:]:#if value is in the rest of the array after this point.
-        toRemove.append(final[i+1:].index(val)) #add it to the index to remove
-     
-toRemove.sort(reverse = True)#sort in reverse order to that we don't fuck up indices
-for idx in toRemove:
-    final.pop(idx)#pop it out
-# it removes the last value in first, and adds the second to last 
-# value from first, to final. It's doubled, something wrong with 
-# removing values.
-    
-final = np.vstack((final,first[-1]))#fucked up indices, need to add the last item in the "first" list
-final = np.array(final)
-
-np.savetxt(folder +'/'+ title + 'all.txt', final,fmt = "%1.2f")
-np.savetxt(folder +'/'+ title + '435555.txt', first,fmt = "%1.2f")
-np.savetxt(folder +'/'+ title + '625814.txt', second,fmt = "%1.2f")
+    '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '      \
+    'Sharp Round Crowd')
 """

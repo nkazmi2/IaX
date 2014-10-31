@@ -30,7 +30,7 @@ def main():
         print "Opening " + title[m]
         ###FIX COORDINATES!!!!
 
-        image = fits.open("sn2008ge/" + title[m], mode='copyonwrite', memmap=True)
+        image = fits.open("New_sn2008ge/" + title[m], mode='copyonwrite', memmap=True)
 
         head  = image[0].header #info() 
 
@@ -43,8 +43,12 @@ def main():
         ## not the actual pixel coordinates, xpix and ypix
         ## The larger dimension is run first, so what's actually the ypix
         ## is run first. 
-        cen1 = 3387
-        cen2 = 3375
+        cen1 = 3388
+        cen2 = 3372
+        # next 20141015_lacosmic.fits files        
+        #cen1 = 3387
+        #cen2 = 3375
+        # first set of lacosmic.fits files
         #cen1 = 3399
         #cen2 = 3371
         halfx = 0
