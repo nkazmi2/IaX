@@ -90,59 +90,52 @@ age80   = np.where((logAGE == 8.0))
 
 #####################################################################
 
-#radius   = [10,17,23,34,50]#[10,50,100,150,200]
-radius     = [200]
-f435f555_0 = []
-f625f814_0 = []
-f435f555_1 = []
-f625f814_1 = []
-f435f555_2 = []
-f625f814_2 = []
-f435f555_3 = []
-f625f814_3 = []
-f435f555_4 = []
-f625f814_4 = []
-f435f555_5 = []
-f625f814_5 = []
-f435f555_6 = []
-f625f814_6 = []
-f435f555_7 = []
-f625f814_7 = []
-f435f555_8 = []
-f625f814_8 = []
-
-
+radius   = [10,17,23,34,50]#[10,50,100,150,200]
+#radius     = [200]
+f435f555   = []
+f625f814   = []
 
 if (title == 'SN08ge'):
-    #ytopmax    = -4.0
-    #ytopmin    = -9.0
-    #ybotmax    = -4.0
-    #ybotmin    = -9.0
-    ytopmax    = -3.0
-    ytopmin    = -5.5
-    ybotmax    = -3.0
-    ybotmin    = -7.0
-    f435f555_0.append(pickle.load(open('SN2008GE/sn2008ge_f435f555_sn3_rad0.p', 'rb')))    
-    f625f814_0.append(pickle.load(open('SN2008GE/sn2008ge_f625f814_sn3_rad0.p', 'rb')))    
-    #f435f555_1.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad1.p', 'rb')))    
-    #f625f814_1.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad1.p', 'rb')))   
-    #f435f555_2.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad2.p', 'rb')))    
-    #f625f814_2.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad2.p', 'rb')))  
-    #f435f555_3.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad3.p', 'rb')))    
-    #f625f814_3.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad3.p', 'rb')))
-    #f435f555_4.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad4.p', 'rb')))    
-    #f625f814_4.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad4.p', 'rb')))
-    """
-    f435f555_5.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad5.p', 'rb')))    
-    f625f814_5.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad5.p', 'rb')))   
-    f435f555_6.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad6.p', 'rb')))    
-    f625f814_6.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad6.p', 'rb')))  
-    f435f555_7.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad7.p', 'rb')))    
-    f625f814_7.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad7.p', 'rb')))
-    f435f555_8.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff435f555_sn3_rad8.p', 'rb')))    
-    f625f814_8.append(pickle.load(open('SN2008GE/sn2008ge_20141015_ff625f814_sn3_rad8.p', 'rb')))
-    """
- 
+    yLmax    = -2.0
+    yLmin    = -6.5
+    yRmax    = -3.0
+    yRmin    = -8.0
+    f435f555.append(pickle.load(open('SN2008GE/sn2008ge_f435f555.p', 'rb')))    
+    f625f814.append(pickle.load(open('SN2008GE/sn2008ge_f625f814.p', 'rb')))    
+    
+Abs435 = f435f555[0][0] 
+Abs555 = f435f555[0][1] 
+Apn435 = f435f555[0][2] 
+Apn555 = f435f555[0][3] 
+UncXl  = f435f555[0][4] 
+UncYl  = f435f555[0][5] 
+SN435  = f435f555[0][6] 
+SN555  = f435f555[0][7]
+Radl   = f435f555[0][8] 
+
+
+Abs625 = f625f814[0][0] 
+Abs814 = f625f814[0][1]
+Apn625 = f625f814[0][2]
+Apn814 = f625f814[0][3] 
+UncXr  = f625f814[0][4] 
+UncYr  = f625f814[0][5] 
+SN625  = f625f814[0][6] 
+SN814  = f625f814[0][7] 
+Radr   = f625f814[0][8] 
+
+
+s0 = np.where(Radl <= radius[0])
+s1 = np.where(Radl <= radius[1])
+s2 = np.where(Radl <= radius[2])
+s3 = np.where(Radl <= radius[3])
+s4 = np.where(Radl <= radius[4])
+
+r0 = np.where(Radr <= radius[0])
+r1 = np.where(Radr <= radius[1])
+r2 = np.where(Radr <= radius[2])
+r3 = np.where(Radr <= radius[3])
+r4 = np.where(Radr <= radius[4])
 
 ###########################################################################
 print "Begin plotting Isochrones..."
@@ -164,56 +157,52 @@ c1plt.yaxis.set_minor_locator(AutoMinorLocator())
 c1plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
-"""if (title == 'SN08ge'):
+if (title == 'SN08ge'):
     c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
            'b:', label = 'Age = 10$^{7.6}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age765],  F555W[age765]),  F555W[age765],  
-    #       'g:', label = 'Age = 10$^{7.65}$ yrs')
+    c1plt.plot(np.subtract(F435W[age765],  F555W[age765]),  F555W[age765],  
+           'g:', label = 'Age = 10$^{7.65}$ yrs')
     #c1plt.plot(np.subtract(F435W[age773],  F555W[age773]),  F555W[age773],  
-    #       'r--', label = 'Age = 10$^{7.73}$ yrs')
-"""    
-for i in range(start,end):
-        """
-        c1plt.errorbar(np.subtract(f435f555_4[i][8],   f435f555_4[i][9]),   
-                       f435f555_4[i][1], f435f555_4[i][2],   f435f555_4[i][3], 
-                        fmt=None, ecolor="c",  marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_4[i][8],   f435f555_4[i][9]),   
-                      f435f555_4[i][1], label = 'R = ' + str(radius[4]) + " Pix",  
-                        c='c',marker='d')
-        c1plt.errorbar(np.subtract(f435f555_3[i][8],   f435f555_3[i][9]),   
-                       f435f555_3[i][1], f435f555_3[i][2],   f435f555_3[i][3], 
-                        fmt=None, ecolor="y",  marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_3[i][8],   f435f555_3[i][9]),   
-                      f435f555_3[i][1], label = 'R = ' + str(radius[3]) + " Pix",  
-                        c='y',marker='d')
-        c1plt.errorbar(np.subtract(f435f555_2[i][8],   f435f555_2[i][9]),   
-                       f435f555_2[i][1], f435f555_2[i][2],   f435f555_2[i][3], 
-                        fmt=None, ecolor="b",  marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_2[i][8],   f435f555_2[i][9]),   
-                      f435f555_2[i][1], label = 'R = ' + str(radius[2]) + " Pix",  
-                        c='b',marker='d')
-        c1plt.errorbar(np.subtract(f435f555_1[i][8],   f435f555_1[i][9]),  
-                       f435f555_1[i][1], f435f555_1[i][2],   f435f555_1[i][3],
-                         fmt=None, ecolor="r", marker=None, mew=0 )
-        c1plt.scatter(np.subtract(f435f555_1[i][8],   f435f555_1[i][9]),   
-                      f435f555_1[i][1], label = 'R = ' + str(radius[1]) + " Pix",  
-                        c='r',marker='d')        
-        c1plt.errorbar(np.subtract(f435f555_0[i][8],   f435f555_0[i][9]),  
-                       f435f555_0[i][1], f435f555_0[i][2],   f435f555_0[i][3],
-                         fmt=None, ecolor="k", marker=None, mew=0 )
-        """
-        c1plt.scatter(np.subtract(f435f555_0[i][8],   f435f555_0[i][9]),   
-                      f435f555_0[i][1], label = 'R = ' + str(radius[0]) + " Pix",  
-                        c='k',marker='d')
-        snt += 1
-
+           #'r--', label = 'Age = 10$^{7.73}$ yrs')
+c1plt.errorbar(np.subtract(Apn435[r4],   Apn555[r4]),   
+               Abs435[r4], UncXl[r4],   UncYl[r4], 
+               fmt=None, ecolor="k", marker=None, mew=0 )
+c1plt.scatter(np.subtract(Apn435[r4],   Apn555[r4]),
+               Abs435[r4], label = 'R = ' + str(radius[4]) + " Pc",
+               c='k',marker='d')
+c1plt.errorbar(np.subtract(Apn435[r3],   Apn555[r3]),   
+               Abs435[r3], UncXl[r3],   UncYl[r3], 
+               fmt=None, ecolor="r", marker=None, mew=0 )
+c1plt.scatter(np.subtract(Apn435[r3],   Apn555[r3]),
+               Abs435[r3], label = 'R = ' + str(radius[3]) + " Pc",
+               c='r',marker='d')       
+c1plt.errorbar(np.subtract(Apn435[r2],   Apn555[r2]),   
+               Abs435[r2], UncXl[r2],   UncYl[r2], 
+               fmt=None, ecolor="g", marker=None, mew=0 )
+c1plt.scatter(np.subtract(Apn435[r2],   Apn555[r2]),
+               Abs435[r2], label = 'R = ' + str(radius[2]) + " Pc",
+               c='g',marker='d')           
+c1plt.errorbar(np.subtract(Apn435[r1],   Apn555[r1]),   
+               Abs435[r1], UncXl[r1],   UncYl[r1], 
+               fmt=None, ecolor="b", marker=None, mew=0 )
+c1plt.scatter(np.subtract(Apn435[r1],   Apn555[r1]),
+               Abs435[r1], label = 'R = ' + str(radius[1]) + " Pc",
+               c='b',marker='d') 
+c1plt.errorbar(np.subtract(Apn435[r0],   Apn555[r0]),   
+               Abs435[r0], UncXl[r0],   UncYl[r0], 
+               fmt=None, ecolor="c", marker=None, mew=0 )
+c1plt.scatter(np.subtract(Apn435[r0],   Apn555[r0]),
+               Abs435[r0], label = 'R = ' + str(radius[0]) + " Pc",
+               c='c',marker='d')   
+               
 ########################################################################### 
 ###########################################################################
 ###########################################################################  
-#l = plt.legend(prop = {'family' : 'serif'},loc=4)
-#l.draw_frame(False)
+l = plt.legend(prop = {'family' : 'serif'},loc=4)
+l.draw_frame(False)
 ########################################################################### 
-#c1plt.set_ylim(bottom=ytopmax, top=ytopmin)
+#c1plt.set_ylim(bottom=yLmax, top=yLmin)
+#c1plt.set_xlim(-2,2)
 ###########################################################################
 
 c2plt = plt.subplot2grid((2,2), (0,1), rowspan = 2)
@@ -229,100 +218,96 @@ c2plt.yaxis.set_minor_locator(AutoMinorLocator())
 c2plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
-"""if (title == 'SN08ge'):    
+if (title == 'SN08ge'):    
     c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],  
            'b:', label = 'Age = 10$^{7.6}$ yrs')
-    #c2plt.plot(np.subtract(F625W[age765],  F814W[age765]),  F814W[age765],
-    #       'g:' , label = 'Age = 10$^{7.65}$ yrs')
+    c2plt.plot(np.subtract(F625W[age765],  F814W[age765]),  F814W[age765],
+           'g:' , label = 'Age = 10$^{7.65}$ yrs')
     #c2plt.plot(np.subtract(F625W[age773],  F814W[age773]),  F814W[age773],  
     #       'r--' , label = 'Age = 10$^{7.73}$ yrs')  
-"""
-
-for k in range(start,end):
-        """
-        c2plt.errorbar(np.subtract(f625f814_4[k][8],   f625f814_4[k][9]),   
-                       f625f814_4[k][1], f625f814_4[k][2],   f625f814_4[k][3], 
-                        fmt=None, ecolor="c", marker=None, mew=0 )
-        c2plt.scatter(np.subtract(f625f814_4[k][8],   f625f814_4[k][9]),   f625f814_4[k][1],
-                      label = 'R = ' + str(radius[4]) + " Pix",  #'S/N >= ' + str(snb) +
-                        c='c',marker='d')
-        c2plt.errorbar(np.subtract(f625f814_3[k][8],   f625f814_3[k][9]),   
-                       f625f814_3[k][1], f625f814_3[k][2],   f625f814_3[k][3], 
-                        fmt=None, ecolor="y", marker=None, mew=0 )
-        c2plt.scatter(np.subtract(f625f814_3[k][8],   f625f814_3[k][9]),   f625f814_3[k][1],
-                      label = 'R = ' + str(radius[3]) + " Pix",   #'S/N >= ' + str(snb) +
-                        c='y',marker='d')
-        c2plt.errorbar(np.subtract(f625f814_2[k][8],   f625f814_2[k][9]),   
-                       f625f814_2[k][1], f625f814_2[k][2],   f625f814_2[k][3], 
-                        fmt=None, ecolor="b", marker=None, mew=0 )
-        c2plt.scatter(np.subtract(f625f814_2[k][8],   f625f814_2[k][9]),   f625f814_2[k][1],
-                      label = 'R = ' + str(radius[2]) + " Pix",   #'S/N >= ' + str(snb) +
-                        c='b',marker='d')
-        c2plt.errorbar(np.subtract(f625f814_1[k][8],   f625f814_1[k][9]),   
-                       f625f814_1[k][1], f625f814_1[k][2],   f625f814_1[k][3], 
-                        fmt=None, ecolor="r", marker=None, mew=0 )
-        c2plt.scatter(np.subtract(f625f814_1[k][8],   f625f814_1[k][9]),   f625f814_1[k][1],  #'S/N >= ' + str(snb) +   
-                      label ='R = ' + str(radius[1]) + " Pix",  
-                        c='r',marker='d')
-        c2plt.errorbar(np.subtract(f625f814_0[k][8],   f625f814_0[k][9]),   
-                       f625f814_0[k][1], f625f814_0[k][2],   f625f814_0[k][3], 
-                        fmt=None, ecolor="k", marker=None, mew=0 )
-        """
-        c2plt.scatter(np.subtract(f625f814_0[k][8],   f625f814_0[k][9]),   f625f814_0[k][1],   
-                      label = 'R = ' + str(radius[0]) + " Pix",   #'S/N >= ' + str(snb) +
-                        c='k',marker='d')
-        snb += 1
+                              
+c2plt.errorbar(np.subtract(Apn625[r4],   Apn814[r4]),   
+               Abs814[r4], UncXr[r4],   UncYr[r4], 
+               fmt=None, ecolor="k", marker=None, mew=0 )
+c2plt.scatter(np.subtract(Apn625[r4],   Apn814[r4]),
+               Abs814[r4], label = 'R = ' + str(radius[4]) + " Pc",
+               c='k',marker='d')
+c2plt.errorbar(np.subtract(Apn625[r3],   Apn814[r3]),   
+               Abs814[r3], UncXr[r3],   UncYr[r3], 
+               fmt=None, ecolor="r", marker=None, mew=0 )
+c2plt.scatter(np.subtract(Apn625[r3],   Apn814[r3]),
+               Abs814[r3], label = 'R = ' + str(radius[3]) + " Pc",
+               c='r',marker='d')       
+c2plt.errorbar(np.subtract(Apn625[r2],   Apn814[r2]),   
+               Abs814[r2], UncXr[r2],   UncYr[r2], 
+               fmt=None, ecolor="g", marker=None, mew=0 )
+c2plt.scatter(np.subtract(Apn625[r2],   Apn814[r2]),
+               Abs814[r2], label = 'R = ' + str(radius[2]) + " Pc",
+               c='g',marker='d')           
+c2plt.errorbar(np.subtract(Apn625[r1],   Apn814[r1]),   
+               Abs814[r1], UncXr[r1],   UncYr[r1], 
+               fmt=None, ecolor="b", marker=None, mew=0 )
+c2plt.scatter(np.subtract(Apn625[r1],   Apn814[r1]),
+               Abs814[r1], label = 'R = ' + str(radius[1]) + " Pc",
+               c='b',marker='d') 
+c2plt.errorbar(np.subtract(Apn625[r0],   Apn814[r0]),   
+               Abs814[r0], UncXr[r0],   UncYr[r0], 
+               fmt=None, ecolor="c", marker=None, mew=0 )
+c2plt.scatter(np.subtract(Apn625[r0],   Apn814[r0]),
+               Abs814[r0], label = 'R = ' + str(radius[0]) + " Pc",
+               c='c',marker='d')                        
 
 ###########################################################################
-#This was an iffy move,using the sn =3 of a point that's not plotted, I don't like it
-"""
 c1plt.set_xlim(-1, 3)
 c2plt.set_xlim(-.8, 1.2)
 s1 = -1 
-horz1 = -4.0 
+horz1 = -3.7 
 b1 = -4.0
-x2 = 4
+x2 = 3
 y1 = (s1*x2) + b1
 x1 = 1.5# np.subtract(horz1,b1)/s1
 
 
-ptsR = np.array([[-4,ytopmax],
-                 [-4,horz1],
+ptsR = np.array([[-3,yLmax],
+                 [-3,horz1],
                  [x1,horz1], #need the x value
                  [x2,y1],           
-                 [x2,ytopmax]])
+                 [x2,yLmax]])
 polyR = Polygon(ptsR, color='grey', alpha=0.15,closed = True)
 
 c1plt.add_patch(polyR)
 #############
-horz = -4.0
+horz = -5.0
 s4 = -1 
 b4 = -4.0
-x4 = 1.5 
+x4 = 3 
 y4 = (s4*x4) + b4
 x3 = np.subtract(horz,b4)/s4
 
 
-pts = np.array([[-2,ybotmax],
-                [-2,horz],
+pts = np.array([[-3,yRmax],
+                [-3,horz],
                 [x3,horz], 
                 [x4,y4],           
-                [x4,ybotmax]])
+                [x4,yRmax]])
 poly = Polygon(pts, color='grey', alpha=0.15,closed = True)
 
 c2plt.add_patch(poly)
-"""
 
 ###########################################################################
-#l = plt.legend(prop = {'family' : 'serif'},loc=4)
-#l.draw_frame(False)
+l = plt.legend(prop = {'family' : 'serif'},loc=4)
+l.draw_frame(False)
 ########################################################################### 
-#c2plt.set_ylim(bottom=ybotmax, top=ybotmin) 
+c1plt.set_ylim(bottom=yLmax, top=yLmin)
+c1plt.set_xlim(-2,2)
+
+c2plt.set_ylim(bottom=yRmax, top=yRmin)  
+c2plt.set_xlim(-.8,3)
 ########################################################################### 
 plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'total'+ '.png'
+figname = title + '_' + 'rnd1'+ '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname
