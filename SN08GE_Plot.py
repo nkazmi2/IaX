@@ -157,42 +157,49 @@ c1plt.yaxis.set_minor_locator(AutoMinorLocator())
 c1plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
-if (title == 'SN08ge'):
-    c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
-           'b:', label = 'Age = 10$^{7.6}$ yrs')
-    c1plt.plot(np.subtract(F435W[age765],  F555W[age765]),  F555W[age765],  
-           'g:', label = 'Age = 10$^{7.65}$ yrs')
+#if (title == 'SN08ge'):
+#    c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
+#           'b:', label = 'Age = 10$^{7.6}$ yrs')
+#    c1plt.plot(np.subtract(F435W[age765],  F555W[age765]),  F555W[age765],  
+#           'g:', label = 'Age = 10$^{7.65}$ yrs')
     #c1plt.plot(np.subtract(F435W[age773],  F555W[age773]),  F555W[age773],  
            #'r--', label = 'Age = 10$^{7.73}$ yrs')
+
+#plt.annotate('', xy=(1.992,-6.1), xycoords = 'data', #(Top of the arrow)
+#             xytext = (2, -3.5), textcoords = 'data', # End of the arrow
+#                arrowprops = {'arrowstyle':'->'})       # what the arrow looks like
+#plt.annotate('A${_v}}$ = 3.6', xy=(0.0,-5.5), xycoords = 'data', # coord of term
+#             xytext = (2, 3), textcoords = 'offset points')
+
 c1plt.errorbar(np.subtract(Apn435[r4],   Apn555[r4]),   
-               Abs435[r4], UncXl[r4],   UncYl[r4], 
+               Abs555[r4], UncXl[r4],   UncYl[r4], 
                fmt=None, ecolor="k", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[r4],   Apn555[r4]),
-               Abs435[r4], label = 'R = ' + str(radius[4]) + " Pc",
+               Abs555[r4], label = 'R = ' + str(radius[4]) + " Pc",
                c='k',marker='d')
 c1plt.errorbar(np.subtract(Apn435[r3],   Apn555[r3]),   
-               Abs435[r3], UncXl[r3],   UncYl[r3], 
+               Abs555[r3], UncXl[r3],   UncYl[r3], 
                fmt=None, ecolor="r", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[r3],   Apn555[r3]),
-               Abs435[r3], label = 'R = ' + str(radius[3]) + " Pc",
+               Abs555[r3], label = 'R = ' + str(radius[3]) + " Pc",
                c='r',marker='d')       
 c1plt.errorbar(np.subtract(Apn435[r2],   Apn555[r2]),   
-               Abs435[r2], UncXl[r2],   UncYl[r2], 
+               Abs555[r2], UncXl[r2],   UncYl[r2], 
                fmt=None, ecolor="g", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[r2],   Apn555[r2]),
-               Abs435[r2], label = 'R = ' + str(radius[2]) + " Pc",
+               Abs555[r2], label = 'R = ' + str(radius[2]) + " Pc",
                c='g',marker='d')           
 c1plt.errorbar(np.subtract(Apn435[r1],   Apn555[r1]),   
-               Abs435[r1], UncXl[r1],   UncYl[r1], 
+               Abs555[r1], UncXl[r1],   UncYl[r1], 
                fmt=None, ecolor="b", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[r1],   Apn555[r1]),
-               Abs435[r1], label = 'R = ' + str(radius[1]) + " Pc",
+               Abs555[r1], label = 'R = ' + str(radius[1]) + " Pc",
                c='b',marker='d') 
 c1plt.errorbar(np.subtract(Apn435[r0],   Apn555[r0]),   
-               Abs435[r0], UncXl[r0],   UncYl[r0], 
+               Abs555[r0], UncXl[r0],   UncYl[r0], 
                fmt=None, ecolor="c", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[r0],   Apn555[r0]),
-               Abs435[r0], label = 'R = ' + str(radius[0]) + " Pc",
+               Abs555[r0], label = 'R = ' + str(radius[0]) + " Pc",
                c='c',marker='d')   
                
 ########################################################################### 
@@ -218,14 +225,20 @@ c2plt.yaxis.set_minor_locator(AutoMinorLocator())
 c2plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
-if (title == 'SN08ge'):    
-    c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],  
-           'b:', label = 'Age = 10$^{7.6}$ yrs')
-    c2plt.plot(np.subtract(F625W[age765],  F814W[age765]),  F814W[age765],
-           'g:' , label = 'Age = 10$^{7.65}$ yrs')
+#if (title == 'SN08ge'):    
+#    c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],  
+#           'b:', label = 'Age = 10$^{7.6}$ yrs')
+#    c2plt.plot(np.subtract(F625W[age765],  F814W[age765]),  F814W[age765],
+#           'g:' , label = 'Age = 10$^{7.65}$ yrs')
     #c2plt.plot(np.subtract(F625W[age773],  F814W[age773]),  F814W[age773],  
     #       'r--' , label = 'Age = 10$^{7.73}$ yrs')  
                               
+#plt.annotate('', xy=(1.99,-6), xycoords = 'data',
+#             xytext = (2, -3.5), textcoords = 'data',
+#                arrowprops = {'arrowstyle':'->'})
+#plt.annotate('A${_v}}$ = 2.5', xy=(0.0,-6.5), xycoords = 'data',
+#             xytext = (2, 3), textcoords = 'offset points')
+             
 c2plt.errorbar(np.subtract(Apn625[r4],   Apn814[r4]),   
                Abs814[r4], UncXr[r4],   UncYr[r4], 
                fmt=None, ecolor="k", marker=None, mew=0 )
@@ -258,14 +271,15 @@ c2plt.scatter(np.subtract(Apn625[r0],   Apn814[r0]),
                c='c',marker='d')                        
 
 ###########################################################################
+
 c1plt.set_xlim(-1, 3)
 c2plt.set_xlim(-.8, 1.2)
 s1 = -1 
-horz1 = -3.7 
+horz1 = -4.4 
 b1 = -4.0
-x2 = 3
+x2 = 4
 y1 = (s1*x2) + b1
-x1 = 1.5# np.subtract(horz1,b1)/s1
+x1 = .48# np.subtract(horz1,b1)/s1
 
 
 ptsR = np.array([[-3,yLmax],
@@ -277,12 +291,12 @@ polyR = Polygon(ptsR, color='grey', alpha=0.15,closed = True)
 
 c1plt.add_patch(polyR)
 #############
-horz = -5.0
+horz = -5.3
 s4 = -1 
-b4 = -4.0
-x4 = 3 
+b4 = -5.0
+x4 = 4 
 y4 = (s4*x4) + b4
-x3 = np.subtract(horz,b4)/s4
+x3 = .1#np.subtract(horz,b4)/s4
 
 
 pts = np.array([[-3,yRmax],
@@ -299,15 +313,18 @@ l = plt.legend(prop = {'family' : 'serif'},loc=4)
 l.draw_frame(False)
 ########################################################################### 
 c1plt.set_ylim(bottom=yLmax, top=yLmin)
-c1plt.set_xlim(-2,2)
-
+c1plt.set_xlim(-2,3.3)
+#12Z
+#14dt
+#redding remove and see what happens
+#instead of bad list, make constraints
 c2plt.set_ylim(bottom=yRmax, top=yRmin)  
-c2plt.set_xlim(-.8,3)
+c2plt.set_xlim(-1,3)
 ########################################################################### 
 plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'rnd1'+ '.png'
+figname = title + '_' + 'rnd3'+ '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname

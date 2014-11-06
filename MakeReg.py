@@ -150,7 +150,7 @@ crd814  = data[:,61] # Column 62 Crowd for F814W
 
 ################################################### 
 ################################################### 
-
+"""
 identify = pyregion.open(folder + '/sn2008ge_threeprog2.reg') #sn08ge
 #identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha
 r = pyregion.open(folder + '/sn2008ge_three.reg')
@@ -176,8 +176,7 @@ for i in range(len(r)):
 for j in range(len(save)):
     badX.append(r[save[j]].coord_list[0] - .5)
     badY.append(r[save[j]].coord_list[1] - .5)
-
-
+"""
 ################################################### 
 ############ Save coordinates to a file ###########
 print "Choppin some SN-suey"
@@ -217,14 +216,14 @@ sharpmin = -.786
 roundmax = 1.46
 crowdmax = 1.2
 
-cut.append(np.where((star <= 2)    & (crowd <= crowdmax ) 
-                & (sharp <= sharpmax) & (sharp >= sharpmin) 
-                & (roond <= roundmax) 
+cut.append(np.where((star <= 2)    #& (crowd <= crowdmax ) 
+                #& (sharp <= sharpmax) & (sharp >= sharpmin) 
+                #& (roond <= roundmax) 
                 & (((snr435 >= 3 ) | (snr555 >= 3 )) | ((snr625 >= 3 ) | (snr814 >= 3 )))
                  # & (((snr435 >= 3 ) | (snr555 >= 3 )) | ((snr625 >= 3 ) | (snr814 >= 3 ))) &(((snr435 >= 8 ) | (snr555 >= 8 )) | ((snr625 >= 8 ) | (snr814 >= 8 )))               
-                & ((snr435 <= 55) & (snr555 <= 55) & (snr625 <= 55) & (snr814 <= 55))
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 200) 
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))  
+                #& ((snr435 <= 55) & (snr555 <= 55) & (snr625 <= 55) & (snr814 <= 55))
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 200) ))
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))  
 
 print "Sharp Max: ", np.max(sharp[cut[0]])
 print "Sharp Min: ", np.min(sharp[cut[0]])
@@ -270,7 +269,7 @@ print "RoundMean: ", np.mean(rnd814[cut[0]])
 print "Crowd Max: ", np.max(crd814[cut[0]])
 print "CrowdMean: ", np.mean(crd814[cut[0]])
 
-"""
+
 for i in range(len(xcoord[cut[0]])):
     circ.append('circle(')
     comm.append(',')
@@ -279,12 +278,12 @@ for i in range(len(xcoord[cut[0]])):
 
 np.savetxt(folder +'/sn2008ge.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
-               comments = 'global color=red dashlist=8 3 width=1'
+               comments = 'global color=cyan dashlist=8 3 width=1'
                ' font="helvetica 10 normal" select=1' \
                ' highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1' \
                '\nimage;' )
 print 'Files Saved'
-
+"""
 print "Make Text File"
 
 dataOut_1 = np.array(np.c_[star[cut[0]]  ,
