@@ -30,7 +30,7 @@ def main():
         print "Opening " + title[m]
         ###FIX COORDINATES!!!!
 
-        image = fits.open("New_sn2008ge/" + title[m], mode='copyonwrite', memmap=True)
+        image = fits.open(title[m], mode='copyonwrite', memmap=True)
 
         head  = image[0].header #info() 
 
@@ -122,7 +122,7 @@ def main():
         
         plotname  = title[m][:-14]   + "_residual.fits"
         plotname2 = title[m][:-14]   + "_box.fits"
-        fits.writeto('sn2008ge/' + plotname , combo, head, clobber=True)
+        fits.writeto(plotname , combo, head, clobber=True)
         #fits.writeto(plotname2,combo[cen1-500:cen1+500,cen2-500:cen2+500], head, clobber=True)
         print "Plotting " + plotname + " & " + plotname2
         
