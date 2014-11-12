@@ -5,7 +5,6 @@ Created on Fri Aug 01 13:23:45 2014
 @author: Nova
 """
 import numpy as np
-import matplotlib.pyplot as plt
 import pyregion
 
 ################################################### 
@@ -59,7 +58,7 @@ cut  = []
 ##################### 2008ge ######################
 #"""
 folder   = "SN2008GE"
-name     = 'sn2008ge.phot' 
+name     = 'sn2008ge_new.phot' 
 #name     = 'sn2008ge_20141015_final.out'
 
 # Actual X & Y pixel coordinates of sn
@@ -216,20 +215,21 @@ sharpmin = -.786
 roundmax = 1.46
 crowdmax = 1.2
 
-cut.append(np.where((star <= 2)  & (crowd <= crowdmax ) 
+cut.append((np.where((star <= 2)   & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) & (sharp >= sharpmin) 
-                & (roond <= roundmax)
-                & ((snr625 > 0 ) & (snr814 > 0 )) 
-                & ((snr625 >= 3) & (snr814 >= 3))              
+                & (roond <= roundmax) 
+                & (((snr625 > 0 ) & (snr814 > 0 )) | ((snr435 > 0 ) & (snr555 > 0 )))
+                & (((snr625 >= 3) & (snr814 >= 3)) | ((snr435 >= 3) & (snr555 >= 3)))            
                 & ((srp435 <= 3)  & (srp555 <= 3)  & (srp625 <= 3)  & (srp814 <= 3) 
                 & (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))
                 & ((snr435 <= 60) & (snr555 <= 60) & (snr625 <= 60) & (snr814 <= 60))
-                & ((f625mag <= 80) & (f814mag <= 80))
-                & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9))
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= 50)                
-                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)      
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord)) ))
-
+                & (((f435mag <= 80) & (f555mag <= 80)) | ((f625mag <= 80) & (f814mag <= 80)))
+                & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9)) 
+                & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= 100)               
+                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25) 
+                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
+                )))
+                
 print "Sharp Max: ", np.max(sharp[cut[0]])
 print "Sharp Min: ", np.min(sharp[cut[0]])
 print "SharpMean: ", np.mean(sharp[cut[0]]) 
@@ -274,18 +274,16 @@ print "RoundMean: ", np.mean(rnd814[cut[0]])
 print "Crowd Max: ", np.max(crd814[cut[0]])
 print "CrowdMean: ", np.mean(crd814[cut[0]])
 
-
 for i in range(len(xcoord[cut[0]])):
     circ.append('circle(')
     comm.append(',')
     clos.append(',2)')
-    
 
-np.savetxt(folder +'/toss.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
+np.savetxt(folder +'/good100.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
-               comments = 'global color=blue dashlist=8 3 width=1'
+               comments = 'global color=green dashlist=8 3 width=1' \
                ' font="helvetica 10 normal" select=1' \
-               ' highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1' \
+               ' highlite=1 dash=0 fixed=0 edit=1 delete=1 include=1 source=1' \
                '\nimage;' )
 print 'Files Saved'
 """
