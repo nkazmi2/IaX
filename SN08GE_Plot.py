@@ -63,38 +63,17 @@ F555W  = d[:,:,10]
 F625W  = d[:,:,12]
 F814W  = d[:,:,16]
 
-age67   = np.where((logAGE == 6.7))
-age68   = np.where((logAGE == 6.8))
-age69   = np.where((logAGE == 6.9))
-age70   = np.where((logAGE == 7.0))
-age71   = np.where((logAGE == 7.1))
-age72   = np.where((logAGE == 7.2))
-age73   = np.where((logAGE == 7.3))
-age74   = np.where((logAGE == 7.4))
-age75   = np.where((logAGE == 7.5))
-age76   = np.where((logAGE == 7.6))
-age763  = np.where((logAGE == 7.63))
-age765  = np.where((logAGE == 7.65))
-age77   = np.where((logAGE == 7.7))
-age771  = np.where((logAGE == 7.71))
-age772  = np.where((logAGE == 7.72))
-age773  = np.where((logAGE == 7.73))
-age774  = np.where((logAGE == 7.74))
-age775  = np.where((logAGE == 7.75))
-age776  = np.where((logAGE == 7.76))
-age777  = np.where((logAGE == 7.77))
-age78   = np.where((logAGE == 7.8))
-age785  = np.where((logAGE == 7.85))
-age79   = np.where((logAGE == 7.9))
-age80   = np.where((logAGE == 8.0))
-
+#####################################################################
+## CHOOSE AGE TO BE PLOTTED 
 #####################################################################
 
-radius1   = [10,17,23,34,50]#[50,75,100,125,150]
-radius2   = [10,17,23,34,50]
+IsoAge = 7.45 # 7.0 7.76 7.73
+age    = np.where((logAGE == IsoAge))
 
+#####################################################################
+radius1   = [50,75,100,125,150]#[10,17,23,34,50]#[10,25,50,75,100]#
+radius2   = [10,17,23,34,50]#[50,75,100,125,150]#
 scale = (1000.0/23.0)
-#radius   = [25,50,100,150,200]
 f435f555   = []
 f625f814   = []
 Abs435 = [] 
@@ -116,10 +95,10 @@ SN814  = []
 Radl   = [] 
 Radr   = [] 
 
-yLmax    = -2.0
-yLmin    = -6.5
-yRmax    = -3.0
-yRmin    = -8.0
+yLmax    = -3.0
+yLmin    = -8.0
+yRmax    = -4.0
+yRmin    = -9.0
      
 f435f555.append(pickle.load(open('SN2008GE/sn2008ge_f435f555.p', 'rb')))  
 f625f814.append(pickle.load(open('SN2008GE/sn2008ge_f625f814.p', 'rb')))  
@@ -162,8 +141,10 @@ h = [2, 4] # height of the plotted figure
 fig1 = plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
 gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
 
-fig1.suptitle('CMD for SN 2008ge',fontdict = font, size=15)
+#fig1.suptitle('CMD for SN 2008ge',fontdict = font, size=15)
 
+fig1.suptitle(title + ': CMD for Z = 0.' + name[1:-7] + ', Y = 0.' + name[6:-4] + ' S/N >= 3',
+          fontdict = font, size=15)
 ###########################################################################
 c1plt = plt.subplot2grid((2,2), (0,0), rowspan = 2)
 plt.gca().invert_yaxis()
@@ -176,8 +157,8 @@ plt.ylabel("M$_{F555W}$ (mag)",fontdict = font)
 #c1plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
-#c1plt.plot(np.subtract(F435W[age74],  F555W[age74]),  F555W[age74],  
-           #'b:', label = 'Age = 10$^{7.4}$ yrs')
+c1plt.plot(np.subtract(F435W[age],  F555W[age]),  F555W[age],  
+           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
 
 #plt.annotate('', xy=(1.992,-6.1), xycoords = 'data', #(Top of the arrow)
 #             xytext = (2, -3.5), textcoords = 'data', # End of the arrow
@@ -215,14 +196,14 @@ c1plt.errorbar(np.subtract(Apn435[s0],   Apn555[s0]),
 c1plt.scatter(np.subtract(Apn435[s0],   Apn555[s0]),
                Abs555[s0], label = 'R = ' + str(round(radius1[0]*(scale),-2)) + " Pc",
                c='c',marker='d')   
-
+"""
 c1plt.annotate(str(0), xy=(np.subtract(Apn435[s4][0], Apn555[s4][0]),Abs555[s4][0]), 
                xytext=(np.subtract(Apn435[s4][0], Apn555[s4][0])-.1,Abs555[s4][0]-.1),
                 arrowprops=dict(arrowstyle="->",) )
-c1plt.annotate(str(21), xy=(np.subtract(Apn435[s4][1], Apn555[s4][1]),Abs555[s4][1]), 
+c1plt.annotate(str(11), xy=(np.subtract(Apn435[s4][1], Apn555[s4][1]),Abs555[s4][1]), 
                xytext=(np.subtract(Apn435[s4][1], Apn555[s4][1])-.1,Abs555[s4][1]-.1),
                 arrowprops=dict(arrowstyle="->",) )
-            
+"""            
 """              
 for i in range(len(Apn435[s4])):
     c1plt.annotate(str(i), xy=(np.subtract(Apn435[s4][i], Apn555[s4][i]),Abs555[s4][i]), 
@@ -254,8 +235,8 @@ plt.ylabel("M$_{F814W}$ (mag)",fontdict = font)
 #c2plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
-#c2plt.plot(np.subtract(F625W[age74],  F814W[age74]),  F814W[age74],  
-           #'b:', label = 'Age = 10$^{7.4}$ yrs')
+c2plt.plot(np.subtract(F625W[age],  F814W[age]),  F814W[age],  
+           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
                               
 #plt.annotate('', xy=(1.99,-6), xycoords = 'data',
 #             xytext = (2, -3.5), textcoords = 'data',
@@ -294,67 +275,68 @@ c2plt.scatter(np.subtract(Apn625[r0],   Apn814[r0]),
                Abs814[r0], label = 'R = ' + str(round(radius2[0]*(scale),-2)) + " Pc",
                c='c',marker='d')                        
 
-for k in range(len(Apn814[r4])):
-        c2plt.annotate(str(k), xy=(np.subtract(Apn625[r4][k], Apn814[r4][k]),Abs814[r4][k]), 
-               xytext=(np.subtract(Apn625[r4][k], Apn814[r4][k])-1,Abs814[r4][k]-.8),
-                arrowprops=dict(arrowstyle="->"),
-                )
+#for k in range(len(Apn814[r4])):
+#        c2plt.annotate(str(k), xy=(np.subtract(Apn625[r4][k], Apn814[r4][k]),Abs814[r4][k]), 
+#               xytext=(np.subtract(Apn625[r4][k], Apn814[r4][k])-.6,Abs814[r4][k]-.6),
+#                arrowprops=dict(arrowstyle="->"),
+#                )
    
 ###########################################################################
-"""
-c1plt.set_xlim(-1, 3)
-c2plt.set_xlim(-.8, 1.2)
+sn435 = -3.93
+sn555 = -4.41
+sn625 = -4.96
+sn814 = -5.05
+#############
 s1 = -1 
-horz1 = -4.4 
 b1 = -4.0
 x2 = 4
 y1 = (s1*x2) + b1
-x1 = .48# np.subtract(horz1,b1)/s1
+x1 = sn435 - sn555 #.48# np.subtract(horz1,b1)/s1
 
 
 ptsR = np.array([[-3,yLmax],
-                 [-3,horz1],
-                 [x1,horz1], #need the x value
+                 [-3,sn555],
+                 [x1,sn555], #need the x value
                  [x2,y1],           
                  [x2,yLmax]])
 polyR = Polygon(ptsR, color='grey', alpha=0.15,closed = True)
 
 c1plt.add_patch(polyR)
 #############
-horz = -5.3
 s4 = -1 
 b4 = -5.0
 x4 = 4 
 y4 = (s4*x4) + b4
-x3 = .1#np.subtract(horz,b4)/s4
+x3 = sn625 - sn814  #.1#np.subtract(horz,b4)/s4
 
 
 pts = np.array([[-3,yRmax],
-                [-3,horz],
-                [x3,horz], 
+                [-3,sn814],
+                [x3,sn814], 
                 [x4,y4],           
                 [x4,yRmax]])
 poly = Polygon(pts, color='grey', alpha=0.15,closed = True)
 
 c2plt.add_patch(poly)
-"""
+
 ###########################################################################
 l = plt.legend(prop = {'family' : 'serif'},loc=4)
 l.draw_frame(False)
 ########################################################################### 
-#c1plt.set_ylim(bottom=yLmax, top=yLmin)
-#c1plt.set_xlim(-2,3.3)
+c1plt.set_ylim(bottom=yLmax, top=yLmin)
+c1plt.set_xlim(-.75,2.0)
+c2plt.set_ylim(bottom=yRmax, top=yRmin)  
+c2plt.set_xlim(-.75,2.5)
+
 #12Z
 #14dt
 #redding remove and see what happens
 #instead of bad list, make constraints
-#c2plt.set_ylim(bottom=yRmax, top=yRmin)  
-#c2plt.set_xlim(-1,3)
 ########################################################################### 
 plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'rnd7'+ '.png'
+figname = title + '_' + 'rnd12'+ '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname

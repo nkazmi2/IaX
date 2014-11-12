@@ -4,7 +4,6 @@ Created on Mon Jun 16 10:34:33 2014
 
 @author: Nova
 """
-
 from astropy.io import fits
 import numpy as np
 
