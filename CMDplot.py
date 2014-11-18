@@ -135,7 +135,8 @@ Radl   = []
 Radr   = []       
 if (title == 'SN08ha'):
     radius     = [9.282,15.469,20.63,30.94,45] #[450,750,1000,1500,2200] 
-    scale      = (1000.0/23.63)
+    dist       = 20e7
+    conver     = (2.5*math.pi)/(50.0*3600*180)
     ytopmax    = -3.5
     ytopmin    = -6.5
     ybotmax    = -3.5
@@ -152,7 +153,8 @@ if (title == 'SN08ha'):
 
 elif (title == 'SN10ae'):
     radius     = [14.171,23.62,31.50,47.236,67.295]  # 450,750,1000,1500,2200
-    scale      = (1000.0/31.50)
+    dist       = 13.1e7
+    conver     = (2.5*math.pi)/(50.0*3600*180)
     ytopmax    = -2.5
     ytopmin    = -7.0
     ybotmax    = -3.0
@@ -168,7 +170,8 @@ elif (title == 'SN10ae'):
 
 elif (title == 'SN10el'):
     radius     = [18.62,31.03,41.38,62.065,91.0287] # 450,750,1000,1500,2200
-    scale      = (1000.0/41.38)
+    dist       = 9.97e7
+    conver     = (2.5*math.pi)/(50.0*3600*180)
     title      = 'SN10el'
     ytopmax    = -1.5
     ytopmin    = -6.0
@@ -362,31 +365,31 @@ c1plt.errorbar(np.subtract(Apn435[s4],   Apn555[s4]),
                Abs555[s4], UncXl[s4],   UncYl[s4], 
                fmt=None, ecolor="k", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s4],   Apn555[s4]),
-               Abs555[s4], label = 'R = ' + str(round(radius[4]*(scale),-2)) + " Pc",
+               Abs555[s4], label = 'R = ' + str(round(dist*(math.tan(radius[4]*conver)),-2)) + " AU",
                c='k',marker='d')
 c1plt.errorbar(np.subtract(Apn435[s3],   Apn555[s3]),   
                Abs555[s3], UncXl[s3],   UncYl[s3], 
                fmt=None, ecolor="r", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s3],   Apn555[s3]),
-               Abs555[s3], label = 'R = ' + str(round(radius[3]*(scale),-2)) + " Pc",
+               Abs555[s3], label = 'R = ' + str(round(dist*(math.tan(radius[3]*conver)),-2)) + " AU",
                c='r',marker='d')       
 c1plt.errorbar(np.subtract(Apn435[s2],   Apn555[s2]),   
                Abs555[s2], UncXl[s2],   UncYl[s2], 
                fmt=None, ecolor="g", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s2],   Apn555[s2]),
-               Abs555[s2], label = 'R = ' + str(round(radius[2]*(scale),-2)) + " Pc",
+               Abs555[s2], label = 'R = ' + str(round(dist*(math.tan(radius[2]*conver)),-2)) + " AU",
                c='g',marker='d')           
 c1plt.errorbar(np.subtract(Apn435[s1],   Apn555[s1]),   
                Abs555[s1], UncXl[s1],   UncYl[s1], 
                fmt=None, ecolor="b", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s1],   Apn555[s1]),
-               Abs555[s1], label = 'R = ' + str(round(radius[1]*(scale),-2)) + " Pc",
+               Abs555[s1], label = 'R = ' + str(round(dist*(math.tan(radius[1]*conver)),-2)) + " AU",
                c='b',marker='d') 
 c1plt.errorbar(np.subtract(Apn435[s0],   Apn555[s0]),   
                Abs555[s0], UncXl[s0],   UncYl[s0], 
                fmt=None, ecolor="c", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s0],   Apn555[s0]),
-               Abs555[s0], label = 'R = ' + str(round(radius[0]*(scale),-2)) + " Pc",
+               Abs555[s0], label = 'R = ' + str(round(dist*(math.tan(radius[0]*conver)),-2))+ " AU",
                c='c',marker='d')   
 
 
@@ -517,31 +520,31 @@ c2plt.errorbar(np.subtract(Apn625[r4],   Apn814[r4]),
                Abs814[r4], UncXr[r4],   UncYr[r4], 
                fmt=None, ecolor="k", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r4],   Apn814[r4]),
-               Abs814[r4], label = 'R = ' + str(round(radius[4]*(scale),-2)) + " Pc",
+               Abs814[r4], label = 'R = ' + str(round(dist*(math.tan(radius[4]*conver)),-2)) + " AU",
                c='k',marker='d')
 c2plt.errorbar(np.subtract(Apn625[r3],   Apn814[r3]),   
                Abs814[r3], UncXr[r3],   UncYr[r3], 
                fmt=None, ecolor="r", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r3],   Apn814[r3]),
-               Abs814[r3], label = 'R = ' + str(round(radius[3]*(scale),-2)) + " Pc",
+               Abs814[r3], label = 'R = ' + str(round(dist*(math.tan(radius[3]*conver)),-2)) + " AU",
                c='r',marker='d')       
 c2plt.errorbar(np.subtract(Apn625[r2],   Apn814[r2]),   
                Abs814[r2], UncXr[r2],   UncYr[r2], 
                fmt=None, ecolor="g", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r2],   Apn814[r2]),
-               Abs814[r2], label = 'R = ' + str(round(radius[2]*(scale),-2)) + " Pc",
+               Abs814[r2], label = 'R = ' + str(round(dist*(math.tan(radius[2]*conver)),-2)) + " AU",
                c='g',marker='d')           
 c2plt.errorbar(np.subtract(Apn625[r1],   Apn814[r1]),   
                Abs814[r1], UncXr[r1],   UncYr[r1], 
                fmt=None, ecolor="b", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r1],   Apn814[r1]),
-               Abs814[r1], label = 'R = ' + str(round(radius[1]*(scale),-2)) + " Pc",
+               Abs814[r1], label = 'R = ' + str(round(dist*(math.tan(radius[1]*conver)),-2)) + " AU",
                c='b',marker='d') 
 c2plt.errorbar(np.subtract(Apn625[r0],   Apn814[r0]),   
                Abs814[r0], UncXr[r0],   UncYr[r0], 
                fmt=None, ecolor="c", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r0],   Apn814[r0]),
-               Abs814[r0], label = 'R = ' + str(round(radius[0]*(scale),-2)) + " Pc",
+               Abs814[r0], label = 'R = ' + str(round(dist*(math.tan(radius[0]*conver)),-2)) + " AU",
                c='c',marker='d')                        
 
 ###########################################################################

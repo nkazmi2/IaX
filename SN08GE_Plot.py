@@ -10,6 +10,7 @@ import numpy               as np
 import matplotlib.pyplot   as plt
 import matplotlib.gridspec as gridspec
 import pickle
+import math
 from matplotlib.ticker  import MultipleLocator 
 from matplotlib.ticker  import AutoMinorLocator
 from matplotlib.patches import Polygon
@@ -71,11 +72,12 @@ IsoAge = 7.45 # 7.0 7.76 7.73
 age    = np.where((logAGE == IsoAge))
 
 #####################################################################
-radius1   = [50,75,100,125,150]#[10,17,23,34,50]#[10,25,50,75,100]#
-radius2   = [10,17,23,34,50]#[50,75,100,125,150]#
-scale = (1000.0/23.0)
-f435f555   = []
-f625f814   = []
+radius1   = [50,100,150,175,200]#[50,75,100,125,150]#[10,25,50,75,100]#[10,17,23,34,50]#
+radius2   = [50,100,150,175,200]#[50,75,100,125,150]#[10,25,50,75,100]#[10,17,23,34,50]#
+dist      = 17.95e7
+conver    = (2.5*math.pi)/(50.0*3600*180)
+f435f555  = []
+f625f814  = []
 Abs435 = [] 
 Abs555 = [] 
 Abs625 = [] 
@@ -170,31 +172,31 @@ c1plt.errorbar(np.subtract(Apn435[s4],   Apn555[s4]),
                Abs555[s4], UncXl[s4],   UncYl[s4], 
                fmt=None, ecolor="k", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s4],   Apn555[s4]),
-               Abs555[s4], label = 'R = ' + str(round(radius1[4]*(scale),-2)) + " Pc",
+               Abs555[s4], label = 'R = ' + str(round(dist*(math.tan(radius1[4]*conver)),-2)) + " AU",
                c='k',marker='d')
 c1plt.errorbar(np.subtract(Apn435[s3],   Apn555[s3]),   
                Abs555[s3], UncXl[s3],   UncYl[s3], 
                fmt=None, ecolor="r", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s3],   Apn555[s3]),
-               Abs555[s3], label = 'R = ' + str(round(radius1[3]*(scale),-2)) + " Pc",
+               Abs555[s3], label = 'R = ' + str(round(dist*(math.tan(radius1[3]*conver)),-2))+ " AU",
                c='r',marker='d')       
 c1plt.errorbar(np.subtract(Apn435[s2],   Apn555[s2]),   
                Abs555[s2], UncXl[s2],   UncYl[s2], 
                fmt=None, ecolor="g", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s2],   Apn555[s2]),
-               Abs555[s2], label = 'R = ' + str(round(radius1[2]*(scale),-2)) + " Pc",
+               Abs555[s2], label = 'R = ' + str(round(dist*(math.tan(radius1[2]*conver)),-2)) + " AU",
                c='g',marker='d')           
 c1plt.errorbar(np.subtract(Apn435[s1],   Apn555[s1]),   
                Abs555[s1], UncXl[s1],   UncYl[s1], 
                fmt=None, ecolor="b", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s1],   Apn555[s1]),
-               Abs555[s1], label = 'R = ' + str(round(radius1[1]*(scale),-2)) + " Pc",
+               Abs555[s1], label = 'R = ' + str(round(dist*(math.tan(radius1[1]*conver)),-2)) + " AU",
                c='b',marker='d') 
 c1plt.errorbar(np.subtract(Apn435[s0],   Apn555[s0]),   
                Abs555[s0], UncXl[s0],   UncYl[s0], 
                fmt=None, ecolor="c", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s0],   Apn555[s0]),
-               Abs555[s0], label = 'R = ' + str(round(radius1[0]*(scale),-2)) + " Pc",
+               Abs555[s0], label = 'R = ' + str(round(dist*(math.tan(radius1[0]*conver)),-2)) + " AU",
                c='c',marker='d')   
 """
 c1plt.annotate(str(0), xy=(np.subtract(Apn435[s4][0], Apn555[s4][0]),Abs555[s4][0]), 
@@ -248,31 +250,31 @@ c2plt.errorbar(np.subtract(Apn625[r4],   Apn814[r4]),
                Abs814[r4], UncXr[r4],   UncYr[r4], 
                fmt=None, ecolor="k", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r4],   Apn814[r4]),
-               Abs814[r4], label = 'R = ' + str(round(radius2[4]*(scale),-2)) + " Pc",
+               Abs814[r4], label = 'R = ' + str(round(dist*(math.tan(radius2[4]*conver)),-2)) + " AU",
                c='k',marker='d')
 c2plt.errorbar(np.subtract(Apn625[r3],   Apn814[r3]),   
                Abs814[r3], UncXr[r3],   UncYr[r3], 
                fmt=None, ecolor="r", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r3],   Apn814[r3]),
-               Abs814[r3], label = 'R = ' + str(round(radius2[3]*(scale),-2)) + " Pc",
+               Abs814[r3], label = 'R = ' + str(round(dist*(math.tan(radius2[3]*conver)),-2)) + " AU",
                c='r',marker='d')       
 c2plt.errorbar(np.subtract(Apn625[r2],   Apn814[r2]),   
                Abs814[r2], UncXr[r2],   UncYr[r2], 
                fmt=None, ecolor="g", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r2],   Apn814[r2]),
-               Abs814[r2], label = 'R = ' + str(round(radius2[2]*(scale),-2)) + " Pc",
+               Abs814[r2], label = 'R = ' + str(round(dist*(math.tan(radius2[2]*conver)),-2)) + " AU",
                c='g',marker='d')           
 c2plt.errorbar(np.subtract(Apn625[r1],   Apn814[r1]),   
                Abs814[r1], UncXr[r1],   UncYr[r1], 
                fmt=None, ecolor="b", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r1],   Apn814[r1]),
-               Abs814[r1], label = 'R = ' + str(round(radius2[1]*(scale),-2)) + " Pc",
+               Abs814[r1], label = 'R = ' + str(round(dist*(math.tan(radius2[1]*conver)),-2)) + " AU",
                c='b',marker='d') 
 c2plt.errorbar(np.subtract(Apn625[r0],   Apn814[r0]),   
                Abs814[r0], UncXr[r0],   UncYr[r0], 
                fmt=None, ecolor="c", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r0],   Apn814[r0]),
-               Abs814[r0], label = 'R = ' + str(round(radius2[0]*(scale),-2)) + " Pc",
+               Abs814[r0], label = 'R = ' + str(round(dist*(math.tan(radius2[0]*conver)),-2)) + " AU",
                c='c',marker='d')                        
 
 #for k in range(len(Apn814[r4])):
@@ -337,6 +339,6 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'rnd12'+ '.png'
+figname = title + '_' + 'we'+ '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname

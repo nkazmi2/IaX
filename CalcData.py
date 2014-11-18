@@ -294,7 +294,7 @@ f814Abs = f814mag - dmod - ACS814 - H814
 ########### Deal with bad points ##########
 print "Filter bad sources...."
 if (folder == "SN2008GE"):   
-    identify = pyregion.open(folder + '/sn2008ge_bad_search.reg') #sn08ge
+    identify = pyregion.open(folder + '/sn2008ge_badList.reg') #sn08ge
     r = pyregion.open(folder + '/sn2008ge.reg')
     #identify = pyregion.open(folder + '/sn2008ge_3good.reg') #sn08ge
     #r = pyregion.open(folder + '/sn2008ge_coord3.reg')
@@ -350,7 +350,7 @@ if (folder == "SN2008GE"):
                 & ((snr435 >= 3) & (snr555 >= 3))                 
                 & ((srp435 <= 3)  & (srp555 <= 3)  & (srp625 <= 3)  & (srp814 <= 3) 
                 & (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))  
-                & ((snr435 <= 60) & (snr555 <= 60) & (snr625 <= 60) & (snr814 <= 60))
+                #& ((snr435 <= 60) & (snr555 <= 60) & (snr625 <= 60) & (snr814 <= 60))
                 & ((f435mag <= 80) & (f555mag <= 80)) 
                 & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9))
                 & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= radius[0])               
@@ -363,7 +363,7 @@ if (folder == "SN2008GE"):
                 & ((snr625 >= 3) & (snr814 >= 3))              
                 & ((srp435 <= 3)  & (srp555 <= 3)  & (srp625 <= 3)  & (srp814 <= 3) 
                 & (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))
-                & ((snr435 <= 60) & (snr555 <= 60) & (snr625 <= 60) & (snr814 <= 60))
+                #& ((snr435 <= 60) & (snr555 <= 60) & (snr625 <= 60) & (snr814 <= 60))
                 & ((f625mag <= 80) & (f814mag <= 80))
                 & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9)) 
                 & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= radius[0])               
@@ -396,7 +396,7 @@ else:
             #rad.append(i)
             #snr.append(m)
 """
-
+"""
 sn1 = []
 sn2 = []
 sn3 = []
@@ -421,7 +421,7 @@ sn4 = np.where((star <= 2) & (snr814 == 3.0) &
 print "Mean f814w Abs Mag at S/N = 3 : ", np.mean(f814Abs[sn4])
 #print f814Abs[sn4]
 print "Applying contrains to SN Data..."
-
+"""
 
 #print "Mean Sharp Value " + title[:-1] + " : " + str(np.mean(sharp))
 #print "Mean Round Value " + title[:-1] + " : " + str(np.mean(roond))

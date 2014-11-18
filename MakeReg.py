@@ -150,7 +150,7 @@ crd814  = data[:,61] # Column 62 Crowd for F814W
 ################################################### 
 ################################################### 
 
-identify = pyregion.open(folder + '/sn2008ge_bad_search.reg') #sn08ge
+identify = pyregion.open(folder + '/sn2008ge_badList.reg') #sn08ge
 #identify = pyregion.open(folder + '/'+ title +'final.reg') #sn08ha
 r = pyregion.open(folder + '/sn2008ge.reg')
 save = []
@@ -222,10 +222,10 @@ cut.append((np.where((star <= 2)   & (crowd <= crowdmax )
                 & (((snr625 >= 3) & (snr814 >= 3)) | ((snr435 >= 3) & (snr555 >= 3)))            
                 & ((srp435 <= 3)  & (srp555 <= 3)  & (srp625 <= 3)  & (srp814 <= 3) 
                 & (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))
-                & ((snr435 <= 60) & (snr555 <= 60) & (snr625 <= 60) & (snr814 <= 60))
+                #& ((snr435 <= 90) & (snr555 <= 90) & (snr625 <= 90) & (snr814 <= 90))
                 & (((f435mag <= 80) & (f555mag <= 80)) | ((f625mag <= 80) & (f814mag <= 80)))
                 & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9)) 
-                & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= 100)               
+                & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= 200)               
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
                 )))
@@ -279,7 +279,7 @@ for i in range(len(xcoord[cut[0]])):
     comm.append(',')
     clos.append(',2)')
 
-np.savetxt(folder +'/good100.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
+np.savetxt(folder +'/delete.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
                comments = 'global color=green dashlist=8 3 width=1' \
                ' font="helvetica 10 normal" select=1' \
