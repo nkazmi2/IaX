@@ -16,10 +16,12 @@ title = 'SN08ge'
 #####################################################################
 
 if (title == 'SN08ha'):
-    name = 'Z0046Y26.dat'
+    name   = 'Z0046Y26.dat'
+    radius = [450,750,1000,1500,2200] 
     #name = 'Z0384Y26.dat'
 elif (title == 'SN08ge'): 
     name = 'Z0170Y26.dat'
+    radius = [2200,4400,6500,7600,8700]
     
 d = []
 d.append(np.loadtxt('Metallicity/'+name))
@@ -44,8 +46,35 @@ age70   = np.where((logAGE == 7.0))
 age71   = np.where((logAGE == 7.1))
 age72   = np.where((logAGE == 7.2))
 age73   = np.where((logAGE == 7.3))
+age731  = np.where((logAGE == 7.31))
+age732  = np.where((logAGE == 7.32))
+age733  = np.where((logAGE == 7.33))
+age734  = np.where((logAGE == 7.34))
+age735  = np.where((logAGE == 7.35))
+age736  = np.where((logAGE == 7.36))
+age737  = np.where((logAGE == 7.37))
+age738  = np.where((logAGE == 7.38))
+age739  = np.where((logAGE == 7.39))
 age74   = np.where((logAGE == 7.4))
+age741  = np.where((logAGE == 7.41))
+age742  = np.where((logAGE == 7.42))
+age743  = np.where((logAGE == 7.43))
+age744  = np.where((logAGE == 7.44))
+age745  = np.where((logAGE == 7.45))
+age746  = np.where((logAGE == 7.46))
+age747  = np.where((logAGE == 7.47))
+age748  = np.where((logAGE == 7.48))
+age749  = np.where((logAGE == 7.49))
 age75   = np.where((logAGE == 7.5))
+age751  = np.where((logAGE == 7.51))
+age752  = np.where((logAGE == 7.52))
+age753  = np.where((logAGE == 7.53))
+age754  = np.where((logAGE == 7.54))
+age755  = np.where((logAGE == 7.55))
+age756  = np.where((logAGE == 7.56))
+age757  = np.where((logAGE == 7.57))
+age758  = np.where((logAGE == 7.58))
+age759  = np.where((logAGE == 7.59))
 age76   = np.where((logAGE == 7.6))
 age761  = np.where((logAGE == 7.61))
 age762  = np.where((logAGE == 7.62))
@@ -72,46 +101,43 @@ age79   = np.where((logAGE == 7.9))
 age80   = np.where((logAGE == 8.0))
 
 age = []
+#age.append([age73,age731,age732,age733,age734,age735,age736,age737,age738,age739])
+age.append([age74,age741,age742,age743,age744,age745,age746,age747,age748,age749])
+#age.append([age75,age751,age752,age753,age754,age755,age756,age757,age758,age759])
 #age.append([age76,age761,age762,age763,age774,age765,age766,age767,age768,age769])
-age.append([age77,age771,age772,age773,age774,age775,age776,age777,age778,age779])
+#age.append([age77,age771,age772,age773,age774,age775,age776,age777,age778,age779])
 
 #####################################################################
 
-radius     = [450,750,1000,1500,2200] 
-f435f555_0 = []
-f625f814_0 = []
-f435f555_1 = []
-f625f814_1 = []
-f435f555_2 = []
-f625f814_2 = []
-f435f555_3 = []
-f625f814_3 = []
-f435f555_4 = []
-f625f814_4 = []
+f435f555 = []
+f625f814 = []
 
 if (title == 'SN08ha'):
     for i in range(3,6):
-        f435f555_0.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad0.p', 'rb')))    
-        f625f814_0.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad0.p', 'rb')))    
-        f435f555_1.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad1.p', 'rb')))    
-        f625f814_1.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad1.p', 'rb')))   
-        f435f555_2.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad2.p', 'rb')))    
-        f625f814_2.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad2.p', 'rb')))
-        f435f555_3.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad3.p', 'rb')))    
-        f625f814_3.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad3.p', 'rb')))
-        f435f555_4.append(pickle.load(open('SN2008HA/sn2008ha_f435f555_sn'+ str(i) +'_rad4.p', 'rb')))    
-        f625f814_4.append(pickle.load(open('SN2008HA/sn2008ha_f625f814_sn'+ str(i) +'_rad4.p', 'rb')))
+        f435f555.append(pickle.load(open('SN2008HA/sn2008ha_f435f555.p', 'rb')))    
+        f625f814.append(pickle.load(open('SN2008HA/sn2008ha_f625f814.p', 'rb')))  
 elif (title == 'SN08ge'):
-        f435f555_0.append(pickle.load(open('SN2008GE/sn2008ge_f435f555.p', 'rb')))    
-        f625f814_0.append(pickle.load(open('SN2008GE/sn2008ge_f625f814.p', 'rb')))    
+        f435f555.append(pickle.load(open('SN2008GE/sn2008ge_f435f555.p', 'rb')))    
+        f625f814.append(pickle.load(open('SN2008GE/sn2008ge_f625f814.p', 'rb')))    
 
+ignoring1 = np.where((f435f555[0][8] != f435f555[0][8][0]) & 
+                  (f435f555[0][8] != f435f555[0][8][1]) &
+                  (f435f555[0][8] != f435f555[0][8][2]) &
+                  (f435f555[0][8] != f435f555[0][8][3]) )
+ignoring2 = np.where((f625f814[0][8] != f625f814[0][8][0]) & 
+                  (f625f814[0][8] != f625f814[0][8][1]) &
+                  (f625f814[0][8] != f625f814[0][8][2]) &
+                  (f625f814[0][8] != f625f814[0][8][3]) )
+f435f555 = np.array(f435f555)
+f625f814 = np.array(f625f814)
+# np.take(f435f555[0][8], bright) useful if I only needed it once
 
 for agesInd in xrange(len(age[0])):
     print "                "
-    print "Age 10^7.7" + str(agesInd)
+    print "Age 10^7.4" + str(agesInd)
     print "F435W-F555W"
     ClosInd = []
-    for sample in izip(np.subtract(f435f555_0[0][0],f435f555_0[0][1]), f435f555_0[0][1]):
+    for sample in izip(np.subtract(f435f555[0][0][ignoring1],f435f555[0][1][ignoring1]), f435f555[0][1][ignoring1]):
         closestD = -1 
         closestIdx = -1
         for IdX , val in enumerate(izip(np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]])):
@@ -123,15 +149,15 @@ for agesInd in xrange(len(age[0])):
     ClosInd = np.array(ClosInd)
     func_vals = np.c_[np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]]]
     comp_vals = func_vals[ClosInd]
-    print "Chi^2 of 10^7.7" + str(agesInd)
-    print stats.chisquare(np.c_[np.subtract(f435f555_0[0][0],f435f555_0[0][1]), f435f555_0[0][1]],comp_vals)
+    print "Chi^2 of 10^7.4" + str(agesInd)
+    print stats.chisquare(np.c_[np.subtract(f435f555[0][0][ignoring1],f435f555[0][1][ignoring1]), f435f555[0][1][ignoring1]],comp_vals)
    
     
     print "                "
     print "F555W - F814W"
     
     ClosInd = []
-    for sample in izip(np.subtract(f625f814_0[0][0],f625f814_0[0][1]), f625f814_0[0][1]):
+    for sample in izip(np.subtract(f625f814[0][0][ignoring2],f625f814[0][1][ignoring2]), f625f814[0][1][ignoring2]):
         closestD = -1 
         closestIdx = -1
         for IdX , val in enumerate(izip(np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]])):
@@ -143,9 +169,9 @@ for agesInd in xrange(len(age[0])):
     ClosInd = np.array(ClosInd)
     func_vals = np.c_[np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]]]
     comp_vals = func_vals[ClosInd]
-    print "Chi^2 of 10^7.7" + str(agesInd)
-    print stats.chisquare(np.c_[np.subtract(f625f814_0[0][0],f625f814_0[0][1]), f625f814_0[0][1]],comp_vals)
-           
+    print "Chi^2 of 10^7.4" + str(agesInd)
+    print stats.chisquare(np.c_[np.subtract(f625f814[0][0][ignoring2],f625f814[0][1][ignoring2]), f625f814[0][1][ignoring2]],comp_vals)
+        
 ###############################################################################
 ###############################################################################
 ###############################################################################
@@ -157,7 +183,7 @@ for agesInd in xrange(len(age[0])):
     print "F435W-F555W"
     print "                "
     #ClosInd = []
-    #for sample in izip(np.subtract(f435f555_0[0][0],f435f555_0[0][1]), f435f555_0[0][1]):
+    #for sample in izip(np.subtract(f435f555[0][0],f435f555[0][1]), f435f555[0][1]):
     #    closestD = -1 
     #    closestIdx = -1
     #    for IdX , val in enumerate(izip(np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]])):
@@ -172,7 +198,7 @@ for agesInd in xrange(len(age[0])):
     
     #print "Radius 450pc"
     #print "Chi^2 of 10^7.7" + str(agesInd)
-    #print stats.chisquare(np.c_[np.subtract(f435f555_0[0][0],f435f555_0[0][1]), f435f555_0[0][1]],comp_vals)
+    #print stats.chisquare(np.c_[np.subtract(f435f555[0][0],f435f555[0][1]), f435f555[0][1]],comp_vals)
     ######
     ClosInd = []
     for sample in izip(np.subtract(f435f555_1[0][0],f435f555_1[0][1]), f435f555_1[0][1]):
@@ -245,7 +271,7 @@ for agesInd in xrange(len(age[0])):
     print "F555W - F814W"
     print "                "
     #ClosInd = []
-    #for sample in izip(np.subtract(f625f814_0[0][0],f625f814_0[0][1]), f625f814_0[0][1]):
+    #for sample in izip(np.subtract(f625f814[0][0],f625f814[0][1]), f625f814[0][1]):
     #    closestD = -1 
     #    closestIdx = -1
     #    for IdX , val in enumerate(izip(np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]])):
@@ -259,7 +285,7 @@ for agesInd in xrange(len(age[0])):
     #comp_vals = func_vals[ClosInd]
     #print "Radius 450pc"
     #print "Chi^2 of 10^7.7" + str(agesInd)
-    #print stats.chisquare(np.c_[np.subtract(f625f814_0[0][0],f625f814_0[0][1]), f625f814_0[0][1]],comp_vals)
+    #print stats.chisquare(np.c_[np.subtract(f625f814[0][0],f625f814[0][1]), f625f814[0][1]],comp_vals)
        
     ######
     ClosInd = []

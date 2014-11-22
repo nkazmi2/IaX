@@ -68,8 +68,9 @@ F814W  = d[:,:,16]
 ## CHOOSE AGE TO BE PLOTTED 
 #####################################################################
 
-IsoAge = 7.45 # 7.0 7.76 7.73
-age    = np.where((logAGE == IsoAge))
+IsoAge = 7.46# 7.0 7.76 7.73
+age    = np.where(logAGE == IsoAge)
+#print np.shape(age)
 
 #####################################################################
 radius1   = [50,100,150,175,200]#[50,75,100,125,150]#[10,25,50,75,100]#[10,17,23,34,50]#
@@ -159,21 +160,22 @@ plt.ylabel("M$_{F555W}$ (mag)",fontdict = font)
 #c1plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
-c1plt.plot(np.subtract(F435W[age],  F555W[age]),  F555W[age],  
-           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
+#c1plt.plot(np.subtract(F435W[age],  F555W[age]),  F555W[age],  
+#           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
 
 #plt.annotate('', xy=(1.992,-6.1), xycoords = 'data', #(Top of the arrow)
 #             xytext = (2, -3.5), textcoords = 'data', # End of the arrow
 #                arrowprops = {'arrowstyle':'->'})       # what the arrow looks like
 #plt.annotate('A${_v}}$ = 3.6', xy=(0.0,-5.5), xycoords = 'data', # coord of term
 #             xytext = (2, 3), textcoords = 'offset points')
-
+"""
 c1plt.errorbar(np.subtract(Apn435[s4],   Apn555[s4]),   
                Abs555[s4], UncXl[s4],   UncYl[s4], 
                fmt=None, ecolor="k", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s4],   Apn555[s4]),
                Abs555[s4], label = 'R = ' + str(round(dist*(math.tan(radius1[4]*conver)),-2)) + " AU",
                c='k',marker='d')
+"""
 c1plt.errorbar(np.subtract(Apn435[s3],   Apn555[s3]),   
                Abs555[s3], UncXl[s3],   UncYl[s3], 
                fmt=None, ecolor="r", marker=None, mew=0 )
@@ -237,21 +239,22 @@ plt.ylabel("M$_{F814W}$ (mag)",fontdict = font)
 #c2plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
-c2plt.plot(np.subtract(F625W[age],  F814W[age]),  F814W[age],  
-           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
+#c2plt.plot(np.subtract(F625W[age],  F814W[age]),  F814W[age],  
+#           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
                               
 #plt.annotate('', xy=(1.99,-6), xycoords = 'data',
 #             xytext = (2, -3.5), textcoords = 'data',
 #                arrowprops = {'arrowstyle':'->'})
 #plt.annotate('A${_v}}$ = 2.5', xy=(0.0,-6.5), xycoords = 'data',
 #             xytext = (2, 3), textcoords = 'offset points')
-             
+"""             
 c2plt.errorbar(np.subtract(Apn625[r4],   Apn814[r4]),   
                Abs814[r4], UncXr[r4],   UncYr[r4], 
                fmt=None, ecolor="k", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r4],   Apn814[r4]),
                Abs814[r4], label = 'R = ' + str(round(dist*(math.tan(radius2[4]*conver)),-2)) + " AU",
                c='k',marker='d')
+"""
 c2plt.errorbar(np.subtract(Apn625[r3],   Apn814[r3]),   
                Abs814[r3], UncXr[r3],   UncYr[r3], 
                fmt=None, ecolor="r", marker=None, mew=0 )
@@ -330,8 +333,6 @@ c1plt.set_xlim(-.75,2.0)
 c2plt.set_ylim(bottom=yRmax, top=yRmin)  
 c2plt.set_xlim(-.75,2.5)
 
-#12Z
-#14dt
 #redding remove and see what happens
 #instead of bad list, make constraints
 ########################################################################### 
