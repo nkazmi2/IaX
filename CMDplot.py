@@ -134,9 +134,9 @@ SN814  = []
 Radl   = [] 
 Radr   = []       
 if (title == 'SN08ha'):
-    radius     = [15,30,50]#[9.282,15.469,20.63,30.94,45] #[450,750,1000,1500,2200] 
+    radius     = [15,30,45]#[9.282,15.469,20.63,30.94,45] #[450,750,1000,1500,2200] 
     dist       = 20e7
-    conver     = (2.5*math.pi)/(50.0*3600*180)
+    conver     = (5) #(2.5*math.pi)/(50.0*3600*180)
     yLmax    = -3.5
     yLmin    = -6.5
     yRmax    = -3.5
@@ -145,8 +145,8 @@ if (title == 'SN08ha'):
     #Mean f555w Abs Mag at S/N = 3 :  -4.36564102564
     #Mean f625w Abs Mag at S/N = 3 :  -4.37502222222
     #Mean f814w Abs Mag at S/N = 3 :  -4.46459459459
-    f435f555.append(pickle.load(open('SN2008HA/sn2008ha_f435f5552.p', 'rb')))    
-    f625f814.append(pickle.load(open('SN2008HA/sn2008ha_f625f8142.p', 'rb')))    
+    f435f555.append(pickle.load(open('SN2008HA/sn2008ha_f435f555.p', 'rb')))    
+    f625f814.append(pickle.load(open('SN2008HA/sn2008ha_f625f814.p', 'rb')))    
 ###############################################################################
 
 ###############################################################################
@@ -377,19 +377,19 @@ elif (title == 'SN10el'):
 #               Abs555[s2], UncXl[s2],   UncYl[s2], 
 #               fmt=None, ecolor="g", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s2],   Apn555[s2]),
-               Abs555[s2], label = 'R = ' + str(round(dist*(math.tan(radius[2]*conver)),-2)) + " AU",
+               Abs555[s2], label = 'R = ' + str(round(radius[2]*conver)) + " pc" ,#str(round(dist*(math.tan(radius[2]*conver)),-2)) + " AU",
                c='r',marker='d')           
 #c1plt.errorbar(np.subtract(Apn435[s1],   Apn555[s1]),   
                #Abs555[s1], UncXl[s1],   UncYl[s1], 
                #fmt=None, ecolor="b", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s1],   Apn555[s1]),
-               Abs555[s1], label = 'R = ' + str(round(dist*(math.tan(radius[1]*conver)),-2)) + " AU",
+               Abs555[s1], label = 'R = ' + str(round(radius[1]*conver)) + " pc" ,#str(round(dist*(math.tan(radius[1]*conver)),-2)) + " AU",
                c='y',marker='d') 
 c1plt.errorbar(np.subtract(Apn435[s0],   Apn555[s0]),   
                Abs555[s0], UncXl[s0],   UncYl[s0], 
                fmt=None, ecolor="c", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s0],   Apn555[s0]),
-               Abs555[s0], label = 'R = ' + str(round(dist*(math.tan(radius[0]*conver)),-2))+ " AU",
+               Abs555[s0], label = 'R = ' + str(round(radius[0]*conver))  + " pc" ,#str(round(dist*(math.tan(radius[0]*conver)),-2))+ " AU",
                c='c',marker='d')   
 
 
@@ -528,26 +528,26 @@ elif (title == 'SN10el'):
 #               Abs814[r2], UncXr[r2],   UncYr[r2], 
 #               fmt=None, ecolor="g", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r2],   Apn814[r2]),
-               Abs814[r2], label = 'R = ' + str(round(dist*(math.tan(radius[2]*conver)),-2)) + " AU",
+               Abs814[r2], label = 'R = ' + str(round(radius[2]*conver)) + " pc" ,#str(round(dist*(math.tan(radius[2]*conver)),-2)) + " AU",
                c='r',marker='d')           
 #c2plt.errorbar(np.subtract(Apn625[r1],   Apn814[r1]),   
                #Abs814[r1], UncXr[r1],   UncYr[r1], 
                #fmt=None, ecolor="b", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r1],   Apn814[r1]),
-               Abs814[r1], label = 'R = ' + str(round(dist*(math.tan(radius[1]*conver)),-2)) + " AU",
+               Abs814[r1], label = 'R = ' + str(round(radius[1]*conver)) + " pc" ,#str(round(dist*(math.tan(radius[1]*conver)),-2)) + " AU",
                c='y',marker='d') 
 c2plt.errorbar(np.subtract(Apn625[r0],   Apn814[r0]),   
                Abs814[r0], UncXr[r0],   UncYr[r0], 
                fmt=None, ecolor="c", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r0],   Apn814[r0]),
-               Abs814[r0], label = 'R = ' + str(round(dist*(math.tan(radius[0]*conver)),-2)) + " AU",
+               Abs814[r0], label = 'R = ' + str(round(radius[0]*conver)) + " pc" ,#str(round(dist*(math.tan(radius[0]*conver)),-2)) + " AU",
                c='c',marker='d')                        
 
 ###########################################################################
-sn435 = -4.042
-sn555 = -4.411
-sn625 = -4.318
-sn814 = -4.412
+sn435 = -4.04
+sn555 = -4.5
+sn625 = -4.3
+sn814 = -4.5
 #############
 s1 = -1 
 b1 = -4.0
@@ -556,7 +556,7 @@ y1 = (s1*x2) + b1
 x1 = sn435 - sn555 #.48# np.subtract(horz1,b1)/s1
 
 
-sn555 = -4.6
+#sn555 = -4.6
 ptsR = np.array([[-3,yLmax],
                  [-3,sn555],
                  [x1,sn555], #need the x value
@@ -595,6 +595,6 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'delete2' + '.png'
+figname = title + '_' + 'Final' + '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname

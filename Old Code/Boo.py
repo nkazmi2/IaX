@@ -43,7 +43,7 @@ snt        = 3
 snb        = 3
 #####################################################################
 
-name = 'Z0170Y26.dat' #'Z0001Y26.dat'
+name = 'Z0200Y26.dat' #'Z0001Y26.dat'
 
 d = []
 d.append(np.loadtxt('../Metallicity/'+name))
@@ -64,12 +64,8 @@ F555W  = d[:,:,10]
 F625W  = d[:,:,12]
 F814W  = d[:,:,16]
 
+
+print logAGE
 #####################################################################
 ## CHOOSE AGE TO BE PLOTTED 
 #####################################################################
-
-IsoAge = [7.45,7.55,7.58] # 7.0 7.76 7.73
-IsoAge = np.array(IsoAge)
-#print logAGE == 7.45
-age    = np.where((logAGE == IsoAge[0]))
-print np.shape(age)

@@ -210,68 +210,66 @@ sharpmin = -0.792
 roundmax =  2.048
 crowdmax =  0.5
 """
-sharpmax = 0.163
+sharpmax = 0.165
 sharpmin = -.786
-roundmax = 1.46
+roundmax = 1.8
 crowdmax = 1.2
-
 cut.append((np.where((star <= 2)   & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) & (sharp >= sharpmin) 
                 & (roond <= roundmax) 
                 & (((snr625 > 0 ) & (snr814 > 0 )) | ((snr435 > 0 ) & (snr555 > 0 )))
-                & (((snr625 >= 3) & (snr814 >= 3)) | ((snr435 >= 3) & (snr555 >= 3)))            
+                & (((snr625 >= 3.5) & (snr814 >= 3.5)) | ((snr435 >= 3.5) & (snr555 >= 3.5)))            
                 & ((srp435 <= 3)  & (srp555 <= 3)  & (srp625 <= 3)  & (srp814 <= 3) 
                 & (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))
-                #& ((snr435 <= 90) & (snr555 <= 90) & (snr625 <= 90) & (snr814 <= 90))
                 & (((f435mag <= 80) & (f555mag <= 80)) | ((f625mag <= 80) & (f814mag <= 80)))
                 & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9)) 
                 & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= 200)               
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
                 )))
-                
-print "Sharp Max: ", np.max(sharp[cut[0]])
-print "Sharp Min: ", np.min(sharp[cut[0]])
+       
+print "Sharp Max: ", np.max( sharp[cut[0]])
+print "Sharp Min: ", np.min( sharp[cut[0]])
 print "SharpMean: ", np.mean(sharp[cut[0]]) 
-print "Round Max: ", np.max(roond[cut[0]])
+print "Round Max: ", np.max( roond[cut[0]])
 print "RoundMean: ", np.mean(roond[cut[0]])
-print "Crowd Max: ", np.max(crowd[cut[0]])
+print "Crowd Max: ", np.max( crowd[cut[0]])
 print "CrowdMean: ", np.mean(crowd[cut[0]])
 
 print "435 values"
-print "Sharp Max: ", np.max(srp435[cut[0]])
-print "Sharp Min: ", np.min(srp435[cut[0]])
+print "Sharp Max: ", np.max( srp435[cut[0]])
+print "Sharp Min: ", np.min( srp435[cut[0]])
 print "SharpMean: ", np.mean(srp435[cut[0]]) 
-print "Round Max: ", np.max(rnd435[cut[0]])
+print "Round Max: ", np.max( rnd435[cut[0]])
 print "RoundMean: ", np.mean(rnd435[cut[0]])
-print "Crowd Max: ", np.max(crd435[cut[0]])
+print "Crowd Max: ", np.max( crd435[cut[0]])
 print "CrowdMean: ", np.mean(crd435[cut[0]])
 
 print "555 values"
-print "Sharp Max: ", np.max(srp555[cut[0]])
-print "Sharp Min: ", np.min(srp555[cut[0]])
+print "Sharp Max: ", np.max( srp555[cut[0]])
+print "Sharp Min: ", np.min( srp555[cut[0]])
 print "SharpMean: ", np.mean(srp555[cut[0]]) 
-print "Round Max: ", np.max(rnd555[cut[0]])
+print "Round Max: ", np.max( rnd555[cut[0]])
 print "RoundMean: ", np.mean(rnd555[cut[0]])
-print "Crowd Max: ", np.max(crd555[cut[0]])
+print "Crowd Max: ", np.max( crd555[cut[0]])
 print "CrowdMean: ", np.mean(crd555[cut[0]])
 
 print "625 values"
-print "Sharp Max: ", np.max(srp625[cut[0]])
-print "Sharp Min: ", np.min(srp625[cut[0]])
+print "Sharp Max: ", np.max( srp625[cut[0]])
+print "Sharp Min: ", np.min( srp625[cut[0]])
 print "SharpMean: ", np.mean(srp625[cut[0]]) 
-print "Round Max: ", np.max(rnd625[cut[0]])
+print "Round Max: ", np.max( rnd625[cut[0]])
 print "RoundMean: ", np.mean(rnd625[cut[0]])
-print "Crowd Max: ", np.max(crd625[cut[0]])
+print "Crowd Max: ", np.max( crd625[cut[0]])
 print "CrowdMean: ", np.mean(crd625[cut[0]])
 
 print "814 values"
-print "Sharp Max: ", np.max(srp814[cut[0]])
-print "Sharp Min: ", np.min(srp814[cut[0]])
+print "Sharp Max: ", np.max( srp814[cut[0]])
+print "Sharp Min: ", np.min( srp814[cut[0]])
 print "SharpMean: ", np.mean(srp814[cut[0]]) 
-print "Round Max: ", np.max(rnd814[cut[0]])
+print "Round Max: ", np.max( rnd814[cut[0]])
 print "RoundMean: ", np.mean(rnd814[cut[0]])
-print "Crowd Max: ", np.max(crd814[cut[0]])
+print "Crowd Max: ", np.max( crd814[cut[0]])
 print "CrowdMean: ", np.mean(crd814[cut[0]])
 
 for i in range(len(xcoord[cut[0]])):

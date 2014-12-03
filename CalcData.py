@@ -98,7 +98,7 @@ font = {'family' : 'serif',
 ################################################### 
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
-"""
+#"""
 folder   = "SN2008GE"
 name     = 'sn2008ge_new.phot' 
 #name     = 'sn2008ge_20141015_final.out' #'sn2008ge_new.out'renamed for constistancy 
@@ -117,16 +117,16 @@ H625     = 0 #F625W
 H814     = 0 #F814W	
 
 # Median (redshift independent) distance modulus of host galaxy
-dmod     = 31.08 #31.27 
+dmod     = 31.33 
 
 # Actual X & Y pixel coordinates of sn
 xsn      = 3247.539
 ysn      = 3419.971
 #radius   = [10.342,17.24,23.00,34.47,50.556] # 450,750,1000,1500,2200
 radius   = [200]
-"""
+#"""
 ##################### 2008ha ######################
-
+"""
 folder   = "SN2008HA"
 name     = 'sn2008ha_new.phot'
 # Magnitude of the Milkyway Galaxy 
@@ -150,7 +150,7 @@ xsn      = 1736.199
 ysn      = 3171.792
 
 radius   = [50] # 450,750,1000,1500,2200
-
+"""
 ##################### 2010ae ######################
 """
 folder   = "SN2010AE"
@@ -170,7 +170,7 @@ H625     = 1.262 #F625W
 H814     = 0.867 #F814W	
 
 # Median (redshift independent) distance modulus of host galaxy
-dmod     = 30.51 #30.58 
+dmod     = 30.9
 
 # Actual X & Y pixel coordinates of sn
 xsn      = 1795.3831# 1796.640
@@ -197,7 +197,7 @@ H625     = 2.001 #F625W
 H814     = 1.376 #F814W	
 
 # Median (redshift independent) distance modulus of host galaxy
-dmod     = 30.29 #29.99 
+dmod     = 30.09 
 
 # Actual X & Y pixel coordinates of sn
 xsn      = 2418.859
@@ -205,6 +205,10 @@ ysn      = 1570.826
 
 radius   = [18.62,31.03,41.38,62.065,91.0287] # 450,750,1000,1500,2200
 """
+
+
+##################### 2012Z ######################
+#dmod = 32.07 (TF)
 ###################################################    
 ######### Open and read in the data file ##########
 
@@ -294,13 +298,39 @@ f814Abs = f814mag - dmod - ACS814 - H814
 ########### Deal with bad points ##########
 print "Filter bad sources...."
 if (folder == "SN2008GE"):   
-    identify = pyregion.open(folder + '/sn2008ge_badList.reg') #sn08ge
+    identify = pyregion.open(folder + '/sn2008ge_badList2.reg') #sn08ge
     r = pyregion.open(folder + '/sn2008ge.reg')
     #identify = pyregion.open(folder + '/sn2008ge_3good.reg') #sn08ge
     #r = pyregion.open(folder + '/sn2008ge_coord3.reg')
-else:
-    identify = pyregion.open(folder + '/'+ title +'1122.reg') #sn08ha
-    r = pyregion.open(folder + '/'+ title +'coord.reg')
+elif (folder == "SN2008HA"):
+        identifyL = pyregion.open(folder + '/'+ title +'1121.reg') #sn08ha
+        origcoord  = pyregion.open(folder + '/'+ title +'coord.reg')
+        save = []
+        badXL = []
+        badYL = []
+        fix  = []
+
+        for i in range(len(identifyL)):
+            if (pyregion.ShapeList(identifyL[i].attr[1].get("color"))  == ['y', 'e', 'l', 'l', 'o', 'w']):
+                fix.append(i)
+                #yellow is good
+                #cyan is bad
+
+        for i in range(len(fix)):
+            origcoord[fix[i]].attr[1]["color"] = 'yellow'
+
+        for i in range(len(origcoord)):
+            p1 = pyregion.ShapeList(origcoord[i].attr[1].get("color"))
+            if (p1[0] == 'c'):
+                save.append(i) 
+ 
+        for j in range(len(save)): 
+            badXL.append(origcoord[save[j]].coord_list[0] - 0.5)
+            badYL.append(origcoord[save[j]].coord_list[1] - 0.5)
+    
+        identify = pyregion.open(folder + '/'+ title +'1122.reg') #sn08ha
+        r = pyregion.open(folder + '/'+ title +'coord.reg')
+
 save = []
 badX = []
 badY = []
@@ -324,8 +354,6 @@ for j in range(len(save)):
     badX.append(r[save[j]].coord_list[0] - 0.5)
     badY.append(r[save[j]].coord_list[1] - 0.5)
 
-#identify.close()
-#r.close()
 ################################################### 
 ##### Find correct color magnitudes make cuts #####
 # hard contrains because the mean of the list 
@@ -337,41 +365,40 @@ print "Make final cuts..."
 #snr = []
 
 if (folder == "SN2008GE"):
-    sharpmax = 0.163
-    sharpmin = -.786
-    roundmax = 1.46
-    crowdmax = 1.2
+    sharpmax =  0.165
+    sharpmin = -0.786
+    roundmax =  1.8
+    crowdmax =  1.2
     #for m in range(3,6):
     #for i in range(len(radius)):
     cut435555.append(np.where((star <= 2)   & (crowd <= crowdmax ) 
-                & (sharp <= sharpmax) & (sharp >= sharpmin) 
+                #& (sharp <= sharpmax) 
+                & (sharp >= sharpmin) 
                 & (roond <= roundmax)
                 & ((snr435 > 0 ) & (snr555 > 0 )) 
-                & ((snr435 >= 3) & (snr555 >= 3))                 
+                & ((snr435 >= 3.5) & (snr555 >= 3.5))                 
                 & ((srp435 <= 3)  & (srp555 <= 3)  & (srp625 <= 3)  & (srp814 <= 3) 
                 & (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))  
-                #& ((snr435 <= 60) & (snr555 <= 60) & (snr625 <= 60) & (snr814 <= 60))
                 & ((f435mag <= 80) & (f555mag <= 80)) 
                 & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9))
                 & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= radius[0])               
-                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)   
+                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)  
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord)) ))
-    cut625814.append(np.where((star <= 2)   & (crowd <= crowdmax )  
+    cut625814.append(np.where((star <= 2) & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) & (sharp >= sharpmin) 
                 & (roond <= roundmax) 
                 & ((snr625 > 0 ) & (snr814 > 0 )) 
-                & ((snr625 >= 3) & (snr814 >= 3))              
+                & ((snr625 >= 3.5) & (snr814 >= 3.5))              
                 & ((srp435 <= 3)  & (srp555 <= 3)  & (srp625 <= 3)  & (srp814 <= 3) 
                 & (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))
-                #& ((snr435 <= 60) & (snr555 <= 60) & (snr625 <= 60) & (snr814 <= 60))
                 & ((f625mag <= 80) & (f814mag <= 80))
                 & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9)) 
-                & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= radius[0])               
-                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)     
+                & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= radius[0])  
+                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
             #rad.append(i)
             #snr.append(m)            
-else:    
+elif (folder == "SN2008HA"):    
     sharpmax = .55
     sharpmin = -.44
     roundmax = 2.7
@@ -382,7 +409,7 @@ else:
                 & ((snr435 >= 3) & (snr555 >= 3))  
                 & ((f435mag <= 90) & (f555mag <= 90))                 
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0])   #))   
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord)) ))
+                & list(np.any(x not in badXL for x in xcoord) and np.any(y not in badYL for y in ycoord)) ))
     cut625814.append(np.where((star <= 2) & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) & (sharp >= sharpmin)
                 & (roond <= roundmax) 
@@ -397,23 +424,23 @@ sn1 = []
 sn2 = []
 sn3 = []
 sn4 = []
-sn1 = np.where((star <= 2) & (snr435 == 3.0) &
-        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 50))  
+sn1 = np.where((star <= 2) & (snr435 == 3.5) &
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))  
 print "Mean f435w Abs Mag at S/N = 3 : ", np.mean(f435Abs[sn1])  
 #print f435Abs[sn1]
 
-sn2 = np.where((star <= 2) & (snr555 == 3.0) &
-        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 50)) 
+sn2 = np.where((star <= 2) & (snr555 == 3.5) &
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)) 
 print "Mean f555w Abs Mag at S/N = 3 : ", np.mean(f555Abs[sn2])
 #print f555Abs[sn2]
 
-sn3 = np.where((star <= 2) & (snr625 == 3.0) &
-        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 50))  
+sn3 = np.where((star <= 2) & (snr625 == 3.5) &
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))  
 print "Mean f625w Abs Mag at S/N = 3 : ", np.mean(f625Abs[sn3])
 #print f625Abs[sn3]
 
-sn4 = np.where((star <= 2) & (snr814 == 3.0) &
-        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 50)) 
+sn4 = np.where((star <= 2) & (snr814 == 3.5) &
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)) 
 print "Mean f814w Abs Mag at S/N = 3 : ", np.mean(f814Abs[sn4])
 #print f814Abs[sn4]
 print "Applying contrains to SN Data..."
@@ -442,8 +469,8 @@ snr625_814.append(( f625Abs[cut625814[0]],f814Abs[cut625814[0]],
                     (((xsn - xcoord[cut625814[0]])**2 + (ysn - ycoord[cut625814[0]])**2)**.5),
                     ))
                     
-pickle.dump( snr435_555[0], open(folder + '/' + title + 'f435f5552.p', "wb" ) )
-pickle.dump( snr625_814[0], open(folder + '/' + title + 'f625f8142.p', "wb" ) )
+pickle.dump( snr435_555[0], open(folder + '/' + title + 'f435f555.p', "wb" ) )
+pickle.dump( snr625_814[0], open(folder + '/' + title + 'f625f814.p', "wb" ) )
 
 """
 for n in range(len(cut435555)):

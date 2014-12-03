@@ -43,7 +43,7 @@ snt        = 3
 snb        = 3
 #####################################################################
 
-name = 'Z0170Y26.dat' #'Z0001Y26.dat'
+name = 'Z0010Y26.dat' #'Z0001Y26.dat'
 
 d = []
 d.append(np.loadtxt('Metallicity/'+name))
@@ -68,15 +68,15 @@ F814W  = d[:,:,16]
 ## CHOOSE AGE TO BE PLOTTED 
 #####################################################################
 
-IsoAge = 7.46# 7.0 7.76 7.73
+IsoAge = 7.40
 age    = np.where(logAGE == IsoAge)
 #print np.shape(age)
 
 #####################################################################
-radius1   = [50,100,150,175,200]#[50,75,100,125,150]#[10,25,50,75,100]#[10,17,23,34,50]#
-radius2   = [50,100,150,175,200]#[50,75,100,125,150]#[10,25,50,75,100]#[10,17,23,34,50]#
+radius1   = [50,150,200]
+radius2   = [50,150,200]
 dist      = 17.95e7
-conver    = (2.5*math.pi)/(50.0*3600*180)
+conver    = (4.35)#(2.5*math.pi)/(50.0*3600*180)
 f435f555  = []
 f625f814  = []
 Abs435 = [] 
@@ -129,14 +129,14 @@ Radr   = f625f814[0][8]
 s0 = np.where(Radl <= radius1[0])
 s1 = np.where(Radl <= radius1[1])
 s2 = np.where(Radl <= radius1[2])
-s3 = np.where(Radl <= radius1[3])
-s4 = np.where(Radl <= radius1[4])
+#s3 = np.where(Radl <= radius1[3])
+#s4 = np.where(Radl <= radius1[4])
 
 r0 = np.where(Radr <= radius2[0])
 r1 = np.where(Radr <= radius2[1])
 r2 = np.where(Radr <= radius2[2])
-r3 = np.where(Radr <= radius2[3])
-r4 = np.where(Radr <= radius2[4])
+#r3 = np.where(Radr <= radius2[3])
+#r4 = np.where(Radr <= radius2[4])
 
 ###########################################################################
 print "Begin plotting Isochrones..."
@@ -146,7 +146,7 @@ gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
 
 #fig1.suptitle('CMD for SN 2008ge',fontdict = font, size=15)
 
-fig1.suptitle(title + ': CMD for Z = 0.' + name[1:-7] + ', Y = 0.' + name[6:-4] + ' S/N >= 3',
+fig1.suptitle(title + ': CMD for Z = 0.' + name[1:-7] + ', Y = 0.' + name[6:-4] + ' S/N >= 3.5',
           fontdict = font, size=15)
 ###########################################################################
 c1plt = plt.subplot2grid((2,2), (0,0), rowspan = 2)
@@ -160,8 +160,8 @@ plt.ylabel("M$_{F555W}$ (mag)",fontdict = font)
 #c1plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
-#c1plt.plot(np.subtract(F435W[age],  F555W[age]),  F555W[age],  
-#           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
+c1plt.plot(np.subtract(F435W[age],  F555W[age]),  F555W[age],  
+           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
 
 #plt.annotate('', xy=(1.992,-6.1), xycoords = 'data', #(Top of the arrow)
 #             xytext = (2, -3.5), textcoords = 'data', # End of the arrow
@@ -176,29 +176,29 @@ c1plt.scatter(np.subtract(Apn435[s4],   Apn555[s4]),
                Abs555[s4], label = 'R = ' + str(round(dist*(math.tan(radius1[4]*conver)),-2)) + " AU",
                c='k',marker='d')
 """
-c1plt.errorbar(np.subtract(Apn435[s3],   Apn555[s3]),   
-               Abs555[s3], UncXl[s3],   UncYl[s3], 
-               fmt=None, ecolor="r", marker=None, mew=0 )
-c1plt.scatter(np.subtract(Apn435[s3],   Apn555[s3]),
-               Abs555[s3], label = 'R = ' + str(round(dist*(math.tan(radius1[3]*conver)),-2))+ " AU",
-               c='r',marker='d')       
-c1plt.errorbar(np.subtract(Apn435[s2],   Apn555[s2]),   
-               Abs555[s2], UncXl[s2],   UncYl[s2], 
-               fmt=None, ecolor="g", marker=None, mew=0 )
+#c1plt.errorbar(np.subtract(Apn435[s3],   Apn555[s3]),   
+#               Abs555[s3], UncXl[s3],   UncYl[s3], 
+               #fmt=None, ecolor="r", marker=None, mew=0 )
+#c1plt.scatter(np.subtract(Apn435[s3],   Apn555[s3]),
+               #Abs555[s3], label = 'R = ' + str(round(dist*(math.tan(radius1[3]*conver)),-2))+ " AU",
+               #c='r',marker='d')       
+#c1plt.errorbar(np.subtract(Apn435[s2],   Apn555[s2]),   
+               #Abs555[s2], UncXl[s2],   UncYl[s2], 
+               #fmt=None, ecolor="g", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s2],   Apn555[s2]),
-               Abs555[s2], label = 'R = ' + str(round(dist*(math.tan(radius1[2]*conver)),-2)) + " AU",
-               c='g',marker='d')           
-c1plt.errorbar(np.subtract(Apn435[s1],   Apn555[s1]),   
-               Abs555[s1], UncXl[s1],   UncYl[s1], 
-               fmt=None, ecolor="b", marker=None, mew=0 )
+               Abs555[s2], label = 'R = ' + str(round(radius1[2]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius1[2]*conver)),-2)) + " AU",
+               c='r',marker='d')           
+#c1plt.errorbar(np.subtract(Apn435[s1],   Apn555[s1]),   
+               #Abs555[s1], UncXl[s1],   UncYl[s1], 
+               #fmt=None, ecolor="b", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s1],   Apn555[s1]),
-               Abs555[s1], label = 'R = ' + str(round(dist*(math.tan(radius1[1]*conver)),-2)) + " AU",
-               c='b',marker='d') 
+               Abs555[s1], label = 'R = ' + str(round(radius1[1]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius1[1]*conver)),-2)) + " AU",
+               c='y',marker='d') 
 c1plt.errorbar(np.subtract(Apn435[s0],   Apn555[s0]),   
                Abs555[s0], UncXl[s0],   UncYl[s0], 
                fmt=None, ecolor="c", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s0],   Apn555[s0]),
-               Abs555[s0], label = 'R = ' + str(round(dist*(math.tan(radius1[0]*conver)),-2)) + " AU",
+               Abs555[s0], label = 'R = ' + str(round(radius1[0]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius1[0]*conver)),-2)) + " AU",
                c='c',marker='d')   
 """
 c1plt.annotate(str(0), xy=(np.subtract(Apn435[s4][0], Apn555[s4][0]),Abs555[s4][0]), 
@@ -238,10 +238,12 @@ plt.ylabel("M$_{F814W}$ (mag)",fontdict = font)
 
 #c2plt.yaxis.set_major_locator(MultipleLocator(.5))
 
-###########################################################################
-#c2plt.plot(np.subtract(F625W[age],  F814W[age]),  F814W[age],  
-#           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
-                              
+
+c2plt.plot(np.subtract(F625W[age],  F814W[age]),  F814W[age],  
+           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
+   
+
+###########################################################################                         
 #plt.annotate('', xy=(1.99,-6), xycoords = 'data',
 #             xytext = (2, -3.5), textcoords = 'data',
 #                arrowprops = {'arrowstyle':'->'})
@@ -255,29 +257,29 @@ c2plt.scatter(np.subtract(Apn625[r4],   Apn814[r4]),
                Abs814[r4], label = 'R = ' + str(round(dist*(math.tan(radius2[4]*conver)),-2)) + " AU",
                c='k',marker='d')
 """
-c2plt.errorbar(np.subtract(Apn625[r3],   Apn814[r3]),   
-               Abs814[r3], UncXr[r3],   UncYr[r3], 
-               fmt=None, ecolor="r", marker=None, mew=0 )
-c2plt.scatter(np.subtract(Apn625[r3],   Apn814[r3]),
-               Abs814[r3], label = 'R = ' + str(round(dist*(math.tan(radius2[3]*conver)),-2)) + " AU",
-               c='r',marker='d')       
-c2plt.errorbar(np.subtract(Apn625[r2],   Apn814[r2]),   
-               Abs814[r2], UncXr[r2],   UncYr[r2], 
-               fmt=None, ecolor="g", marker=None, mew=0 )
+#c2plt.errorbar(np.subtract(Apn625[r3],   Apn814[r3]),   
+               #Abs814[r3], UncXr[r3],   UncYr[r3], 
+               #fmt=None, ecolor="r", marker=None, mew=0 )
+#c2plt.scatter(np.subtract(Apn625[r3],   Apn814[r3]),
+               #Abs814[r3], label = 'R = ' + str(round(dist*(math.tan(radius2[3]*conver)),-2)) + " AU",
+               #c='r',marker='d')       
+#c2plt.errorbar(np.subtract(Apn625[r2],   Apn814[r2]),   
+               #Abs814[r2], UncXr[r2],   UncYr[r2], 
+               #fmt=None, ecolor="g", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r2],   Apn814[r2]),
-               Abs814[r2], label = 'R = ' + str(round(dist*(math.tan(radius2[2]*conver)),-2)) + " AU",
-               c='g',marker='d')           
-c2plt.errorbar(np.subtract(Apn625[r1],   Apn814[r1]),   
-               Abs814[r1], UncXr[r1],   UncYr[r1], 
-               fmt=None, ecolor="b", marker=None, mew=0 )
+               Abs814[r2], label = 'R = ' + str(round(radius2[2]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius2[2]*conver)),-2)) + " AU",
+               c='r',marker='d')           
+#c2plt.errorbar(np.subtract(Apn625[r1],   Apn814[r1]),   
+               #Abs814[r1], UncXr[r1],   UncYr[r1], 
+               #fmt=None, ecolor="b", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r1],   Apn814[r1]),
-               Abs814[r1], label = 'R = ' + str(round(dist*(math.tan(radius2[1]*conver)),-2)) + " AU",
-               c='b',marker='d') 
+               Abs814[r1], label = 'R = ' + str(round(radius2[1]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius2[1]*conver)),-2)) + " AU",
+               c='y',marker='d') 
 c2plt.errorbar(np.subtract(Apn625[r0],   Apn814[r0]),   
                Abs814[r0], UncXr[r0],   UncYr[r0], 
                fmt=None, ecolor="c", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r0],   Apn814[r0]),
-               Abs814[r0], label = 'R = ' + str(round(dist*(math.tan(radius2[0]*conver)),-2)) + " AU",
+               Abs814[r0], label = 'R = ' + str(round(radius2[0]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius2[0]*conver)),-2)) + " AU",
                c='c',marker='d')                        
 
 #for k in range(len(Apn814[r4])):
@@ -287,10 +289,10 @@ c2plt.scatter(np.subtract(Apn625[r0],   Apn814[r0]),
 #                )
    
 ###########################################################################
-sn435 = -3.93
-sn555 = -4.41
-sn625 = -4.96
-sn814 = -5.05
+sn435 = -4.17#-3.93
+sn555 = -4.56#-4.41
+sn625 = -5.03#-4.96
+sn814 = -5.2#-5.05
 #############
 s1 = -1 
 b1 = -4.0
@@ -340,6 +342,6 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'we'+ '.png'
+figname = title + '_' + 'we6'+ '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname
