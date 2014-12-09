@@ -50,9 +50,9 @@ class Star:
 #####################################################################
 ########################### PICK THE SN!! ###########################
 #####################################################################
-title = 'SN08ha'
+#title = 'SN08ha'
 #title = 'SN10ae'
-#title = 'SN10el'
+title = 'SN10el'
 
 # Set the plotted point S/N parameters
 start      = 0 # start = 0 starts at S/N 3
@@ -63,13 +63,10 @@ snb        = 3
 
 if (title == 'SN08ha'):
     name = 'Z0046Y26.dat'
-    #name = 'Z0384Y26.dat'
 elif (title == 'SN10ae'):
     name = 'Z0073Y26.dat'
-    #name = 'Z0321Y26.dat'
 elif (title == 'SN10el'):
     name = 'Z0170Y26.dat'
-    #name = 'Z0217Y26.dat'
 
 d = []
 d.append(np.loadtxt('Metallicity/'+name))
@@ -106,10 +103,18 @@ age774  = np.where((logAGE == 7.74))
 age775  = np.where((logAGE == 7.75))
 age776  = np.where((logAGE == 7.76))
 age777  = np.where((logAGE == 7.77))
+age778  = np.where((logAGE == 7.78))
 age78   = np.where((logAGE == 7.8))
+age781  = np.where((logAGE == 7.81))
+age782  = np.where((logAGE == 7.82))
+age783  = np.where((logAGE == 7.83))
+age784  = np.where((logAGE == 7.84))
 age785  = np.where((logAGE == 7.85))
+age786  = np.where((logAGE == 7.86))
+age787  = np.where((logAGE == 7.87))
+age788  = np.where((logAGE == 7.88))
+age789  = np.where((logAGE == 7.89))
 age79   = np.where((logAGE == 7.9))
-age80   = np.where((logAGE == 8.0))
     
 #####################################################################
 
@@ -137,10 +142,15 @@ if (title == 'SN08ha'):
     radius     = [15,30,45]#[9.282,15.469,20.63,30.94,45] #[450,750,1000,1500,2200] 
     dist       = 20e7
     conver     = (5) #(2.5*math.pi)/(50.0*3600*180)
-    yLmax    = -3.5
-    yLmin    = -6.5
-    yRmax    = -3.5
-    yRmin    = -7.0
+    yLmax      = -3.5
+    yLmin      = -6.5
+    yRmax      = -3.5
+    yRmin      = -7.0
+    xLmax    = -0.75
+    xLmin    =  2.0
+    xRmax    = -0.75
+    xRmin    =  2.0
+    
     #Mean f435w Abs Mag at S/N = 3 :  -4.0062
     #Mean f555w Abs Mag at S/N = 3 :  -4.36564102564
     #Mean f625w Abs Mag at S/N = 3 :  -4.37502222222
@@ -152,31 +162,42 @@ if (title == 'SN08ha'):
 ###############################################################################
 
 elif (title == 'SN10ae'):
-    radius     = [14.171,23.62,31.50,47.236,67.295]  # 450,750,1000,1500,2200
+    radius     = [25,50,100]#[8,12,18]  # 450,750,1000,1500,2200
     dist       = 13.1e7
-    conver     = (2.5*math.pi)/(50.0*3600*180)
-    yLmax    = -2.5
-    yLmin    = -7.0
-    yRmax    = -3.0
-    yRmin    = -7.5
+    conver     = (63.52) #(2.5*math.pi)/(50.0*3600*180)
+    yLmax      = -3.5
+    yLmin      = -8.5
+    yRmax      = -4.5
+    yRmin      = -7.0
+    xLmax      = -0.75
+    xLmin      =  2.0
+    xRmax      = -0.75
+    xRmin      =  2.0
+    
     #ytopmax    = -4.5
     #ytopmin    = -8.0
     #ybotmax    = -4.0
     #ybotmin    = -8.5
     
     for i in range(3,6):
-        f435f555.append(pickle.load(open('SN2010AE/sn2010ae_f435f555.p', 'rb')))    
-        f625f814.append(pickle.load(open('SN2010AE/sn2010ae_f625f814.p', 'rb')))    
+        f435f555.append(pickle.load(open('SN2010AE/sn2010ae.f435f555.p', 'rb')))    
+        f625f814.append(pickle.load(open('SN2010AE/sn2010ae.f625f814.p', 'rb')))    
 
 elif (title == 'SN10el'):
-    radius     = [18.62,31.03,41.38,62.065,91.0287] # 450,750,1000,1500,2200
+    radius     = [10,15,20]  # 450,750,1000,1500,2200
     dist       = 9.97e7
-    conver     = (2.5*math.pi)/(50.0*3600*180)
+    conver     = (48.33) #(2.5*math.pi)/(50.0*3600*180)
     title      = 'SN10el'
-    ytopmax    = -1.5
-    ytopmin    = -6.0
-    ybotmax    = -2.0
-    ybotmin    = -6.3
+    yLmax    = -2.0
+    yLmin    = -5.5
+    yRmax    = -2.0
+    yRmin    = -5.5
+    
+    xLmax    = -0.5
+    xLmin    =  2.0
+    xRmax    = -1
+    xRmin    =  1.8
+    
 
     #ytopmax    = 0.0
     #ytopmin    = -9.0
@@ -184,8 +205,8 @@ elif (title == 'SN10el'):
     #ybotmin    = -9.0
 
     for i in range(3,6):
-        f435f555.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_rad0.p', 'rb')))    
-        f625f814.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_rad0.p', 'rb')))    
+        f435f555.append(pickle.load(open('SN2010EL/sn2010el.f435f555.p', 'rb')))    
+        f625f814.append(pickle.load(open('SN2010EL/sn2010el.f625f814.p', 'rb')))    
  
         #f435f555.append(pickle.load(open('SN2010EL/sn2010el_f435f555_sn'+ str(i) +'_red_rad0.p', 'rb')))    
         #f625f814.append(pickle.load(open('SN2010EL/sn2010el_f625f814_sn'+ str(i) +'_red_rad0.p', 'rb')))    
@@ -252,7 +273,7 @@ h = [2, 4] # height of the plotted figure
 fig1 = plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
 gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
 
-fig1.suptitle(title + ': CMD for Z = 0.' + name[1:-7] + ', Y = 0.' + name[6:-4] + ' S/N >= 3',
+fig1.suptitle(title + ': CMD for Z = 0.' + name[1:-7] + ', Y = 0.' + name[6:-4] + ' S/N >= 10',
           fontdict = font, size=15)
 
 
@@ -317,21 +338,39 @@ elif (title == 'SN10ae'):
     c1plt.plot(np.subtract(F435W[age75],  F555W[age75]),  F555W[age75],  
            'c-.', label = 'Age = 10$^{7.5}$ yrs')
     #c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
-    #       'r--', label = 'Age = 10$^{7.6}$ yrs') 
+           #'r--', label = 'Age = 10$^{7.6}$ yrs') 
+    #c1plt.plot(np.subtract(F435W[age765], F555W[age765]), F555W[age765],  
+           #'g-' , label = 'Age = 10$^{7.65}$ yrs')
     #c1plt.plot(np.subtract(F435W[age77],  F555W[age77]),  F555W[age77],  
-    #       'y-' , label = 'Age = 10$^{7.7}$ yrs')
+           #'y-' , label = 'Age = 10$^{7.7}$ yrs')
     #c1plt.plot(np.subtract(F435W[age774], F555W[age774]), F555W[age774],  
     #       'g:' , label = 'Age = 10$^{7.74}$ yrs')
 elif (title == 'SN10el'):  
     #plt.annotate('A${_v}}$ = ' + str(A435555), xy=(0.5, -6.5), xytext=(1.1, -5.0),
     #         arrowprops=dict(arrowstyle="->",
     #                        connectionstyle="arc3"),)
-    plt.annotate('', xy=(1.062, -5.717), xycoords = 'data',
-    xytext = (1.8, -3.2), textcoords = 'data',
-    arrowprops = {'arrowstyle':'->'})
-    plt.annotate('A${_v}}$ = 3.4105', xy=(0.2,-5.5), xycoords = 'data',
-    xytext = (2, 3), textcoords = 'offset points')
     
+    plt.annotate('', xy=(.9, -5.217), xycoords = 'data',
+                 xytext = (1.638, -2.7), textcoords = 'data',
+                    arrowprops = {'arrowstyle':'->'})
+    plt.annotate('A${_v}}$ = 3.4105', xy=(0.2,-5.2), xycoords = 'data',
+                 xytext = (2, 3), textcoords = 'offset points')
+    #c1plt.plot(np.subtract(F435W[age783], F555W[age783]), F555W[age783],  
+    #       'g--', label = 'Age = 10$^{7.83}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age784], F555W[age784]), F555W[age784],  
+    #       'b--' , label = 'Age = 10$^{7.84}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age785], F555W[age785]), F555W[age785],  
+    #       'm--' , label = 'Age = 10$^{7.85}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age786], F555W[age786]), F555W[age786],  
+    #       'r--' , label = 'Age = 10$^{7.86}$ yrs')
+    c1plt.plot(np.subtract(F435W[age787], F555W[age787]), F555W[age787],  
+           'b--' , label = 'Age = 10$^{7.87}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age788], F555W[age788]), F555W[age788],  
+    #       'g--', label = 'Age = 10$^{7.88}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age789], F555W[age789]), F555W[age789],  
+    #       'b--' , label = 'Age = 10$^{7.89}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age79], F555W[age79]), F555W[age79],  
+    #       'm--' , label = 'Age = 10$^{7.9}$ yrs')
     #c1plt.plot(np.subtract(F435W[age70],  F555W[age70]),  F555W[age70],  
     #       'r--', label = 'Age = 10$^{7.0}$ yrs')
     #c1plt.plot(np.subtract(F435W[age71],  F555W[age71]),  F555W[age71],  
@@ -350,8 +389,14 @@ elif (title == 'SN10el'):
     #       'y-' , label = 'Age = 10$^{7.7}$ yrs')
     #c1plt.plot(np.subtract(F435W[age78],  F555W[age78]),  F555W[age78],  
     #       'g:' , label = 'Age = 10$^{7.8}$ yrs')
-    c1plt.plot(np.subtract(F435W[age785], F555W[age785]), F555W[age785],  
-           'r--' , label = 'Age = 10$^{7.85}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
+    #       'r--', label = 'Age = 10$^{7.6}$ yrs') 
+    #c1plt.plot(np.subtract(F435W[age785], F555W[age785]), F555W[age785],  
+           #'g--' , label = 'Age = 10$^{7.85}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age77],  F555W[age77]),  F555W[age77],  
+    #       'y-' , label = 'Age = 10$^{7.7}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age785], F555W[age785]), F555W[age785],  
+           #'r--' , label = 'Age = 10$^{7.85}$ yrs')
     #c1plt.plot(np.subtract(F435W[age79],  F555W[age79]),  F555W[age79],  
     #       'c-.', label = 'Age = 10$^{7.9}$ yrs') 
     #c1plt.plot(np.subtract(F435W[age80],  F555W[age80]),  F555W[age80],  
@@ -377,19 +422,19 @@ elif (title == 'SN10el'):
 #               Abs555[s2], UncXl[s2],   UncYl[s2], 
 #               fmt=None, ecolor="g", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s2],   Apn555[s2]),
-               Abs555[s2], label = 'R = ' + str(round(radius[2]*conver)) + " pc" ,#str(round(dist*(math.tan(radius[2]*conver)),-2)) + " AU",
+               Abs555[s2], label = 'R = ' + str(round(radius[2]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius[2]*conver)),-2)) + " AU",
                c='r',marker='d')           
 #c1plt.errorbar(np.subtract(Apn435[s1],   Apn555[s1]),   
                #Abs555[s1], UncXl[s1],   UncYl[s1], 
                #fmt=None, ecolor="b", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s1],   Apn555[s1]),
-               Abs555[s1], label = 'R = ' + str(round(radius[1]*conver)) + " pc" ,#str(round(dist*(math.tan(radius[1]*conver)),-2)) + " AU",
+               Abs555[s1], label = 'R = ' + str(round(radius[1]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius[1]*conver)),-2)) + " AU",
                c='y',marker='d') 
 c1plt.errorbar(np.subtract(Apn435[s0],   Apn555[s0]),   
                Abs555[s0], UncXl[s0],   UncYl[s0], 
                fmt=None, ecolor="c", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s0],   Apn555[s0]),
-               Abs555[s0], label = 'R = ' + str(round(radius[0]*conver))  + " pc" ,#str(round(dist*(math.tan(radius[0]*conver)),-2))+ " AU",
+               Abs555[s0], label = 'R = ' + str(round(radius[0]*conver,-1))  + " pc" ,#str(round(dist*(math.tan(radius[0]*conver)),-2))+ " AU",
                c='c',marker='d')   
 
 
@@ -422,7 +467,6 @@ c2plt.yaxis.set_major_locator(MultipleLocator(.5))
 ###########################################################################
 #c2plt.plot(np.subtract(F625W[age70],  F814W[age70]),  F814W[age70],  
 #           'r--', label = 'Age = 10$^{7.0}$ yrs')
-
 if (title == 'SN08ha'):   
     #plt.annotate('', xy=(1.216, -5.48), xycoords = 'data', #(Top of the arrow)
     #xytext = (1.0, -5), textcoords = 'data', # End of the arrow
@@ -477,11 +521,12 @@ elif (title == 'SN10el'):
     #plt.annotate('A${_v}}$ = ' + str(A625814) , xy=(0.5, -7.0), xytext=(1.1, -5.5),
     #         arrowprops=dict(arrowstyle="->",
     #                        connectionstyle="arc3"),)
-    plt.annotate('', xy=(1.375, -5.376), xycoords = 'data',
-    xytext = (2.0, -4), textcoords = 'data',
-    arrowprops = {'arrowstyle':'->'})
-    plt.annotate('A${_v}}$ = 2.2016', xy=(1.2,-3.8), xycoords = 'data',
-    xytext = (2, 3), textcoords = 'offset points')
+    
+    plt.annotate('', xy=(.8, -5.376), xycoords = 'data',
+                 xytext = (1.425, -4), textcoords = 'data',
+                    arrowprops = {'arrowstyle':'->'})
+    plt.annotate('A${_v}}$ = 2.2016', xy=(.9,-3.8), xycoords = 'data',
+                 xytext = (2, 3), textcoords = 'offset points')
     #c2plt.plot(np.subtract(F625W[age70],  F814W[age70]),  F814W[age70],  
     #       'r--', label = 'Age = 10$^{7.0}$ yrs')
     #c2plt.plot(np.subtract(F625W[age71],  F814W[age71]),  F814W[age71],  
@@ -496,17 +541,30 @@ elif (title == 'SN10el'):
     #       'c-.', label = 'Age = 10$^{7.5}$ yrs')
     #c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],  
     #       'r--', label = 'Age = 10$^{7.6}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age783], F814W[age783]), F814W[age783],  
+    #       'g--', label = 'Age = 10$^{7.83}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age784], F814W[age784]), F814W[age784],  
+    #       'b--' , label = 'Age = 10$^{7.84}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age785], F814W[age785]), F814W[age785],  
+    #       'm--' , label = 'Age = 10$^{7.85}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age786], F814W[age786]), F814W[age786],  
+    #       'r--' , label = 'Age = 10$^{7.86}$ yrs')
+    c2plt.plot(np.subtract(F625W[age787], F814W[age787]), F814W[age787],  
+           'b--' , label = 'Age = 10$^{7.87}$ yrs')    
+    #c2plt.plot(np.subtract(F625W[age788], F814W[age788]), F814W[age788],  
+    #       'g--', label = 'Age = 10$^{7.88}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age789], F814W[age789]), F814W[age789],  
+    #       'b--' , label = 'Age = 10$^{7.89}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age79], F814W[age79]), F814W[age79],  
+    #       'm--' , label = 'Age = 10$^{7.9}$ yrs')
     #c2plt.plot(np.subtract(F625W[age77],  F814W[age77]),  F814W[age77],  
     #       'y-' , label = 'Age = 10$^{7.7}$ yrs')
     #c2plt.plot(np.subtract(F625W[age78],  F814W[age78]),  F814W[age78],  
     #       'g:' , label = 'Age = 10$^{7.8}$ yrs')
-    c2plt.plot(np.subtract(F625W[age785], F814W[age785]), F814W[age785],  
-           'r--' , label = 'Age = 10$^{7.85}$ yrs')
     #c2plt.plot(np.subtract(F625W[age79],  F814W[age79]),  F814W[age79],  
     #       'c-.', label = 'Age = 10$^{7.9}$ yrs') 
     #c2plt.plot(np.subtract(F625W[age80],  F814W[age80]),  F814W[age80],  
     #       'b:' , label = 'Age = 10$^{8.0}$ yrs')  
-
 ###########################################################################
 #c2plt.scatter(np.subtract(f625f814_4[0][0][overlapR],   f625f814_4[0][1][overlapR]),
 #              f625f814_4[0][1][overlapR],label = "Shared Points",  
@@ -528,26 +586,38 @@ elif (title == 'SN10el'):
 #               Abs814[r2], UncXr[r2],   UncYr[r2], 
 #               fmt=None, ecolor="g", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r2],   Apn814[r2]),
-               Abs814[r2], label = 'R = ' + str(round(radius[2]*conver)) + " pc" ,#str(round(dist*(math.tan(radius[2]*conver)),-2)) + " AU",
+               Abs814[r2], label = 'R = ' + str(round(radius[2]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius[2]*conver)),-2)) + " AU",
                c='r',marker='d')           
 #c2plt.errorbar(np.subtract(Apn625[r1],   Apn814[r1]),   
                #Abs814[r1], UncXr[r1],   UncYr[r1], 
                #fmt=None, ecolor="b", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r1],   Apn814[r1]),
-               Abs814[r1], label = 'R = ' + str(round(radius[1]*conver)) + " pc" ,#str(round(dist*(math.tan(radius[1]*conver)),-2)) + " AU",
+               Abs814[r1], label = 'R = ' + str(round(radius[1]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius[1]*conver)),-2)) + " AU",
                c='y',marker='d') 
 c2plt.errorbar(np.subtract(Apn625[r0],   Apn814[r0]),   
                Abs814[r0], UncXr[r0],   UncYr[r0], 
                fmt=None, ecolor="c", marker=None, mew=0 )
 c2plt.scatter(np.subtract(Apn625[r0],   Apn814[r0]),
-               Abs814[r0], label = 'R = ' + str(round(radius[0]*conver)) + " pc" ,#str(round(dist*(math.tan(radius[0]*conver)),-2)) + " AU",
+               Abs814[r0], label = 'R = ' + str(round(radius[0]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius[0]*conver)),-2)) + " AU",
                c='c',marker='d')                        
 
 ###########################################################################
-sn435 = -4.04
-sn555 = -4.5
-sn625 = -4.3
-sn814 = -4.5
+
+if (title == 'SN08ha'): 
+    sn435 = -4.04
+    sn555 = -4.5
+    sn625 = -4.3
+    sn814 = -4.5
+elif (title == 'SN10ae'):
+    sn435 = -3.52
+    sn555 = -3.78
+    sn625 = -4.11
+    sn814 = -4
+elif (title == 'SN10el'):
+    sn435 = -2.03
+    sn555 = -2.64
+    sn625 = -3.05
+    sn814 = -2.83
 #############
 s1 = -1 
 b1 = -4.0
@@ -555,8 +625,6 @@ x2 = 3
 y1 = (s1*x2) + b1
 x1 = sn435 - sn555 #.48# np.subtract(horz1,b1)/s1
 
-
-#sn555 = -4.6
 ptsR = np.array([[-3,yLmax],
                  [-3,sn555],
                  [x1,sn555], #need the x value
@@ -572,8 +640,6 @@ x4 = 3
 y4 = (s4*x4) + b4
 x3 = sn625 - sn814  #.1#np.subtract(horz,b4)/s4
 
-
-#sn814 = -4.6
 pts = np.array([[-3,yRmax],
                 [-3,sn814],
                 [x3,sn814], 
@@ -582,19 +648,20 @@ pts = np.array([[-3,yRmax],
 poly = Polygon(pts, color='grey', alpha=0.15,closed = True)
 
 c2plt.add_patch(poly)
+
 ###########################################################################
 l = plt.legend(prop = {'family' : 'serif'},loc=4)
 l.draw_frame(False)
 ########################################################################### 
 c1plt.set_ylim(bottom=yLmax, top=yLmin)
-c1plt.set_xlim(-.75,2.0)
+c1plt.set_xlim(xLmax,xLmin)
 c2plt.set_ylim(bottom=yRmax, top=yRmin)  
-c2plt.set_xlim(-.75,2.0)
+c2plt.set_xlim(xRmax,xRmin)
 ########################################################################### 
 plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'Final' + '.png'
+figname = title + '_' + 'region' + '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname

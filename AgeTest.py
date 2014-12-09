@@ -11,7 +11,7 @@ from   itertools import izip
 import pickle
 #####################################################################
 ########################### PICK THE SN!! ###########################
-title = 'SN08ge'
+title = 'SN10el'
 #title = 'SN08ha'
 #####################################################################
 
@@ -22,7 +22,9 @@ if (title == 'SN08ha'):
 elif (title == 'SN08ge'): 
     name = 'Z0170Y26.dat'
     radius = [2200,4400,6500,7600,8700]
-    
+elif (title == 'SN10el'): 
+    name = 'Z0170Y26.dat'
+   
 d = []
 d.append(np.loadtxt('Metallicity/'+name))
 d = np.array(d)
@@ -96,16 +98,24 @@ age777  = np.where((logAGE == 7.77))
 age778  = np.where((logAGE == 7.78))
 age779  = np.where((logAGE == 7.79))
 age78   = np.where((logAGE == 7.8))
+age781  = np.where((logAGE == 7.81))
+age782  = np.where((logAGE == 7.82))
+age783  = np.where((logAGE == 7.83))
+age784  = np.where((logAGE == 7.84))
 age785  = np.where((logAGE == 7.85))
+age786  = np.where((logAGE == 7.86))
+age787  = np.where((logAGE == 7.87))
+age788  = np.where((logAGE == 7.88))
+age789  = np.where((logAGE == 7.89))
 age79   = np.where((logAGE == 7.9))
-age80   = np.where((logAGE == 8.0))
 
 age = []
-#age.append([age73,age731,age732,age733,age734,age735,age736,age737,age738,age739])
-age.append([age74,age741,age742,age743,age744,age745,age746,age747,age748,age749])
+age.append([age73,age731,age732,age733,age734,age735,age736,age737,age738,age739])
+#age.append([age74,age741,age742,age743,age744,age745,age746,age747,age748,age749])
 #age.append([age75,age751,age752,age753,age754,age755,age756,age757,age758,age759])
 #age.append([age76,age761,age762,age763,age774,age765,age766,age767,age768,age769])
 #age.append([age77,age771,age772,age773,age774,age775,age776,age777,age778,age779])
+#age.append([age78,age781,age782,age783,age784,age785,age786,age787,age788,age789])
 
 #####################################################################
 
@@ -115,21 +125,25 @@ f625f814 = []
 if (title == 'SN08ha'):
     for i in range(3,6):
         f435f555.append(pickle.load(open('SN2008HA/sn2008ha_f435f555.p', 'rb')))    
-        f625f814.append(pickle.load(open('SN2008HA/sn2008ha_f625f814.p', 'rb')))  
-elif (title == 'SN08ge'):
-        f435f555.append(pickle.load(open('SN2008GE/sn2008ge_f435f555.p', 'rb')))    
-        f625f814.append(pickle.load(open('SN2008GE/sn2008ge_f625f814.p', 'rb')))    
-
-ignoring1 = np.where((f435f555[0][8] != f435f555[0][8][0]) & 
+        f625f814.append(pickle.load(open('SN2008HA/sn2008ha_f625f814.p', 'rb'))) 
+        ignoring1 = np.where((f435f555[0][8] != f435f555[0][8][0]) & 
                   (f435f555[0][8] != f435f555[0][8][1]) &
                   (f435f555[0][8] != f435f555[0][8][2]) &
                   (f435f555[0][8] != f435f555[0][8][3]) )
-ignoring2 = np.where((f625f814[0][8] != f625f814[0][8][0]) & 
+        ignoring2 = np.where((f625f814[0][8] != f625f814[0][8][0]) & 
                   (f625f814[0][8] != f625f814[0][8][1]) &
                   (f625f814[0][8] != f625f814[0][8][2]) &
                   (f625f814[0][8] != f625f814[0][8][3]) )
-f435f555 = np.array(f435f555)
-f625f814 = np.array(f625f814)
+        f435f555 = np.array(f435f555)
+        f625f814 = np.array(f625f814) 
+elif (title == 'SN08ge'):
+        f435f555.append(pickle.load(open('SN2008GE/sn2008ge_f435f555.p', 'rb')))    
+        f625f814.append(pickle.load(open('SN2008GE/sn2008ge_f625f814.p', 'rb')))  
+elif (title == 'SN10el'):
+        f435f555.append(pickle.load(open('SN2010EL/sn2010el.f435f555.p', 'rb')))    
+        f625f814.append(pickle.load(open('SN2010EL/sn2010el.f625f814.p', 'rb')))     
+
+
 # np.take(f435f555[0][8], bright) useful if I only needed it once
 
 for agesInd in xrange(len(age[0])):
