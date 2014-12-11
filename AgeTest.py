@@ -11,8 +11,10 @@ from   itertools import izip
 import pickle
 #####################################################################
 ########################### PICK THE SN!! ###########################
-title = 'SN10el'
+#title = 'SN10el'
 #title = 'SN08ha'
+#title = 'SN10ae'
+title = 'SN08ge'
 #####################################################################
 
 if (title == 'SN08ha'):
@@ -20,10 +22,12 @@ if (title == 'SN08ha'):
     radius = [450,750,1000,1500,2200] 
     #name = 'Z0384Y26.dat'
 elif (title == 'SN08ge'): 
-    name = 'Z0170Y26.dat'
+    name = 'Z0200Y26.dat'
     radius = [2200,4400,6500,7600,8700]
 elif (title == 'SN10el'): 
     name = 'Z0170Y26.dat'
+elif (title == 'SN10ae'): 
+    name = 'Z0073Y26.dat'
    
 d = []
 d.append(np.loadtxt('Metallicity/'+name))
@@ -110,8 +114,8 @@ age789  = np.where((logAGE == 7.89))
 age79   = np.where((logAGE == 7.9))
 
 age = []
-age.append([age73,age731,age732,age733,age734,age735,age736,age737,age738,age739])
-#age.append([age74,age741,age742,age743,age744,age745,age746,age747,age748,age749])
+#age.append([age73,age731,age732,age733,age734,age735,age736,age737,age738,age739])
+age.append([age74,age741,age742,age743,age744,age745,age746,age747,age748,age749])
 #age.append([age75,age751,age752,age753,age754,age755,age756,age757,age758,age759])
 #age.append([age76,age761,age762,age763,age774,age765,age766,age767,age768,age769])
 #age.append([age77,age771,age772,age773,age774,age775,age776,age777,age778,age779])
@@ -142,8 +146,61 @@ elif (title == 'SN08ge'):
 elif (title == 'SN10el'):
         f435f555.append(pickle.load(open('SN2010EL/sn2010el.f435f555.p', 'rb')))    
         f625f814.append(pickle.load(open('SN2010EL/sn2010el.f625f814.p', 'rb')))     
+elif (title == 'SN10ae'):
+        f435f555.append(pickle.load(open('SN2010AE/sn2010ae.f435f555.p', 'rb')))    
+        f625f814.append(pickle.load(open('SN2010AE/sn2010ae.f625f814.p', 'rb')))     
 
+for agesInd in xrange(len(age[0])):
+    print "                "
+    print "Age 10^7.4" + str(agesInd)
+    print "F435W-F555W"
+    ClosInd = []
+    for sample in izip(np.subtract(f435f555[0][0],f435f555[0][1]), f435f555[0][1]):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]]]
+    comp_vals = func_vals[ClosInd]
+    print "Chi^2 of 10^7.4" + str(agesInd)
+    print stats.chisquare(np.c_[np.subtract(f435f555[0][0],f435f555[0][1]), f435f555[0][1]],comp_vals)
+   
+    
+    print "                "
+    print "F555W - F814W"
+    
+    ClosInd = []
+    for sample in izip(np.subtract(f625f814[0][0],f625f814[0][1]), f625f814[0][1]):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]]]
+    comp_vals = func_vals[ClosInd]
+    print "Chi^2 of 10^7.4" + str(agesInd)
+    print stats.chisquare(np.c_[np.subtract(f625f814[0][0],f625f814[0][1]), f625f814[0][1]],comp_vals)
 
+"""
+ignoring1 = np.where((f435f555[0][8] != f435f555[0][8][0]) & 
+                  (f435f555[0][8] != f435f555[0][8][1]) &
+                  (f435f555[0][8] != f435f555[0][8][2]) &
+                  (f435f555[0][8] != f435f555[0][8][3]) )
+ignoring2 = np.where((f625f814[0][8] != f625f814[0][8][0]) & 
+                  (f625f814[0][8] != f625f814[0][8][1]) &
+                  (f625f814[0][8] != f625f814[0][8][2]) &
+                  (f625f814[0][8] != f625f814[0][8][3]) )
+f435f555 = np.array(f435f555)
+f625f814 = np.array(f625f814)
 # np.take(f435f555[0][8], bright) useful if I only needed it once
 
 for agesInd in xrange(len(age[0])):
@@ -185,7 +242,7 @@ for agesInd in xrange(len(age[0])):
     comp_vals = func_vals[ClosInd]
     print "Chi^2 of 10^7.4" + str(agesInd)
     print stats.chisquare(np.c_[np.subtract(f625f814[0][0][ignoring2],f625f814[0][1][ignoring2]), f625f814[0][1][ignoring2]],comp_vals)
-        
+"""        
 ###############################################################################
 ###############################################################################
 ###############################################################################

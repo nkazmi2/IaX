@@ -97,8 +97,8 @@ def pcklfile(Name, title, bluecuts, redcuts,xsn,ysn,
                     (((xsn - xcoord[redcuts])**2 + (ysn - ycoord[redcuts])**2)**.5),
                     ))
                     
-    pickle.dump( snr435_555[0], open(Name + '/' + title + 'f435f555.p', "wb" ) )
-    pickle.dump( snr625_814[0], open(Name + '/' + title + 'f625f814.p', "wb" ) )
+    pickle.dump( snr435_555[0], open(Name + '/' + title + 'f435f555_test.p', "wb" ) )
+    pickle.dump( snr625_814[0], open(Name + '/' + title + 'f625f814_test.p', "wb" ) )
 
     print "Pickled."
 ################################################### 
@@ -106,30 +106,44 @@ def SNinfo(Name):
     ################################################### 
     ######### Things that change for each sn ##########
     ##################### 2008ge ######################
-        #[file,ACS435,ACS555,ACS625,ACS814,MW,Host,
+        #[file,
+        #ACS435,ACS555,ACS625,ACS814,
+        #MW,Host,
         #H435,H555,H625,H814,
-        #dmod,xsn,ysn,radius
-        #coordlist, good/bad source list
+        #dmod,xsn,ysn,radius,
+        #coordlist, good/bad source list,
         #sharpmax, sharpmin, round, crowd]
     Info = []
     if (Name == "SN2008GE"):
-        Info = ['sn2008ge_new.phot',0.046,0.036,0.028,0.020,
-                0.011,0.0,0,0,0,0,31.33,3247.539,3419.971,200,
+        Info = ['sn2008ge_new.phot', #0
+                0.046,0.036,0.028,0.020,
+                0.011,0.0,
+                0,0,0,0,
+                31.33,3247.539,3419.971,200,
                 'sn2008ge.reg','sn2008ge_badList2.reg',
                 0.165,-0.786,1.8,1.2]
     elif (Name == "SN2008HA"):
-        Info = ['sn2008ha_new.phot',0.284,0.219,0.174,0.120,
-                0.07,0.0,0,0,0,0,31.64,1736.199,3171.792,50,
+        Info = ['sn2008ha_new.phot',
+                0.284,0.219,0.174,0.120,
+                0.07,0.0,
+                0,0,0,0,
+                31.64,1736.199,3171.792,50,
                 'sn2008ha_coord.reg', 'sn2008ha_1121.reg', 'sn2008ha_1121.reg',
                 .55,-.44,2.7,1.7]
     elif (Name == "SN2010AE"):
-        Info = ['sn2010ae.phot.out',0.509,0.394,0.313,0.215,
-                0.124,0.5,2.052,1.588,1.262,0.867,30.9,1795.3831,1932.8080,100,
-                'sn3coord.reg','sn3.reg', 
+        Info = ['sn2010ae.phot.out',
+                0.509,0.394,0.313,0.215,
+                0.124,0.5,
+                2.052,1.588,1.262,0.867,
+                30.9,1795.3831,1932.8080,100,
+                'sn3coord.reg','sn3good.reg', 
                 .46,-.6,1.0,0.7]
     elif (Name == "SN2010EL"):
-        Info = ['sn2010el.phot.out',0.033,0.025,0.020,0.014,
-                0.008,0.8,3.255,2.517,2.001,1.376,30.09,2418.859,1570.826,100,
+        Info = ['sn2010el.phot.out',
+                0.033,0.025,0.020,0.014,
+                0.008,0.8,
+                3.255,2.517,2.001,1.376,
+                30.09,2418.859,1570.826,100,
                 'sn3coord.reg','sn3good.reg',
                 .66,-.56,1.16,.72]
     return Info
@@ -167,6 +181,7 @@ def textfile(Name, title, bluecuts, redcuts,xsn,ysn,
              xcoord,ycoord,
              sharp,roond,crowd): 
     print "Save into text file"
+    
     dataOut_1 = np.array(np.c_[star[bluecuts]  ,
         xcoord[bluecuts]+.5 ,ycoord[bluecuts]+.5 ,
         (((xsn - xcoord[bluecuts])**2 + (ysn - ycoord[bluecuts])**2)**.5),
@@ -218,7 +233,7 @@ def textfile(Name, title, bluecuts, redcuts,xsn,ysn,
 ###################################################    
 ######### Open and read in the data file ##########
 def main():
-    Name = "SN2010EL"
+    Name = "SN2010AE" #SN2010EL"
     print "Opening file: ",Name
 
     SNstuff = SNinfo(Name)
@@ -237,13 +252,13 @@ def main():
     xsn     = SNstuff[12]
     ysn     = SNstuff[13]
     radius  = SNstuff[14]
-    identify = pyregion.open(Name + '/' + SNstuff[14])
-    r = pyregion.open(Name+ '/'+ SNstuff[15])    
+    identify = pyregion.open(str(Name) + '/' + str(SNstuff[15]))
+    r = pyregion.open(str(Name)+ '/'+ str(SNstuff[16]))    
     
-    sharpmax = SNstuff[16]
-    sharpmin = SNstuff[17]
-    roundmax = SNstuff[18]
-    crowdmax = SNstuff[19]
+    sharpmax = SNstuff[17]
+    sharpmin = SNstuff[18]
+    roundmax = SNstuff[19]
+    crowdmax = SNstuff[20]
     
     print "Opening file: ",name
     print "Extracting ", name, " information..."
@@ -320,7 +335,7 @@ def main():
 
 ################################################### 
     print "Make final cuts..." 
-
+    
     if (Name == "SN2008GE"):
         cut435555.append(np.where((star <= 2)   & (crowd <= crowdmax ) 
                 & (sharp <= sharpmax) 
@@ -363,28 +378,28 @@ def main():
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0]) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
     else:    
-        cut435555.append(np.where((star <= 2)   & (crowd <= crowdmax )  
+        cut435555 = (np.where((star <= 2) & (crowd <= crowdmax)  
                 & (sharp <= sharpmax) & (sharp >= sharpmin)
                 & (roond <= roundmax)    
                 & ((snr435 >= 3) & (snr555 >= 3))  
                 & ((f435mag <= 90) & (f555mag <= 90)) 
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0]) 
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0])
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
-        cut625814.append(np.where((star <= 2)   & (crowd <= crowdmax )  
+        cut625814 = (np.where((star <= 2) & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) & (sharp >= sharpmin)
                 & (roond <= roundmax)    
                 & ((snr625 >= 3) & (snr814 >= 3))  
                 & ((f625mag <= 90) & (f814mag <= 90))   
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0]) 
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0]) 
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
     sn1 = []
     sn2 = []
     sn3 = []
     sn4 = []
     sn1 = np.where((star <= 2) & (snr435 == 3.0) &
-            ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))  
+        ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))  
     print "Mean f435w Abs Mag at S/N = 3 : ", np.mean(f435Abs[sn1])  
     #print f435Abs[sn1]
 
@@ -410,20 +425,19 @@ def main():
 
 ################################################### 
 ############ Save good arrays to a file ###########
-################################################### 
+###################################################     
     pcklfile(Name,title,cut435555[0],cut625814[0],xsn,ysn,
              f435Abs,f555Abs,f625Abs,f814Abs,
              f435mag,f555mag,f625mag,f814mag,
              unc435,unc555,unc625,unc814,
              snr435,snr555,snr625,snr814,
              xcoord,ycoord)
-    textfile(Name,title,cut435555[0],cut625814[0],xsn,ysn,
-             f435Abs,f555Abs,f625Abs,f814Abs,
-             f435mag,f555mag,f625mag,f814mag,
-             unc435,unc555,unc625,unc814,
-             snr435,snr555,snr625,snr814,
-             xcoord,ycoord,
-             sharp,roond,crowd)
-
+    #textfile(Name,title,cut435555[0],cut625814[0],xsn,ysn,
+             #f435Abs,f555Abs,f625Abs,f814Abs,
+             #f435mag,f555mag,f625mag,f814mag,
+             #unc435,unc555,unc625,unc814,
+             #snr435,snr555,snr625,snr814,
+             #xcoord,ycoord,
+             #sharp,roond,crowd)
 
 main() 

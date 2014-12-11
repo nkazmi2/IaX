@@ -42,8 +42,9 @@ end        = 1 # end = 2 goes to S/N 4
 snt        = 3
 snb        = 3
 #####################################################################
-
-name = 'Z0010Y26.dat' #'Z0001Y26.dat'
+print "Grabbing Metallicity files"
+print "1"
+name = 'Z0300Y26.dat' #'Z0001Y26.dat'
 
 d = []
 d.append(np.loadtxt('Metallicity/'+name))
@@ -64,13 +65,63 @@ F555W  = d[:,:,10]
 F625W  = d[:,:,12]
 F814W  = d[:,:,16]
 
+IsoAge = 7.28
+age    = np.where(logAGE == IsoAge)
+
 #####################################################################
 ## CHOOSE AGE TO BE PLOTTED 
 #####################################################################
+print "2"
+name2 = 'Z0200Y26.dat' #'Z0001Y26.dat'
 
-IsoAge = 7.40
-age    = np.where(logAGE == IsoAge)
-#print np.shape(age)
+d2 = []
+d2.append(np.loadtxt('Metallicity/'+name2))
+d2 = np.array(d2)
+
+#print d
+#print np.shape(d) #(1L, 16776L, 21L)
+
+logAGE2 = []
+F435W2  = []
+F555W2  = []
+F625W2  = []
+F814W2  = []
+
+logAGE2 = d2[:,:,0]
+F435W2  = d2[:,:,7]
+F555W2  = d2[:,:,10]
+F625W2  = d2[:,:,12]
+F814W2  = d2[:,:,16]
+
+IsoAge2 = 7.3
+age2    = np.where(logAGE2 == IsoAge2)
+
+#####################################################################
+#####################################################################
+print "3"
+name3 = 'Z0010Y26.dat' #'Z0001Y26.dat'
+
+d3 = []
+d3.append(np.loadtxt('Metallicity/'+name3))
+d3 = np.array(d3)
+
+#print d
+#print np.shape(d) #(1L, 16776L, 21L)
+
+logAGE3 = []
+F435W3  = []
+F555W3  = []
+F625W3  = []
+F814W3  = []
+
+logAGE3 = d3[:,:,0]
+F435W3  = d3[:,:,7]
+F555W3  = d3[:,:,10]
+F625W3  = d3[:,:,12]
+F814W3  = d3[:,:,16]
+
+IsoAge3 = 7.43
+age3    = np.where(logAGE3 == IsoAge3)
 
 #####################################################################
 radius1   = [50,150,200]
@@ -146,7 +197,7 @@ gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
 
 #fig1.suptitle('CMD for SN 2008ge',fontdict = font, size=15)
 
-fig1.suptitle(title + ': CMD for Z = 0.' + name[1:-7] + ', Y = 0.' + name[6:-4] + ' S/N >= 3.5',
+fig1.suptitle(title + ': CMD with S/N >= 3.5',
           fontdict = font, size=15)
 ###########################################################################
 c1plt = plt.subplot2grid((2,2), (0,0), rowspan = 2)
@@ -158,11 +209,17 @@ plt.ylabel("M$_{F555W}$ (mag)",fontdict = font)
 #c1plt.yaxis.set_minor_locator(AutoMinorLocator())
 
 #c1plt.yaxis.set_major_locator(MultipleLocator(.5))
-
+ 
 ###########################################################################
 c1plt.plot(np.subtract(F435W[age],  F555W[age]),  F555W[age],  
-           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
-
+           'g:',  label = 'Z = 0.' + name[1:-7] )#'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
+c1plt.plot(np.subtract(F435W2[age2],  F555W2[age2]),  F555W2[age2],  
+           'k--', label = 'Z = 0.' + name2[1:-7] )#'Age = 10$^{'+ str(IsoAge2) +'}$ yrs')
+c1plt.plot(np.subtract(F435W3[age3],  F555W3[age3]),  F555W3[age3],  
+           'b-.', label = 'Z = 0.' + name3[1:-7] )#'Age = 10$^{'+ str(IsoAge3) +'}$ yrs')
+           
+           
+           
 #plt.annotate('', xy=(1.992,-6.1), xycoords = 'data', #(Top of the arrow)
 #             xytext = (2, -3.5), textcoords = 'data', # End of the arrow
 #                arrowprops = {'arrowstyle':'->'})       # what the arrow looks like
@@ -240,8 +297,11 @@ plt.ylabel("M$_{F814W}$ (mag)",fontdict = font)
 
 
 c2plt.plot(np.subtract(F625W[age],  F814W[age]),  F814W[age],  
-           'b:', label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
-   
+           'g:' , label = 'Z = 0.' + name[1:-7] )# 'Age = 10$^{'+ str(IsoAge) +'}$ yrs') 
+c2plt.plot(np.subtract(F625W2[age2],  F814W2[age2]),  F814W2[age2],  
+           'k--', label = 'Z = 0.' + name2[1:-7] )# 'Age = 10$^{'+ str(IsoAge2) +'}$ yrs') 
+c2plt.plot(np.subtract(F625W3[age3],  F814W3[age3]),  F814W3[age3],  
+           'b-.', label = 'Z = 0.' + name3[1:-7] )# 'Age = 10$^{'+ str(IsoAge3) +'}$ yrs') 
 
 ###########################################################################                         
 #plt.annotate('', xy=(1.99,-6), xycoords = 'data',

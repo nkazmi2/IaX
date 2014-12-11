@@ -303,10 +303,10 @@ if (folder == "SN2008GE"):
     #identify = pyregion.open(folder + '/sn2008ge_3good.reg') #sn08ge
     #r = pyregion.open(folder + '/sn2008ge_coord3.reg')
 elif (folder == "SN2010AE"):
-    identify = pyregion.open(folder + '/good.reg') #sn08ge
-    r = pyregion.open(folder + '/delete.reg')  
+    identify = pyregion.open(folder + '/sn3good.reg') #sn08ge
+    r = pyregion.open(folder + '/sn3coord.reg')  
 elif (folder == "SN2010EL"):
-    identify = pyregion.open(folder + '/sn3good2.reg') #sn08ge
+    identify = pyregion.open(folder + '/sn3good.reg') #sn08ge
     r = pyregion.open(folder + '/sn3coord.reg')  
 elif (folder == "SN2008HA"):
         identifyL = pyregion.open(folder + '/'+ title +'1121.reg') #sn08ha
@@ -431,16 +431,16 @@ if (folder == "SN2010AE"):
     #roundmax = 3  # <-sn10filter #sn 5 4.5
     #crowdmax = .9# <-sn10filter #sn 5 3.6
     cut435555.append(np.where((star <= 2)   & (crowd <= crowdmax )  
-                #& (sharp <= sharpmax) & (sharp >= sharpmin)
-                #& (roond <= roundmax)    
+                & (sharp <= sharpmax) & (sharp >= sharpmin)
+                & (roond <= roundmax)    
                 & ((snr435 >= 3) & (snr555 >= 3))  
                 & ((f435mag <= 90) & (f555mag <= 90)) 
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0]) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
-    cut625814.append(np.where((star <= 2)   #& (crowd <= crowdmax )  
-                #& (sharp <= sharpmax) & (sharp >= sharpmin)
-                #& (roond <= roundmax)    
+    cut625814.append(np.where((star <= 2)   & (crowd <= crowdmax )  
+                & (sharp <= sharpmax) & (sharp >= sharpmin)
+                & (roond <= roundmax)    
                 & ((snr625 >= 3) & (snr814 >= 3))  
                 & ((f625mag <= 90) & (f814mag <= 90))   
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0]) 
@@ -471,22 +471,22 @@ sn1 = []
 sn2 = []
 sn3 = []
 sn4 = []
-sn1 = np.where((star <= 2) & (snr435 == 3.0) &
+sn1 = np.where((star <= 2) & (snr435 >= 3.0) & (snr435 < 4.0) &
         ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))  
 print "Mean f435w Abs Mag at S/N = 3 : ", np.mean(f435Abs[sn1])  
 #print f435Abs[sn1]
 
-sn2 = np.where((star <= 2) & (snr555 == 3.0) &
+sn2 = np.where((star <= 2) & (snr555 >= 3.0) & (snr555 < 4.0) &
         ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)) 
 print "Mean f555w Abs Mag at S/N = 3 : ", np.mean(f555Abs[sn2])
 #print f555Abs[sn2]
 
-sn3 = np.where((star <= 2) & (snr625 == 3.0) &
+sn3 = np.where((star <= 2) & (snr625 >= 3.0) & (snr625 < 4.0) &
         ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100))  
 print "Mean f625w Abs Mag at S/N = 3 : ", np.mean(f625Abs[sn3])
 #print f625Abs[sn3]
 
-sn4 = np.where((star <= 2) & (snr814 == 3.0) &
+sn4 = np.where((star <= 2) & (snr814 >= 3.0) & (snr814 < 4.0) &
         ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)) 
 print "Mean f814w Abs Mag at S/N = 3 : ", np.mean(f814Abs[sn4])
 

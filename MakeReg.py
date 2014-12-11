@@ -57,7 +57,7 @@ cut  = []
 ################################################### 
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
-"""
+#"""
 folder   = "SN2008GE"
 name     = 'sn2008ge_new.phot' 
 #name     = 'sn2008ge_20141015_final.out'
@@ -65,25 +65,25 @@ name     = 'sn2008ge_new.phot'
 # Actual X & Y pixel coordinates of sn
 xsn      = 3247.539
 ysn      = 3419.971
-"""
+#"""
 ##################### 2008ha ######################
 """
 folder   = "SN2008HA"
 name     = 'sn2008ha_new.phot'
 
 # Actual X & Y pixel coordinates of sn
-xsn      = 1726.352
-ysn      = 3172.530
+xsn      = 1736.199#1736.352
+ysn      = 3171.792#3172.530
 """
 ##################### 2010ae ######################
-#"""
+"""
 folder   = "SN2010AE"
 name     = 'sn2010ae.phot.out'
 
 # Actual X & Y pixel coordinates of sn
-xsn      = 1796.640
-ysn      = 1931.995
-#"""
+xsn      = 1795.3831#1796.640
+ysn      = 1931.8080#1931.995
+"""
 ##################### 2010el ######################
 """    
 folder   = "SN2010EL"
@@ -148,16 +148,16 @@ crd814  = data[:,61] # Column 62 Crowd for F814W
 """
 ################################################### 
 ################################################### 
-"""
+
 if (folder == "SN2008GE"):
-    identify = pyregion.open(folder + '/sn2008ge_badList.reg') #sn08ge
+    identify = pyregion.open(folder + '/sn2008ge_badList2.reg') #sn08ge
     r = pyregion.open(folder + '/sn2008ge.reg')
 
 elif (folder == "SN2010AE"):
-    identify = pyregion.open(folder + '/sn10.reg') #sn08ge
-    r = pyregion.open(folder + '/sn10coord.reg')  
+    identify = pyregion.open(folder + '/sn3good.reg') #sn08ge
+    r = pyregion.open(folder + '/sn3coord.reg')  
 elif (folder == "SN2010EL"):
-    identify = pyregion.open(folder + '/sn3.reg') #sn08ge
+    identify = pyregion.open(folder + '/sn3good.reg') #sn08ge
     r = pyregion.open(folder + '/sn3coord.reg')  
 save = []
 badX = []
@@ -181,7 +181,7 @@ for i in range(len(r)):
 for j in range(len(save)):
     badX.append(r[save[j]].coord_list[0] - .5)
     badY.append(r[save[j]].coord_list[1] - .5)
-"""
+
 ################################################### 
 ############ Save coordinates to a file ###########
 print "Choppin some SN-suey"
@@ -207,9 +207,9 @@ if (folder == "SN2010AE"):
                 #(((snr435 <= 30) & (snr555 <= 30)) |
                 #((snr625 <= 30) & (snr814 <= 30)))
                 #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) > 15) 
-                & (((f435mag <= 80) & (f555mag <= 80)) | ((f625mag <= 80) & (f814mag <= 80)))                               
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)      
-                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
+                & (((f435mag <= 90) & (f555mag <= 90)) | ((f625mag <= 90) & (f814mag <= 90)))                               
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 17)      
+                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
 elif (folder == "SN2010EL"): 
     sharpmax = 0.66
@@ -220,18 +220,18 @@ elif (folder == "SN2010EL"):
     cut.append(np.where((star <= 2)     
                 & (((snr625 >= 3) & (snr814 >= 3)) 
                 | (( snr435 >= 3) & (snr555 >= 3)))          
-                #& (crowd <= crowdmax)
-                #& (sharp <= sharpmax) 
-                #& (sharp >= sharpmin) 
-                #& (roond <= roundmax) 
+                & (crowd <= crowdmax)
+                & (sharp <= sharpmax) 
+                & (sharp >= sharpmin) 
+                & (roond <= roundmax) 
                 #(((snr435 >= 10) | (snr555 >= 10)) |
                 #((snr625 >= 10) | (snr814 >= 10))) &
                 #(((snr435 <= 30) & (snr555 <= 30)) |
                 #((snr625 <= 30) & (snr814 <= 30)))
                 #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) > 15) 
-                & (((f435mag <= 80) & (f555mag <= 80)) | ((f625mag <= 80) & (f814mag <= 80)))               
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)      
-                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
+                & (((f435mag <= 90) & (f555mag <= 90)) | ((f625mag <= 90) & (f814mag <= 90)))               
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 20)      
+                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
 elif (folder == "SN2008GE"):   
     #sharpmax =  0.663
