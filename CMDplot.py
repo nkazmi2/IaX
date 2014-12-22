@@ -50,10 +50,10 @@ class Star:
 #####################################################################
 ########################### PICK THE SN!! ###########################
 ####################################################################
-title = 'SN08ha'
+#title = 'SN08ha'
 #title = 'SN10ae'
 #title = 'SN10el'
-#title = 'SN08ge'
+title = 'SN08ge'
 
 # Set the plotted point S/N parameters
 start      = 0 # start = 0 starts at S/N 3
@@ -63,13 +63,13 @@ snb        = 3
 #####################################################################
 
 if (title == 'SN08ha'):
-    name = 'Z0046Y26.dat'
+    name = 'Z0060Y26.dat'
 elif (title == 'SN10ae'):
-    name = 'Z0073Y26.dat'
+    name = 'Z0096Y26.dat'
 elif (title == 'SN10el'):
-    name = 'Z0170Y26.dat'
+    name = 'Z0224Y26.dat'
 elif (title == 'SN08ge'):
-    name = 'Z0400Y26.dat'
+    name = 'Z0100Y26.dat'
 
 d = []
 d.append(np.loadtxt('Metallicity/'+name))
@@ -163,6 +163,7 @@ age787  = np.where((logAGE == 7.87))
 age788  = np.where((logAGE == 7.88))
 age789  = np.where((logAGE == 7.89))
 age79   = np.where((logAGE == 7.9))
+age80   = np.where((logAGE == 8.0))
     
 #####################################################################
 
@@ -192,7 +193,7 @@ if (title == 'SN08ha'):
     conver     = (5) #(2.5*math.pi)/(50.0*3600*180)
     yLmax      = -3.5
     yLmin      = -6.5
-    yRmax      = -3.5
+    yRmax      = -4.0
     yRmin      = -7.0
     xLmax    = -0.75
     xLmin    =  2.0
@@ -210,7 +211,7 @@ if (title == 'SN08ha'):
 ###############################################################################
 
 elif (title == 'SN10ae'):
-    radius     = [8,10,18]#[8,12,18]  # 450,750,1000,1500,2200
+    radius     = [8,10,15]#[8,12,18]  # 450,750,1000,1500,2200
     dist       = 13.1e7
     conver     = (63.52) #(2.5*math.pi)/(50.0*3600*180)
     
@@ -234,7 +235,7 @@ elif (title == 'SN10el'):
     title      = 'SN10el'
     yLmax    = -2.0
     yLmin    = -5.5
-    yRmax    = -2.0
+    yRmax    = -2.5
     yRmin    = -5.5
     
     xLmax    = -0.5
@@ -247,7 +248,7 @@ elif (title == 'SN10el'):
  
 
 elif (title == 'SN08ge'):
-    radius   = [50,150,200]
+    radius   = [38,75,100]
     dist     = 17.95e7
     conver   = (4.35)
     yLmax    = -3.0
@@ -344,10 +345,14 @@ if (title == 'SN08ha'):
     #       'y-' , label = 'Age = 10$^{7.7}$ yrs')
     #c1plt.plot(np.subtract(F435W[age771], F555W[age771]), F555W[age771],  
     #       'y-' , label = 'Age = 10$^{7.71}$ yrs')
-    c1plt.plot(np.subtract(F435W[age773], F555W[age773]), F555W[age773],  
-           'k--' , label = 'Age = 10$^{7.73}$ yrs')
+    c1plt.plot(np.subtract(F435W[age772], F555W[age772]), F555W[age772],  
+           'k--' , label = 'Age = 10$^{7.72}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age773], F555W[age773]), F555W[age773],  
+    #       'k--' , label = 'Age = 10$^{7.73}$ yrs')
     #c1plt.plot(np.subtract(F435W[age774], F555W[age774]), F555W[age774],  
     #       'g-' , label = 'Age = 10$^{7.74}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age775], F555W[age775]), F555W[age775],  
+    #       'b-' , label = 'Age = 10$^{7.75}$ yrs')
     #c1plt.plot(np.subtract(F435W[age78],  F555W[age78]),  F555W[age78],  
     #       'g:' , label = 'Age = 10$^{7.8}$ yrs')
 elif (title == 'SN10ae'):  
@@ -366,10 +371,10 @@ elif (title == 'SN10ae'):
     #       'c-', label = 'Age = 10$^{7.39}$ yrs')
     #c1plt.plot(np.subtract(F435W[age74],  F555W[age74]),  F555W[age74],  
     #       'b:' , label = 'Age = 10$^{7.4}$ yrs')
-    c1plt.plot(np.subtract(F435W[age741], F555W[age741]), F555W[age741],  
-           'k--' , label = 'Age = 10$^{7.41}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age742], F555W[age742]), F555W[age742],  
-    #       'c-' , label = 'Age = 10$^{7.42}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age741], F555W[age741]), F555W[age741],  
+    #       'k--' , label = 'Age = 10$^{7.41}$ yrs')
+    c1plt.plot(np.subtract(F435W[age742], F555W[age742]), F555W[age742],  
+           'k--' , label = 'Age = 10$^{7.42}$ yrs')
     #c1plt.plot(np.subtract(F435W[age743], F555W[age743]), F555W[age743],  
            #'g-' , label = 'Age = 10$^{7.43}$ yrs')
     #c1plt.plot(np.subtract(F435W[age744], F555W[age744]), F555W[age744],  
@@ -400,22 +405,6 @@ elif (title == 'SN10el'):
                     arrowprops = {'arrowstyle':'->'})
     plt.annotate('A${_v}}$ = 3.4105', xy=(0.2,-5.2), xycoords = 'data',
                  xytext = (2, 3), textcoords = 'offset points')
-    #c1plt.plot(np.subtract(F435W[age783], F555W[age783]), F555W[age783],  
-    #       'g--', label = 'Age = 10$^{7.83}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age784], F555W[age784]), F555W[age784],  
-    #       'b--' , label = 'Age = 10$^{7.84}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age785], F555W[age785]), F555W[age785],  
-    #       'm--' , label = 'Age = 10$^{7.85}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age786], F555W[age786]), F555W[age786],  
-    #       'r--' , label = 'Age = 10$^{7.86}$ yrs')
-    c1plt.plot(np.subtract(F435W[age787], F555W[age787]), F555W[age787],  
-           'k--' , label = 'Age = 10$^{7.87}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age788], F555W[age788]), F555W[age788],  
-    #       'g--', label = 'Age = 10$^{7.88}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age789], F555W[age789]), F555W[age789],  
-    #       'b--' , label = 'Age = 10$^{7.89}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age79], F555W[age79]), F555W[age79],  
-    #       'm--' , label = 'Age = 10$^{7.9}$ yrs')
     #c1plt.plot(np.subtract(F435W[age70],  F555W[age70]),  F555W[age70],  
     #       'r--', label = 'Age = 10$^{7.0}$ yrs')
     #c1plt.plot(np.subtract(F435W[age71],  F555W[age71]),  F555W[age71],  
@@ -434,14 +423,24 @@ elif (title == 'SN10el'):
     #       'y-' , label = 'Age = 10$^{7.7}$ yrs')
     #c1plt.plot(np.subtract(F435W[age78],  F555W[age78]),  F555W[age78],  
     #       'g:' , label = 'Age = 10$^{7.8}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age76],  F555W[age76]),  F555W[age76],  
-    #       'r--', label = 'Age = 10$^{7.6}$ yrs') 
+    c1plt.plot(np.subtract(F435W[age781], F555W[age781]), F555W[age781],  
+           'k--' , label = 'Age = 10$^{7.81}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age782], F555W[age782]), F555W[age782],  
+    #       'y--', label = 'Age = 10$^{7.82}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age783], F555W[age783]), F555W[age783],  
+    #       'g--', label = 'Age = 10$^{7.83}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age784], F555W[age784]), F555W[age784],  
+    #       'b--' , label = 'Age = 10$^{7.84}$ yrs')
     #c1plt.plot(np.subtract(F435W[age785], F555W[age785]), F555W[age785],  
-           #'g--' , label = 'Age = 10$^{7.85}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age77],  F555W[age77]),  F555W[age77],  
-    #       'y-' , label = 'Age = 10$^{7.7}$ yrs')
-    #c1plt.plot(np.subtract(F435W[age785], F555W[age785]), F555W[age785],  
-           #'r--' , label = 'Age = 10$^{7.85}$ yrs')
+    #       'm--' , label = 'Age = 10$^{7.85}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age786], F555W[age786]), F555W[age786],  
+    #       'r--' , label = 'Age = 10$^{7.86}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age787], F555W[age787]), F555W[age787],  
+    #       'k--' , label = 'Age = 10$^{7.87}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age788], F555W[age788]), F555W[age788],  
+    #       'g--', label = 'Age = 10$^{7.88}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age789], F555W[age789]), F555W[age789],  
+    #       'b--' , label = 'Age = 10$^{7.89}$ yrs')
     #c1plt.plot(np.subtract(F435W[age79],  F555W[age79]),  F555W[age79],  
     #       'c-.', label = 'Age = 10$^{7.9}$ yrs') 
     #c1plt.plot(np.subtract(F435W[age80],  F555W[age80]),  F555W[age80],  
@@ -573,10 +572,14 @@ if (title == 'SN08ha'):
            #'y-' , label = 'Age = 10$^{7.7}$ yrs')   
     #c2plt.plot(np.subtract(F625W[age771],  F814W[age771]),  F814W[age771],  
     #       'y-' , label = 'Age = 10$^{7.71}$ yrs')  
-    c2plt.plot(np.subtract(F625W[age773],  F814W[age773]),  F814W[age773],  
-           'k--' , label = 'Age = 10$^{7.73}$ yrs')  
+    c2plt.plot(np.subtract(F625W[age772],  F814W[age772]),  F814W[age772],  
+           'k--' , label = 'Age = 10$^{7.72}$ yrs')   
+    #c2plt.plot(np.subtract(F625W[age773],  F814W[age773]),  F814W[age773],  
+    #       'k--' , label = 'Age = 10$^{7.73}$ yrs')  
     #c2plt.plot(np.subtract(F625W[age774],  F814W[age774]),  F814W[age774],  
     #       'g-' , label = 'Age = 10$^{7.74}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age775],  F814W[age775]),  F814W[age775],  
+    #       'b-' , label = 'Age = 10$^{7.75}$ yrs')
     #c2plt.plot(np.subtract(F625W[age78],  F814W[age78]),  F814W[age78],  
     #       'g:' , label = 'Age = 10$^{7.8}$ yrs')
 elif (title == 'SN10ae'):
@@ -595,10 +598,10 @@ elif (title == 'SN10ae'):
     #       'c-', label = 'Age = 10$^{7.39}$ yrs')
     #c2plt.plot(np.subtract(F625W[age74],  F814W[age74]),  F814W[age74],  
     #       'b:' , label = 'Age = 10$^{7.4}$ yrs')
-    c2plt.plot(np.subtract(F625W[age741],  F814W[age741]),  F814W[age741],  
-           'k--' , label = 'Age = 10$^{7.41}$ yrs')
-    #c2plt.plot(np.subtract(F625W[age742],  F814W[age742]),  F814W[age742],  
-    #       'c-' , label = 'Age = 10$^{7.42}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age741],  F814W[age741]),  F814W[age741],  
+    #       'k--' , label = 'Age = 10$^{7.41}$ yrs')
+    c2plt.plot(np.subtract(F625W[age742],  F814W[age742]),  F814W[age742],  
+           'k--' , label = 'Age = 10$^{7.42}$ yrs')
     #c2plt.plot(np.subtract(F625W[age743],  F814W[age743]),  F814W[age743],  
     #       'g-' , label = 'Age = 10$^{7.43}$ yrs')
     #c2plt.plot(np.subtract(F625W[age744],  F814W[age744]),  F814W[age744],  
@@ -639,6 +642,14 @@ elif (title == 'SN10el'):
     #       'c-.', label = 'Age = 10$^{7.5}$ yrs')
     #c2plt.plot(np.subtract(F625W[age76],  F814W[age76]),  F814W[age76],  
     #       'r--', label = 'Age = 10$^{7.6}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age77],  F814W[age77]),  F814W[age77],  
+    #       'y-' , label = 'Age = 10$^{7.7}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age78],  F814W[age78]),  F814W[age78],  
+    #       'g:' , label = 'Age = 10$^{7.8}$ yrs')
+    c2plt.plot(np.subtract(F625W[age781], F814W[age781]), F814W[age781],  
+           'k--' , label = 'Age = 10$^{7.81}$ yrs')    
+    #c2plt.plot(np.subtract(F625W[age782], F814W[age782]), F814W[age782],  
+    #       'y--', label = 'Age = 10$^{7.82}$ yrs')
     #c2plt.plot(np.subtract(F625W[age783], F814W[age783]), F814W[age783],  
     #       'g--', label = 'Age = 10$^{7.83}$ yrs')
     #c2plt.plot(np.subtract(F625W[age784], F814W[age784]), F814W[age784],  
@@ -647,29 +658,23 @@ elif (title == 'SN10el'):
     #       'm--' , label = 'Age = 10$^{7.85}$ yrs')
     #c2plt.plot(np.subtract(F625W[age786], F814W[age786]), F814W[age786],  
     #       'r--' , label = 'Age = 10$^{7.86}$ yrs')
-    c2plt.plot(np.subtract(F625W[age787], F814W[age787]), F814W[age787],  
-           'k--' , label = 'Age = 10$^{7.87}$ yrs')    
+    #c2plt.plot(np.subtract(F625W[age787], F814W[age787]), F814W[age787],  
+    #       'k--' , label = 'Age = 10$^{7.87}$ yrs')    
     #c2plt.plot(np.subtract(F625W[age788], F814W[age788]), F814W[age788],  
     #       'g--', label = 'Age = 10$^{7.88}$ yrs')
     #c2plt.plot(np.subtract(F625W[age789], F814W[age789]), F814W[age789],  
     #       'b--' , label = 'Age = 10$^{7.89}$ yrs')
     #c2plt.plot(np.subtract(F625W[age79], F814W[age79]), F814W[age79],  
     #       'm--' , label = 'Age = 10$^{7.9}$ yrs')
-    #c2plt.plot(np.subtract(F625W[age77],  F814W[age77]),  F814W[age77],  
-    #       'y-' , label = 'Age = 10$^{7.7}$ yrs')
-    #c2plt.plot(np.subtract(F625W[age78],  F814W[age78]),  F814W[age78],  
-    #       'g:' , label = 'Age = 10$^{7.8}$ yrs')
-    #c2plt.plot(np.subtract(F625W[age79],  F814W[age79]),  F814W[age79],  
-    #       'c-.', label = 'Age = 10$^{7.9}$ yrs') 
     #c2plt.plot(np.subtract(F625W[age80],  F814W[age80]),  F814W[age80],  
     #       'b:' , label = 'Age = 10$^{8.0}$ yrs')  
 elif (title == 'SN08ge'): 
-    c2plt.plot(np.subtract(F625W[age70],  F814W[age70]),  F814W[age70],  
-           'y-', label = 'Age = 10$^{7.0}$ yrs')
-    c2plt.plot(np.subtract(F625W[age71],  F814W[age71]),  F814W[age71],  
-           'y-', label = 'Age = 10$^{7.1}$ yrs')
-    c2plt.plot(np.subtract(F625W[age72],  F814W[age72]),  F814W[age72],  
-           'g:', label = 'Age = 10$^{7.2}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age70],  F814W[age70]),  F814W[age70],  
+    #       'y-', label = 'Age = 10$^{7.0}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age71],  F814W[age71]),  F814W[age71],  
+    #       'm-', label = 'Age = 10$^{7.1}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age72],  F814W[age72]),  F814W[age72],  
+    #       'g:', label = 'Age = 10$^{7.2}$ yrs')
     #c2plt.plot(np.subtract(F625W[age721],  F814W[age721]),  F814W[age721],  
     #       'k--' , label = 'Age = 10$^{7.21}$ yrs')
     #c2plt.plot(np.subtract(F625W[age722],  F814W[age722]),  F814W[age722],  
@@ -684,8 +689,8 @@ elif (title == 'SN08ge'):
     #       'y-' , label = 'Age = 10$^{7.26}$ yrs')
     #c2plt.plot(np.subtract(F625W[age727],  F814W[age727]),  F814W[age727],  
     #       'y-' , label = 'Age = 10$^{7.27}$ yrs')
-    c2plt.plot(np.subtract(F625W[age728],  F814W[age728]),  F814W[age728],  
-           'g--' , label = 'Age = 10$^{7.28}$ yrs')
+    #c2plt.plot(np.subtract(F625W[age728],  F814W[age728]),  F814W[age728],  
+    #       'g--' , label = 'Age = 10$^{7.28}$ yrs')
     #c2plt.plot(np.subtract(F625W[age729],  F814W[age729]),  F814W[age729],  
     #       'c-', label = 'Age = 10$^{7.29}$ yrs')
     #c2plt.plot(np.subtract(F625W[age73],  F814W[age73]),  F814W[age73],  
@@ -715,9 +720,9 @@ elif (title == 'SN08ge'):
     #c2plt.plot(np.subtract(F625W[age742],  F814W[age742]),  F814W[age742],  
     #       'c--' , label = 'Age = 10$^{7.42}$ yrs')
     #c2plt.plot(np.subtract(F625W[age743],  F814W[age743]),  F814W[age743],  
-    #       'g--' , label = 'Age = 10$^{7.43}$ yrs')
-    #c2plt.plot(np.subtract(F625W[age744],  F814W[age744]),  F814W[age744],  
-    #       'y-' , label = 'Age = 10$^{7.44}$ yrs')
+    #      'g--' , label = 'Age = 10$^{7.43}$ yrs')
+    c2plt.plot(np.subtract(F625W[age744],  F814W[age744]),  F814W[age744],  
+           'k--' , label = 'Age = 10$^{7.44}$ yrs')
     #c2plt.plot(np.subtract(F625W[age745],  F814W[age745]),  F814W[age745],  
     #       'r:' , label = 'Age = 10$^{7.45}$ yrs')
     #c2plt.plot(np.subtract(F625W[age746],  F814W[age746]),  F814W[age746],  
@@ -725,7 +730,7 @@ elif (title == 'SN08ge'):
     #c2plt.plot(np.subtract(F625W[age747],  F814W[age747]),  F814W[age747],  
     #       'g--' , label = 'Age = 10$^{7.47}$ yrs')
     #c2plt.plot(np.subtract(F625W[age75],  F814W[age75]),  F814W[age75],  
-    #       'y-', label = 'Age = 10$^{7.5}$ yrs')
+    #       'y--', label = 'Age = 10$^{7.5}$ yrs')
     #c2plt.plot(np.subtract(F625W[age751],  F814W[age751]),  F814W[age751],  
     #       'k--', label = 'Age = 10$^{7.51}$ yrs')
     #c2plt.plot(np.subtract(F625W[age752],  F814W[age752]),  F814W[age752],  
@@ -852,6 +857,6 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'region' + '.png'
+figname = title + '_' + 'Final2' + '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname

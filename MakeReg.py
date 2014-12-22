@@ -130,7 +130,7 @@ snr814  = data[:,58]
 
 xcoord  = data[:, 2]
 ycoord  = data[:, 3]
-"""
+
 srp435  = data[:,20] # Column 21 Sharp for F435W
 srp555  = data[:,33] # Column 34 Sharp for F555W
 srp625  = data[:,46] # Column 47 Sharp for F625W
@@ -145,10 +145,10 @@ crd435  = data[:,22] # Column 23 Crowd for F435W
 crd555  = data[:,35] # Column 36 Crowd for F555W
 crd625  = data[:,48] # Column 49 Crowd for F625W
 crd814  = data[:,61] # Column 62 Crowd for F814W
-"""
-################################################### 
-################################################### 
 
+################################################### 
+################################################### 
+"""
 if (folder == "SN2008GE"):
     identify = pyregion.open(folder + '/sn2008ge_badList2.reg') #sn08ge
     r = pyregion.open(folder + '/sn2008ge.reg')
@@ -181,7 +181,7 @@ for i in range(len(r)):
 for j in range(len(save)):
     badX.append(r[save[j]].coord_list[0] - .5)
     badY.append(r[save[j]].coord_list[1] - .5)
-
+"""
 ################################################### 
 ############ Save coordinates to a file ###########
 print "Choppin some SN-suey"
@@ -240,21 +240,21 @@ elif (folder == "SN2008GE"):
     #crowdmax =  0.5
 
     sharpmax = 0.165
-    sharpmin = -.786
+    #sharpmin = -.786
     roundmax = 1.8
     crowdmax = 1.2
-    cut.append((np.where((star <= 2)   & (crowd <= crowdmax )  
-                & (sharp <= sharpmax) & (sharp >= sharpmin) 
-                & (roond <= roundmax) 
-                & (((snr625 > 0 ) & (snr814 > 0 )) | ((snr435 > 0 ) & (snr555 > 0 )))
+    cut.append((np.where((star <= 2)   #& (crowd <= crowdmax )  
+                #& (sharp <= sharpmax) & (sharp >= sharpmin) 
+                #& (roond <= roundmax) 
+                #& (((snr625 > 0 ) & (snr814 > 0 )) | ((snr435 > 0 ) & (snr555 > 0 )))
                 & (((snr625 >= 3.5) & (snr814 >= 3.5)) | ((snr435 >= 3.5) & (snr555 >= 3.5)))            
-                & ((srp435 <= 3)  & (srp555 <= 3)  & (srp625 <= 3)  & (srp814 <= 3) 
-                & (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))
-                & (((f435mag <= 80) & (f555mag <= 80)) | ((f625mag <= 80) & (f814mag <= 80)))
-                & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9)) 
-                & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= 200)               
+                #& ((srp435 <= 3)  & (srp555 <= 3)  & (srp625 <= 3)  & (srp814 <= 3) 
+                #& (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))
+                #& (((f435mag <= 80) & (f555mag <= 80)) | ((f625mag <= 80) & (f814mag <= 80)))
+                #& ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9)) 
+                & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= 230)               
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25) 
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
                 )))
 """
 print "Sharp Max: ", np.max( sharp[cut[0]])

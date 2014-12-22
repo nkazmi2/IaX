@@ -98,7 +98,7 @@ font = {'family' : 'serif',
 ################################################### 
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
-"""
+#"""
 folder   = "SN2008GE"
 name     = 'sn2008ge_new.phot' 
 #name     = 'sn2008ge_20141015_final.out' #'sn2008ge_new.out'renamed for constistancy 
@@ -123,8 +123,8 @@ dmod     = 31.33
 xsn      = 3247.539
 ysn      = 3419.971
 #radius   = [10.342,17.24,23.00,34.47,50.556] # 450,750,1000,1500,2200
-radius   = [200]
-"""
+radius   = [101]
+#"""
 ##################### 2008ha ######################
 """
 folder   = "SN2008HA"
@@ -152,7 +152,7 @@ ysn      = 3171.792
 radius   = [50] # 450,750,1000,1500,2200
 """
 ##################### 2010ae ######################
-#"""
+"""
 folder   = "SN2010AE"
 name     = 'sn2010ae.phot.out'
 
@@ -177,7 +177,7 @@ xsn      = 1795.3831# 1796.640
 ysn      = 1931.8080# 1931.995
 
 radius   = [100] # 450,750,1000,1500,2200
-#"""
+"""
 ##################### 2010el ######################
 """    
 folder   = "SN2010EL"
@@ -298,8 +298,8 @@ print "Filter bad sources...."
 print "Looking in " + folder
 
 if (folder == "SN2008GE"):   
-    identify = pyregion.open(folder + '/sn2008ge_badList2.reg') #sn08ge
-    r = pyregion.open(folder + '/sn2008ge.reg')
+    identify = pyregion.open(folder + '/sn3.5.reg') #sn08ge
+    r = pyregion.open(folder + '/sn3.5coord.reg')
     #identify = pyregion.open(folder + '/sn2008ge_3good.reg') #sn08ge
     #r = pyregion.open(folder + '/sn2008ge_coord3.reg')
 elif (folder == "SN2010AE"):
