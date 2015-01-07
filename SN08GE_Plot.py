@@ -65,7 +65,7 @@ F555W  = d[:,:,10]
 F625W  = d[:,:,12]
 F814W  = d[:,:,16]
 
-IsoAge = 7.28
+IsoAge = 7.29
 age    = np.where(logAGE == IsoAge)
 
 #####################################################################
@@ -98,6 +98,7 @@ age2    = np.where(logAGE2 == IsoAge2)
 
 #####################################################################
 #####################################################################
+"""
 print "3"
 name3 = 'Z0100Y26.dat' #'Z0001Y26.dat'
 
@@ -122,10 +123,10 @@ F814W3  = d3[:,:,16]
 
 IsoAge3 = 7.44
 age3    = np.where(logAGE3 == IsoAge3)
-
+"""
 #####################################################################
-radius1   = [38,75,100]
-radius2   = [38,75,100]
+radius1   = [50,100,200]
+radius2   = [38,75 ,100]
 dist      = 17.95e7
 conver    = (4.35)#(2.5*math.pi)/(50.0*3600*180)
 f435f555  = []
@@ -197,8 +198,9 @@ gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
 
 #fig1.suptitle('CMD for SN 2008ge',fontdict = font, size=15)
 
-fig1.suptitle(title + ': CMD with S/N >= 3.5',
-          fontdict = font, size=15)
+fig1.suptitle(title + ': CMD with S/N >= 3.5,' + ' Z = 0.' + name[2:-9]
+            + ' & Z = 0.' + name2[2:-9],
+              fontdict = font, size=15)
 ###########################################################################
 c1plt = plt.subplot2grid((2,2), (0,0), rowspan = 2)
 plt.gca().invert_yaxis()
@@ -212,11 +214,11 @@ plt.ylabel("M$_{F555W}$ (mag)",fontdict = font)
  
 ###########################################################################
 c1plt.plot(np.subtract(F435W[age],  F555W[age]),  F555W[age],  
-           'g:',  label = 'Z = 0.' + name[1:-7] )#'Age = 10$^{'+ str(IsoAge) +'}$ yrs')
+           'g:',  label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs') #'Z = 0.' + name[1:-7] )#
 c1plt.plot(np.subtract(F435W2[age2],  F555W2[age2]),  F555W2[age2],  
-           'k--', label = 'Z = 0.' + name2[1:-7] )#'Age = 10$^{'+ str(IsoAge2) +'}$ yrs')
-c1plt.plot(np.subtract(F435W3[age3],  F555W3[age3]),  F555W3[age3],  
-           'b-.', label = 'Z = 0.' + name3[1:-7] )#'Age = 10$^{'+ str(IsoAge3) +'}$ yrs')
+           'k--', label = 'Age = 10$^{'+ str(IsoAge2) +'}$ yrs') #'Z = 0.' + name2[1:-7] )#
+#c1plt.plot(np.subtract(F435W3[age3],  F555W3[age3]),  F555W3[age3],  
+#          'b-.', label = 'Z = 0.' + name3[1:-7] )#'Age = 10$^{'+ str(IsoAge3) +'}$ yrs')
            
            
            
@@ -297,11 +299,11 @@ plt.ylabel("M$_{F814W}$ (mag)",fontdict = font)
 
 
 c2plt.plot(np.subtract(F625W[age],  F814W[age]),  F814W[age],  
-           'g:' , label = 'Z = 0.' + name[1:-7] )# 'Age = 10$^{'+ str(IsoAge) +'}$ yrs') 
+           'g:' , label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs') #'Z = 0.' + name[1:-7] )#
 c2plt.plot(np.subtract(F625W2[age2],  F814W2[age2]),  F814W2[age2],  
-           'k--', label = 'Z = 0.' + name2[1:-7] )# 'Age = 10$^{'+ str(IsoAge2) +'}$ yrs') 
-c2plt.plot(np.subtract(F625W3[age3],  F814W3[age3]),  F814W3[age3],  
-           'b-.', label = 'Z = 0.' + name3[1:-7] )# 'Age = 10$^{'+ str(IsoAge3) +'}$ yrs') 
+           'k--', label = 'Age = 10$^{'+ str(IsoAge2) +'}$ yrs') #'Z = 0.' + name2[1:-7] )#
+#c2plt.plot(np.subtract(F625W3[age3],  F814W3[age3]),  F814W3[age3],  
+#           'b-.', label = 'Z = 0.' + name3[1:-7] )# 'Age = 10$^{'+ str(IsoAge3) +'}$ yrs') 
 
 ###########################################################################                         
 #plt.annotate('', xy=(1.99,-6), xycoords = 'data',
@@ -402,6 +404,6 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'we6'+ '.png'
+figname = title + '_' + 'we13'+ '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname

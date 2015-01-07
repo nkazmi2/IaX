@@ -123,7 +123,7 @@ dmod     = 31.33
 xsn      = 3247.539
 ysn      = 3419.971
 #radius   = [10.342,17.24,23.00,34.47,50.556] # 450,750,1000,1500,2200
-radius   = [101]
+radius   = [200]
 #"""
 ##################### 2008ha ######################
 """
@@ -298,7 +298,7 @@ print "Filter bad sources...."
 print "Looking in " + folder
 
 if (folder == "SN2008GE"):   
-    identify = pyregion.open(folder + '/sn3.5.reg') #sn08ge
+    identify = pyregion.open(folder + '/sn3.5good.reg') #sn08ge
     r = pyregion.open(folder + '/sn3.5coord.reg')
     #identify = pyregion.open(folder + '/sn2008ge_3good.reg') #sn08ge
     #r = pyregion.open(folder + '/sn2008ge_coord3.reg')
