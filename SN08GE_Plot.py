@@ -198,8 +198,8 @@ gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
 
 #fig1.suptitle('CMD for SN 2008ge',fontdict = font, size=15)
 
-fig1.suptitle(title + ': CMD with S/N >= 3.5,' + ' Z = 0.' + name[2:-9]
-            + ' & Z = 0.' + name2[2:-9],
+fig1.suptitle(title + ': CMD with S/N >= 3.5,' + ' Z = 0.0' + name[2:-9]
+            + ' & Z = 0.0' + name2[2:-9],
               fontdict = font, size=15)
 ###########################################################################
 c1plt = plt.subplot2grid((2,2), (0,0), rowspan = 2)

@@ -8,7 +8,7 @@ Created on Thu Oct 16 13:51:48 2014
 import numpy as np
 import csv
 import matplotlib.pyplot as plt
-
+from scipy import interpolate
 ########################################################################
 
 crimefile = open('Abundances.txt', 'r')
@@ -41,23 +41,11 @@ hydro = np.array(map(float, hydro))
 errfe = np.array(map(float, errfe))
 errhy = np.array(map(float, errhy))
 
-#print errfe[468] 
-#print type(errfe[468])
-#print type(np.float64('nan'))
-#print (errfe[468] == errfe[468])
-#print errfe[468]
-#print errhy
-#real = np.where(( errfe == float('nan')) & (errhy == float('nan')) )
-#real = np.where(( errfe != ' nan  ') & (errhy != ' nan  ') )
-#print len(fe5270)
-#print len(fe5270[real])
-
 ########################################################################
 
 layoutfile = open('Template2.txt', 'r')
 read  = csv.reader(layoutfile)
 LayRows = [line for line in read]
-name      = []
 Hbeta     = []
 Hbetao    = []
 Hbetap    = []
@@ -72,7 +60,6 @@ Z_0_22 = []
 met    = []
 age    = []
 for j in xrange(len(LayRows)):
-    #name.append(LayRows[j][0])
     met.append(LayRows[j][0][:-7])
     age.append(LayRows[j][0][14:])
     Hbeta.append(LayRows[j][18])
@@ -80,78 +67,147 @@ for j in xrange(len(LayRows)):
     Hbetap.append(LayRows[j][20])
     layFe5270.append(LayRows[j][28])
 
-
 metal     = np.array(met)
+AGE       = np.array(age)
 Hbeta     = np.array(map(float, Hbeta))
 Hbetao    = np.array(map(float, Hbetao))
 Hbetap    = np.array(map(float, Hbetap))
 layFe5270 = np.array(map(float, layFe5270))
 
-#print metal[np.where(metal == 'Mun1.30Zp0.00T')]
-Z_2_32 = np.where(metal == 'Mun1.30Zm2.32T')
-Z_1_71 = np.where(metal == 'Mun1.30Zm1.71T')
-Z_1_31 = np.where(metal == 'Mun1.30Zm1.31T')
+#Z_2_32 = np.where(metal == 'Mun1.30Zm2.32T')
+#Z_1_71 = np.where(metal == 'Mun1.30Zm1.71T')
+#Z_1_31 = np.where(metal == 'Mun1.30Zm1.31T')
 Z_0_71 = np.where(metal == 'Mun1.30Zm0.71T')
 Z_0_40 = np.where(metal == 'Mun1.30Zm0.40T')
 Z_0_00 = np.where(metal == 'Mun1.30Zp0.00T')
 Z_0_22 = np.where(metal == 'Mun1.30Zp0.22T')
 
-#print metal[Z_0_22]
-#print layFe5270[Z_0_22]
-
-#Z_2_32 = np.where(name[0:6] == '2.32')
-#Z_1_71 = np.where(name[0:23] == '1.71')
-#Z_1_31 = np.where(name[24:47] == '1.31')
-#Z_0_71 = np.where(name[48:72] == '0.71')
-#Z_0_40 = np.where(name[73:97] == '0.40')
-#Z_0_00 = np.where(name[98:123] == '0.00')
-#Z_0_22 = np.where(name[124:147] == '0.22')
-
-#print layFe5270[Z_1_71]
-#print layFe5270[Z_1_31]
-#print layFe5270[Z_0_71]
-#print layFe5270[Z_0_40]
-#print layFe5270[Z_0_00]
-#print layFe5270[Z_0_22]
-
-#Hbeta     = np.array(map(float, Hbeta))
-#Hbetao    = np.array(map(float, Hbetao))
-#Hbetap    = np.array(map(float, Hbetap))
-#layFe5270 = np.array(map(float, layFe5270))
+#a = np.where(AGE == '00.0631')
+#b = np.where(AGE == '00.0708')
+#c = np.where(AGE == '00.0794')
+#d = np.where(AGE == '00.0891')
+#e = np.where(AGE == '00.1000')
+#f = np.where(AGE == '00.1122')
+#g = np.where(AGE == '00.1259')
+#h = np.where(AGE == '00.1413')
+#i = np.where(AGE == '00.1585')
+#j = np.where(AGE == '00.1778')
+#k = np.where(AGE == '00.1995')
+#l = np.where(AGE == '00.2239')
+#m = np.where(AGE == '00.2512')
+#n = np.where(AGE == '00.2818')
+#o = np.where(AGE == '00.3162')
+#p = np.where(AGE == '00.3548')
+#q = np.where(AGE == '00.3981')
+#r = np.where(AGE == '00.4467')
+#s = np.where(AGE == '00.5012')
+#t = np.where(AGE == '00.5623')
+#u = np.where(AGE == '00.6310')
+#v = np.where(AGE == '00.7079')
+#w = np.where(AGE == '00.7943')
+#x = np.where(AGE == '00.8913')
+#y = np.where(AGE == '01.0000')
+#z = np.where(AGE == '01.1220')
+#aa = np.where(AGE == '01.2589')
+#ba = np.where(AGE == '01.4125')
+#ca = np.where(AGE == '01.5849')
+#da = np.where(AGE == '01.7783')
+#ea = np.where(AGE == '01.9953')
+#fa = np.where(AGE == '02.2387')
+#ga = np.where(AGE == '02.5119')
+#ha = np.where(AGE == '02.8184')
+#ia = np.where(AGE == '03.1623')
+#ja = np.where(AGE == '03.5481')
+#ka = np.where(AGE == '03.9811')
+#la = np.where(AGE == '04.4668')
+#ma = np.where(AGE == '05.0119')
+#na = np.where(AGE == '05.6234')
+oa = np.where(AGE == '06.3096')
+pa = np.where(AGE == '07.0795')
+qa = np.where(AGE == '07.9433')
+ra = np.where(AGE == '08.9125')
+sa = np.where(AGE == '10.0000')
+ta = np.where(AGE == '11.2202')
+ua = np.where(AGE == '12.5893')
+va = np.where(AGE == '14.1254')
+wa = np.where(AGE == '15.8489')
+xa = np.where(AGE == '17.7828')
+zz = np.where((AGE == '06.3096') | (AGE == '07.0795') | (AGE == '07.9433')
+            | (AGE == '08.9125') | (AGE == '10.0000') | (AGE == '11.2202')
+            | (AGE == '12.5893') | (AGE == '14.1254') | (AGE == '15.8489')
+            | (AGE == '17.7828'))
 
 ########################################################################
-
 
 print "Showin Sesame"
 plt.xlabel("Fe 5270")
 plt.ylabel("H Beta")
-#plt.errorbar(fe5270[real],hydro[real],errfe[real], errhy[real],
-#             ecolor="k", marker=None,linestyle="None") 
-#plt.scatter(fe5270,hydro,c='k')
-#plt.plot(layFe5270,Hbeta,c='k')
-plt.plot(layFe5270[Z_2_32],Hbeta[Z_2_32],label = "[M/H] = -2.32", c='k',marker='o')
-plt.plot(layFe5270[Z_1_71],Hbeta[Z_1_71],label = "[M/H] = -1.71", c='r',marker='o')
-plt.plot(layFe5270[Z_1_31],Hbeta[Z_1_31],label = "[M/H] = -1.31",c='y',marker='o')
-plt.plot(layFe5270[Z_0_71],Hbeta[Z_0_71],label = "[M/H] = -0.71",c='g',marker='o')
-plt.plot(layFe5270[Z_0_40],Hbeta[Z_0_40],label = "[M/H] = -0.40",c='b',marker='o')
-plt.plot(layFe5270[Z_0_00],Hbeta[Z_0_00],label = "[M/H] = 0.00",c='c',marker='o')
-plt.plot(layFe5270[Z_0_22],Hbeta[Z_0_22],label = "[M/H] = 0.22",c='m',marker='o')
 
 
-#plt.plot(layFe5270[0:5],Hbeta[0:5],label = "[M/H] = -2.32", c='k',marker='o')
-#plt.plot(layFe5270[6:53],Hbeta[6:53],label = "[M/H] = -1.71", c='r',marker='o')
-#plt.plot(layFe5270[54:103],Hbeta[54:103],label = "[M/H] = -1.31",c='y',marker='o')
-#plt.plot(layFe5270[104:153],Hbeta[104:153],label = "[M/H] = -0.71",c='g',marker='o')
-#plt.plot(layFe5270[154:203],Hbeta[154:203],label = "[M/H] = -0.40",c='b',marker='o')
-#plt.plot(layFe5270[204:254],Hbeta[204:254],label = "[M/H] = 0.00",c='c',marker='o')
-#plt.plot(layFe5270[255:303],Hbeta[255:303],label = "[M/H] = 0.22",c='m',marker='o')
+#plt.plot(layFe5270[a],Hbeta[a], c='k',marker='o')
+#plt.plot(layFe5270[b],Hbeta[b], c='k',marker='o')
+#plt.plot(layFe5270[c],Hbeta[c], c='k',marker='o')
+#plt.plot(layFe5270[d],Hbeta[d], c='k',marker='o')
+#plt.plot(layFe5270[e],Hbeta[e], c='k',marker='o')
+#plt.plot(layFe5270[f],Hbeta[f], c='k',marker='o')
+#plt.plot(layFe5270[g],Hbeta[g], c='k',marker='o')
+#plt.plot(layFe5270[h],Hbeta[h], c='k',marker='o')
+#plt.plot(layFe5270[i],Hbeta[i], c='k',marker='o')
+#plt.plot(layFe5270[j],Hbeta[j], c='k',marker='o')
+#plt.plot(layFe5270[k],Hbeta[k], c='k',marker='o')
+#plt.plot(layFe5270[l],Hbeta[l], c='k',marker='o')
+#plt.plot(layFe5270[m],Hbeta[m], c='k',marker='o')
+#plt.plot(layFe5270[n],Hbeta[n], c='k',marker='o')
+#plt.plot(layFe5270[o],Hbeta[o], c='k',marker='o')
+#plt.plot(layFe5270[p],Hbeta[p], c='k',marker='o')
+#plt.plot(layFe5270[q],Hbeta[q], c='k',marker='o')
+#plt.plot(layFe5270[r],Hbeta[r], c='k',marker='o')
+#plt.plot(layFe5270[s],Hbeta[s], c='k',marker='o')
+#plt.plot(layFe5270[t],Hbeta[t], c='k',marker='o')
+#plt.plot(layFe5270[u],Hbeta[u], c='k',marker='o')
+#plt.plot(layFe5270[v],Hbeta[v], c='k',marker='o')
+#plt.plot(layFe5270[w],Hbeta[w], c='k',marker='o')
+#plt.plot(layFe5270[x],Hbeta[x], c='k',marker='o')
+#plt.plot(layFe5270[y],Hbeta[y], c='k',marker='o')
+#plt.plot(layFe5270[z],Hbeta[z], c='k',marker='o')
+#plt.plot(layFe5270[aa],Hbeta[aa], c='k',marker='o')
+#plt.plot(layFe5270[ba],Hbeta[ba], c='k',marker='o')
+#plt.plot(layFe5270[ca],Hbeta[ca], c='k',marker='o')
+#plt.plot(layFe5270[da],Hbeta[da], c='k',marker='o')
+#plt.plot(layFe5270[ea],Hbeta[ea], c='k',marker='o')
+#plt.plot(layFe5270[fa],Hbeta[fa], c='k',marker='o')
+#plt.plot(layFe5270[ga],Hbeta[ga], c='k',marker='o')
+#plt.plot(layFe5270[ha],Hbeta[ha], c='k',marker='o')
+#plt.plot(layFe5270[ia],Hbeta[ia], c='k',marker='o')
+#plt.plot(layFe5270[ja],Hbeta[ja], c='k',marker='o')
+#plt.plot(layFe5270[ka],Hbeta[ka], c='k',marker='o')
+#plt.plot(layFe5270[la],Hbeta[la], c='k',marker='o')
+#plt.plot(layFe5270[ma],Hbeta[ma], c='k',marker='o')
+#plt.plot(layFe5270[na],Hbeta[na], c='k',marker='o')
+plt.plot(layFe5270[oa][-4:],Hbeta[oa][-4:], c='k',marker='o')
+plt.plot(layFe5270[pa][-4:],Hbeta[pa][-4:], c='k',marker='o')
+plt.plot(layFe5270[qa][-4:],Hbeta[qa][-4:], c='k',marker='o')
+plt.plot(layFe5270[ra][-4:],Hbeta[ra][-4:], c='k',marker='o')
+plt.plot(layFe5270[sa][-4:],Hbeta[sa][-4:], c='k',marker='o')
+plt.plot(layFe5270[ta][-4:],Hbeta[ta][-4:], c='k',marker='o')
+plt.plot(layFe5270[ua][-4:],Hbeta[ua][-4:], c='k',marker='o')
+plt.plot(layFe5270[va][-4:],Hbeta[va][-4:], c='k',marker='o')
+plt.plot(layFe5270[wa][-4:],Hbeta[wa][-4:], c='k',marker='o')
+plt.plot(layFe5270[xa][-4:],Hbeta[xa][-4:], c='k',marker='o')
 
-#plt.plot(layFe5270[0:23],Hbeta[0:23],label = "[M/H] = -1.71", c='r',marker='o')
-#plt.plot(layFe5270[24:47],Hbeta[24:47],label = "[M/H] = -1.31",c='y',marker='o')
-#plt.plot(layFe5270[48:72],Hbeta[48:72],label = "[M/H] = -0.71",c='g',marker='o')
-#plt.plot(layFe5270[73:97],Hbeta[73:97],label = "[M/H] = -0.40",c='b',marker='o')
-#plt.plot(layFe5270[98:123],Hbeta[98:123],label = "[M/H] = 0.00",c='c',marker='o')
-#plt.plot(layFe5270[124:147],Hbeta[124:147],label = "[M/H] = 0.22",c='m',marker='o')
+
+#plt.plot(np.sort(layFe5270[zz][-40:]),Hbeta[zz][-40:], c='c',marker='o')
+### AGE -> ta ua va wa xa
+### met -> Z_0_40, Z_0_00
+
+#plt.plot(layFe5270[Z_2_32],Hbeta[Z_2_32],label = "[M/H] = -2.32", c='k',marker='o')
+#plt.plot(layFe5270[Z_1_71],Hbeta[Z_1_71],label = "[M/H] = -1.71", c='r',marker='o')
+#plt.plot(layFe5270[Z_1_31],Hbeta[Z_1_31],label = "[M/H] = -1.31",c='y',marker='o')
+plt.plot(layFe5270[Z_0_71][-10:],Hbeta[Z_0_71][-10:],label = "[M/H] = -0.71",c='g',marker='o')
+plt.plot(layFe5270[Z_0_40][-10:],Hbeta[Z_0_40][-10:],label = "[M/H] = -0.40",c='b',marker='o')
+plt.plot(layFe5270[Z_0_00][-10:],Hbeta[Z_0_00][-10:],label = "[M/H] =  0.00",c='c',marker='o')
+plt.plot(layFe5270[Z_0_22][-10:],Hbeta[Z_0_22][-10:],label = "[M/H] =  0.22",c='m',marker='o')
+
 plt.errorbar(fe5270[109],hydro[109],errfe[109], errhy[109],
              ecolor="k", marker=None,linestyle="None")                 
 plt.scatter(fe5270[109],hydro[109],c='k',marker='D')
@@ -159,3 +215,60 @@ plt.scatter(fe5270[109],hydro[109],c='k',marker='D')
 l = plt.legend(prop = {'family' : 'serif'},loc=1)
 l.draw_frame(False)
 plt.show()
+
+########################################################################
+print "Bivariate Interpolation over a rectangular grid"
+
+x   = np.array([#06.3096, 
+                #07.0795, 
+                #07.9433, 
+                #08.9125, 
+                #10.0000,
+                11.2202, 
+                12.5893, 
+                14.1254, 
+                15.8489, 
+                17.7828])
+y   = np.array([#-.71, 
+                -0.40, 
+                 0.00, 
+                 0.22])
+zfe = np.array([ 
+   #layFe5270[oa][-4:],
+   #layFe5270[pa][-4:],
+   #layFe5270[qa][-4:],
+   #layFe5270[ra][-4:],
+   #layFe5270[sa][-4:],
+   layFe5270[ta][-3:],
+   layFe5270[ua][-3:],
+   layFe5270[va][-3:],
+   layFe5270[wa][-3:],
+   layFe5270[xa][-3:]])
+zhb = np.array([ 
+   #Hbeta[oa][-4:],
+   #Hbeta[pa][-4:],
+   #Hbeta[qa][-4:],
+   #Hbeta[ra][-4:],
+   #Hbeta[sa][-4:],
+   Hbeta[ta][-3:],
+   Hbeta[ua][-3:],
+   Hbeta[va][-3:],
+   Hbeta[wa][-3:],
+   Hbeta[xa][-3:]])
+
+print "Creating array and grid"
+BIV = interpolate.RectBivariateSpline(x, y, zfe, kx=2, ky=2, s=0)
+print "Using Fe5270 values as z"
+print "Coefficients:"
+print BIV.get_coeffs()
+print BIV([fe5270[109]],[hydro[109]])
+print BIV([hydro[109]],[fe5270[109]])
+
+BHb = interpolate.RectBivariateSpline(x, y, zhb, kx=2, ky=2, s=0)
+print "Using H Beta values as z"
+print "Coefficients:"
+print BHb.get_coeffs()
+print BHb([fe5270[109]],[hydro[109]])
+print BHb([hydro[109]],[fe5270[109]])
+
+print "NGC 1527 Fe5270 =",fe5270[109], "& Hbeta values =",hydro[109]
