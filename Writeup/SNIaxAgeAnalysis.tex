@@ -1,0 +1,502 @@
+\documentclass[preprint]{aastex}
+\usepackage{amsmath,natbib}
+%\usepackage{cite}
+\usepackage{graphicx}
+\usepackage[caption=false]{subfig}
+
+%\setcitestyle{authoryear}
+%\usepackage{cite}
+%\documentstyle[natbib209]
+%\citestyle{aa}
+%\newcommand{\vdag}{(v)^\dagger}
+%\newcommand{\myemail}{nkazmi2@illinois.com}
+%{***YOUR EMAIL HERE***}
+
+\shorttitle{Supernovae Iax Age Analysis}
+%{***PUT AN SHORTENED TITLE HERE***}
+\shortauthors{Kazmi, N. F. et al.}
+
+\begin{document}
+
+\title{Supernovae Iax Age Analysis}
+%{***PUT TITLE HERE***}
+
+\author{Novarah F. Kazmi\altaffilmark{1}, Ryan J. Foley\altaffilmark{1}, Curtis McCully\altaffilmark{2}}
+\altaffiltext{1}{Astronomy Department, University of Illinois at Urbana-Champaign,
+1002 W. Green Street, Urbana, Illinois 61801, USA.}
+\altaffiltext{2}{Department of Physics, University of California, Santa Barbara, CA 93106}
+%{Department of Physics and Astronomy, Rutgers, the State University
+%of New Jersey, 136 Frelinghuysen Road, Piscataway, New Jersey
+%08854, USA}
+%\author{***FIRST AUTHOR'S LAST NAME, FIRST INITIAL MIDDLE INITIAL(?)***}
+%\affil{***FIRST AUTHOR'S DEPARTMENT, INSTITUTION, CITY, STATE CODE ZIP 
+%CODE***}
+%\author{***SECOND AUTHOR'S LAST NAME, FIRST INITIAL MIDDLE 
+%INITIAL(?)***}
+%\affil{***SECOND AUTHOR'S DEPARTMENT, INSTITUTION, CITY, STATE CODE ZIP 
+%CODE***}
+%\author{***THIRD AUTHOR'S LAST NAME, FIRST INITIAL MIDDLE INITIAL(?)***}
+%\affil{***THIRD AUTHOR'S DEPARTMENT, INSTITUTION, CITY, STATE CODE ZIP 
+%CODE***}
+%repeat as necessary
+
+\begin{abstract}
+\noindent Rewriting Abstract%We present an analysis of Supernovae (SNe) 2008ge, 2008ha, 2010ae, 
+%2010el. These SNe were observed using the Hubble Space Telescope (HST) in the
+%%f435w, f555w, f625w, and f814w wavebands.  
+%optical wavebands.
+%These SNe are catagorized as Type Iax, a distinct category from Type Ia or Type II. 
+%Iax are notible for their low spectra luminosity and low ejecta velocities. 
+%The stellar populations around these four SNe were analyzed to understand
+% the ages of the SNe. 
+%There is a correlation between the ages of the four separate SNe. 
+%The details of the analysis include an examination of wavebands ; 
+%adjusting the spectra for host and Milky Way (MW) reddening; 
+%and filtering out sources with respect to their crowding, sharpness, and
+% roundness features.
+%%The occurance and trend in ages shows that IaX are a common feature
+%% for all SNe.
+% Further study needs to be done to have conclusive results. \\
+
+%\smallskip
+\noindent\textit{Key words}: supernovae: general - supernovae: individual (SN 2008ge, SN 2008ha, 
+SN 2010ae, SN 2010el)%, SN 2012Z, SN 2014dt)
+\end{abstract}
+
+\section{Introduction}
+A relatively new developement in Supernovae (SNe) classification 
+has been the Type Iax Supernovae (SNe Iax). 
+These are separate from Type Ia SNe (no hydrogen lines, thermonuclear explosions) 
+and Type II SNe (promenint hydrogen features, core-collapse), 
+%SNe which are classified by their optical spectra then higlighted by the detonation mechanisms.
+Iax are theorized to be thermonuclear explosions of Carbon-Oxygen
+White Dwarf (C/O WD) and they share spectral properties with Ia SNe; however,
+they have unique features which separate them from the traditional Ia SNe \citep{fol1304}. 
+
+The differences between Ia and Iax begin with their luminosities.
+Iax SNe possess a less luminous light curve, 
+their absolute magnitudes fall between a range of 
+``$-14.2 \leq M_{V,peak} \leq -18.4$ mag''
+ \citep{fol1304}.
+%The Iax rise-time rate is slightly larger than their Ia counterparts, 
+%, a slow decline rate,
+% NO CLEAR IDEA OF WHAT IS CORRECT FOR RISE/DECLINE RATE
+%SOME ARE FAST, SOME ARE SLOW :\
+The Iax lack an observable second maxima in the near-infared (NIR),
+which would be expected in Type Ia \citep{li03}. 
+They have a lower ejecta velocity and do not show hydrogen and helium in their
+ spectra.
+The appearance of hydrogen and helium only occurs when there are environmental factors, such as  
+a circumstellar disks or intermediate mass elements donating the material \citep{fol09}. 
+Though the explosion mechanics of Iax are still unknown, the most accurate model
+predicts a partial deflagration from the accretion of a Helium star 
+onto a C/O WD \citep{krom13, fol1304}.
+
+The host galaxies environments are significant because
+the metallicity of the host galaxy affects the luminosity and the age of the
+SNe explosion.
+Iax have been identified in predominately late-time galaxies, 
+but have not been observed in elliptical galaxies \citep{fol1304}. 
+This is different from Iax, which are impartial to the galaxy type \citep{van92}. 
+We would expect the SNe in more massive galaxies to have a brighter 
+luminosity than SNe from smaller galaxies  \citep{fol1305}. 
+Metallicity comes into play because progenitors with high 
+metallicity results in lower luminosity light curves for their SNe \citep{tim03}. 
+However, we know these from studies of Ia SNe, we can only vaguely frame Iax SNe with this information. 
+%To truely understand the behaviors of Iax, we study specific parameters. 
+ 
+%INCLUDE: Information about the affects host galaxies have on SNe.
+%This will be useful when comparing the ages and seeing if the
+%galaxies were important factors (metallicity and luminosity)
+
+Though some parameters and features are known, there is still a lot 
+that is not understood about Iax SNe.
+The parameter that will be examined in this paper is the ages 
+of the surrounding stellar population of these Iax.
+By studying the ages of the remaining stars around the SNe,
+we can predict the age of the Iax prior to detonation and 
+see if there is a correlation of ages.  
+%; however, SNe Iax are different from SNe Ia. 
+%In the recent decade there has been an increase of SNe Ia analysis. 
+%These studies reveal a range of behaviours and spectral features. 
+
+In this analysis we study SN2008ge, SN2008ha, 
+SN2010ae, SN2010el, SN2012Z, and SN2014dt. 
+The focus was on creating an age limit for the stellar populations around these SNe.
+The stellar population around SN2008ha was analysed in fig. 4 of \citet{fol1409}, 
+the model recreated in this paper so as to apply the same method 
+of analysis to SN2008ge, SN2010ae, SN2010el, SN2012Z, and SN2014dt. 
+
+In this paper, we will discuss our findings of Iax stellar populations.
+% (this is a weird sentence).
+In section 2, we will discuss the Spectroscopy and Photometry of these SNe .
+%and compare them with earlier results. 
+We will discuss the methods of our analysis in section 3. 
+In section 4, we will discuss our contraints and results.
+The summary of this project is in section 5. 
+The World Coordinate System (WCS) is used throughout this analysis. 
+%Reddening shift of the MilkyWay and host galaxies are used
+%to measure the extinction of the spectra.
+
+%(SNe Ia), have been studied in depth, 
+%moreso in the last decade due to the increase in technology and 
+%an interest in the accelerating universe.
+%Type Ia are used to measure the rate of expansion of the universe
+%(Perlmutter et al. 1999) because of their near uniform light curves
+%and relatively similar spectra. 
+%However, not all thermonuclear explosions share this behaviour. 
+%Continued study of thermonuclear explosions reveal that they are not a "simple"
+% catagory of SNe, they show a wide range of behaviours and spectral features. 
+%Continued study of thermonuclear explosions reveal a range of behaviours 
+%and spectral features. 
+
+
+%The behaviors of SNe with peculiar features were cataloged as SNe Iax.
+%The unique spectral features and low luminosity lightcurves require a revised class
+%thermonuclear explosions. 
+%Therefore, SNe Iax are a separate category from SNe Ia.
+%The unique features of Iax indicate that they are not a subset of Ia, 
+%but should instead be considered their own class. 
+%The differences between Ia and Iax indicate that 
+%However, Iax are predicted to be a unique "set" of thermonuclear explosions. 
+%While the mechanics of this model have not been finalized, 
+%the spectra and lightcurves of Iax show that it is a distinct type of SNe
+%explosion, and not a subset of Ia. 
+
+%Earlier literature called Iax, 'SN2002cx-like'. SN2002cx was examined
+%because of it's [peculiar characteristics.] 
+%The current class of Iax include 25 SNe.
+%These SNe have a range of behaviors but do have low ejecta velocities, low light 
+%curve luminosities, and lack the (usual) Ia features.  
+
+
+
+%WHAT OTHER PAPERS HAVE STUDIED THIS - citations
+
+\section{Class Members}
+The catalog of SNe is growing and we are able to identify new SNe 
+as Iax. Of the list of identified Iax SNe, we will focus on the following:  
+SNe 2008ge, 2008ha, 2010ae, and 2010el. %, 2012Z, and 2014dt. 
+
+These SNe are representative of the variety of environments Iax
+occur in. 
+The host galaxies vary from S0 to spiral galaxies. 
+Using these unique environments we will be able to 
+see the affects of the environment on these SNe. 
+%The increase in new SNe data shows the variations in SNe spectra. 
+%The classification of SNe was created when the data regarding Ia and II %
+%SN showed unusual variations. 
+%SN Iax are a result of the new classifications, Iax had a much lower
+% light curve, (exact value), and other stuff ().  
+%The current list of SNe Type Iax contain 25 SNe,
+%of that list, 6 SNe were chosen to study in depth. 
+% was determined to be a class Iax 
+% Parameters
+
+%2002cx and 2005hk were blueshifted velocity ,
+% 2008A redshifted velocity because it had a unique velocity,
+% this implies %that velocity shifts are unique for each SN
+%5.  http://adsabs.harvard.edu/abs/2013arXiv1309.4457M
+
+\begin{table}[ht]
+\begin{center}
+\caption{Supernovae Host Galaxies} 
+\begin{tabular}{l*{6}{c}r}
+\hline\hline
+SN name & R.A. (J2000) & Dec. (J2000) & Host Galaxy  & Morphology & Reference  \\% &?  & ?\\
+\hline
+2008ge   & 04h 08m 24.68s & -47d 53m 47.4s    & NGC 1527           & SAB0$^{-r}$     & 1 \\%& ? &?\\
+2008ha   & 23h 34m 52.7s   & +18d 13m 35s     & UGC 12682         &  Im                    & 1 \\%& ? &?\\
+2010ae   & 07h 15m 54.6s   & -57d 20m 37s      & ESO 162- G 017  & Sb? pec edge-on & 1 \\%& ? &?\\
+2010el    & 04h 19m 58.8s   & -54d 56m 39s      & NGC 1566           & SAB(s)bc           & 1 \\%& ? &?\\
+%2012Z     & 03h 22m 05.3s   & -15d 23m 16s      & NGC 1309           & SA(s)bc             & 1 \\%& ? &?\\
+%2014dt    & 12h 21m 57.57s  & +04d 28m 18.5s & M61 or NGC 4303 & SAB(rs)bc         & 1 \\%& ? &?\\
+\hline
+\end{tabular}
+\label{tab:multicol}
+\end{center}
+\tablenotemark{{\bf References.}(1)}
+%\tablenotetext{ALPHA TAG}{TEXT}
+\end{table}
+%(1) 
+%RC3.9
+%1991 vol. p. 
+%DE VAUCOULEURS, G., DE VAUCOULEURS, A., CORWIN JR., H.G., BUTA, R. J. PATUREL, G., AND FOUQUE, P.
+%THIRD REFERENCE CATALOGUE OF BRIGHT GALAXIES, VERSION 3.9 
+
+\subsection{SN 2008ge}
+
+\begin{figure}[htp]
+    \centering
+	%%%%%%%%%%%%trim = left bottom right top
+    \includegraphics[trim = 0mm 150mm 0mm 0mm, clip, scale =0.4]{../Figures/sn08ge_Galaxy.png}
+    \caption{False color image of NGC 1527, host galaxy for SN 2008ge.We present a false color image, F814W, F625W, and F435W, red, green, and blue respectively.}%make this more original
+    \label{08gegal}
+\end{figure}
+
+\begin{figure}[htp]
+  \centering
+
+  \subfloat[F435W waveband]{\label{figur:r435}\includegraphics[width=80mm]{../Figures/sn08ge_Regions435.png}}
+  \vspace*{\fill}  
+  \subfloat[F555W waveband]{\label{figur:r555}\includegraphics[width=80mm]{../Figures/sn08ge_Regions555.png}}
+  \\
+  \subfloat[F625W waveband]{\label{figur:r625}\includegraphics[width=80mm]{../Figures/sn08ge_Regions625.png}}
+  \vspace*{\fill}  
+  \subfloat[F814W waveband]{\label{figur:r814}\includegraphics[width=80mm]{../Figures/sn08ge_Regions814.png}}
+   \label{fig:Regions08ge}\caption{Surrounding Region of SN 2008ge}
+\end{figure}
+
+\begin{figure}[htp]
+  \centering
+
+  \subfloat[F435W waveband]{\label{figur:s435}\includegraphics[width=80mm]{../Figures/sn08ge_source435.png}}
+  \vspace*{\fill}
+  \subfloat[F555W waveband]{\label{figur:s555}\includegraphics[width=80mm]{../Figures/sn08ge_source555.png}}
+  \\
+  \subfloat[F625W waveband]{\label{figur:s625}\includegraphics[width=80mm]{../Figures/sn08ge_source625.png}}
+  \vspace*{\fill}  
+  \subfloat[F814W waveband]{\label{figur:s814}\includegraphics[width=80mm]{../Figures/sn08ge_source814.png}}
+  \label{fig:Sources08ge}\caption{SN 2008ge Location}
+\end{figure}
+
+The first obervations of SN 2008ge were taken by
+Chase on 2008 October 8.27 in NGC 1527 \citep{pig08}. 
+NGC is a class SAB0$^{-r}$, S0, galaxy, a lenticular galaxy. 
+SN 2008ge was observed after its maxium light, the observered peak was 
+$M_{V,peak} = -17.4$ mag.% \citep{fol1011}.
+Previous observations of NGC 1527 do not show 
+signs of star formation and a lack massive stars near 
+position of the SNe. 
+This along with a "large generated 56Ni mass all suggest a WD progenitor"  \citep{fol1011}.
+
+
+\subsection{SN 2008ha}
+
+\begin{center}
+\begin{figure}
+\begin{minipage}[c][5cm][t]{.52\textwidth}
+  %\vspace*{\fill}
+  %\centering
+  \includegraphics[scale = 0.5]{../Figures/sn08ha_Galaxy.png}
+  \label{fig:08hagal}
+\end{minipage}%
+\begin{minipage}[c][5cm][t]{.49\textwidth}
+   %\vspace*{\fill}
+  %\centering
+  \includegraphics[scale = 1.539]{../Figures/sn08ha_Regions2.png}
+  \label{fig:r08ha}\par%\vfill
+  \includegraphics[scale = 1.539]{../Figures/sn08ha_Source2.png}
+  \label{fig:s08ha}
+\end{minipage}
+\caption{These are false color images of UGC 12682, the host galaxy of SN 2008ha. The colors
+red, green and blue correspond to the F814W, F625W, and F435W wavebands respectively. \textit{Left:} This is a }
+
+\end{figure}  
+\end{center}
+SN 2008ha was first observed 2008 November 7.17 in UGC 12682, 
+an Im type highly irregular galaxy, by POSS \citep{puc08}.
+The first observations of SN 2008ha classified it as 
+a Ia SN with properties simiar to SN 2002cx-like \citep{fol08}. 
+At its peak SN 2008ha was observed with a $M_{V,peak} = -14$ mag, 
+whereas SN 2002cx was observed at  $M_{V,peak} = -20$ mag. 
+This puts 08ha on the extreme end of this classification. 
+It is less luminous and has one of the smallest ejecta velocity, ~3000$km/s$ lower than SN 2002cx. 
+ \citep{fol09,fol1001,val09}.
+
+%An interesting character. It is an extreme case for IaX because of its low luminosity (-14.21 +/- .15 mag), slower ejecta velocity, KE, and Total Enegy. Maybe had a massive progenitor. This SNe is discussed a lot, how come it wasn't made into it's own class. Compared with 2005E, however 2005E isn't IaX. 
+\begin{centering}
+\subsection{SN 2010ae}
+\begin{figure}
+\begin{minipage}[c][5cm][t]{.6\textwidth}
+  \vspace*{\fill}
+  \centering
+  \includegraphics[scale = 0.5]{../Figures/sn10ae_Galaxy.png}
+  \caption{test figure one}
+  \label{fig:10aegal}
+\end{minipage}%
+\begin{minipage}[c][5cm][t]{.5\textwidth}
+  \vspace*{\fill}
+  \centering
+  \includegraphics[scale = 1.539]{../Figures/sn10ae_Regions2.png}
+  \label{fig:r10ae}\par%\vfill
+  \includegraphics[scale = 1.539]{../Figures/sn10ae_Source2.png}
+  \label{fig:s10ae}
+\end{minipage}
+\end{figure}
+\end{centering}
+SN 2010ae was first observed on 2010 February 23 in ESO 162-G017 \citep{pig10}, a sprial barred galaxy.
+SN 2010ae was initially thought to be a Ia SN; however, that classification
+was later redacted when analysis of its spectra showed strong similarities to
+SN 2008ha, it was then reclassified as SNe Iax \citep{str1003}.
+
+We are observing ESO 162-G017 edge on, we are not sure of the locations of the neighboring stars
+relative to the SNe explosion point. 
+We will consider if these stars are in the forground or if they lie in the same plane as the SNe.
+
+%but these are all considerations we must make in order to understand our analysis.  
+%In this analysis we will be looking at the stellar populations surrounding the SNe point. 
+
+\subsection{SN 2010el}
+
+SN 2010el was first obervered on 2010 June 19 in NGC 1566, 
+an intermediate sprial galaxy \citep{mon10}. 
+It was classified a type Iax because its
+spectra resembled that of SN 2008ha \citep{bes10}.
+
+%\subsection{SN 2012Z}
+
+%SN 2012Z was first observed on 2012 January 29 in NGC 1309,
+%a normal spiral galaxy, by LOSS.
+%SN 2012Z was classified as Iax when initial observations of its spectra
+%displayed properties similar to Iax (Cenko et al. 2012).
+
+%\subsection{SN 2014dt}
+%SN 2014dt was first found on 2014 September 29.8 in M61 (Nakano & Itagaki
+%(2014) a). 
+% It was quickly classified as Type Iax and soon after was  observered with the HST. 
+%The HST was able to collect data soon after the initial discovery. ()
+
+%9. http://adsabs.harvard.edu/abs/2014A%26A...561A.146S  
+%Hα and [Nii] λλ6548, 6583 emission, 12 + log (O/H) = 8.40 ± 0.18 dex
+%O3N2 method suggests an averaged local metallicity of 12 + log(O/H) = 8.34±0.14 dex, where again the quoted uncertainty includes measurement and systematic errors. These oxygen abundance metallicities correspond to 0.52 and 0.44 the known solar metallicity of ∼8.69 dex (Asplund et al. 2009), and so are consistent with the metallicity of the LMC.
+
+\section{Spectroscopy \& Photometry}
+
+This anaysis used photometric images from the Hubble Space Telescope (HST).
+%The HST collected these images using 
+%(HST Info- exposures, camera lens size 
+%and date and time it observed each object.
+%I should include images of the SN discovery- tho not relevant)
+The SNe were observered in the F435W, F555W, F625W, and F814W wavebands. 
+The cosmic rays were removed using the L.A. Cosmic Algorithm,
+the resulting images were used in the remainder of the analysis. 
+
+%SNe 2008ge, 2008ha, 
+%2010ae, 2010el, 2012Z, and 2014dt. 
+% IRAF DAOPHOT p
+
+%This data was collected [DATE] using [type of collection method, ccd stuff,
+%how the images were corrected]. 
+
+%IRAF (Image Reduction and Analysis Facility) is distributed by the National
+%Optical Astronomy Observatory, which is operated by the Association
+%of Universities for Research in Astronomy, Inc., under cooperative agreement
+%with the National Science Foundation.
+
+\section{Methods}
+Catalogs of the surrounding stellar population 
+were generated for each SNe using DolPhot on HST photometric images. 
+The objects in the catalog were then filtered by their 
+S/N, sharp, crowd, and round parameters to identify real sources.
+%The filters included bright and faint sources over specific S/N thresholds, 
+%depending on the environment of the host galaxy. 
+The parameters were adjusted for each SNe environment to extract real stars sources from the catalogs.
+
+We examined the environment around SN 2008ha, its 
+Color Magnitude Diagram (CMD) had been made in Fig 4. of \citet{fol1409}.
+This paper modeled concentric regions of 15, 30, and 45 pix (75, 150, 225 pc)
+around the SNe. 
+This SN was only reddened by the Milky way, there was no host galaxy reddening.
+For SN 2008ha we used $ 12 + Log(O/H) = 8.16, Z = 0.006$ \citep{fol09,tak95}.
+With our catalog of stars, we were able to recover the same
+results as \citet{fol1409}.
+Fig () shows the same sources from different wavebands being plotted
+and a similar age limit. 
+The ages of the stellar population in our paper are in agrement with the earlier paper. 
+%The remaining criteria included it's position, the filters included sources within a radius 
+%100 pixels, though the physical distance is dependent on the SNe being discussed. 
+%The other criteria was the Signal to Noise (S/N), at minimum, 
+%sources had to be above S/N of 3 in at least one waveband. 
+%The sources also needed to have particular Crowding values, for example, 
+%clustered sources may included extended sources, which would not be "good" 
+%sources. The sharpness and roundness was also taken into account. 
+%The sharpness was set to [], and the roundness was set to []. 
+%Using these parameters, we were able to recreate the Color Magnitude Diagram (CMD)
+%of SN 2008ha, figure () from (Foley ...). This study focused on the stars within
+% (15, 30, and 45 pix or 730, 1500, 2200 AU)
+
+SN 2008ge was observed 6.55 arcsec away from the center of it's host galaxy,
+NGC 1527, a bright lenticular galaxy. 
+In order to look at the region of space around the coordinates of the SN, 
+we made a subracted image for each of the wavebands, this was essential in
+properly identifying star-like sources. 
+The subtracted images
+were created by splitting the galaxy into four quadrants, and subtracting 
+cross quadrants. 
+The subtracted images are shown in Figures ~\ref{fig:Regions08ge} \& ~\ref{fig:Sources08ge}, 
+highlighted are the real sources from the catalog. 
+We estimated the metallicity for SN 2008ge to be between 
+$Z = .02$ dex and $Z = .03$ dex, $12 + Log(O/H) = 8.68$  and $12 + Log(O/H) = 8.85$ respectively \citep{pro11}. 
+There was no host galaxy reddening for this SN, though we included Milky Way reddening in our analysis. 
+
+Other than SN 2008ge, we were able to use the lacosmic.fits files in the analysis of SN 2010ae and SN 2010el. 
+Using DolPhot we were able to extract sources from the HST images. 
+Using the new catalogs for SNe 2010ae and 2010el,
+real sources were identified, either through contraints on crowding, sharpness, and roundness,
+or through a visual examination. The results from this analysis will be discussed in the next section. 
+We included both host galaxy and milky way reddening in our final analysis. 
+
+SN 2010ae was obsevered in an edge on galaxy,
+we had to be very careful with the stars we used because it would be hard
+to tell if something was in the plane of the galaxy or if it was somewhere in the foreground. 
+SN 2010ae had a metallicity of $ 12 + Log(O/H) = 8.36, Z = 0.0096$. It was reddened by its host galaxy
+as well as by the milky way. 
+
+SN 2010el was highly reddened by it's host galaxy, we included the reddening vector to demonstrate
+the affects of the host galaxy on the stellar population. 
+This region had an oxygen abundance of $ 12 + Log(O/H) = 8.73, Z = 0.0224.$
+
+%There are different host galaxies environments and thus, different metallicity values. 
+
+
+%The NGC 1527 is bright and identifying sources in the HST images was difficult
+%The catalog was made of S/N fluctuations, which aren't as helpful as you would think.
+%So the catalog was contrained as much as I could reasonably make it. 
+%This meant looking at bright and dim stars (though saying they're stars is really
+%pushing the definition because sometimes it was just a flucuation). 
+%Following that was excluding objects that were within 25pix of the center
+%of the galaxy. This space was not identified well in the catalog. 
+%Using the subtracted images of the wavebands, we are able to see 
+%details of what is happening near center of the galaxy. 
+%After contraining parameters, such as S/N, crowd, sharpness, and roundness, 
+%we also visually searched for sources from the remaining list. 
+%Yes, super tiresome and really tedious. Oh well. 
+%These steps took a region of space with over 1000 sources
+%and reduced it to less than 30. 
+
+
+\section{Discussion \& Results}
+
+
+SNe Iax are a new category of SNe, they include a wide range of SNe with unique parameters.
+%Age was the parameter studied in this paper. 
+The age of the host galaxies can be a factor which separates 
+SNe Ia from Iax.
+By creating CMDs for the neighboring stellar populations,
+we are able to measure the ages of the stars in that region. 
+This allowed us to estimate the age the SN would have been prior to its detonation. 
+
+
+The ages of SNe 2008ge, 2008ha, 2010ae, and 2010el were found to be
+%, 2012Z, and 2014dt 
+19.5-27.5 Myr, 52.5 Myr, 26.3 Myr, 65.0 Myr respectively. 
+From these results, there is spread of ages between Iax. 
+This information indicates that Iax come from young stars, though
+%this tells us is that there is a relation between these SNIax,
+our current set of data only includes 4 values.
+this gives a weak relationship which would be strengthened by recreating this analysis for the remaining SN Iax.
+Further cataloging of Iax will add to the information we have and give us a better model for these types of SNe.  
+
+
+{\it Acknowledgments:} We are grateful to **ACKNOWLEDGEMENTS HERE***.
+
+%\bibliographystyle{apalike}
+%\bibliography{SNeIaxCite}{}
+
+\bibliography{SNeIaxCite}{}
+\bibliographystyle{apalike}%don't know why this works now
+%\bibliographystyle{apj}
+%\bibliographystyle{plainnat}% this one works
+%\bibliographystyle{apacite}
+\end{document}

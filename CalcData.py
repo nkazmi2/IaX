@@ -94,13 +94,13 @@ font = {'family' : 'serif',
         'weight' : 'normal',
         'size'   : 10,
         } 
-
+radius = [5000]
 ################################################### 
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
 #"""
 folder   = "SN2008GE"
-name     = 'sn2008ge_new.phot' 
+name     = 'sn2008ge.phot.out' 
 #name     = 'sn2008ge_20141015_final.out' #'sn2008ge_new.out'renamed for constistancy 
 
 # Magnitude of the Milkyway Galaxy 
@@ -122,8 +122,7 @@ dmod     = 31.33
 # Actual X & Y pixel coordinates of sn
 xsn      = 3247.539
 ysn      = 3419.971
-#radius   = [10.342,17.24,23.00,34.47,50.556] # 450,750,1000,1500,2200
-radius   = [200]
+#radius   = [200]
 #"""
 ##################### 2008ha ######################
 """
@@ -149,7 +148,7 @@ dmod     = 31.64 #31.50 is the value I got from NED
 xsn      = 1736.199
 ysn      = 3171.792
 
-radius   = [50] # 450,750,1000,1500,2200
+#radius   = [50] # 450,750,1000,1500,2200
 """
 ##################### 2010ae ######################
 """
@@ -176,7 +175,7 @@ dmod     = 30.9
 xsn      = 1795.3831# 1796.640
 ysn      = 1931.8080# 1931.995
 
-radius   = [100] # 450,750,1000,1500,2200
+#radius   = [100] # 450,750,1000,1500,2200
 """
 ##################### 2010el ######################
 """    
@@ -203,7 +202,7 @@ dmod     = 30.09
 xsn      = 2418.859
 ysn      = 1570.826
 
-radius   = [100] # 450,750,1000,1500,2200
+#radius   = [100] # 450,750,1000,1500,2200
 """
 ##################### 2012Z ######################
 #dmod = 32.07 (TF)
@@ -370,13 +369,25 @@ print "Make final cuts..."
 #rad = []
 #snr = []
 
-if (folder == "SN2008GE"):
+cut435555.append(np.where((star <= 2) 
+                #& (( snr435 >= 15) & (snr555 >= 15))
+                & (( snr435 >= 10) & (snr555 >= 10))
+                #& (( snr435 >= 5) & (snr555 >= 5))
+                #& (( snr435 >= 3) & (snr555 >= 3))
+                & ((f435mag <= 80) & (f555mag <= 80)) 
+                )) 
+cut625814.append(np.where((star <= 2) 
+                #& (( snr435 >= 15) & (snr555 >= 15))
+                & (( snr435 >= 10) & (snr555 >= 10))
+                #& ((snr625 >= 5) & (snr814 >= 5)) 
+                #& ((snr625 >= 3) & (snr814 >= 3)) 
+                & ((f625mag <= 80) & (f814mag <= 80))
+                ))
+"""if (folder == "SN2008GE"):
     sharpmax =  0.165
     sharpmin = -0.786
     roundmax =  1.8
     crowdmax =  1.2
-    #for m in range(3,6):
-    #for i in range(len(radius)):
     cut435555.append(np.where((star <= 2)   & (crowd <= crowdmax ) 
                 #& (sharp <= sharpmax) 
                 & (sharp >= sharpmin) 
@@ -401,7 +412,7 @@ if (folder == "SN2008GE"):
                 & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9)) 
                 & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= radius[0])  
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))          
+                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
 elif (folder == "SN2008HA"):    
     sharpmax = .55
     sharpmin = -.44
@@ -467,6 +478,7 @@ if (folder == "SN2010EL"):
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0]) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
+"""                
 sn1 = []
 sn2 = []
 sn3 = []

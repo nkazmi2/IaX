@@ -59,7 +59,8 @@ cut  = []
 ##################### 2008ge ######################
 """
 folder   = "SN2008GE"
-name     = 'sn2008ge_new.phot' 
+name     = 'sn2008ge.phot.out' 
+#name     = 'sn2008ge_new.phot' 
 #name     = 'sn2008ge_20141015_final.out'
 
 # Actual X & Y pixel coordinates of sn
@@ -189,6 +190,17 @@ circ = []
 comm = []
 clos = []
 
+cut.append(np.where((star <= 2)
+                #& (((snr625 >= 15) & (snr814 >= 15)) 
+                #| (( snr435 >= 15) & (snr555 >= 15)))
+                #& (((snr625 >= 10) & (snr814 >= 10)) 
+                #| (( snr435 >= 10) & (snr555 >= 10)))
+                & (((snr625 >= 5) & (snr814 >= 5)) 
+                | (( snr435 >= 5) & (snr555 >= 5)))
+                #& (((snr625 >= 3) & (snr814 >= 3)) 
+                #| (( snr435 >= 3) & (snr555 >= 3)))
+                ))  
+"""
 if (folder == "SN2010AE"): 
     sharpmax = 0.46
     sharpmin = -.6
@@ -238,7 +250,7 @@ elif (folder == "SN2008GE"):
                 & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= 200)               
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
-                )))
+                )))"""
 """
 print "Sharp Max: ", np.max( sharp[cut[0]])
 print "Sharp Min: ", np.min( sharp[cut[0]])
@@ -296,7 +308,7 @@ np.savetxt(folder +'/sources.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[
                ' highlite=1 dash=0 fixed=0 edit=1 delete=1 include=1 source=1' \
                '\nimage;' )
 print 'Files Saved'
-
+"""
 print "Make Text File"
 
 yax1 = []
@@ -323,3 +335,4 @@ np.savetxt(folder +'/'+ title + 'del.txt', dataOut_1 ,delimiter='   ', fmt = "%1
     'Sharp Round Crowd Sharp 435   555   625   814 Round 435   555  625   814 Crowd 435  555  625  814') 
     
 print "Save into text file"
+"""

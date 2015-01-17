@@ -217,58 +217,27 @@ l.draw_frame(False)
 plt.show()
 
 ########################################################################
-print "Bivariate Interpolation over a rectangular grid"
+#poly = np.polyfit(layFe5270[zz][-40:], Hbeta[zz][-40:], 4, rcond=None, full=False, w=None, cov=False)
+#print poly([fe5270[109],hydro[109]])
+"""
+AGE   = np.array([11.2202, 12.5893, 14.1254, 15.8489, 17.7828]) 
+METAL = np.array([ -0.40, 0.00, 0.22])
+Fe = np.array([[ 2.6893,  3.5985,  4.0714], 
+               [ 2.7176,  3.6732,  4.1542], 
+               [ 2.7539,  3.7121,  4.2214],
+               [ 2.7782,  3.7663,  4.2407], 
+               [ 2.847,   3.7911,  4.2873]])
 
-x   = np.array([#06.3096, 
-                #07.0795, 
-                #07.9433, 
-                #08.9125, 
-                #10.0000,
-                11.2202, 
-                12.5893, 
-                14.1254, 
-                15.8489, 
-                17.7828])
-y   = np.array([#-.71, 
-                -0.40, 
-                 0.00, 
-                 0.22])
-zfe = np.array([ 
-   #layFe5270[oa][-4:],
-   #layFe5270[pa][-4:],
-   #layFe5270[qa][-4:],
-   #layFe5270[ra][-4:],
-   #layFe5270[sa][-4:],
-   layFe5270[ta][-3:],
-   layFe5270[ua][-3:],
-   layFe5270[va][-3:],
-   layFe5270[wa][-3:],
-   layFe5270[xa][-3:]])
-zhb = np.array([ 
-   #Hbeta[oa][-4:],
-   #Hbeta[pa][-4:],
-   #Hbeta[qa][-4:],
-   #Hbeta[ra][-4:],
-   #Hbeta[sa][-4:],
-   Hbeta[ta][-3:],
-   Hbeta[ua][-3:],
-   Hbeta[va][-3:],
-   Hbeta[wa][-3:],
-   Hbeta[xa][-3:]])
-
-print "Creating array and grid"
-BIV = interpolate.RectBivariateSpline(x, y, zfe, kx=2, ky=2, s=0)
-print "Using Fe5270 values as z"
-print "Coefficients:"
-print BIV.get_coeffs()
-print BIV([fe5270[109]],[hydro[109]])
-print BIV([hydro[109]],[fe5270[109]])
-
-BHb = interpolate.RectBivariateSpline(x, y, zhb, kx=2, ky=2, s=0)
-print "Using H Beta values as z"
-print "Coefficients:"
-print BHb.get_coeffs()
-print BHb([fe5270[109]],[hydro[109]])
-print BHb([hydro[109]],[fe5270[109]])
-
-print "NGC 1527 Fe5270 =",fe5270[109], "& Hbeta values =",hydro[109]
+# Hbeta is a grid of the line strengths of H_beta
+Hbeta = np.array([[ 1.8472,  1.71,    1.6324],
+                  [ 1.7714,  1.6365,  1.5464],
+                  [ 1.7349,  1.5615,  1.4515],
+                  [ 1.6855,  1.5024,  1.3957],
+                  [ 1.6596,  1.4307,  1.3054]])
+                  
+xknots = np.array([0,1,2,3,4]) 
+yknots = np.array([0,1,2])                 
+                  
+LS = interpolate.LSQBivariateSpline(Fe, Hbeta, AGE, xknots, yknots, w=None, kx=2, ky=2, eps=None)
+print LS
+"""

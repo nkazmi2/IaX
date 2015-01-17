@@ -123,6 +123,6 @@ def main():
         plotname2 = title[m][:-14]   + "_box.fits"
         fits.writeto(plotname , combo, head, clobber=True)
         #fits.writeto(plotname2,combo[cen1-500:cen1+500,cen2-500:cen2+500], head, clobber=True)
-        print "Plotting " + plotname + " & " + plotname2
+        print "Plotting " + plotname + #" & " + plotname2
         
 main()       
