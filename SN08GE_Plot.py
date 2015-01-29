@@ -125,8 +125,8 @@ IsoAge3 = 7.44
 age3    = np.where(logAGE3 == IsoAge3)
 """
 #####################################################################
-radius1   = [50,100,200]
-radius2   = [38,75 ,100]
+radius1   = [114,137,160]
+radius2   = [114,137,160]#[68,91,114]
 dist      = 17.95e7
 conver    = (4.35)#(2.5*math.pi)/(50.0*3600*180)
 f435f555  = []
@@ -151,12 +151,12 @@ Radl   = []
 Radr   = [] 
 
 yLmax    = -3.0
-yLmin    = -8.0
+yLmin    = -8.5
 yRmax    = -4.0
-yRmin    = -9.0
+yRmin    = -9.5
      
-f435f555.append(pickle.load(open('SN2008GE/sn2008ge_f435f555.p', 'rb')))  
-f625f814.append(pickle.load(open('SN2008GE/sn2008ge_f625f814.p', 'rb')))  
+f435f555.append(pickle.load(open('SN2008GE/sn2008ge.f435f555.p', 'rb')))  
+f625f814.append(pickle.load(open('SN2008GE/sn2008ge.f625f814.p', 'rb')))  
  
 Abs435 = f435f555[0][0] 
 Abs555 = f435f555[0][1] 
@@ -198,7 +198,7 @@ gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
 
 #fig1.suptitle('CMD for SN 2008ge',fontdict = font, size=15)
 
-fig1.suptitle(title + ': CMD with S/N >= 3.5,' + ' Z = 0.0' + name[2:-9]
+fig1.suptitle(title + ': CMD with S/N >= 3.0,' + ' Z = 0.0' + name[2:-9]
             + ' & Z = 0.0' + name2[2:-9],
               fontdict = font, size=15)
 ###########################################################################
@@ -258,19 +258,21 @@ c1plt.errorbar(np.subtract(Apn435[s0],   Apn555[s0]),
                fmt=None, ecolor="c", marker=None, mew=0 )
 c1plt.scatter(np.subtract(Apn435[s0],   Apn555[s0]),
                Abs555[s0], label = 'R = ' + str(round(radius1[0]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius1[0]*conver)),-2)) + " AU",
-               c='c',marker='d')   
+               c='c',marker='d')  
+########################################################################### 
+###########################################################################
+###########################################################################   
 """
-c1plt.annotate(str(0), xy=(np.subtract(Apn435[s4][0], Apn555[s4][0]),Abs555[s4][0]), 
-               xytext=(np.subtract(Apn435[s4][0], Apn555[s4][0])-.1,Abs555[s4][0]-.1),
+c1plt.annotate(str(10), xy=(np.subtract(Apn435[s2][3], Apn555[s2][3]),Abs555[s2][3]), 
+               xytext=(np.subtract(Apn435[s2][3], Apn555[s2][3])-.1,Abs555[s2][3]-.1),
                 arrowprops=dict(arrowstyle="->",) )
-c1plt.annotate(str(11), xy=(np.subtract(Apn435[s4][1], Apn555[s4][1]),Abs555[s4][1]), 
-               xytext=(np.subtract(Apn435[s4][1], Apn555[s4][1])-.1,Abs555[s4][1]-.1),
+c1plt.annotate(str(11), xy=(np.subtract(Apn435[s2][4], Apn555[s2][4]),Abs555[s2][4]), 
+               xytext=(np.subtract(Apn435[s2][4], Apn555[s2][4])-.1,Abs555[s2][4]-.1),
                 arrowprops=dict(arrowstyle="->",) )
-"""            
-"""              
-for i in range(len(Apn435[s4])):
-    c1plt.annotate(str(i), xy=(np.subtract(Apn435[s4][i], Apn555[s4][i]),Abs555[s4][i]), 
-               xytext=(np.subtract(Apn435[s4][i], Apn555[s4][i])+.1,Abs555[s4][i]-.1),
+                     
+for i in range(3):
+    c1plt.annotate(str(i+1), xy=(np.subtract(Apn435[s2][i], Apn555[s2][i]),Abs555[s2][i]), 
+               xytext=(np.subtract(Apn435[s2][i], Apn555[s2][i])+.1,Abs555[s2][i]-.1),
                 #textcoords='offset points',
             arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
             )               
@@ -344,17 +346,23 @@ c2plt.scatter(np.subtract(Apn625[r0],   Apn814[r0]),
                Abs814[r0], label = 'R = ' + str(round(radius2[0]*conver,-1)) + " pc" ,#str(round(dist*(math.tan(radius2[0]*conver)),-2)) + " AU",
                c='c',marker='d')                        
 
-#for k in range(len(Apn814[r4])):
-#        c2plt.annotate(str(k), xy=(np.subtract(Apn625[r4][k], Apn814[r4][k]),Abs814[r4][k]), 
-#               xytext=(np.subtract(Apn625[r4][k], Apn814[r4][k])-.6,Abs814[r4][k]-.6),
-#                arrowprops=dict(arrowstyle="->"),
-#                )
-   
+########################################################################### 
 ###########################################################################
-sn435 = -4.17#-3.93
-sn555 = -4.56#-4.41
-sn625 = -5.03#-4.96
-sn814 = -5.2#-5.05
+###########################################################################   
+"""
+for k in range(len(Apn814[r2])):
+        c2plt.annotate(str(k+1), xy=(np.subtract(Apn625[r2][k], Apn814[r2][k]),Abs814[r2][k]), 
+               xytext=(np.subtract(Apn625[r2][k], Apn814[r2][k])-.3,Abs814[r2][k]-.3),
+                arrowprops=dict(arrowstyle="->"),
+                )
+ """  
+########################################################################### 
+###########################################################################
+###########################################################################   
+sn435 = -4.65271111111#-4.17#-3.93
+sn555 = -5.37180645161#-4.56#-4.41
+sn625 = -5.56276436782#-5.03#-4.96
+sn814 = -5.16993814433#-5.2#-5.05
 #############
 s1 = -1 
 b1 = -4.0
@@ -404,6 +412,6 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'we13'+ '.png'
+figname = title + '_' + 'we16'+ '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname

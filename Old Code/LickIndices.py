@@ -8,7 +8,10 @@ Created on Thu Oct 16 13:51:48 2014
 import numpy as np
 import csv
 import matplotlib.pyplot as plt
-from scipy import interpolate
+import scipy.optimize    as optimization
+from   scipy     import interpolate
+from   itertools import izip
+from   scipy     import stats
 ########################################################################
 
 crimefile = open('Abundances.txt', 'r')
@@ -37,28 +40,28 @@ errhy = np.array(errhy)
 real = np.where(( errfe != ' nan  ') & (errhy != ' nan  ') )   
 
 fe5270 = np.array(map(float, fe5270))
-hydro = np.array(map(float, hydro))
-errfe = np.array(map(float, errfe))
-errhy = np.array(map(float, errhy))
+hydro  = np.array(map(float, hydro))
+errfe  = np.array(map(float, errfe))
+errhy  = np.array(map(float, errhy))
 
 ########################################################################
 
 layoutfile = open('Template2.txt', 'r')
-read  = csv.reader(layoutfile)
-LayRows = [line for line in read]
-Hbeta     = []
-Hbetao    = []
-Hbetap    = []
-layFe5270 = []
-Z_2_32 = []
-Z_1_71 = []
-Z_1_31 = []
-Z_0_71 = []
-Z_0_40 = []
-Z_0_00 = []
-Z_0_22 = []
-met    = []
-age    = []
+read       = csv.reader(layoutfile)
+LayRows    = [line for line in read]
+Hbeta      = []
+Hbetao     = []
+Hbetap     = []
+layFe5270  = []
+Z_2_32     = []
+Z_1_71     = []
+Z_1_31     = []
+Z_0_71     = []
+Z_0_40     = []
+Z_0_00     = []
+Z_0_22     = []
+met        = []
+age        = []
 for j in xrange(len(LayRows)):
     met.append(LayRows[j][0][:-7])
     age.append(LayRows[j][0][14:])
@@ -143,7 +146,6 @@ print "Showin Sesame"
 plt.xlabel("Fe 5270")
 plt.ylabel("H Beta")
 
-
 #plt.plot(layFe5270[a],Hbeta[a], c='k',marker='o')
 #plt.plot(layFe5270[b],Hbeta[b], c='k',marker='o')
 #plt.plot(layFe5270[c],Hbeta[c], c='k',marker='o')
@@ -195,7 +197,6 @@ plt.plot(layFe5270[va][-4:],Hbeta[va][-4:], c='k',marker='o')
 plt.plot(layFe5270[wa][-4:],Hbeta[wa][-4:], c='k',marker='o')
 plt.plot(layFe5270[xa][-4:],Hbeta[xa][-4:], c='k',marker='o')
 
-
 #plt.plot(np.sort(layFe5270[zz][-40:]),Hbeta[zz][-40:], c='c',marker='o')
 ### AGE -> ta ua va wa xa
 ### met -> Z_0_40, Z_0_00
@@ -214,7 +215,7 @@ plt.scatter(fe5270[109],hydro[109],c='k',marker='D')
 
 l = plt.legend(prop = {'family' : 'serif'},loc=1)
 l.draw_frame(False)
-plt.show()
+#plt.show()
 
 ########################################################################
 #poly = np.polyfit(layFe5270[zz][-40:], Hbeta[zz][-40:], 4, rcond=None, full=False, w=None, cov=False)
@@ -240,4 +241,66 @@ yknots = np.array([0,1,2])
                   
 LS = interpolate.LSQBivariateSpline(Fe, Hbeta, AGE, xknots, yknots, w=None, kx=2, ky=2, eps=None)
 print LS
+#Fe    = np.array([[ 2.6893, 2.7176, 2.7539, 2.7782, 2.8470], 
+#                  [ 3.5985, 3.6732, 3.7121, 3.7663, 3.7911]])
+#Hbeta = np.array([[ 1.8472, 1.7714, 1.7349, 1.6855, 1.6596],  
+#                  [ 1.7100, 1.6365, 1.5615, 1.5024, 1.4307]])   
+#Fe = np.array([[ 2.6893,  3.5985], 
+#               [ 2.7176,  3.6732], 
+#               [ 2.7539,  3.7121],
+#               [ 2.7782,  3.7663], 
+#               [ 2.847,   3.7911]])
+               
+#Hbeta = np.array([[ 1.8472,  1.7100],
+#                  [ 1.7714,  1.6365],
+#                  [ 1.7349,  1.5615],
+#                  [ 1.6855,  1.5024],
+#                  [ 1.6596,  1.4307]])
 """
+
+Fe = np.array([layFe5270[Z_0_40][-5:],layFe5270[Z_0_00][-5:]])
+Hb = np.array([Hbeta[Z_0_40][-5:]    ,Hbeta[Z_0_00][-5:]    ])
+   
+#sigma = np.array([[ 0.0, 0.0, 0.0, 0.0, 0.0], 
+#                  [ 0.0, 0.0, 0.0, 0.0, 0.0]])           
+
+
+#print Fe*Hb
+
+xp = np.linspace(2.5, 4.0, 100)
+
+z = np.polyfit(layFe5270[Z_0_40][-5:],Hbeta[Z_0_40][-5:] , 1)
+p = np.poly1d(z)
+
+a = np.polyfit(layFe5270[Z_0_00][-5:],Hbeta[Z_0_00][-5:] , 1)
+b = np.poly1d(a)
+
+c = np.polyfit(layFe5270[ta][-3:],Hbeta[ta][-3:], 1)
+d = np.poly1d(c)
+
+e = np.polyfit(layFe5270[ua][-3:],Hbeta[ua][-3:], 1)
+f = np.poly1d(e)
+
+g = np.polyfit(layFe5270[va][-3:],Hbeta[va][-3:], 1)
+h = np.poly1d(g)
+
+i = np.polyfit(layFe5270[wa][-3:],Hbeta[wa][-3:], 1)
+j = np.poly1d(i)
+
+k = np.polyfit(layFe5270[xa][-3:],Hbeta[xa][-3:], 1)
+l = np.poly1d(k)
+
+plt.plot(Fe, Hb, '.', xp, p(xp))
+plt.plot(Fe, Hb, '.', xp, b(xp))
+plt.plot(Fe, Hb, '.', xp, d(xp))
+#plt.plot(Fe, Hb, '.', xp, f(xp))
+#plt.plot(Fe, Hb, '.', xp, h(xp))
+#plt.plot(Fe, Hb, '.', xp, j(xp))
+plt.plot(Fe, Hb, '.', xp, l(xp))
+#xp = np.linspace(2.5, 4.0, 100)
+#Fe = np.array([2.6893, 2.7176, 2.7539, 2.7782, 2.8470, 3.5985, 3.6732, 3.7121, 3.7663, 3.7911])
+#Hb = np.array([1.8472, 1.7714, 1.7349, 1.6855, 1.6596, 1.7100, 1.6365, 1.5615, 1.5024, 1.4307])
+#z  = np.polyfit(Fe, Hb, 4)
+#p  = np.poly1d(z)   
+#plt.plot(Fe, Hb, '.', xp, p(xp))
+plt.show()

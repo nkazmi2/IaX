@@ -98,17 +98,12 @@ def main():
         ############### Combine the images ################
         ###################################################
         print "Combining pieces..."
+        
         combo[subx3:subx4,suby3:suby4] = quad1 
         combo[subx3:subx4,suby1:suby2] = quad2
         combo[subx1:subx2,suby1:suby2] = quad3
         combo[subx1:subx2,suby3:suby4] = quad4
-          
-        #combo[subx3-1:subx4-1,suby3-1:suby4-1] = quad1 
-        #combo[subx3-1:subx4-1,suby1+1:suby2+1] = quad2
-        #combo[subx1+1:subx2+1,suby1+1:suby2+1] = quad3
-        #combo[subx1+1:subx2+1,suby3-1:suby4-1] = quad4
-        
-
+                       
         if (halfx == 1):
             combo[cen1,suby1:suby4] = 0
         if (halfy == 1):
@@ -119,10 +114,10 @@ def main():
         ###################################################
         print "Begin saving figure..."
         
-        plotname  = title[m][:-14]   + "_residual.fits"
-        plotname2 = title[m][:-14]   + "_box.fits"
+        plotname  = title[m][:-14]   + "_residual1.fits"
+        #plotname2 = title[m][:-14]   + "_box.fits"
         fits.writeto(plotname , combo, head, clobber=True)
         #fits.writeto(plotname2,combo[cen1-500:cen1+500,cen2-500:cen2+500], head, clobber=True)
-        print "Plotting " + plotname + #" & " + plotname2
+        print "Plotting " + plotname #+ " & " + plotname2
         
 main()       

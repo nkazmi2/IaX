@@ -13,22 +13,22 @@ import pickle
 ########################### PICK THE SN!! ###########################
 #title = 'SN10el'
 #title = 'SN08ha'
-#title = 'SN10ae'
-title = 'SN08ge'
+title = 'SN10ae'
+#title = 'SN08ge'
 #####################################################################
 
 if (title == 'SN08ha'):
-    name   = 'Z0046Y26.dat'
+    name   = 'Z0060Y26.dat'
     radius = [450,750,1000,1500,2200] 
     #name = 'Z0384Y26.dat'
 elif (title == 'SN08ge'): 
-    name = 'Z0200Y26.dat'
+    name = 'Z0300Y26.dat'
     radius = [2200,4400,6500,7600,8700]
 elif (title == 'SN10el'): 
-    name = 'Z0170Y26.dat'
+    name = 'Z0224Y26.dat'
 elif (title == 'SN10ae'): 
-    name = 'Z0073Y26.dat'
-   
+    name = 'Z0096Y26.dat'
+
 d = []
 d.append(np.loadtxt('Metallicity/'+name))
 d = np.array(d)
@@ -114,8 +114,9 @@ age789  = np.where((logAGE == 7.89))
 age79   = np.where((logAGE == 7.9))
 
 age = []
-#age.append([age73,age731,age732,age733,age734,age735,age736,age737,age738,age739])
-age.append([age74,age741,age742,age743,age744,age745,age746,age747,age748,age749])
+stupid = 7.3
+age.append([age73,age731,age732,age733,age734,age735,age736,age737,age738,age739])
+#age.append([age74,age741,age742,age743,age744,age745,age746,age747,age748,age749])
 #age.append([age75,age751,age752,age753,age754,age755,age756,age757,age758,age759])
 #age.append([age76,age761,age762,age763,age774,age765,age766,age767,age768,age769])
 #age.append([age77,age771,age772,age773,age774,age775,age776,age777,age778,age779])
@@ -141,8 +142,8 @@ if (title == 'SN08ha'):
         f435f555 = np.array(f435f555)
         f625f814 = np.array(f625f814) 
 elif (title == 'SN08ge'):
-        f435f555.append(pickle.load(open('SN2008GE/sn2008ge_f435f555.p', 'rb')))    
-        f625f814.append(pickle.load(open('SN2008GE/sn2008ge_f625f814.p', 'rb')))  
+        f435f555.append(pickle.load(open('SN2008GE/sn2008ge.f435f555.p', 'rb')))    
+        f625f814.append(pickle.load(open('SN2008GE/sn2008ge.f625f814.p', 'rb')))  
 elif (title == 'SN10el'):
         f435f555.append(pickle.load(open('SN2010EL/sn2010el.f435f555.p', 'rb')))    
         f625f814.append(pickle.load(open('SN2010EL/sn2010el.f625f814.p', 'rb')))     
@@ -152,7 +153,7 @@ elif (title == 'SN10ae'):
 
 for agesInd in xrange(len(age[0])):
     print "                "
-    print "Age 10^7.4" + str(agesInd)
+    print "Age 10^" + str(stupid) + str(agesInd)
     print "F435W-F555W"
     ClosInd = []
     for sample in izip(np.subtract(f435f555[0][0],f435f555[0][1]), f435f555[0][1]):
@@ -187,7 +188,7 @@ for agesInd in xrange(len(age[0])):
     ClosInd = np.array(ClosInd)
     func_vals = np.c_[np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]]]
     comp_vals = func_vals[ClosInd]
-    print "Chi^2 of 10^7.4" + str(agesInd)
+    print "Chi^2 of 10^" + str(stupid)  + str(agesInd)
     print stats.chisquare(np.c_[np.subtract(f625f814[0][0],f625f814[0][1]), f625f814[0][1]],comp_vals)
 
 """

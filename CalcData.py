@@ -94,116 +94,119 @@ font = {'family' : 'serif',
         'weight' : 'normal',
         'size'   : 10,
         } 
-radius = [5000]
 ################################################### 
 ######### Things that change for each sn ##########
+        
+#title = 'SN08ge'
+#title = 'SN08ha'
+#title = 'SN10ae'
+title = 'SN10el'
 ##################### 2008ge ######################
-#"""
-folder   = "SN2008GE"
-name     = 'sn2008ge.phot.out' 
-#name     = 'sn2008ge_20141015_final.out' #'sn2008ge_new.out'renamed for constistancy 
+if (title == 'SN08ge'): 
+    folder   = "SN2008GE"
+    name     = 'sn2008ge.phot.out' 
+    #name    = 'sn2008ge_20141015_final.out' #'sn2008ge_new.out'renamed for constistancy 
 
-# Magnitude of the Milkyway Galaxy 
-ACS435   = 0.046 #F435W
-ACS555   = 0.036 #F555W	
-ACS625   = 0.028 #F625W	
-ACS814   = 0.020 #F814W	
-MW       = 0.011
-Host     = 0.0
-
-H435     = 0 #F435W
-H555     = 0 #F555W	
-H625     = 0 #F625W	
-H814     = 0 #F814W	
-
-# Median (redshift independent) distance modulus of host galaxy
-dmod     = 31.33 
-
-# Actual X & Y pixel coordinates of sn
-xsn      = 3247.539
-ysn      = 3419.971
-#radius   = [200]
-#"""
-##################### 2008ha ######################
-"""
-folder   = "SN2008HA"
-name     = 'sn2008ha_new.phot'
-# Magnitude of the Milkyway Galaxy 
-ACS435   = 0.284 #F435W
-ACS555   = 0.219 #F555W	
-ACS625   = 0.174 #F625W	
-ACS814   = 0.120 #F814W	
-MW       = 0.07
-Host     = 0.0
-
-H435     = 0 #F435W
-H555     = 0 #F555W	
-H625     = 0 #F625W	
-H814     = 0 #F814W	
-
-# Median (redshift independent) distance modulus of host galaxy
-dmod     = 31.64 #31.50 is the value I got from NED
-
-# Actual X & Y pixel coordinates of sn
-xsn      = 1736.199
-ysn      = 3171.792
-
-#radius   = [50] # 450,750,1000,1500,2200
-"""
-##################### 2010ae ######################
-"""
-folder   = "SN2010AE"
-name     = 'sn2010ae.phot.out'
-
-# Magnitude of the Milkyway Galaxy m is low(?) .1sol
-ACS435   = 0.509 #F435W
-ACS555   = 0.394 #F555W	
-ACS625   = 0.313 #F625W	
-ACS814   = 0.215 #F814W	
-MW       = 0.124
-Host     = 0.5
-
-H435     = 2.052 #F435W
-H555     = 1.588 #F555W	
-H625     = 1.262 #F625W	
-H814     = 0.867 #F814W	
-
-# Median (redshift independent) distance modulus of host galaxy
-dmod     = 30.9
-
-# Actual X & Y pixel coordinates of sn
-xsn      = 1795.3831# 1796.640
-ysn      = 1931.8080# 1931.995
-
-#radius   = [100] # 450,750,1000,1500,2200
-"""
-##################### 2010el ######################
-"""    
-folder   = "SN2010EL"
-name     = 'sn2010el.phot.out'
+    # Magnitude of the Milkyway Galaxy 
+    ACS435   = 0.046 #F435W
+    ACS555   = 0.036 #F555W	
+    ACS625   = 0.028 #F625W	
+    ACS814   = 0.020 #F814W	
+    MW       = 0.011
+    Host     = 0.0
     
-# Magnitude of the Milkyway Galaxy 
-ACS435   = 0.033 #F435W
-ACS555   = 0.025 #F555W	
-ACS625   = 0.020 #F625W	
-ACS814   = 0.014 #F814W	
-MW       = 0.008
-Host     = 0.8
+    H435     = 0 #F435W
+    H555     = 0 #F555W	
+    H625     = 0 #F625W	
+    H814     = 0 #F814W	
+    
+    # Median (redshift independent) distance modulus of host galaxy
+    dmod     = 31.33 
+    
+    # Actual X & Y pixel coordinates of sn
+    xsn      = 3249.22
+    ysn      = 3421.6611
+    radius   = [200]
+##################### 2008ha ######################
+elif (title == 'SN08ha'):
+    folder   = "SN2008HA" 
+    name     = 'sn2008ha_new.phot'
+    # Magnitude of the Milkyway Galaxy 
+    ACS435   = 0.284 #F435W
+    ACS555   = 0.219 #F555W	
+    ACS625   = 0.174 #F625W	
+    ACS814   = 0.120 #F814W	
+    MW       = 0.07
+    Host     = 0.0
+    
+    H435     = 0 #F435W
+    H555     = 0 #F555W	
+    H625     = 0 #F625W	
+    H814     = 0 #F814W	
+    
+    # Median (redshift independent) distance modulus of host galaxy
+    dmod     = 31.64 #31.50 is the value I got from NED
+    
+    # Actual X & Y pixel coordinates of sn
+    xsn      = 1736.199
+    ysn      = 3171.792
+    
+    radius   = [50] # 450,750,1000,1500,2200
 
-H435     = 3.255 #F435W
-H555     = 2.517 #F555W	
-H625     = 2.001 #F625W	
-H814     = 1.376 #F814W	
+##################### 2010ae ######################
+elif (title == 'SN10ae'):
+    folder   = "SN2010AE"
+    name     = 'sn2010ae.phot.out'
+    
+    # Magnitude of the Milkyway Galaxy m is low(?) .1sol
+    ACS435   = 0.509 #F435W
+    ACS555   = 0.394 #F555W	
+    ACS625   = 0.313 #F625W	
+    ACS814   = 0.215 #F814W	
+    MW       = 0.124
+    Host     = 0.5
+    
+    H435     = 2.052 #F435W
+    H555     = 1.588 #F555W	
+    H625     = 1.262 #F625W	
+    H814     = 0.867 #F814W	
 
-# Median (redshift independent) distance modulus of host galaxy
-dmod     = 30.09 
+    # Median (redshift independent) distance modulus of host galaxy
+    dmod     = 30.9
+    
+    # Actual X & Y pixel coordinates of sn
+    xsn      = 1783.3953#1795.3831# 1796.640
+    ysn      = 1923.19955#1931.8080# 1931.995
+    
+    radius   = [100] # 450,750,1000,1500,2200
+    
+##################### 2010el ######################
+elif (title == 'SN10el'):
+    folder   = "SN2010EL"
+    name     = 'sn2010el.phot.out'
+    
+    # Magnitude of the Milkyway Galaxy 
+    ACS435   = 0.033 #F435W
+    ACS555   = 0.025 #F555W	
+    ACS625   = 0.020 #F625W	
+    ACS814   = 0.014 #F814W	
+    MW       = 0.008
+    Host     = 0.8
+    
+    H435     = 3.255 #F435W
+    H555     = 2.517 #F555W	
+    H625     = 2.001 #F625W	
+    H814     = 1.376 #F814W	
+    
+    # Median (redshift independent) distance modulus of host galaxy
+    dmod     = 30.09 
+    
+    # Actual X & Y pixel coordinates of sn
+    xsn      = 2419.791
+    ysn      = 1563.517
+   
+    radius   = [100] # 450,750,1000,1500,2200
 
-# Actual X & Y pixel coordinates of sn
-xsn      = 2418.859
-ysn      = 1570.826
-
-#radius   = [100] # 450,750,1000,1500,2200
-"""
 ##################### 2012Z ######################
 #dmod = 32.07 (TF)
 ###################################################    
@@ -296,18 +299,10 @@ f814Abs = f814mag - dmod - ACS814 - H814
 print "Filter bad sources...."
 print "Looking in " + folder
 
-if (folder == "SN2008GE"):   
-    identify = pyregion.open(folder + '/sn3.5good.reg') #sn08ge
-    r = pyregion.open(folder + '/sn3.5coord.reg')
-    #identify = pyregion.open(folder + '/sn2008ge_3good.reg') #sn08ge
-    #r = pyregion.open(folder + '/sn2008ge_coord3.reg')
-elif (folder == "SN2010AE"):
-    identify = pyregion.open(folder + '/sn3good.reg') #sn08ge
-    r = pyregion.open(folder + '/sn3coord.reg')  
-elif (folder == "SN2010EL"):
-    identify = pyregion.open(folder + '/sn3good.reg') #sn08ge
-    r = pyregion.open(folder + '/sn3coord.reg')  
-elif (folder == "SN2008HA"):
+identify = pyregion.open(folder + '/NewCat.reg') #sn08ge
+r = pyregion.open(folder + '/NewCatCoord.reg')  
+
+"""if (folder == "SN2008HA"):
         identifyL = pyregion.open(folder + '/'+ title +'1121.reg') #sn08ha
         origcoord  = pyregion.open(folder + '/'+ title +'coord.reg')
         save = []
@@ -335,7 +330,7 @@ elif (folder == "SN2008HA"):
     
         identify = pyregion.open(folder + '/'+ title +'1122.reg') #sn08ha
         r = pyregion.open(folder + '/'+ title +'coord.reg')
-
+"""
 save = []
 badX = []
 badY = []
@@ -369,47 +364,29 @@ print "Make final cuts..."
 #rad = []
 #snr = []
 
-cut435555.append(np.where((star <= 2) 
-                #& (( snr435 >= 15) & (snr555 >= 15))
-                & (( snr435 >= 10) & (snr555 >= 10))
-                #& (( snr435 >= 5) & (snr555 >= 5))
-                #& (( snr435 >= 3) & (snr555 >= 3))
-                & ((f435mag <= 80) & (f555mag <= 80)) 
-                )) 
-cut625814.append(np.where((star <= 2) 
-                #& (( snr435 >= 15) & (snr555 >= 15))
-                & (( snr435 >= 10) & (snr555 >= 10))
-                #& ((snr625 >= 5) & (snr814 >= 5)) 
-                #& ((snr625 >= 3) & (snr814 >= 3)) 
-                & ((f625mag <= 80) & (f814mag <= 80))
-                ))
-"""if (folder == "SN2008GE"):
-    sharpmax =  0.165
-    sharpmin = -0.786
-    roundmax =  1.8
-    crowdmax =  1.2
-    cut435555.append(np.where((star <= 2)   & (crowd <= crowdmax ) 
-                #& (sharp <= sharpmax) 
+if (folder == "SN2008GE"):
+    sharpmax =  0.06
+    sharpmin = -0.35
+    roundmax =  1.5
+    crowdmax =  0.2 # 1.15
+    cut435555.append(np.where((star <= 2)   
+                & (crowd <= crowdmax ) 
+                & (sharp <= sharpmax) 
                 & (sharp >= sharpmin) 
                 & (roond <= roundmax)
                 & ((snr435 > 0 ) & (snr555 > 0 )) 
-                & ((snr435 >= 3.5) & (snr555 >= 3.5))                 
-                & ((srp435 <= 3)  & (srp555 <= 3)  & (srp625 <= 3)  & (srp814 <= 3) 
-                & (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))  
-                & ((f435mag <= 80) & (f555mag <= 80)) 
-                & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9))
+                & ((snr435 >= 3) & (snr555 >= 3))                 
+                & ((f435mag <= 90) & (f555mag <= 90)) 
                 & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= radius[0])               
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)  
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord)) ))
-    cut625814.append(np.where((star <= 2) & (crowd <= crowdmax )  
+    cut625814.append(np.where((star <= 2) 
+                & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) & (sharp >= sharpmin) 
                 & (roond <= roundmax) 
                 & ((snr625 > 0 ) & (snr814 > 0 )) 
-                & ((snr625 >= 3.5) & (snr814 >= 3.5))              
-                & ((srp435 <= 3)  & (srp555 <= 3)  & (srp625 <= 3)  & (srp814 <= 3) 
-                & (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))
-                & ((f625mag <= 80) & (f814mag <= 80))
-                & ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9)) 
+                & ((snr625 >= 3) & (snr814 >= 3))              
+                & ((f625mag <= 90) & (f814mag <= 90))
                 & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= radius[0])  
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
@@ -441,28 +418,31 @@ if (folder == "SN2010AE"):
     #sharpmin = -.9# <-sn10filter #sn -.9
     #roundmax = 3  # <-sn10filter #sn 5 4.5
     #crowdmax = .9# <-sn10filter #sn 5 3.6
-    cut435555.append(np.where((star <= 2)   & (crowd <= crowdmax )  
-                & (sharp <= sharpmax) & (sharp >= sharpmin)
-                & (roond <= roundmax)    
+    cut435555.append(np.where((star <= 2)   
+                #& (crowd <= crowdmax )  
+                #& (sharp <= sharpmax) & (sharp >= sharpmin)
+                #& (roond <= roundmax)    
                 & ((snr435 >= 3) & (snr555 >= 3))  
                 & ((f435mag <= 90) & (f555mag <= 90)) 
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0]) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
-    cut625814.append(np.where((star <= 2)   & (crowd <= crowdmax )  
-                & (sharp <= sharpmax) & (sharp >= sharpmin)
-                & (roond <= roundmax)    
+    cut625814.append(np.where((star <= 2)   
+                #& (crowd <= crowdmax )  
+                #& (sharp <= sharpmax) & (sharp >= sharpmin)
+                #& (roond <= roundmax)    
                 & ((snr625 >= 3) & (snr814 >= 3))  
                 & ((f625mag <= 90) & (f814mag <= 90))   
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0]) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
 if (folder == "SN2010EL"):    
-    sharpmax =  0.66 
-    sharpmin = -0.56
-    roundmax =  1.16 
-    crowdmax =  0.72
-    cut435555.append(np.where((star <= 2)   & (crowd <= crowdmax )  
+    sharpmax =  0.66 # .37
+    sharpmin = -0.56 #-.23 
+    roundmax =  1.16 # .62 
+    crowdmax =  0.72 # .26
+    cut435555.append(np.where((star <= 2)   
+                & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) & (sharp >= sharpmin)
                 & (roond <= roundmax)    
                 & ((snr435 >= 3) & (snr555 >= 3))  
@@ -470,7 +450,8 @@ if (folder == "SN2010EL"):
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0]) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
-    cut625814.append(np.where((star <= 2)   & (crowd <= crowdmax )  
+    cut625814.append(np.where((star <= 2)   
+                & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) & (sharp >= sharpmin)
                 & (roond <= roundmax)    
                 & ((snr625 >= 3) & (snr814 >= 3))  
@@ -478,7 +459,7 @@ if (folder == "SN2010EL"):
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0]) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
-"""                
+               
 sn1 = []
 sn2 = []
 sn3 = []
