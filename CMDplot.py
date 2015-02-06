@@ -52,14 +52,8 @@ class Star:
 ####################################################################
 
 #title = 'SN08ha'
-#title = 'SN10ae'
-title = 'SN10el'
-
-# Set the plotted point S/N parameters
-start      = 0 # start = 0 starts at S/N 3
-end        = 1 # end = 2 goes to S/N 4
-snt        = 3
-snb        = 3
+title = 'SN10ae'
+#title = 'SN10el'
 #####################################################################
 
 if (title == 'SN08ha'):
@@ -188,7 +182,7 @@ SN814  = []
 Radl   = [] 
 Radr   = []       
 if (title == 'SN08ha'):
-    radius     = [15,30,45]#[9.282,15.469,20.63,30.94,45] #[450,750,1000,1500,2200] 
+    radius     = [15,30,45]
     dist       = 20e7
     conver     = (5) #(2.5*math.pi)/(50.0*3600*180)
     yLmax      = -3.5
@@ -204,8 +198,10 @@ if (title == 'SN08ha'):
     #Mean f555w Abs Mag at S/N = 3 :  -4.36564102564
     #Mean f625w Abs Mag at S/N = 3 :  -4.37502222222
     #Mean f814w Abs Mag at S/N = 3 :  -4.46459459459
-    f435f555.append(pickle.load(open('SN2008HA/sn2008ha_f435f555.p', 'rb')))    
-    f625f814.append(pickle.load(open('SN2008HA/sn2008ha_f625f814.p', 'rb')))    
+    #f435f555.append(pickle.load(open('SN2008HA/sn2008ha_f435f555.p', 'rb')))    
+    #f625f814.append(pickle.load(open('SN2008HA/sn2008ha_f625f814.p', 'rb'))) 
+    f435f555.append(pickle.load(open('SN2008HA/sn08haf435f555.p', 'rb')))    
+    f625f814.append(pickle.load(open('SN2008HA/sn08haf625f814.p', 'rb')))    
 ###############################################################################
 
 ###############################################################################
@@ -218,22 +214,24 @@ elif (title == 'SN10ae'):
     yLmax      = -3.9
     yLmin      = -7.0
     yRmax      = -5.0
-    yRmin      = -8.0
+    yRmin      = -7.5
     
     xLmax      = -0.75
     xLmin      =  2.0
     xRmax      = -0.75
     xRmin      =  2.0
     
-    f435f555.append(pickle.load(open('SN2010AE/sn2010ae.f435f555.p', 'rb')))    
-    f625f814.append(pickle.load(open('SN2010AE/sn2010ae.f625f814.p', 'rb')))    
+    f435f555.append(pickle.load(open('SN2010AE/sn10aef435f555.p', 'rb')))    
+    f625f814.append(pickle.load(open('SN2010AE/sn10aef625f814.p', 'rb')))    
+    #f435f555.append(pickle.load(open('SN2010AE/sn2010ae.f435f555.p', 'rb')))    
+    #f625f814.append(pickle.load(open('SN2010AE/sn2010ae.f625f814.p', 'rb')))    
 
 elif (title == 'SN10el'):
     radius     = [10.34,18.62,20.74]#[16.55,18.62,19.65]#
     dist       = 9.97e7
     conver     = (48.33) #(2.5*math.pi)/(50.0*3600*180)
     title      = 'SN10el'
-    yLmax    = -2.3
+    yLmax    = -2.0
     yLmin    = -5.5
     yRmax    = -3.0
     yRmin    = -6.0
@@ -243,8 +241,8 @@ elif (title == 'SN10el'):
     xRmax    = -0.5
     xRmin    =  2.3
     
-    f435f555.append(pickle.load(open('SN2010EL/sn2010el.f435f555.p', 'rb')))    
-    f625f814.append(pickle.load(open('SN2010EL/sn2010el.f625f814.p', 'rb')))    
+    f435f555.append(pickle.load(open('SN2010EL/sn10elf435f555.p', 'rb')))    
+    f625f814.append(pickle.load(open('SN2010EL/sn10elf625f814.p', 'rb')))    
  
 
 elif (title == 'SN08ge'):
@@ -261,8 +259,8 @@ elif (title == 'SN08ge'):
     xRmax    = -0.5
     xRmin    =  1.7
     
-    f435f555.append(pickle.load(open('SN2008GE/sn2008ge_f435f555.p', 'rb')))  
-    f625f814.append(pickle.load(open('SN2008GE/sn2008ge_f625f814.p', 'rb')))  
+    f435f555.append(pickle.load(open('SN2008GE/sn08gef435f555.p', 'rb')))  
+    f625f814.append(pickle.load(open('SN2008GE/sn08gef625f814.p', 'rb')))  
  
 ###########################################################################
 Abs435 = f435f555[0][0] 
@@ -303,7 +301,8 @@ h = [2, 4] # height of the plotted figure
 fig1 = plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
 gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
 
-fig1.suptitle(title + ': CMD for Z = 0.' + name[1:-7] + ', Y = 0.' + name[6:-4] + ' S/N >= 10',
+fig1.suptitle(title + ': CMD for Z = 0.' + name[1:-7] + ', Y = 0.' + name[6:-4], 
+              #+ ' S/N >= 10',
           fontdict = font, size=15)
 
 
@@ -321,6 +320,7 @@ c1plt.xaxis.set_minor_locator(AutoMinorLocator())
 c1plt.yaxis.set_minor_locator(AutoMinorLocator())
 
 c1plt.yaxis.set_major_locator(MultipleLocator(.5))
+c1plt.xaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
 if (title == 'SN08ha'):          
@@ -421,10 +421,10 @@ elif (title == 'SN10el'):
     #         arrowprops=dict(arrowstyle="->",
     #                        connectionstyle="arc3"),)
     
-    plt.annotate('', xy=(.9, -5.217), xycoords = 'data',
-                 xytext = (1.638, -2.7), textcoords = 'data',
+    plt.annotate('', xy=(1.1, -5.417), xycoords = 'data',
+                 xytext = (1.838, -2.9), textcoords = 'data',
                     arrowprops = {'arrowstyle':'->'})
-    plt.annotate('A${_v}}$ = 3.4105', xy=(0.2,-5.2), xycoords = 'data',
+    plt.annotate('A${_v}}$ = 3.4105', xy=(0.3,-5.2), xycoords = 'data',
                  xytext = (2, 3), textcoords = 'offset points')
     #c1plt.plot(np.subtract(F435W[age70],  F555W[age70]),  F555W[age70],  
     #       'r--', label = 'Age = 10$^{7.0}$ yrs')
@@ -597,6 +597,7 @@ c2plt.xaxis.set_minor_locator(AutoMinorLocator())
 c2plt.yaxis.set_minor_locator(AutoMinorLocator())
 
 c2plt.yaxis.set_major_locator(MultipleLocator(.5))
+c2plt.xaxis.set_major_locator(MultipleLocator(.5))
 
 ###########################################################################
 #c2plt.plot(np.subtract(F625W[age70],  F814W[age70]),  F814W[age70],  
@@ -859,20 +860,20 @@ c2plt.scatter(np.subtract(Apn625[r0],   Apn814[r0]),
 ###########################################################################
 
 if (title == 'SN08ha'): 
-    sn435 = -4.04
-    sn555 = -4.5
-    sn625 = -4.3
-    sn814 = -4.5
+    sn435 = -4.04 #-4.09376
+    sn555 = -4.5  #-4.48311864407
+    sn625 = -4.3  #-4.50531617647
+    sn814 = -4.5  #-3.37183193277
 elif (title == 'SN10ae'):
     sn435 = -4.04249230769#-3.62
     sn555 = -4.32949019608#-4.0#3.78
     sn625 = -4.42041580756#-4.2#4.10
     sn814 = -4.66327731092#-3.83
 elif (title == 'SN10el'):
-    sn435 = -2.87365942029#-2.03
-    sn555 = -3.3605#-2.64
-    sn625 = -3.50310638298#-3.05
-    sn814 = -3.18365116279#-2.83
+    sn435 = -2.86694202899
+    sn555 = -3.3699483871
+    sn625 = -3.49584816754
+    sn814 = -3.171453125
 elif (title == 'SN08ge'):
     sn435 = -4.65271111111#-4.17#-3.93
     sn555 = -5.37180645161#-4.56#-4.41
@@ -945,6 +946,6 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'nam3' + '.png'
+figname = title + '_' + 'test' + '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname

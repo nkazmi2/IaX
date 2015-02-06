@@ -98,9 +98,9 @@ font = {'family' : 'serif',
 ######### Things that change for each sn ##########
         
 #title = 'SN08ge'
-#title = 'SN08ha'
+title = 'SN08ha'
 #title = 'SN10ae'
-title = 'SN10el'
+#title = 'SN10el'
 ##################### 2008ge ######################
 if (title == 'SN08ge'): 
     folder   = "SN2008GE"
@@ -299,11 +299,11 @@ f814Abs = f814mag - dmod - ACS814 - H814
 print "Filter bad sources...."
 print "Looking in " + folder
 
-identify = pyregion.open(folder + '/NewCat.reg') #sn08ge
-r = pyregion.open(folder + '/NewCatCoord.reg')  
+#identify = pyregion.open(folder + '/NewCat.reg') #sn08ge
+#r = pyregion.open(folder + '/NewCatCoord.reg')  
 
-"""if (folder == "SN2008HA"):
-        identifyL = pyregion.open(folder + '/'+ title +'1121.reg') #sn08ha
+if (folder == "SN2008HA"):
+        identifyL = pyregion.open(folder + '/'+ title +'left.reg') #sn08ha
         origcoord  = pyregion.open(folder + '/'+ title +'coord.reg')
         save = []
         badXL = []
@@ -328,9 +328,9 @@ r = pyregion.open(folder + '/NewCatCoord.reg')
             badXL.append(origcoord[save[j]].coord_list[0] - 0.5)
             badYL.append(origcoord[save[j]].coord_list[1] - 0.5)
     
-        identify = pyregion.open(folder + '/'+ title +'1122.reg') #sn08ha
+        identify = pyregion.open(folder + '/'+ title +'right.reg') #sn08ha
         r = pyregion.open(folder + '/'+ title +'coord.reg')
-"""
+
 save = []
 badX = []
 badY = []
@@ -353,7 +353,6 @@ for i in range(len(r)):
 for j in range(len(save)): 
     badX.append(r[save[j]].coord_list[0] - 0.5)
     badY.append(r[save[j]].coord_list[1] - 0.5)
-
 ################################################### 
 ##### Find correct color magnitudes make cuts #####
 # hard contrains because the mean of the list 
@@ -395,14 +394,16 @@ elif (folder == "SN2008HA"):
     sharpmin = -.44
     roundmax = 2.7
     crowdmax = 1.7 # give each plot different bad lists 
-    cut435555.append(np.where((star <= 2) & (crowd <= crowdmax ) 
+    cut435555.append(np.where((star <= 2) 
+                & (crowd <= crowdmax ) 
                 & (sharp <= sharpmax) & (sharp >= sharpmin)
                 & (roond <= roundmax)
                 & ((snr435 >= 3) & (snr555 >= 3))  
                 & ((f435mag <= 90) & (f555mag <= 90))                 
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius[0])     
                 & list(np.any(x not in badXL for x in xcoord) and np.any(y not in badYL for y in ycoord)) ))
-    cut625814.append(np.where((star <= 2) & (crowd <= crowdmax )  
+    cut625814.append(np.where((star <= 2) 
+                & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) & (sharp >= sharpmin)
                 & (roond <= roundmax) 
                 & ((snr625 >= 3) & (snr814 >= 3))
@@ -534,7 +535,7 @@ dataOut_1 = np.array(np.c_[star[cut435555[0]]  ,
     rnd435[cut435555[0]],rnd555[cut435555[0]],rnd625[cut435555[0]],rnd814[cut435555[0]],
     crd435[cut435555[0]],crd555[cut435555[0]],crd625[cut435555[0]],crd814[cut435555[0]],
     ])#,data[:,21][cut435555[0]],data[:,35][cut435555[0]] 
-np.savetxt(folder +'/'+ title + 'cut435555.txt', dataOut_1 ,delimiter='   ', fmt = "%1.4f",
+np.savetxt(folder +'/'+ title + 'test.txt', dataOut_1 ,delimiter='   ', fmt = "%1.4f",
     header ='Object Xpix        Ypix        DisfromSN   Sub    S/N 435   S/N 555   S/N 625   S/N 814 ' \
     #'Mag 435 Mag 555 Mag 625 Mag 814 ' \
     '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '\
@@ -556,7 +557,7 @@ dataOut_2 = np.array(np.c_[star[cut625814[0]] ,
     rnd435[cut625814[0]],rnd555[cut625814[0]],rnd625[cut625814[0]],rnd814[cut625814[0]],
     crd435[cut625814[0]],crd555[cut625814[0]],crd625[cut625814[0]],crd814[cut625814[0]],
     ])#,data[:,48][cut625814[4]],data[:,61][cut625814[4]]    
-np.savetxt(folder +'/'+ title + 'cut625814.txt', dataOut_2 ,delimiter='   ', fmt = "%1.4f",
+np.savetxt(folder +'/'+ title + 'test2.txt', dataOut_2 ,delimiter='   ', fmt = "%1.4f",
     header ='Object Xpix        Ypix        DisFromSN   Sub    S/N 435  S/N 555  S/N 625  S/N 814 ' \
     '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '\
     'Sharp Round Crowd  Sharp 435   555   625   814 Round 435   555  625   814 Crowd 435  555  625  814')

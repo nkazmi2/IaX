@@ -155,8 +155,8 @@ yLmin    = -8.5
 yRmax    = -4.0
 yRmin    = -9.5
      
-f435f555.append(pickle.load(open('SN2008GE/sn2008ge.f435f555.p', 'rb')))  
-f625f814.append(pickle.load(open('SN2008GE/sn2008ge.f625f814.p', 'rb')))  
+f435f555.append(pickle.load(open('SN2008GE/sn08gef435f555.p', 'rb')))  
+f625f814.append(pickle.load(open('SN2008GE/sn08gef625f814.p', 'rb')))  
  
 Abs435 = f435f555[0][0] 
 Abs555 = f435f555[0][1] 
@@ -198,8 +198,8 @@ gs = gridspec.GridSpec(2, 1, height_ratios = h, hspace = 0.005)
 
 #fig1.suptitle('CMD for SN 2008ge',fontdict = font, size=15)
 
-fig1.suptitle(title + ': CMD with S/N >= 3.0,' + ' Z = 0.0' + name[2:-9]
-            + ' & Z = 0.0' + name2[2:-9],
+fig1.suptitle(title + ': CMD for Z = 0.0' + name[2:-9]
+          + ' & Z = 0.0' + name2[2:-9] + ' , Y = 0.26', 
               fontdict = font, size=15)
 ###########################################################################
 c1plt = plt.subplot2grid((2,2), (0,0), rowspan = 2)
@@ -207,10 +207,10 @@ plt.gca().invert_yaxis()
 plt.xlabel("F435W - F555W (mag)",fontdict = font)
 plt.ylabel("M$_{F555W}$ (mag)",fontdict = font)
 
-#c1plt.xaxis.set_minor_locator(AutoMinorLocator()) 
-#c1plt.yaxis.set_minor_locator(AutoMinorLocator())
-
-#c1plt.yaxis.set_major_locator(MultipleLocator(.5))
+c1plt.xaxis.set_minor_locator(AutoMinorLocator()) 
+c1plt.yaxis.set_minor_locator(AutoMinorLocator())
+c1plt.xaxis.set_major_locator(MultipleLocator(.5))
+c1plt.yaxis.set_major_locator(MultipleLocator(.5))
  
 ###########################################################################
 c1plt.plot(np.subtract(F435W[age],  F555W[age]),  F555W[age],  
@@ -294,11 +294,10 @@ plt.ylabel("M$_{F814W}$ (mag)",fontdict = font)
 
 #c2plt.tick_params(axis='both',labelbottom = font)
                   
-#c2plt.xaxis.set_minor_locator(AutoMinorLocator()) 
-#c2plt.yaxis.set_minor_locator(AutoMinorLocator())
-
-#c2plt.yaxis.set_major_locator(MultipleLocator(.5))
-
+c2plt.xaxis.set_minor_locator(AutoMinorLocator()) 
+c2plt.yaxis.set_minor_locator(AutoMinorLocator())
+c2plt.xaxis.set_major_locator(MultipleLocator(.5))
+c2plt.yaxis.set_major_locator(MultipleLocator(.5))
 
 c2plt.plot(np.subtract(F625W[age],  F814W[age]),  F814W[age],  
            'g:' , label = 'Age = 10$^{'+ str(IsoAge) +'}$ yrs') #'Z = 0.' + name[1:-7] )#
@@ -359,10 +358,10 @@ for k in range(len(Apn814[r2])):
 ########################################################################### 
 ###########################################################################
 ###########################################################################   
-sn435 = -4.65271111111#-4.17#-3.93
-sn555 = -5.37180645161#-4.56#-4.41
-sn625 = -5.56276436782#-5.03#-4.96
-sn814 = -5.16993814433#-5.2#-5.05
+sn435 = -4.67795744681#-4.17#-3.93
+sn555 = -5.38804395604#-4.56#-4.41
+sn625 = -5.56602312139#-5.03#-4.96
+sn814 = -5.17195876289#-5.2#-5.05
 #############
 s1 = -1 
 b1 = -4.0
@@ -412,6 +411,6 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'we16'+ '.png'
+figname = title + '_' + 'test'+ '.png'
 plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname
