@@ -68,14 +68,14 @@ xsn      = 3249.22
 ysn      = 3421.6611
 """
 ##################### 2008ha ######################
-"""
+#"""
 folder   = "SN2008HA"
 name     = 'sn2008ha_new.phot'
 
 # Actual X & Y pixel coordinates of sn
 xsn      = 1736.199#1736.352
 ysn      = 3171.792#3172.530
-"""
+#"""
 ##################### 2010ae ######################
 """
 folder   = "SN2010AE"
@@ -86,14 +86,14 @@ xsn      = 1783.3953#1795.3831# 1796.640
 ysn      = 1923.19955#1931.8080# 1931.995
 """
 ##################### 2010el ######################
-#"""    
+"""    
 folder   = "SN2010EL"
 name     = 'sn2010el.phot.out'
     
 # Actual X & Y pixel coordinates of sn
 xsn      = 2419.791
 ysn      = 1563.517
-#"""
+"""
 ###################################################    
 ######### Open and read in the data file ##########
 print "Making Region File"
@@ -149,6 +149,7 @@ crd814  = data[:,61] # Column 62 Crowd for F814W
 
 ################################################### 
 ################################################### 
+"""
 identify = pyregion.open(folder + '/NewCat.reg') #sn08ge
 r = pyregion.open(folder + '/NewCatCoord.reg')  
 
@@ -174,7 +175,7 @@ for i in range(len(r)):
 for j in range(len(save)):
     badX.append(r[save[j]].coord_list[0] - .5)
     badY.append(r[save[j]].coord_list[1] - .5)
-
+"""
 ################################################### 
 ############ Save coordinates to a file ###########
 print "Choppin some SN-suey"
@@ -254,13 +255,27 @@ elif (folder == "SN2008GE"):
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
                 )))
+elif (folder == "SN2008HA"):    
+    sharpmax = .55
+    sharpmin = -.44
+    roundmax = 2.7
+    crowdmax = 1.7 # give each plot different bad lists 
+    cut.append(np.where((star <= 2) 
+                & (crowd <= crowdmax ) 
+                & (sharp <= sharpmax) & (sharp >= sharpmin)
+                & (roond <= roundmax)
+                & (((snr625 >= 3) & (snr814 >= 3)) | ((snr435 >= 3) & (snr555 >= 3)))  
+                & (((f435mag <= 90) & (f555mag <= 90)) | ((f625mag <= 90) & (f814mag <= 90)))
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= 45)     
+                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)  
+                ))
 
 for i in range(len(xcoord[cut[0]])):
     circ.append('circle(')
     comm.append(',')
     clos.append(',2)')
 
-np.savetxt(folder +'/del2.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
+np.savetxt(folder +'/del.reg', np.c_[circ,xcoord[cut[0]]+.5,comm,ycoord[cut[0]]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
                comments = 'global color=green dashlist=8 3 width=1' \
                ' font="helvetica 10 normal" select=1' \
@@ -312,7 +327,7 @@ print "Round Max: ", np.max( rnd814[cut[0]])
 print "RoundMean: ", np.mean(rnd814[cut[0]])
 print "Crowd Max: ", np.max( crd814[cut[0]])
 print "CrowdMean: ", np.mean(crd814[cut[0]])
-"""
+
 print "Make Text File"
 
 yax1 = []
@@ -339,4 +354,3 @@ np.savetxt(folder +'/'+ title + 'del.txt', dataOut_1 ,delimiter='   ', fmt = "%1
     'Sharp Round Crowd Sharp 435   555   625   814 Round 435   555  625   814 Crowd 435  555  625  814') 
     
 print "Save into text file"
-"""

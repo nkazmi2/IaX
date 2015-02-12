@@ -355,9 +355,9 @@ def main():
         SNname = raw_input('Choose a Supernova:')
         print ('You picked %s' %(SNname))
     
-    decpick = raw_input('Do you want to pickle the file (y/n):')
-    dectxt  = raw_input('Do you want make a text file   (y/n):')
-    decsnr  = raw_input('Do you want to look at the S/N (y/n):')
+    decpick = raw_input('Do you want to pickle the file       (y/n):')
+    dectxt  = raw_input('Do you want make a text file         (y/n):')
+    decsnr  = raw_input('Do you want to look at the wavebands (y/n):')
     
     SNstuff = SNinfo(SNname)
     
@@ -369,10 +369,10 @@ def main():
     ACS814  = SNstuff[5]
     #MW      = SNstuff[6]
     #Host    = SNstuff[7]
-    #H435    = SNstuff[8]
-    #H555    = SNstuff[9]
-    #H625    = SNstuff[10]
-    #H814    = SNstuff[11]
+    H435    = SNstuff[8]
+    H555    = SNstuff[9]
+    H625    = SNstuff[10]
+    H814    = SNstuff[11]
     dmod    = SNstuff[12]
     xsn     = SNstuff[13]
     ysn     = SNstuff[14]
@@ -425,10 +425,10 @@ def main():
     
     print "Calculating Absolute Magnitude..."
     #dmod = 5*log(D(pc)) - 5
-    f435Abs = f435mag - dmod - ACS435 #- H435
-    f555Abs = f555mag - dmod - ACS555 #- H555
-    f625Abs = f625mag - dmod - ACS625 #- H625
-    f814Abs = f814mag - dmod - ACS814 #- H814
+    f435Abs = f435mag - dmod - ACS435 - H435
+    f555Abs = f555mag - dmod - ACS555 - H555
+    f625Abs = f625mag - dmod - ACS625 - H625
+    f814Abs = f814mag - dmod - ACS814 - H814
     
 ################################################### 
 ############### Deal with bad points ##############
@@ -489,10 +489,10 @@ def main():
 ################################################### 
         
     if (decsnr == 'y'):
-        print "Look at S/N values"
+        print "Look at waveband limits"
         viewsnr(star, xsn, ysn, xcoord, ycoord, 
             snr435, snr555, snr625, snr814,
             f435Abs, f555Abs, f625Abs, f814Abs)
     else:
-        print "No need for that S/N here"
+        print "No waves here"
 main() 

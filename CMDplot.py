@@ -4,7 +4,6 @@ Created on Tue Jun 10 09:11:48 2014
 
 @author: Nova
 """
-
 from __future__ import division
 import numpy               as np
 import matplotlib.pyplot   as plt
@@ -39,17 +38,9 @@ font = {'family' : 'serif',
         } 
         
         
-class Star:
-    def _init_(self,f435Abs,f555Abs,uncVert,uncHorz,snr435,snr555,xcoord, ycoord): 
-        self.data = []
-    def add(self, x):
-        self.data.append(x)
-    def addtwice(self, x):
-        self.add(x)
-        self.add(x)
 #####################################################################
 ########################### PICK THE SN!! ###########################
-####################################################################
+#####################################################################
 
 #title = 'SN08ha'
 title = 'SN10ae'
@@ -211,10 +202,10 @@ elif (title == 'SN10ae'):
     dist       = 13.1e7
     conver     = (63.52) #(2.5*math.pi)/(50.0*3600*180)
     
-    yLmax      = -3.9
-    yLmin      = -7.0
+    yLmax      = -4.0
+    yLmin      = -8.0
     yRmax      = -5.0
-    yRmin      = -7.5
+    yRmin      = -8.0
     
     xLmax      = -0.75
     xLmin      =  2.0
@@ -294,7 +285,6 @@ r1 = np.where(Radr <= radius[1])
 r2 = np.where(Radr <= radius[2])
 #r3 = np.where(Radr <= radius[3])
 #r4 = np.where(Radr <= radius[4])
-
 ###########################################################################
 print "Begin plotting Isochrones..."
 h = [2, 4] # height of the plotted figure
@@ -561,7 +551,6 @@ UncYl  = f435f555[0][5]
 SN435  = f435f555[0][6] 
 SN555  = f435f555[0][7]
 Radl   = f435f555[0][8] 
-
 Abs625 = f625f814[0][0] 
 Abs814 = f625f814[0][1]
 Apn625 = f625f814[0][2]
@@ -579,9 +568,8 @@ Radr   = f625f814[0][8]
 
 #c1plt.add_patch(poly)
 ###########################################################################  
-l = plt.legend(prop = {'family' : 'serif'},loc=4)
-#l = plt.legend(prop = {'family' : 'serif'},loc=1)
-l.draw_frame(False)
+lL = plt.legend(prop = {'family' : 'serif'},loc=4)
+lL.draw_frame(False)
 ###########################################################################
 
 #c2plt = plt.subplot2grid((2,2), (1,0), colspan = 2)
@@ -919,7 +907,6 @@ for i in range(len(Apn435[s2])-1):
                 #textcoords='offset points',
             arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
             )               
-
 c1plt.annotate(str(7), xy=(np.subtract(Apn435[s2][5], Apn555[s2][5]),Abs555[s2][5]), 
      xytext=(np.subtract(Apn435[s2][5], Apn555[s2][5])+.2,Abs555[s2][5]-.2),
      #textcoords='offset points',
@@ -934,8 +921,8 @@ for i in range(len(Apn625[r2])):
             ) 
 """
 ###########################################################################
-l = plt.legend(prop = {'family' : 'serif'},loc=4)
-l.draw_frame(False)
+lR = plt.legend(prop = {'family' : 'serif'},loc=4)
+lR.draw_frame(False)
 ########################################################################### 
 c1plt.set_ylim(bottom=yLmax, top=yLmin)
 c1plt.set_xlim(xLmax,xLmin)
@@ -947,5 +934,5 @@ plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
 figname = title + '_' + 'test' + '.png'
-plt.savefig('Figures/'+ figname)
+#plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname
