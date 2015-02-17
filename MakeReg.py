@@ -57,7 +57,7 @@ cut  = []
 ################################################### 
 ######### Things that change for each sn ##########
 ##################### 2008ge ######################
-"""
+#"""
 folder   = "SN2008GE"
 name     = 'sn2008ge.phot.out' 
 #name     = 'sn2008ge_new.phot' 
@@ -66,16 +66,16 @@ name     = 'sn2008ge.phot.out'
 # Actual X & Y pixel coordinates of sn
 xsn      = 3249.22
 ysn      = 3421.6611
-"""
-##################### 2008ha ######################
 #"""
+##################### 2008ha ######################
+"""
 folder   = "SN2008HA"
 name     = 'sn2008ha_new.phot'
 
 # Actual X & Y pixel coordinates of sn
 xsn      = 1736.199#1736.352
 ysn      = 3171.792#3172.530
-#"""
+"""
 ##################### 2010ae ######################
 """
 folder   = "SN2010AE"
@@ -149,7 +149,7 @@ crd814  = data[:,61] # Column 62 Crowd for F814W
 
 ################################################### 
 ################################################### 
-"""
+#"""
 identify = pyregion.open(folder + '/NewCat.reg') #sn08ge
 r = pyregion.open(folder + '/NewCatCoord.reg')  
 
@@ -175,7 +175,7 @@ for i in range(len(r)):
 for j in range(len(save)):
     badX.append(r[save[j]].coord_list[0] - .5)
     badY.append(r[save[j]].coord_list[1] - .5)
-"""
+#"""
 ################################################### 
 ############ Save coordinates to a file ###########
 print "Choppin some SN-suey"
@@ -208,7 +208,7 @@ if (folder == "SN2010AE"):
                 & (sharp >= sharpmin) 
                 & (roond <= roundmax) 
                 & (((f435mag <= 90) & (f555mag <= 90)) | ((f625mag <= 90) & (f814mag <= 90)))                               
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 20)      
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < 100)      
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
 elif (folder == "SN2010EL"): 
@@ -251,7 +251,7 @@ elif (folder == "SN2008GE"):
                 #& (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))
                 & (((f435mag <= 90) & (f555mag <= 90)) | ((f625mag <= 90) & (f814mag <= 90)))
                 #& ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9)) 
-                & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= 160)               
+                & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= 250)               
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
                 )))

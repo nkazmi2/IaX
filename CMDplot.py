@@ -43,8 +43,8 @@ font = {'family' : 'serif',
 #####################################################################
 
 #title = 'SN08ha'
-title = 'SN10ae'
-#title = 'SN10el'
+#title = 'SN10ae'
+title = 'SN10el'
 #####################################################################
 
 if (title == 'SN08ha'):
@@ -222,10 +222,10 @@ elif (title == 'SN10el'):
     dist       = 9.97e7
     conver     = (48.33) #(2.5*math.pi)/(50.0*3600*180)
     title      = 'SN10el'
-    yLmax    = -2.0
-    yLmin    = -5.5
-    yRmax    = -3.0
-    yRmin    = -6.0
+    yLmax    = -5.0
+    yLmin    = -8.5
+    yRmax    = -5.0
+    yRmin    = -8.5
     
     xLmax    = -0.5
     xLmin    =  2.0
@@ -410,12 +410,28 @@ elif (title == 'SN10el'):
     #plt.annotate('A${_v}}$ = ' + str(A435555), xy=(0.5, -6.5), xytext=(1.1, -5.0),
     #         arrowprops=dict(arrowstyle="->",
     #                        connectionstyle="arc3"),)
-    
+    """
     plt.annotate('', xy=(1.1, -5.417), xycoords = 'data',
                  xytext = (1.838, -2.9), textcoords = 'data',
                     arrowprops = {'arrowstyle':'->'})
     plt.annotate('A${_v}}$ = 3.4105', xy=(0.3,-5.2), xycoords = 'data',
                  xytext = (2, 3), textcoords = 'offset points')
+    """
+    ACS435 = 0.033
+    ACS555 = 0.025
+    ACS625 = 0.020
+    ACS814 = 0.014
+    H435 = 3.255
+    H555 = 2.517
+    H625 = 2.001
+    H814 = 1.376
+    c1plt.plot(np.subtract((F435W[age76]-ACS435-H435), (F555W[age76]-ACS555-H555)), 
+               (F555W[age76]-ACS555-H555),  
+                'r--', label = 'Age = 10$^{^{7.6}}$ yrs')
+
+    c1plt.plot(np.subtract((F435W[age785]-ACS435-H435), (F555W[age785]-ACS555-H555)), 
+               (F555W[age785]-ACS555-H555),  
+                'b--', label = 'Age = 10$^{^{7.85}}$ yrs')  
     #c1plt.plot(np.subtract(F435W[age70],  F555W[age70]),  F555W[age70],  
     #       'r--', label = 'Age = 10$^{7.0}$ yrs')
     #c1plt.plot(np.subtract(F435W[age71],  F555W[age71]),  F555W[age71],  
@@ -434,8 +450,8 @@ elif (title == 'SN10el'):
     #       'y-' , label = 'Age = 10$^{7.7}$ yrs')
     #c1plt.plot(np.subtract(F435W[age78],  F555W[age78]),  F555W[age78],  
     #       'g:' , label = 'Age = 10$^{7.8}$ yrs')
-    c1plt.plot(np.subtract(F435W[age781], F555W[age781]), F555W[age781],  
-           'k--' , label = 'Age = 10$^{7.81}$ yrs')
+    #c1plt.plot(np.subtract(F435W[age781], F555W[age781]), F555W[age781],  
+    #       'k--' , label = 'Age = 10$^{7.81}$ yrs')
     #c1plt.plot(np.subtract(F435W[age782], F555W[age782]), F555W[age782],  
     #       'y--', label = 'Age = 10$^{7.82}$ yrs')
     #c1plt.plot(np.subtract(F435W[age783], F555W[age783]), F555W[age783],  
@@ -675,12 +691,27 @@ elif (title == 'SN10el'):
     #plt.annotate('A${_v}}$ = ' + str(A625814) , xy=(0.5, -7.0), xytext=(1.1, -5.5),
     #         arrowprops=dict(arrowstyle="->",
     #                        connectionstyle="arc3"),)
-    
+    """
     plt.annotate('', xy=(1.0, -5.376), xycoords = 'data',
                  xytext = (1.625, -4), textcoords = 'data',
                     arrowprops = {'arrowstyle':'->'})
     plt.annotate('A${_v}}$ = 2.2016', xy=(.9,-3.8), xycoords = 'data',
                  xytext = (2, 3), textcoords = 'offset points')
+    """
+    ACS435 = 0.033
+    ACS555 = 0.025
+    ACS625 = 0.020
+    ACS814 = 0.014
+    H435 = 3.255
+    H555 = 2.517
+    H625 = 2.001
+    H814 = 1.376
+    c2plt.plot(np.subtract((F625W[age76]-ACS625-H625), (F814W[age76]-ACS814-H814)),
+              (F814W[age76]-ACS814-H814),  
+              'r--', label = 'Age = 10$^{7.6}$ yrs')
+    c2plt.plot(np.subtract((F625W[age785]-ACS625-H625), (F814W[age785]-ACS814-H814)),
+              (F814W[age785]-ACS814-H814),  
+              'b--', label = 'Age = 10$^{7.85}$ yrs')
     #c2plt.plot(np.subtract(F625W[age70],  F814W[age70]),  F814W[age70],  
     #       'r--', label = 'Age = 10$^{7.0}$ yrs')
     #c2plt.plot(np.subtract(F625W[age71],  F814W[age71]),  F814W[age71],  
@@ -699,8 +730,8 @@ elif (title == 'SN10el'):
     #       'y-' , label = 'Age = 10$^{7.7}$ yrs')
     #c2plt.plot(np.subtract(F625W[age78],  F814W[age78]),  F814W[age78],  
     #       'g:' , label = 'Age = 10$^{7.8}$ yrs')
-    c2plt.plot(np.subtract(F625W[age781], F814W[age781]), F814W[age781],  
-           'k--' , label = 'Age = 10$^{7.81}$ yrs')    
+    #c2plt.plot(np.subtract(F625W[age781], F814W[age781]), F814W[age781],  
+    #       'k--' , label = 'Age = 10$^{7.81}$ yrs')    
     #c2plt.plot(np.subtract(F625W[age782], F814W[age782]), F814W[age782],  
     #       'y--', label = 'Age = 10$^{7.82}$ yrs')
     #c2plt.plot(np.subtract(F625W[age783], F814W[age783]), F814W[age783],  
@@ -933,6 +964,6 @@ plt.tight_layout()
 plt.subplots_adjust(top=0.90)
 ########################################################################### 
 #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-figname = title + '_' + 'test' + '.png'
-#plt.savefig('Figures/'+ figname)
+figname = title + '_' + 'weirdness' + '.png'
+plt.savefig('Figures/'+ figname)
 print "Save and show plot : " + figname
