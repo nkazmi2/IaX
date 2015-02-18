@@ -1,0 +1,22 @@
+# Region file format: DS9 version 4.1
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+image
+circle(1753.9391,1918.1276,2.0000015) # font="helvetica 10 normal" text={S1}
+circle(1779.8328,1940.9357,2.0000015) # font="helvetica 10 normal" text={S2}
+circle(1796.8269,1951.941,2.0000015) # font="helvetica 10 normal" text={S3}
+circle(1756.849,1931.5285,2.0000015) # font="helvetica 10 normal" text={S4}
+circle(1784.6905,1938.1372,2.0000015) # font="helvetica 10 normal" text={S5}
+circle(1798.7761,1930.5415,2.0000015) # font="helvetica 10 normal" text={S6}
+circle(1786.1554,1911.7377,2.0000015) # font="helvetica 10 normal" text={S7}
+circle(1769.3163,1923.1325,2.0000015) # font="helvetica 10 normal" text={S8}
+circle(1805.9042,1914.1437,2.0000015) # font="helvetica 10 normal" text={S9}
+circle(1759.6044,1919.7294,2.0000015) # font="helvetica 10 normal" text={S10}
+circle(1796.8416,1903.341,2.0000015) # font="helvetica 10 normal" text={S11}
+circle(1771.7358,1950.7332,2.0000015) # font="helvetica 10 normal" text={S12}
+circle(1794.7252,1944.7403,2.0000015) # font="helvetica 10 normal" text={S13}
+circle(1785.1828,1915.5374,2.0000015) # font="helvetica 10 normal" text={S14}
+circle(1789.2209,1945.3386,2.0000015) # font="helvetica 10 normal" text={S15}
+circle(1773.3727,1893.9337,2.0000015) # font="helvetica 10 normal" text={S16}
+circle(1781.4597,1915.7363,2.0000015) # font="helvetica 10 normal" text={S17}
+circle(1806.386,1925.9438,2.0000015) # font="helvetica 10 normal" text={S18}
+circle(1783.3953,1923.1996,31.999966) # text={1500 pc}
