@@ -1,0 +1,5 @@
+# Region file format: DS9 version 4.1
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+image
+box(3247.539,3419.971,300.00001,300.00003,0) # color=red
+line(3867.726,2835.2234,4083.9199,2835.1436) # line=0 0 color=red text={10" = 45 pc}

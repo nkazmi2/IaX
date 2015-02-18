@@ -1,0 +1,14 @@
+# Region file format: DS9 version 4.1
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+image
+circle(3285.0194,3440.9761,2.0000017) # font="helvetica 10 normal" text={S1}
+circle(3280.9853,3379.9769,2.0000017) # font="helvetica 10 normal" text={S2}
+circle(3185.53,3515.81,2.0000017) # font="helvetica 10 normal" text={S3}
+circle(3273.9561,3438.9781,2.0000017) # font="helvetica 10 normal" text={S4}
+circle(3394.83,3471.98,2.0000017) # font="helvetica 10 normal" text={S5}
+circle(3315.75,3463.33,2.0000017) # font="helvetica 10 normal" text={S6}
+circle(3292.51,3475.67,2.0000017) # font="helvetica 10 normal" text={S7}
+circle(3335.74,3330.23,2.0000017) # font="helvetica 10 normal" text={S8}
+circle(3240.63,3265.41,2.0000017) # font="helvetica 10 normal" text={S9}
+circle(3183.13,3282.8,2.0000017) # font="helvetica 10 normal" text={S10}
+circle(3156.55,3502.84,2.0000017) # font="helvetica 10 normal" text={S11}
