@@ -46,50 +46,23 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
     cut435555 = []
     cut625814 = []
     if (SNname == 'sn08ha'):
-        cut435555.append(np.where((star <= 2) 
-                & (crowd <= crowdmax ) 
+       cut1  = (np.where((star <= 2) 
+                & (((snr625 >= 3) & (snr814 >= 3)) 
+                | (( snr435 >= 3) & (snr555 >= 3)))                 
+                & (crowd <= crowdmax)  
                 & (sharp <= sharpmax) 
                 & (sharp >= sharpmin)
-                & (roond <= roundmax)
-                & ((snr435 >= 3) & (snr555 >= 3))  
-                & ((f435mag <= 90) & (f555mag <= 90))                 
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius)       
-                & ((((1716.4613  - xcoord)**2 + (3163.7546 - ycoord)**2)**.5) >= 7)    
-                & list(np.any(x not in badXL for x in xcoord) and np.any(y not in badYL for y in ycoord)) ))
-        cut625814.append(np.where((star <= 2) 
-                & (crowd <= crowdmax )  
-                & (sharp <= sharpmax) 
-                & (sharp >= sharpmin)
-                & (roond <= roundmax) 
-                & ((snr625 >= 3) & (snr814 >= 3))
-                & ((f625mag <= 90) & (f814mag <= 90))                
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius)      
+                & (roond <= roundmax)               
                 & ((((1716.4613  - xcoord)**2 + (3163.7546 - ycoord)**2)**.5) >= 7) 
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
     elif (SNname == 'sn08ge'):    
-        cut435555.append(np.where((star <= 2)   
-                & (crowd <= crowdmax )  
-                & (sharp <= sharpmax) 
-                & (sharp >= sharpmin)
-                & (roond <= roundmax)    
-                & ((snr435 >= 3) & (snr555 >= 3))  
-                & ((snr435 > 0 ) & (snr555 > 0 )) 
-                & ((f435mag <= 90) & (f555mag <= 90)) 
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius)      
-                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)  
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
-                ))
-        cut625814.append(np.where((star <= 2)   
-                & (crowd <= crowdmax )  
-                & (sharp <= sharpmax) & (sharp >= sharpmin)
-                & (roond <= roundmax)    
-                & ((snr625 >= 3) & (snr814 >= 3)) 
-                & ((snr625 > 0 ) & (snr814 > 0 )) 
-                & ((f625mag <= 90) & (f814mag <= 90))   
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius)      
-                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)  
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
-                ))
+       cut1  = (np.where((star <= 2) 
+                & (((snr625 >= 3) & (snr814 >= 3)) 
+                | (( snr435 >= 3) & (snr555 >= 3)))  
+                & (((snr625 >= 0) & (snr814 >= 0)) 
+                | (( snr435 >= 0) & (snr555 >= 0)))      
+                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
     else:
         cut435555.append(np.where((star <= 2)   
                 & (crowd <= crowdmax )  
@@ -110,7 +83,7 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
-    return cut435555, cut625814
+    return cut1
 
 ###################################################     
 def SNinfo(SNname):
@@ -195,7 +168,7 @@ def textfile(folder, name, cuts, star, xsn, ysn,
         crd435[cuts],crd555[cuts],crd625[cuts],crd814[cuts]
         ])
         
-    np.savetxt(folder +'/'+ name[:8] + '.CRS.txt', dataOut ,delimiter='   ', fmt = "%1.4f",
+    np.savetxt(folder +'/'+ name[:8] + '.CRS3.txt', dataOut ,delimiter='   ', fmt = "%1.4f",
                header ='Object Xpix        Ypix        DisFromSN  '\
                'S/N 435  S/N 555  S/N 625  S/N 814 ' \
                #'  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '\
@@ -262,7 +235,7 @@ def main():
     decsave = raw_input('Do you want to save the figure (y/n):')
     dectext = raw_input('Make a text file               (y/n):')
     SNstuff = SNinfo(SNname)
-            #[folder, file,
+        #[folder, file,
         #dist, conv
         #ACS435,ACS555,ACS625,ACS814,
         #MW,Host,
@@ -344,15 +317,31 @@ def main():
 
     xcoord  = data[:, 2]
     ycoord  = data[:, 3]
-        
+     
+    print crowdmax
+    print sharpmax, sharpmin
+    print roundmax
+    
     ###################################################
-    cut1  = (np.where((star <= 2) 
+    cut1 = (np.where((star <= 2)           
+                #& (crowd <= crowdmax)  
+                #& (sharp <= sharpmax) 
+                #& (sharp >= sharpmin)
+                #& (roond <= roundmax)   
                 & (((snr625 >= 3) & (snr814 >= 3)) 
-                | (( snr435 >= 3) & (snr555 >= 3)))       
-                #& (sharp <= sharpmax) & (sharp >= sharpmin) 
+                | (( snr435 >= 3) & (snr555 >= 3)))  
+                & (((snr625 >= 0) & (snr814 >= 0)) 
+                | (( snr435 >= 0) & (snr555 >= 0)))      
+                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25) 
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
-    """cut2  = (np.where((star <= 2) 
-                #& (roond <= roundmax) 
+    """cut2 = (np.where((star <= 2) 
+                & (((snr625 >= 3) & (snr814 >= 3)) 
+                | (( snr435 >= 3) & (snr555 >= 3)))                 
+                & (crowd <= crowdmax)  
+                & (sharp <= sharpmax) 
+                & (sharp >= sharpmin)
+                & (roond <= roundmax)               
+                & ((((1716.4613  - xcoord)**2 + (3163.7546 - ycoord)**2)**.5) >= 7) 
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
     cut3  = (np.where((star <= 2)
                 #& (crowd <= .43 ) 
