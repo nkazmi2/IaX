@@ -6,6 +6,7 @@ Created on Mon Feb 02 13:33:54 2015
 """
 
 import numpy as np
+import random
 """
 age = 7.5
 print type(age)
@@ -16,7 +17,14 @@ print stop
 for i in np.arange(start,stop,0.1):#for i in range(start, stop):
         print i
 """
-isonum = 7.74
-print str(round((10**isonum),-4))
-print str(round((10**isonum)*0.000001,2))
-print str(round((10**isonum)/100000.0,1))
+#isonum = 7.74
+#print str(round((10**isonum),-4))
+#print str(round((10**isonum)*0.000001,2))
+#print str(round((10**isonum)/100000.0,1))
+
+#for i in np.arange(7.0,8.0,0.01):
+    #print i
+
+print "\nF435W-F555W"
+
+print np.random.rand(3,1)

@@ -13,7 +13,7 @@ import numpy as np
 import pandas
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-
+import pyregion
 ################################################### 
 
 params = {'legend.fontsize': 10, 
@@ -41,7 +41,9 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
             f435mag, f555mag, f625mag, f814mag,
             xcoord, ycoord,
             badX, badY,
-            badXL, badYL):
+            badXL, badYL,srp435,srp555,srp625,srp814,
+            rnd435,rnd555,rnd625,rnd814,
+            crd435,crd555,crd625,crd814):
     print "Make final cuts for", SNname 
     cut435555 = []
     cut625814 = []
@@ -57,10 +59,9 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
     elif (SNname == 'sn08ge'):    
        cut1  = (np.where((star <= 2) 
-                & (((snr625 >= 3) & (snr814 >= 3)) 
-                | (( snr435 >= 3) & (snr555 >= 3)))  
-                & (((snr625 >= 0) & (snr814 >= 0)) 
-                | (( snr435 >= 0) & (snr555 >= 0)))      
+                & (crd814 <= 2)
+                & (((snr625 >= 3) & (snr814 >= 3)) | (( snr435 >= 3) & (snr555 >= 3)))  
+                & (((snr625 >= 0) & (snr814 >= 0)) | (( snr435 >= 0) & (snr555 >= 0)))    
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
     else:
@@ -85,6 +86,69 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 ))
     return cut1
 
+###################################################     
+def removBad(folder, good_list, coord_list):    
+    print "Filter bad sources...."
+    save = []
+    pixX = []
+    pixY = []
+    fix  = []
+    k    = []
+    l    = []
+    pixXL = []
+    pixYL = []
+
+    if (folder == "SN2008HA"):
+        saveL = []
+        fixL  = []
+        i = []
+        j = []
+        identify  = pyregion.open(str(folder) + '/sn08ha_right.reg')
+        r         = pyregion.open(str(folder) + '/sn2008ha_coord.reg')  
+        identifyL = pyregion.open(str(folder) + '/sn08ha_left.reg') 
+        origcoord = pyregion.open(str(folder) + '/sn2008ha_coord.reg') 
+        
+        for i in xrange(len(identifyL)):
+            if (pyregion.ShapeList(identifyL[i].attr[1].get("color"))  == ['y', 'e', 'l', 'l', 'o', 'w']):
+                fixL.append(i)
+                #yellow is good
+                #cyan is bad
+
+        for i in xrange(len(fixL)):
+            origcoord[fixL[i]].attr[1]["color"] = 'yellow'
+            
+
+        for i in xrange(len(origcoord)):
+            p1 = pyregion.ShapeList(origcoord[i].attr[1].get("color"))
+            if (p1[0] == 'c'):
+                saveL.append(i) 
+
+        for j in xrange(len(saveL)): 
+            pixXL.append(origcoord[saveL[j]].coord_list[0] - 0.5)
+            pixYL.append(origcoord[saveL[j]].coord_list[1] - 0.5)
+    else:
+        identify = pyregion.open(str(folder) + '/' + str(good_list))
+        r        = pyregion.open(str(folder)+ '/'  + str(coord_list))  
+    ############################### 
+    for k in xrange(len(identify)):
+        if (pyregion.ShapeList(identify[k].attr[1].get("color"))  == ['y', 'e', 'l', 'l', 'o', 'w']):
+            fix.append(k)
+            #yellow is good
+            #cyan is bad
+
+    for k in xrange(len(fix)):
+        r[fix[k]].attr[1]["color"] = 'yellow'
+        
+    for k in xrange(len(r)):
+        r1 = pyregion.ShapeList(r[k].attr[1].get("color"))
+        if (r1[0] == 'c'):
+            save.append(k) 
+ 
+    for l in xrange(len(save)): 
+        pixX.append(r[save[l]].coord_list[0] - 0.5)
+        pixY.append(r[save[l]].coord_list[1] - 0.5)
+
+    return pixX, pixY, pixXL, pixYL
 ###################################################     
 def SNinfo(SNname):
         ##### Things that change for each sn ######
@@ -130,7 +194,7 @@ def SNinfo(SNname):
                 0.033,0.025,0.020,0.014,
                 0.008,0.8,
                 3.255,2.517,2.001,1.376,
-                30.09,2419.791,1563.517,25,
+                30.09,2419.791,1563.517,22,
                 'NewCat.reg','NewCatCoord.reg',
                 .66,-.56,1.16,.72]
     return Info
@@ -142,7 +206,6 @@ def save(name):
     plt.savefig('Figures/'+ figname)
     print "Save and show plot : " + figname
     
-
 ###################################################    
     
 def textfile(folder, name, cuts, star, xsn, ysn,
@@ -262,8 +325,8 @@ def main():
     ysn     = SNstuff[16]
     radius  = SNstuff[17]
     
-    #good_list = SNstuff[18]
-    #coor_list = SNstuff[19]
+    good_list = SNstuff[18]
+    coor_list = SNstuff[19]
     
     sharpmax = SNstuff[20]
     sharpmin = SNstuff[21]
@@ -285,10 +348,10 @@ def main():
     roond   = data[:, 7] # round is already a special word
     crowd   = data[:, 9]
     
-    #f435mag = data[:,15] # instramental VEGAMAG magnitude
-    #f555mag = data[:,28]
-    #f625mag = data[:,41]
-    #f814mag = data[:,55]
+    f435mag = data[:,15] # instramental VEGAMAG magnitude
+    f555mag = data[:,28]
+    f625mag = data[:,41]
+    f814mag = data[:,55]
     
     #unc435  = data[:,17] # uncertainty 
     #unc555  = data[:,30]
@@ -317,22 +380,34 @@ def main():
 
     xcoord  = data[:, 2]
     ycoord  = data[:, 3]
-     
-    print crowdmax
-    print sharpmax, sharpmin
-    print roundmax
     
     ###################################################
+    badX  = []
+    badY  = []  
+    badXL = []
+    badYL = []  
+    badX, badY, badXL, badYL = removBad(folder, good_list,coor_list)
+    ###################################################
+    """cut1 = cutdata(SNname,sharpmax,sharpmin,roundmax,crowdmax,radius,
+            star, crowd, sharp, roond, 
+            xsn,ysn,
+            snr435, snr555, snr625, snr814,
+            f435mag, f555mag, f625mag, f814mag,
+            xcoord, ycoord,
+            badX, badY,
+            badXL, badYL,
+            srp435,srp555,srp625,srp814,
+            rnd435,rnd555,rnd625,rnd814,
+            crd435,crd555,crd625,crd814)
+    """
     cut1 = (np.where((star <= 2)           
                 #& (crowd <= crowdmax)  
                 #& (sharp <= sharpmax) 
                 #& (sharp >= sharpmin)
                 #& (roond <= roundmax)   
                 & (((snr625 >= 3) & (snr814 >= 3)) 
-                | (( snr435 >= 3) & (snr555 >= 3)))  
-                & (((snr625 >= 0) & (snr814 >= 0)) 
-                | (( snr435 >= 0) & (snr555 >= 0)))      
-                & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25) 
+                | (( snr435 >= 3) & (snr555 >= 3)))               
+                #& (srp814 >= -3)   
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
     """cut2 = (np.where((star <= 2) 
                 & (((snr625 >= 3) & (snr814 >= 3)) 

@@ -241,8 +241,9 @@ elif (folder == "SN2008GE"):
     roundmax =  1.5
     crowdmax =  0.2 # 1.15
     cut.append((np.where((star <= 2)   
-                & (crowd <= crowdmax )  
-                & (sharp <= sharpmax) & (sharp >= sharpmin) 
+                & (crowd <= crowdmax)  
+                & (sharp <= sharpmax) 
+                & (sharp >= sharpmin) 
                 & (roond <= roundmax) 
                 & (((snr625 > 0 ) & (snr814 > 0 )) | ((snr435 > 0 ) & (snr555 > 0 )))
                 & (((snr625 >= 3) & (snr814 >= 3)) | ((snr435 >= 3) & (snr555 >= 3)))            
@@ -251,9 +252,9 @@ elif (folder == "SN2008GE"):
                 #& (srp435 >= -3)  & (srp555 >= -3) & (srp625 >= -3) & (srp814 >= -3))
                 & (((f435mag <= 90) & (f555mag <= 90)) | ((f625mag <= 90) & (f814mag <= 90)))
                 #& ((crd435 <= 9)  & (crd555 <= 9)  & (crd625 <= 9)  & (crd814 <= 9)) 
-                & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= 250)               
+                & ((((xsn   - xcoord)**2 + (ysn  - ycoord)**2)**.5) <= 116)               
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25) 
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
                 )))
 elif (folder == "SN2008HA"):    
     sharpmax = .55
@@ -328,6 +329,7 @@ print "RoundMean: ", np.mean(rnd814[cut[0]])
 print "Crowd Max: ", np.max( crd814[cut[0]])
 print "CrowdMean: ", np.mean(crd814[cut[0]])
 
+"""
 print "Make Text File"
 
 yax1 = []
@@ -354,3 +356,4 @@ np.savetxt(folder +'/'+ title + 'del.txt', dataOut_1 ,delimiter='   ', fmt = "%1
     'Sharp Round Crowd Sharp 435   555   625   814 Round 435   555  625   814 Crowd 435  555  625  814') 
     
 print "Save into text file"
+"""

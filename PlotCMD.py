@@ -9,10 +9,11 @@ import numpy               as np
 import matplotlib.pyplot   as plt
 import matplotlib.gridspec as gridspec
 import pickle
+import random 
 from matplotlib.ticker  import MultipleLocator 
 from matplotlib.ticker  import AutoMinorLocator
 from matplotlib.patches import Polygon
-import random 
+from itertools          import cycle
 
 params = {'legend.fontsize': 10, 
           'legend.linewidth': 2,
@@ -45,6 +46,7 @@ def annot(SNannot,Apt435,Apt555,Ab555,Apt625,Apt814,Ab814,radR,radL,c1plt,c2plt)
     #Annotate!
 
     if (SNannot == 'sn08ge'):
+        """
         for i in range(8):
             c1plt.annotate(str(i+1), xy=(np.subtract(Apt435[radL][i], Apt555[radL][i]),Ab555[radL][i]), 
                xytext=(np.subtract(Apt435[radL][i], Apt555[radL][i])+.2,Ab555[radL][i]-.2),
@@ -81,7 +83,7 @@ def annot(SNannot,Apt435,Apt555,Ab555,Apt625,Apt814,Ab814,radR,radL,c1plt,c2plt)
                 #textcoords='offset points',
                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
                 ) 
-                 
+        """
         for i in range(len(Apt625[radR])):
             c2plt.annotate(str(i+1), xy=(np.subtract(Apt625[radR][i], Apt814[radR][i]),Ab814[radR][i]), 
                 xytext=(np.subtract(Apt625[radR][i], Apt814[radR][i])+.2,Ab814[radR][i]-.2),
@@ -90,8 +92,7 @@ def annot(SNannot,Apt435,Apt555,Ab555,Apt625,Apt814,Ab814,radR,radL,c1plt,c2plt)
                 )     
     ###############################
     elif (SNannot == 'sn08ha'):
-        for i in range(4):
-            c1plt.annotate(str(29+i), xy=(np.subtract(Apt435[radL][i], Apt555[radL][i]),Ab555[radL][i]), 
+        c1plt.annotate(str(29+i), xy=(np.subtract(Apt435[radL][i], Apt555[radL][i]),Ab555[radL][i]), 
                                xytext=(np.subtract(Apt435[radL][i], Apt555[radL][i])+.2,Ab555[radL][i]-.2),
                                 #textcoords='offset points',
                                 arrowprops=dict(arrowstyle="->",))#facecolor='black', shrink=0.005),
@@ -136,13 +137,14 @@ def annot(SNannot,Apt435,Apt555,Ab555,Apt625,Apt814,Ab814,radR,radL,c1plt,c2plt)
                 )         
     ###############################
     elif (SNannot == 'sn10ae'):
-        for i in range(len(Apt435[radL])-2):
+        
+        for i in range(len(Apt435[radL])-1):
             c1plt.annotate(str(i+1), xy=(np.subtract(Apt435[radL][i], Apt555[radL][i]),Ab555[radL][i]), 
                                xytext=(np.subtract(Apt435[radL][i], Apt555[radL][i])+.2,Ab555[radL][i]-.2),
                                 #textcoords='offset points',
                                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
                                 )               
-        c1plt.annotate(str(17), xy=(np.subtract(Apt435[radL][15], Apt555[radL][15]),Ab555[radL][15]), 
+        """c1plt.annotate(str(17), xy=(np.subtract(Apt435[radL][15], Apt555[radL][15]),Ab555[radL][15]), 
                                xytext=(np.subtract(Apt435[radL][15], Apt555[radL][15])+.2,Ab555[radL][15]-.2),
                                 #textcoords='offset points',
                                  arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
@@ -152,7 +154,12 @@ def annot(SNannot,Apt435,Apt555,Ab555,Apt625,Apt814,Ab814,radR,radL,c1plt,c2plt)
                                 #textcoords='offset points',
                                  arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
                                  ) 
-                                 
+        """    
+        c1plt.annotate(str(6), xy=(np.subtract(Apt435[radL][4], Apt555[radL][4]),Ab555[radL][4]), 
+                               xytext=(np.subtract(Apt435[radL][4], Apt555[radL][4])+.2,Ab555[radL][4]-.2),
+                                #textcoords='offset points',
+                                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
+                                 )                   
         for i in range(len(Apt625[radR])):
             c2plt.annotate(str(i+1), xy=(np.subtract(Apt625[radR][i], Apt814[radR][i]),Ab814[radR][i]), 
                 xytext=(np.subtract(Apt625[radR][i], Apt814[radR][i])+.2,Ab814[radR][i]-.2),
@@ -161,17 +168,17 @@ def annot(SNannot,Apt435,Apt555,Ab555,Apt625,Apt814,Ab814,radR,radL,c1plt,c2plt)
                 )   
     ###############################
     elif (SNannot == 'sn10el'):
-        for i in range(len(Apt435[radL])-1):
+        for i in range(len(Apt435[radL])):
             c1plt.annotate(str(i+1), xy=(np.subtract(Apt435[radL][i], Apt555[radL][i]),Ab555[radL][i]), 
                xytext=(np.subtract(Apt435[radL][i], Apt555[radL][i])+.2,Ab555[radL][i]-.2),
                 #textcoords='offset points',
                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
                 )               
-            c1plt.annotate(str(7), xy=(np.subtract(Apt435[radL][5], Apt555[radL][5]),Ab555[radL][5]), 
-                 xytext=(np.subtract(Apt435[radL][5], Apt555[radL][5])+.2,Ab555[radL][5]-.2),
-                 #textcoords='offset points',
-                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
-                 )   
+            #c1plt.annotate(str(7), xy=(np.subtract(Apt435[radL][5], Apt555[radL][5]),Ab555[radL][5]), 
+            #     xytext=(np.subtract(Apt435[radL][5], Apt555[radL][5])+.2,Ab555[radL][5]-.2),
+            #     #textcoords='offset points',
+            #     arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
+            #     )   
               
         for i in range(len(Apt625[radR])):
             c2plt.annotate(str(i+1), xy=(np.subtract(Apt625[radR][i], Apt814[radR][i]),Ab814[radR][i]), 
@@ -222,30 +229,32 @@ def iso(c1plt,c2plt,supname,isoAGE,isonum,f435,f555,f625,f814,h435,h555,h625,h81
            #'k--', label = 'Age = 10$^{' + str(isonum) + '}$ yrs')   
     """
     start = isonum - .01
-    stop  = isonum + .02     
-    for i in np.arange(start,stop,0.01):
-        print i
+    stop  = isonum + .03     
+    
+    for i in np.arange(start,stop,0.01):        
+        colors = np.random.rand(4,1)
+        
         c1plt.plot(np.subtract((f435[np.where(isoall == i)]-a435-h435), (f555[np.where(isoall == i)]-a555-h555)), 
              (f555[np.where(isoall == i)]-a555-h555),  
-             c=np.random.rand(3,), label = 'Age = 10$^{' + str(i) + '}$ yrs')
+             c = colors, label = 'Age = 10$^{' + str(i) + '}$ yrs')
         c2plt.plot(np.subtract((f625[np.where(isoall == i)]-a625-h625), (f814[np.where(isoall == i)]-a814-h814)),
-            (f814[np.where(isoall == i)]-a814-h814),  
-            c=np.random.rand(3,), label = 'Age = 10$^{' + str(i) + '}$ yrs')
+             (f814[np.where(isoall == i)]-a814-h814),  
+             c = colors, label = 'Age = 10$^{' + str(i) + '}$ yrs')
     """       
-    if (decredhost == 'y'):
-        c1plt.plot(np.subtract((f435[isoAGE]-h435), (f555[isoAGE]-h555)), 
-             (f555[isoAGE]-h555),  
-             'k-', lw = 1.0, label = str(round((10**isonum)*0.000001,2)) + ' Myrs')#'Age = 10$^{' + str(isonum) + '}$ yrs')
-
-        c2plt.plot(np.subtract((f625[isoAGE]-h625), (f814[isoAGE]-h814)),
-            (f814[isoAGE]-h814),  
-             'k-', lw = 1.0, label = str(round((10**isonum)*0.000001,2)) + ' Myrs')#''Age = 10$^{' + str(isonum) + '}$ yrs')
-    else:
-        c1plt.plot(np.subtract((f435[isoAGE]), (f555[isoAGE])), 
+    #if (decredhost == 'y'):
+    #    c1plt.plot(np.subtract((f435[isoAGE]-h435), (f555[isoAGE]-h555)), 
+    #         (f555[isoAGE]-h555),  
+    #         'k-', lw = 1.0, label = str(round((10**isonum)*0.000001,2)) + ' Myrs')#'Age = 10$^{' + str(isonum) + '}$ yrs')
+ 
+    #    c2plt.plot(np.subtract((f625[isoAGE]-h625), (f814[isoAGE]-h814)),
+    #        (f814[isoAGE]-h814),  
+    #         'k-', lw = 1.0, label = str(round((10**isonum)*0.000001,2)) + ' Myrs')#''Age = 10$^{' + str(isonum) + '}$ yrs')
+    #else:
+    c1plt.plot(np.subtract((f435[isoAGE]), (f555[isoAGE])), 
              (f555[isoAGE]),  
              'k-', lw = 1.0, label = str(round((10**isonum)*0.000001,2)) + ' Myrs')#'Age = 10$^{' + str(isonum) + '}$ yrs')
 
-        c2plt.plot(np.subtract((f625[isoAGE]-h625), (f814[isoAGE])),
+    c2plt.plot(np.subtract((f625[isoAGE]-h625), (f814[isoAGE])),
             (f814[isoAGE]),  
              'k-', lw = 1.0, label = str(round((10**isonum)*0.000001,2)) + ' Myrs')#''Age = 10$^{' + str(isonum) + '}$ yrs')
     
@@ -274,7 +283,7 @@ def met(title):
 #####################################################################  
 def save(name):
     #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-    figname = name + '_' + 'test5' + '.png'
+    figname = name + '_' + 'test4' + '.png'
     plt.savefig('Figures/'+ figname)
     print "Save and show plot : " + figname
 #####################################################################     
@@ -286,11 +295,11 @@ def shade(sn435,sn555,sn625,sn814,yLmax,yRmax,c1plt,c2plt):
     y1 = (s1*x2) + b1
     x1 = sn435 - sn555 #.48# np.subtract(horz1,b1)/s1
 
-    ptsR = np.array([[-3,yLmax],
+    ptsR = np.array([[-3,yLmax+2],
                      [-3,sn555],
                      [x1,sn555], #need the x value
                      [x2,y1],           
-                     [x2,yLmax]])
+                     [x2,yLmax+2]])
     polyR = Polygon(ptsR, color='DarkSlateGray', alpha=0.15,closed = True)
 
     c1plt.add_patch(polyR)
@@ -301,14 +310,14 @@ def shade(sn435,sn555,sn625,sn814,yLmax,yRmax,c1plt,c2plt):
     y4 = (s4*x4) + b4
     x3 = sn625 - sn814  #.1#np.subtract(horz,b4)/s4
 
-    pts = np.array([[-3,yRmax],
+    ptsL = np.array([[-3,yRmax+2],
                     [-3,sn814],
                     [x3,sn814], 
                     [x4,y4],           
-                    [x4,yRmax]])
-    poly = Polygon(pts, color='DarkSlateGray', alpha=0.15,closed = True)
+                    [x4,yRmax+2]])
+    polyL = Polygon(ptsL, color='DarkSlateGray', alpha=0.15,closed = True)
 
-    c2plt.add_patch(poly)
+    c2plt.add_patch(polyL)
 #####################################################################
 
 def SNinfo(filename):
@@ -329,7 +338,7 @@ def SNinfo(filename):
                -3.0,-8.5,-4.0,-9.5,
                -0.5,  2.0, -0.5,  2.5, 
                -4.678,-5.388,-5.566,-5.172,
-                7.3,
+                7.17,
                 0.0,0.0,0.0,0.0, 
                 0.046,0.036,0.028,0.020] 
     elif (filename == 'sn08ha'):
@@ -343,7 +352,7 @@ def SNinfo(filename):
                  0.0,0.0,0.0,0.0,
                  0.284,0.219,0.174,0.120]
     elif (filename == 'sn10ae'):
-        radius = [4.73,6.30,7.9]#[7.8,15.74,23.61]#
+        radius = [4.73,6.30,9]#[7.9,15.74,23.61]#
         File = 'SN2010AE'        
         info   = [13.1e7, (63.52), 
                 -5.0, -8.0, -5.0, -8.5, 
@@ -353,7 +362,7 @@ def SNinfo(filename):
                  2.052,1.588,1.262,0.867,
                  0.509,0.394,0.313,0.215]
     elif (filename == 'sn10el'):
-        radius = [8.3,15.52,18.62]#[10.34,14.48,18.62]#
+        radius = [8.3,10.33,15.52]#[10.34,14.48,18.62]#
         File = 'SN2010EL'        
         info   = [9.97e7, (48.33), 
                 -5.0, -8.0, -4.0, -8.0, 
@@ -598,7 +607,6 @@ def main():
         print "Plotting SN...."       
     else: 
         print "Plotting SN...."
-    print np.add(Apn625[r0],H625)
     ###########################################################################
     if (dechost == 'y'):
         c2plt.scatter(np.subtract(np.add(Apn625[r2],H625),   np.add(Apn814[r2],H814)),

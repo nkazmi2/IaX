@@ -12,12 +12,13 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
             f435mag, f555mag, f625mag, f814mag,
             xcoord, ycoord,
             badX, badY,
-            badXL, badYL):
+            badXL, badYL,
+            srp435,srp555,srp625,srp814,crd814):
     print "Make final cuts for", SNname 
-    cut435555 = []
-    cut625814 = []
+    cutL = []
+    cutR = []
     if (SNname == 'sn08ha'):
-        cut435555.append(np.where((star <= 2) 
+        cutL.append(np.where((star <= 2) 
                 & (crowd <= crowdmax ) 
                 & (sharp <= sharpmax) 
                 & (sharp >= sharpmin)
@@ -27,7 +28,7 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius)       
                 & ((((1716.4613  - xcoord)**2 + (3163.7546 - ycoord)**2)**.5) >= 7)    
                 & list(np.any(x not in badXL for x in xcoord) and np.any(y not in badYL for y in ycoord)) ))
-        cut625814.append(np.where((star <= 2) 
+        cutR.append(np.where((star <= 2) 
                 & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) 
                 & (sharp >= sharpmin)
@@ -38,11 +39,12 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 & ((((1716.4613  - xcoord)**2 + (3163.7546 - ycoord)**2)**.5) >= 7) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))))
     elif (SNname == 'sn08ge'):    
-        cut435555.append(np.where((star <= 2)   
+        cutL.append(np.where((star <= 2)   
                 & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) 
                 & (sharp >= sharpmin)
-                & (roond <= roundmax)    
+                & (roond <= roundmax)                 
+                & (crd814 <= 2)
                 & ((snr435 >= 3) & (snr555 >= 3))  
                 & ((snr435 > 0 ) & (snr555 > 0 )) 
                 & ((f435mag <= 90) & (f555mag <= 90)) 
@@ -50,10 +52,11 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)  
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
-        cut625814.append(np.where((star <= 2)   
+        cutR.append(np.where((star <= 2)   
                 & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) & (sharp >= sharpmin)
-                & (roond <= roundmax)    
+                & (roond <= roundmax)                 
+                & (crd814 <= 2)
                 & ((snr625 >= 3) & (snr814 >= 3)) 
                 & ((snr625 > 0 ) & (snr814 > 0 )) 
                 & ((f625mag <= 90) & (f814mag <= 90))   
@@ -61,27 +64,50 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)  
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
-    else:
-        cut435555.append(np.where((star <= 2)   
+    elif (SNname == 'sn10ae'): 
+        cutL.append(np.where((star <= 2)   
                 & (crowd <= crowdmax )  
                 & (sharp <= sharpmax) 
                 & (sharp >= sharpmin)
-                & (roond <= roundmax)    
+                & (roond <= roundmax)                  
+                & (srp814 >= -3)   
                 & ((snr435 >= 3) & (snr555 >= 3))  
                 & ((f435mag <= 90) & (f555mag <= 90)) 
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
-        cut625814.append(np.where((star <= 2)   
+        cutR.append(np.where((star <= 2)   
                 & (crowd <= crowdmax )  
-                & (sharp <= sharpmax) & (sharp >= sharpmin)
+                & (sharp <= sharpmax) 
+                & (sharp >= sharpmin)
                 & (roond <= roundmax)    
                 & ((snr625 >= 3) & (snr814 >= 3))  
                 & ((f625mag <= 90) & (f814mag <= 90))   
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
                 ))
-    return cut435555, cut625814
+    else:
+        cutL.append(np.where((star <= 2)   
+                & (crowd <= crowdmax )  
+                & (sharp <= sharpmax) 
+                & (sharp >= sharpmin)
+                & (roond <= roundmax)   
+                & ((snr435 >= 3) & (snr555 >= 3))  
+                & ((f435mag <= 90) & (f555mag <= 90)) 
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
+                ))
+        cutR.append(np.where((star <= 2)   
+                & (crowd <= crowdmax )  
+                & (sharp <= sharpmax) 
+                & (sharp >= sharpmin)
+                & (roond <= roundmax)    
+                & ((snr625 >= 3) & (snr814 >= 3))  
+                & ((f625mag <= 90) & (f814mag <= 90))   
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
+                ))
+    return cutL, cutR
                
 ################################################### 
 
@@ -139,24 +165,55 @@ def SNinfo(SNname):
                 0.0,0.0,0.0,0.0,
                 31.64,1736.199,3171.792,50,
                 'sn2008ha_coord.reg', 'sn08ha_right.reg',
-                .55,-.44,2.7,1.7]
+                0.55,-0.44,2.7,1.7]
     elif (SNname == "sn10ae"):
         Info = ['SN2010AE', 'sn2010ae.phot.out',
                 0.509,0.394,0.313,0.215,
                 0.124,0.5,
                 2.052,1.588,1.262,0.867,
-                30.9,1783.3953,1923.19955,100,
+                30.9,1783.3953,1923.19955,9,
                 'NewCat.reg','NewCatCoord.reg', 
-                9.0,-9.0,9.0,9.0]#.46,-.6,1.0,0.7]
+                3.0,-0.9,1.5,0.8]#.46,-.6,1.0,0.7]
     elif (SNname == "sn10el"):
         Info = ['SN2010EL', 'sn2010el.phot.out',
                 0.033,0.025,0.020,0.014,
                 0.008,0.8,
                 3.255,2.517,2.001,1.376,
-                30.09,2419.791,1563.517,100,
+                30.09,2419.791,1563.517,22,
                 'NewCat.reg','NewCatCoord.reg',
-                .66,-.56,1.16,.72]
+                0.66,-0.40,0.62,0.45]
     return Info
+################################################### 
+def regfile(folder, bluecuts, redcuts,xsn,ysn,xcoord,ycoord): 
+     
+    print "Save into region file"
+
+    circ      = []
+    comm      = []
+    clos      = []
+    circR     = []
+    commR     = []
+    closR     = []
+    for i in range(len(xcoord[redcuts])):
+            circ.append('circle(')
+            comm.append(',')
+            clos.append(',2)')
+    np.savetxt(folder +'/delL.reg', np.c_[circ,xcoord[redcuts]+.5,comm,ycoord[redcuts]+.5,clos],fmt = "%s",
+               header ='# Region file format: DS9 version 4.1 #', 
+               comments = 'global color=green dashlist=8 3 width=1' \
+               ' font="helvetica 10 normal" select=1' \
+               ' highlite=1 dash=0 fixed=0 edit=1 delete=1 include=1 source=1' \
+               '\nimage;' )
+    for i in range(len(xcoord[bluecuts])):
+            circR.append('circle(')
+            commR.append(',')
+            closR.append(',2)')
+    np.savetxt(folder +'/delR.reg', np.c_[circR,xcoord[bluecuts]+.5,commR,ycoord[bluecuts]+.5,closR],fmt = "%s",
+               header ='# Region file format: DS9 version 4.1 #', 
+               comments = 'global color=green dashlist=8 3 width=1' \
+               ' font="helvetica 10 normal" select=1' \
+               ' highlite=1 dash=0 fixed=0 edit=1 delete=1 include=1 source=1' \
+               '\nimage;' )     
 ################################################### 
 def removBad(folder, good_list, coord_list):    
     print "Filter bad sources...."
@@ -233,6 +290,7 @@ def textfile(folder, name, star, bluecuts, redcuts,xsn,ysn,
     print "Save into text file"
     dataOut_1 = []
     dataOut_2 = []
+    
     dataOut_1 = np.array(np.c_[star[bluecuts]  ,
         xcoord[bluecuts]+.5 ,ycoord[bluecuts]+.5 ,
         (((xsn - xcoord[bluecuts])**2 + (ysn - ycoord[bluecuts])**2)**.5),
@@ -270,8 +328,7 @@ def textfile(folder, name, star, bluecuts, redcuts,xsn,ysn,
                header ='Object Xpix        Ypix        DisFromSN   Sub    S/N 435  S/N 555  S/N 625  S/N 814 ' \
                '  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '\
                'Sharp Round Crowd  Sharp 435   555   625   814 Round 435   555  625   814 Crowd 435  555  625  814')
-
-
+      
     print "Text files " + name + ".cut435555.txt & "+ name + '.cut625814.txt made'
     
 ################################################### 
@@ -357,6 +414,7 @@ def main():
     
     decpick = raw_input('Do you want to pickle the file       (y/n):')
     dectxt  = raw_input('Do you want make a text file         (y/n):')
+    decreg  = raw_input('Do you want make a region file       (y/n):')
     decsnr  = raw_input('Do you want to look at the wavebands (y/n):')
     
     SNstuff = SNinfo(SNname)
@@ -416,6 +474,13 @@ def main():
     snr625  = data[:,45]
     snr814  = data[:,58]
 
+    srp435  = data[:,20] # Column 21 Sharp for F435W
+    srp555  = data[:,33] # Column 34 Sharp for F555W
+    srp625  = data[:,46] # Column 47 Sharp for F625W
+    srp814  = data[:,59] # Column 60 Sharp for F814W
+    
+    crd814  = data[:,61] # Column 62 Crowd for F814W
+    
     xcoord  = data[:, 2]
     ycoord  = data[:, 3]
     
@@ -455,7 +520,8 @@ def main():
             f435mag, f555mag, f625mag, f814mag,
             xcoord, ycoord,
             badX, badY,
-            badXL, badYL)
+            badXL, badYL,
+            srp435,srp555,srp625,srp814,crd814)
             
 ################################################### 
 ############ Save good arrays to a file ###########
@@ -485,6 +551,13 @@ def main():
              sharp,roond,crowd)
     else:
         print "Papyrus is going to come back in style."
+
+###################################################  
+       
+    if (decreg == 'y'):
+        regfile(folder,cut435555[0],cut625814[0],xsn,ysn,xcoord,ycoord)
+    else:
+        print "Moving along"
         
 ################################################### 
         
