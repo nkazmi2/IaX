@@ -79,7 +79,7 @@ def SNinfo(filename):
         info   = [13.1e7, (63.52), 
                 -5.0, -8.0, -5.0, -8.5, 
                 -0.75,  2.0, -0.75,  2.0,
-                -4.042, -4.329, -4.420, -4.663,
+                -4.036,-4.321,-4.415,-4.651, 
                  7.52,
                  2.052,1.588,1.262,0.867,
                  0.509,0.394,0.313,0.215]
@@ -132,6 +132,7 @@ def main():
     for i in np.arange(start,stop,0.01):
         age.append(np.where(LogAge == i))
         num.append(round(i,2))
+    print num
         
     Abs435 = f435f555[0][0] 
     Abs555 = f435f555[0][1] 
@@ -153,43 +154,427 @@ def main():
     #SN814  = f625f814[0][7] 
     #Radr   = f625f814[0][8] 
     
-    for agesInd in xrange(len(age)):
-        print '\nF435W-F555W'
-        #print "Age 10^" + str(stupid) + str(agesInd)
-        print 'Age 10^' + str(num[agesInd])        
-        ClosInd = []
-        for sample in izip(np.subtract(Apn435,Apn555), Abs555):
-            closestD = -1 
-            closestIdx = -1
-            for IdX , val in enumerate(izip(np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]])):
-                dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
-                if dist < closestD:
-                    closestD = dist
-                    closestIdx = IdX
-            ClosInd.append(closestIdx)
-        ClosInd = np.array(ClosInd)
-        func_vals = np.c_[np.subtract(F435W[age[0][agesInd]],F555W[age[0][agesInd]]),F555W[age[0][agesInd]]]
-        comp_vals = func_vals[ClosInd]
-        print "Chi^2 of 10^7.4" + str(agesInd)
-        print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
-   
-        print '\nF625W - F814W'
-    
-        ClosInd = []
-        for sample in izip(np.subtract(Apn625,Apn814), Abs814):
-            closestD = -1 
-            closestIdx = -1
-            for IdX , val in enumerate(izip(np.subtract(F625W[age[0][agesInd]],F814W[age[0][agesInd]]),F814W[age[0][agesInd]])):
-                dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
-                if dist < closestD:
-                    closestD = dist
-                    closestIdx = IdX
-            ClosInd.append(closestIdx)
-        ClosInd = np.array(ClosInd)
-        func_vals = np.c_[np.subtract(F625W[age[0][agesInd]],F814W[age[0][agesInd]]),F814W[age[0][agesInd]]]
-        comp_vals = func_vals[ClosInd]
-        print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
-    
+    """ClosInd = []
+    print 'Age 10^' + str(num[0]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[0]],F555W[age[0]]),F555W[age[0]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[0]],F555W[age[0]]),F555W[age[0]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[1]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[1]],F555W[age[1]]),F555W[age[1]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[1]],F555W[age[1]]),F555W[age[1]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[2]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[2]],F555W[age[2]]),F555W[age[2]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[2]],F555W[age[2]]),F555W[age[2]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[3]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[3]],F555W[age[3]]),F555W[age[3]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[3]],F555W[age[3]]),F555W[age[3]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[4]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[4]],F555W[age[4]]),F555W[age[4]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[4]],F555W[age[4]]),F555W[age[4]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[5]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[5]],F555W[age[5]]),F555W[age[5]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[5]],F555W[age[5]]),F555W[age[5]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[6]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[6]],F555W[age[6]]),F555W[age[6]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[6]],F555W[age[6]]),F555W[age[6]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[7]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[7]],F555W[age[7]]),F555W[age[7]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[7]],F555W[age[7]]),F555W[age[7]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[8]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[8]],F555W[age[8]]),F555W[age[8]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[8]],F555W[age[8]]),F555W[age[8]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[9]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[9]],F555W[age[9]]),F555W[age[9]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[9]],F555W[age[9]]),F555W[age[9]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[10]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[10]],F555W[age[10]]),F555W[age[10]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[10]],F555W[age[10]]),F555W[age[10]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[11]) 
+    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F435W[age[11]],F555W[age[11]]),F555W[age[11]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F435W[age[11]],F555W[age[11]]),F555W[age[11]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    print '\n\n'
+    #for agesInd in xrange(len(age)):
+    #    print '\nF435W-F555W'
+    #    #print "Age 10^" + str(stupid) + str(agesInd)
+    #    print 'Age 10^' + str(num[agesInd])        
+    #    ClosIndL = []
+    #    for sample in izip(np.subtract(Apn435,Apn555), Abs555):
+    #        closestD = -1 
+    #        closestIdx = -1
+    #        for IdX , val in enumerate(izip(np.subtract(F435W[age[agesInd]],F555W[age[agesInd]]),F555W[age[agesInd]])):
+    #            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+    #            if dist < closestD:
+    #                closestD = dist
+    #                closestIdx = IdX
+    #        ClosIndL.append(closestIdx)
+    #    ClosIndL = np.array(ClosIndL)
+    #    func_vals = np.c_[np.subtract(F435W[age[agesInd]],F555W[age[agesInd]]),F555W[age[agesInd]]]
+    #    comp_vals = func_vals[ClosIndL]
+    #    print 'Chi^2 of 10^' + str(num[agesInd])  
+    #    print stats.chisquare(np.c_[np.subtract(Apn435,Apn555), Abs555],comp_vals)
+    #    print '\nF625W - F814W'
+       
+    #for agesIndR in xrange(len(age)):
+    #    ClosIndR = []
+    #    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+    #        closestD = -1 
+    #        closestIdx = -1
+    #        for IdX , val in enumerate(izip(np.subtract(F625W[age[agesInd]],F814W[age[agesInd]]),F814W[age[agesInd]])):
+    #            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+    #            if dist < closestD:
+    #                closestD = dist
+    #                closestIdx = IdX
+    #        ClosIndR.append(closestIdx)
+    #    ClosIndR = np.array(ClosIndR)
+    #    func_vals = np.c_[np.subtract(F625W[age[agesInd]],F814W[age[agesInd]]),F814W[age[agesInd]]]
+    #    comp_vals = func_vals[ClosIndR]
+    #    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    """
+    """ClosInd = []
+    print 'Age 10^' + str(num[0]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[0]],F814W[age[0]]),F814W[age[0]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[0]],F814W[age[0]]),F814W[age[0]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[1]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[1]],F814W[age[1]]),F814W[age[1]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[1]],F814W[age[1]]),F814W[age[1]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[2]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[2]],F814W[age[2]]),F814W[age[2]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[2]],F814W[age[2]]),F814W[age[2]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    #######################
+    """
+    ClosInd = []
+    print 'Age 10^' + str(num[3]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[3]],F814W[age[3]]),F814W[age[3]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[3]],F814W[age[3]]),F814W[age[3]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[4]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[4]],F814W[age[4]]),F814W[age[4]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[4]],F814W[age[4]]),F814W[age[4]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[5]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[5]],F814W[age[5]]),F814W[age[5]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[5]],F814W[age[5]]),F814W[age[5]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[6]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[6]],F814W[age[6]]),F814W[age[6]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[6]],F814W[age[6]]),F814W[age[6]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[7]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[7]],F814W[age[7]]),F814W[age[7]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[7]],F814W[age[7]]),F814W[age[7]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[8]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[8]],F814W[age[8]]),F814W[age[8]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[8]],F814W[age[8]]),F814W[age[8]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[9]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[9]],F814W[age[9]]),F814W[age[9]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[9]],F814W[age[9]]),F814W[age[9]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[10]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[10]],F814W[age[10]]),F814W[age[10]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[10]],F814W[age[10]]),F814W[age[10]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    #######################
+    ClosInd = []
+    print 'Age 10^' + str(num[11]) 
+    for sample in izip(np.subtract(Apn625,Apn814), Abs814):
+        closestD = -1 
+        closestIdx = -1
+        for IdX , val in enumerate(izip(np.subtract(F625W[age[11]],F814W[age[11]]),F814W[age[11]])):
+            dist = (sample[0] - val[0])**2 + (sample[1] - val[1])**2 
+            if dist < closestD:
+                closestD = dist
+                closestIdx = IdX
+        ClosInd.append(closestIdx)
+    ClosInd = np.array(ClosInd)
+    func_vals = np.c_[np.subtract(F625W[age[11]],F814W[age[11]]),F814W[age[11]]]
+    comp_vals = func_vals[ClosInd]
+    print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
     #####################################################################
     """
     #title = 'SN10el'

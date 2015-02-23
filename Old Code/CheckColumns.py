@@ -9,15 +9,15 @@ Read in the data, check which columns are which
 import numpy as np
 import pandas
 # Looking at new.phot.columns files
-f = open('../SN2010AE/sn2010ae.phot.columns','r')
+#f = open('../SN2010AE/sn2010ae.phot.columns','r')
 #f = open('../SN2008GE/sn2008ge_20141015_final.out.columns','r')
-#f = open('../SN2010EL/sn2010el.phot.columns','r')
+f = open('../SN2010EL/sn2010el.phot.columns','r')
 info = f.read()
 f.close()
 print info
 #print type(info)
 #print len(info)
-#print info[0:10000]
+print info[0:10000]
 
 """
 # Looking at Isochrone files

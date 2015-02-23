@@ -72,6 +72,7 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 & (roond <= roundmax)                  
                 & (srp814 >= -3)   
                 & ((snr435 >= 3) & (snr555 >= 3))  
+                & ((snr435 <= 50) & (snr555 <= 50))  
                 & ((f435mag <= 90) & (f555mag <= 90)) 
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
@@ -82,6 +83,7 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 & (sharp >= sharpmin)
                 & (roond <= roundmax)    
                 & ((snr625 >= 3) & (snr814 >= 3))  
+                & ((snr625 <= 50) & (snr814 <= 50))  
                 & ((f625mag <= 90) & (f814mag <= 90))   
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
@@ -93,6 +95,7 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 & (sharp >= sharpmin)
                 & (roond <= roundmax)   
                 & ((snr435 >= 3) & (snr555 >= 3))  
+                & ((snr435 <= 50) & (snr555 <= 50))  
                 & ((f435mag <= 90) & (f555mag <= 90)) 
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
@@ -103,6 +106,7 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 & (sharp >= sharpmin)
                 & (roond <= roundmax)    
                 & ((snr625 >= 3) & (snr814 >= 3))  
+                & ((snr625 <= 50) & (snr814 <= 50))  
                 & ((f625mag <= 90) & (f814mag <= 90))   
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
                 & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
@@ -171,7 +175,7 @@ def SNinfo(SNname):
                 0.509,0.394,0.313,0.215,
                 0.124,0.5,
                 2.052,1.588,1.262,0.867,
-                30.9,1783.3953,1923.19955,9,
+                30.9,1783.3953,1923.19955,15,
                 'NewCat.reg','NewCatCoord.reg', 
                 3.0,-0.9,1.5,0.8]#.46,-.6,1.0,0.7]
     elif (SNname == "sn10el"):
