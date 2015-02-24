@@ -68,7 +68,7 @@ def SNinfo(filename):
                 -4.04, -4.5, -4.30, -4.5,
                  7.74,
                  0.0,0.0,0.0,0.0,
-                 0.284,0.219,0.174,0.120]
+                 0.284,0.219,0.174,0.120] #metal error high .00853, low .00430
     elif (filename == 'sn10ae'):
         radius = [4.73,6.30,9]#[7.9,15.74,23.61]#
         File = 'SN2010AE'        
@@ -78,7 +78,7 @@ def SNinfo(filename):
                 -6.088,-5.910,-5.677,-5.518,#-4.036,-4.321,-4.415,-4.651,
                  7.2,
                  2.052,1.588,1.262,0.867,
-                 0.509,0.394,0.313,0.215]
+                 0.509,0.394,0.313,0.215] #metal error high .0126, low .00662
     elif (filename == 'sn10el'):
         radius = [8.3,10.33,15.52]#[10.34,14.48,18.62]#
         File = 'SN2010EL'        
@@ -116,23 +116,10 @@ def main():
         print ('You picked %s' %(SNname))
     
     SNstuff, Radius, Filename, f435f555, f625f814 = SNinfo(SNname)
-    agenum = SNstuff[14]
     
-    H435   = SNstuff[15]
-    H555   = SNstuff[16]
-    H625   = SNstuff[17]
-    H814   = SNstuff[18]
-    
-    ACS435 = SNstuff[19]
-    ACS555 = SNstuff[20]
-    ACS625 = SNstuff[21]
-    ACS814 = SNstuff[22]
-    
-    MetFile, Metname = met(SNname)    
-    MetFile = np.array(MetFile)  
-    F435W, F555W, F625W, F814W, AGE, LogAge = AGEinfo(MetFile, agenum)
-          
-    Abs435 = f435f555[0][0] 
+    #######################
+    # Scatter plot of CMD
+    #Abs435 = f435f555[0][0] 
     Abs555 = f435f555[0][1] 
     Apn435 = f435f555[0][2] 
     Apn555 = f435f555[0][3] 
@@ -142,7 +129,7 @@ def main():
     #SN555  = f435f555[0][7]
     #Radl   = f435f555[0][8] 
     
-    Abs625 = f625f814[0][0] 
+    #Abs625 = f625f814[0][0] 
     Abs814 = f625f814[0][1]
     Apn625 = f625f814[0][2]
     Apn814 = f625f814[0][3] 
@@ -152,6 +139,29 @@ def main():
     #SN814  = f625f814[0][7] 
     #Radr   = f625f814[0][8] 
     
+    ########################################
+    print "Pulling information that we need"    
+    #SN Specific information, reddening and rough age estimate
+    agenum = SNstuff[14]
+    
+    #H435   = SNstuff[15]
+    #H555   = SNstuff[16]
+    #H625   = SNstuff[17]
+    #H814   = SNstuff[18]
+    
+    #ACS435 = SNstuff[19]
+    #ACS555 = SNstuff[20]
+    #ACS625 = SNstuff[21]
+    #ACS814 = SNstuff[22]
+    ##############################
+    print "Getting the metallicity"
+    # Each SN has a specific metallicity file, this grabs and opens it
+    MetFile, Metname = met(SNname)    
+    MetFile = np.array(MetFile)  
+    F435W, F555W, F625W, F814W, AGE, LogAge = AGEinfo(MetFile, agenum)
+    #######################
+    # Creating age range, +/- .5
+    print "Setting up the age range"
     start = agenum - .05
     stop  = agenum + .06 
         
@@ -159,6 +169,7 @@ def main():
         #age.append(np.where(LogAge == i))
         num.append(round(i,2))       
         
+    # assigning age arrays to one array so that I can loop through it
     age0    = np.where(LogAge == num[0])
     age1    = np.where(LogAge == num[1])
     age2    = np.where(LogAge == num[2])
@@ -173,6 +184,8 @@ def main():
     
     age = [age0,age1,age2,age3,age4,age5,age6,age7,age8,age9,age10]
     
+    ###########################################################################
+    # Estimates the ages
     for ageInd in xrange(len(age)):
         ClosInd = []
         print 'F435w-F555W \nAge 10^' + str(num[ageInd]) 
