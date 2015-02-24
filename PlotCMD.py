@@ -10,10 +10,10 @@ import matplotlib.pyplot   as plt
 import matplotlib.gridspec as gridspec
 import pickle
 import random 
-from matplotlib.ticker  import MultipleLocator 
-from matplotlib.ticker  import AutoMinorLocator
-from matplotlib.patches import Polygon
-from itertools          import cycle
+from   matplotlib.ticker  import MultipleLocator 
+from   matplotlib.ticker  import AutoMinorLocator
+from   matplotlib.patches import Polygon
+from   itertools          import cycle
 
 params = {'legend.fontsize': 10, 
           'legend.linewidth': 2,
@@ -281,7 +281,7 @@ def met(title):
 #####################################################################  
 def save(name):
     #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-    figname = name + '_' + 'test4' + '.png'
+    figname = name + '_' + 'test00' + '.png'
     plt.savefig('Figures/'+ figname)
     print "Save and show plot : " + figname
 #####################################################################     
