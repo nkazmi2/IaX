@@ -137,35 +137,53 @@ def annot(SNannot,Apt435,Apt555,Ab555,Apt625,Apt814,Ab814,radR,radL,c1plt,c2plt)
                 )         
     ###############################
     elif (SNannot == 'sn10ae'):
-        
-        for i in range(len(Apt435[radL])-1):
+        """for i in range(len(Apt435[radL])-1):
             c1plt.annotate(str(i+1), xy=(np.subtract(Apt435[radL][i], Apt555[radL][i]),Ab555[radL][i]), 
                                xytext=(np.subtract(Apt435[radL][i], Apt555[radL][i])+.2,Ab555[radL][i]-.2),
                                 #textcoords='offset points',
                                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
                                 )               
-        """c1plt.annotate(str(17), xy=(np.subtract(Apt435[radL][15], Apt555[radL][15]),Ab555[radL][15]), 
-                               xytext=(np.subtract(Apt435[radL][15], Apt555[radL][15])+.2,Ab555[radL][15]-.2),
-                                #textcoords='offset points',
-                                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
-                                 )   
-        c1plt.annotate(str(18), xy=(np.subtract(Apt435[radL][16], Apt555[radL][16]),Ab555[radL][16]), 
-                               xytext=(np.subtract(Apt435[radL][16], Apt555[radL][16])+.2,Ab555[radL][16]-.2),
-                                #textcoords='offset points',
-                                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
-                                 ) 
-        """    
+        #c1plt.annotate(str(17), xy=(np.subtract(Apt435[radL][15], Apt555[radL][15]),Ab555[radL][15]), 
+        #                       xytext=(np.subtract(Apt435[radL][15], Apt555[radL][15])+.2,Ab555[radL][15]-.2),
+        #                        #textcoords='offset points',
+        #                         arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
+        #                         )   
+        #c1plt.annotate(str(18), xy=(np.subtract(Apt435[radL][16], Apt555[radL][16]),Ab555[radL][16]), 
+        #                       xytext=(np.subtract(Apt435[radL][16], Apt555[radL][16])+.2,Ab555[radL][16]-.2),
+        #                        #textcoords='offset points',
+        #                         arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
+        #                         ) 
+        #    
         c1plt.annotate(str(6), xy=(np.subtract(Apt435[radL][4], Apt555[radL][4]),Ab555[radL][4]), 
                                xytext=(np.subtract(Apt435[radL][4], Apt555[radL][4])+.2,Ab555[radL][4]-.2),
                                 #textcoords='offset points',
                                  arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
-                                 )                   
+                                 )                           
         for i in range(len(Apt625[radR])):
             c2plt.annotate(str(i+1), xy=(np.subtract(Apt625[radR][i], Apt814[radR][i]),Ab814[radR][i]), 
                 xytext=(np.subtract(Apt625[radR][i], Apt814[radR][i])+.2,Ab814[radR][i]-.2),
                 #textcoords='offset points',
                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
                 )   
+        """
+        for i in range(len(Apt435[radL])-1):
+            c1plt.annotate(str(i+1), xy=(np.subtract(Apt435[radL][i]+2.052, Apt555[radL][i]+1.588),Ab555[radL][i]+1.588), 
+                               xytext=(np.subtract(Apt435[radL][i]+2.052, Apt555[radL][i]+1.588)+.2,Ab555[radL][i]+1.588-.2),
+                                #textcoords='offset points',
+                                arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
+                                )               
+
+        c1plt.annotate(str(6), xy=(np.subtract(Apt435[radL][4]+2.052, Apt555[radL][4]+1.588),Ab555[radL][4]+1.588), 
+                               xytext=(np.subtract(Apt435[radL][4]+2.052, Apt555[radL][4]+1.588)+.2,Ab555[radL][4]+1.588-.2),
+                                #textcoords='offset points',
+                                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
+                                 )                   
+        for i in range(len(Apt625[radR])):
+            c2plt.annotate(str(i+1), xy=(np.subtract(Apt625[radR][i]+1.262, Apt814[radR][i]+0.867),Ab814[radR][i]+0.867), 
+                xytext=(np.subtract(Apt625[radR][i]+1.262, Apt814[radR][i]+0.867)+.2,Ab814[radR][i]+0.867-.2),
+                #textcoords='offset points',
+                arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
+                )        
     ###############################
     elif (SNannot == 'sn10el'):
         for i in range(len(Apt435[radL])):

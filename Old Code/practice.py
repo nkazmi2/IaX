@@ -4,94 +4,150 @@ Created on Mon Feb 02 13:33:54 2015
 
 @author: nova
 """
-
-#import numpy as np
-#import random
-"""
-age = 7.5
-print type(age)
-start = age - .5
-stop  = age + .5    
-print start
-print stop
-for i in np.arange(start,stop,0.1):#for i in range(start, stop):
-        print i
-"""
-#isonum = 7.74
-#print str(round((10**isonum),-4))
-#print str(round((10**isonum)*0.000001,2))
-#print str(round((10**isonum)/100000.0,1))
-
-#for i in np.arange(7.0,8.0,0.01):
-    #print i
-
-#print "\nF435W-F555W"
-
-#print np.random.rand(3,1)
-
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
+import numpy     as     np
+from   scipy     import stats
+from   scipy     import interpolate
+from   itertools import izip
+import pickle
 import statsmodels.formula.api as sm
-
-x_list = [0.3333333333333333, 0.2886751345948129, 0.25, 0.23570226039551587, 0.22360679774997896, 0.20412414523193154, 0.2, 0.16666666666666666]
-y_list = [0.13250359351851854, 0.12098339583333334, 0.12398501145833334, 0.09152715, 0.11167239583333334, 0.10876248333333333, 0.09814170444444444, 0.08560799305555555]
-y_err  = [0.003306749165349316, 0.003818446389148108, 0.0056036878203831785, 0.0036635292592592595, 0.0037034897788415424, 0.007576672222222223, 0.002981084130692832, 0.0034913019065973983]
-
-# put x and y into a pandas DataFrame, and the weights into a Series
-ws = pd.DataFrame({
-    'x': x_list,
-    'y': y_list
-})
-weights = pd.Series(y_err)
-
-wls_fit = sm.wls('x ~ y', data=ws, weights=1 / weights).fit()
-ols_fit = sm.ols('x ~ y', data=ws).fit()
-
-# show the fit summary by calling wls_fit.summary()
-# wls fit r-squared is 0.754
-# ols fit r-squared is 0.701
-
-# let's plot our data
-plt.clf()
-fig = plt.figure()
-ax = fig.add_subplot(111, axisbg='w')
-ws.plot(
-    kind='scatter',
-    x='x',
-    y='y',
-    style='o',
-    alpha=1.,
-    ax=ax,
-    title='x vs y scatter',
-    edgecolor='#ff8300',
-    s=40
-)
-
-# weighted prediction
-wp, = ax.plot(
-    wls_fit.predict(),
-    ws['y'],
-    color='#e55ea2',
-    lw=1.,
-    alpha=1.0,
-)
-# unweighted prediction
-op, = ax.plot(  
-    ols_fit.predict(),
-    ws['y'],
-    color='k',
-    ls='solid',
-    lw=1,
-    alpha=1.0,
-)
-leg = plt.legend(
-    (op, wp),
-    ('Ordinary Least Squares', 'Weighted Least Squares'),
-    loc='upper left',
-    fontsize=8)
-
-plt.tight_layout()
-fig.set_size_inches(6.40, 5.12)
-plt.savefig("so.png", dpi=100, alpha=True)
-plt.show()
+#####################################################################
+########################### PICK THE SN!! ###########################
+#####################################################################
+def AGEinfo(d, rawnum):
+    logAGE = np.array(d[:,:,0])
+    f435w  = np.array(d[:,:,7])
+    f555w  = np.array(d[:,:,10])
+    f625w  = np.array(d[:,:,12])
+    f814w  = np.array(d[:,:,16])
+    #limit  = np.array((logAGE >= (rawnum - .05)) & (logAGE <= (rawnum + .5)))
+    age    = np.where(logAGE == rawnum)
+    
+    return f435w, f555w, f625w, f814w, age, logAGE
+#####################################################################
+def met(title):
+    d = []
+    if (title == 'sn08ha'):
+        name = 'Z0060Y26.dat'
+    elif (title == 'sn10ae'):
+        name = 'Z0096Y26.dat'
+    elif (title == 'sn10el'):
+        name = 'Z0224Y26.dat'
+    elif (title == 'sn08ge'):
+        name = 'Z0300Y26.dat'
+    d.append(np.loadtxt('Metallicity/'+name))
+    d = np.array(d)                
+    return d, name
+#####################################################################
+def SNinfo(filename):
+    fL = []
+    fR = []  
+    # [dist, conver,                 0, 1,
+    # yLmax, yLmin, yRmax, yRmin,    2, 3, 4, 5,
+    # xLmax, xLmin, xRmax, xRmin,    6, 7, 8, 9,
+    # sn435, sn555, sn625, sn814,    10,11,12,13,
+    # age,                           14,   
+    # H435,H555,H625,H814,           15,16,17,18,
+    # ACS435,ACS555,ACS625,ACS814]   19,20,21,22
+    File = []
+    if (filename == 'sn08ge'):
+        radius = [35,57.47,115]#[114,183,230]#
+        File = 'SN2008GE'
+        info   = [17.95e7,(4.35), 
+               -3.0,-8.5,-4.0,-9.5,
+               -0.5,  2.0, -0.5,  2.5, 
+               -4.678,-5.388,-5.566,-5.172,
+                7.17,
+                0.0,0.0,0.0,0.0, 
+                0.046,0.036,0.028,0.020] 
+    elif (filename == 'sn08ha'):
+        radius = [15,30,45]
+        File = 'SN2008HA'
+        info   = [20e7, (5), 
+                -3.50, -6.5, -4.00, -7.0, 
+                -0.75,  2.0, -0.75,  2.0,
+                -4.04, -4.5, -4.30, -4.5,
+                 7.74,
+                 0.0,0.0,0.0,0.0,
+                 0.284,0.219,0.174,0.120]
+    elif (filename == 'sn10ae'):
+        radius = [4.73,6.30,9]#[7.9,15.74,23.61]#
+        File = 'SN2010AE'        
+        info   = [13.1e7, (63.52), 
+                -5.0, -8.0, -5.0, -8.5, 
+                -0.75,  2.0, -0.75,  2.0,
+                -6.088,-5.910,-5.677,-5.518,#-4.036,-4.321,-4.415,-4.651,
+                 7.2,
+                 2.052,1.588,1.262,0.867,
+                 0.509,0.394,0.313,0.215]
+    elif (filename == 'sn10el'):
+        radius = [8.3,10.33,15.52]#[10.34,14.48,18.62]#
+        File = 'SN2010EL'        
+        info   = [9.97e7, (48.33), 
+                -5.0, -8.0, -4.0, -8.0, 
+                -0.5,  2.0, -0.5,  2.3,
+                -6.122,-5.887,-5.497,-4.547, 
+                 7.3,
+                 3.255,2.517,2.001,1.376,
+                 0.033,0.025,0.020,0.014]
+                 
+    fL.append(pickle.load(open(str(File) + '/' + str(filename) + 'f435f555.p', 'rb')))    
+    fR.append(pickle.load(open(str(File) + '/' + str(filename) + 'f625f814.p', 'rb')))  
+    
+    return info, radius, File, fL, fR     
+ 
+#####################################################################   
+    age = []
+    num = []
+    print 'Which SNe do you wanna plot?'
+    print 'sn08ge \nsn08ha \nsn10ae \nsn10el'
+    
+    SNname = raw_input('Choose a Supernova:')
+    
+    print ('You picked %s' %(SNname))
+    
+    check = raw_input('Is this correct? (y/n)')
+    if (check == 'y'):
+        print "Let's begin!"
+    else:
+        SNname = []    
+        print "Let's try again"
+        SNname = raw_input('Choose a Supernova:')
+        print ('You picked %s' %(SNname))
+    
+    SNstuff, Radius, Filename, f435f555, f625f814 = SNinfo(SNname)
+    agenum = SNstuff[14]
+    
+    H435   = SNstuff[15]
+    H555   = SNstuff[16]
+    H625   = SNstuff[17]
+    H814   = SNstuff[18]
+    
+    ACS435 = SNstuff[19]
+    ACS555 = SNstuff[20]
+    ACS625 = SNstuff[21]
+    ACS814 = SNstuff[22]
+    
+    MetFile, Metname = met(SNname)    
+    MetFile = np.array(MetFile)  
+    F435W, F555W, F625W, F814W, AGE, LogAge = AGEinfo(MetFile, agenum)
+          
+    Abs435 = f435f555[0][0] 
+    Abs555 = f435f555[0][1] 
+    Apn435 = f435f555[0][2] 
+    Apn555 = f435f555[0][3] 
+    UncXl  = f435f555[0][4] 
+    UncYl  = f435f555[0][5] 
+    #SN435  = f435f555[0][6] 
+    #SN555  = f435f555[0][7]
+    #Radl   = f435f555[0][8] 
+    
+    Abs625 = f625f814[0][0] 
+    Abs814 = f625f814[0][1]
+    Apn625 = f625f814[0][2]
+    Apn814 = f625f814[0][3] 
+    UncXr  = f625f814[0][4] 
+    UncYr  = f625f814[0][5] 
+    
+    
+    print ((UncXl**2 + UncYl**2)**.5 )
+main()
