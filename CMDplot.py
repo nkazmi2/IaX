@@ -777,14 +777,14 @@ elif (title == 'SN08ge'):
     #       'g--' , label = 'Age = 10$^{7.28}$ yrs')
     c2plt.plot(np.subtract(F625W[age729],  F814W[age729]),  F814W[age729],  
            'c-', label = 'Age = 10$^{7.29}$ yrs')
-    #c2plt.plot(np.subtract(F625W[age73],  F814W[age73]),  F814W[age73],  
-    #       'k--', label = 'Age = 10$^{7.3}$ yrs')
-    #c2plt.plot(np.subtract(F625W[age731],  F814W[age731]),  F814W[age731],  
-    #       'k--' , label = 'Age = 10$^{7.31}$ yrs')
-    #c2plt.plot(np.subtract(F625W[age732],  F814W[age732]),  F814W[age732],  
-    #       'c--' , label = 'Age = 10$^{7.32}$ yrs')
-    #c2plt.plot(np.subtract(F625W[age733],  F814W[age733]),  F814W[age733],  
-    #       'g--' , label = 'Age = 10$^{7.33}$ yrs')
+    c2plt.plot(np.subtract(F625W[age73],  F814W[age73]),  F814W[age73],  
+           'k--', label = 'Age = 10$^{7.3}$ yrs')
+    c2plt.plot(np.subtract(F625W[age731],  F814W[age731]),  F814W[age731],  
+           'k--' , label = 'Age = 10$^{7.31}$ yrs')
+    c2plt.plot(np.subtract(F625W[age732],  F814W[age732]),  F814W[age732],  
+           'c--' , label = 'Age = 10$^{7.32}$ yrs')
+    c2plt.plot(np.subtract(F625W[age733],  F814W[age733]),  F814W[age733],  
+           'g--' , label = 'Age = 10$^{7.33}$ yrs')
     c2plt.plot(np.subtract(F625W[age734],  F814W[age734]),  F814W[age734],  
            'y-' , label = 'Age = 10$^{7.34}$ yrs')
     #c2plt.plot(np.subtract(F625W[age735],  F814W[age735]),  F814W[age735],  

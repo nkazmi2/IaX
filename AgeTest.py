@@ -5,11 +5,11 @@ Created on Tue Oct 14 15:07:49 2014
 @author: Nova
 """
 import numpy     as     np
-from   scipy     import stats
-from   scipy     import interpolate
+import scipy.odr.odrpack as odrpack
 from   itertools import izip
 import pickle
 import statsmodels.formula.api as sm
+from scipy import stats
 #####################################################################
 ########################### PICK THE SN!! ###########################
 #####################################################################
@@ -33,7 +33,7 @@ def met(title):
     elif (title == 'sn10el'):
         name = 'Z0224Y26.dat'
     elif (title == 'sn08ge'):
-        name = 'Z0300Y26.dat'
+        name = 'Z0314Y26.dat'
     d.append(np.loadtxt('Metallicity/'+name))
     d = np.array(d)                
     return d, name
@@ -183,8 +183,9 @@ def main():
     age10   = np.where(LogAge == num[10])
     
     age = [age0,age1,age2,age3,age4,age5,age6,age7,age8,age9,age10]
-    
+
     ###########################################################################
+    #Chi Square Fit 
     # Estimates the ages
     for ageInd in xrange(len(age)):
         ClosInd = []
@@ -218,5 +219,44 @@ def main():
         func_vals = np.c_[np.subtract(F625W[age[ageInd]],F814W[age[ageInd]]),F814W[age[ageInd]]]
         comp_vals = func_vals[ClosInd]
         print stats.chisquare(np.c_[np.subtract(Apn625,Apn814), Abs814],comp_vals)
+    """
+    
+    print "Testing new fit code"
+    F435_555 = []
+    F625_814 = []
+    F435_555 = np.subtract(F435W,F555W)
+    F625_814 = np.subtract(F625W,F814W)
+    #fcn = lambda age0, F435_555: F435_555[age0]
+    #print "Made function"
+    #m = odr.Model(fcn)
+    #print "Made Model"
+    #d = odr.RealData(np.subtract(Apn435,Apn555), Abs555,UncXl,UncYl)
+    #print "Made Data"
+       
+    #fit = odr.ODR(d,m,beta0=beta0)
+    #print "Made Fit"
+    #output = fit.run()
+    #print output.beta
+    
+    # Star data for CMD
+    x  = np.subtract(Apn435,Apn555)
+    y  = Abs555
+    sx = UncXl
+    sy = UncYl
 
+    def f(B, x):
+        return B[x] 
+        #return F435_555[age0]
+    print "Created function"
+    isochr = odrpack.Model(f(F435_555,age[0]))
+    print "Made Model"
+    # mydata = odrpack.Data(x, y, wd=1./np.power(sx,2), we=1./np.power(sy,2))
+    mydata = odrpack.RealData(x, y, sx=sx, sy=sy)
+    print "Mydata is done"
+    
+    myodr = odrpack.ODR(mydata,isochr, beta0=[1.,2.])
+    print "Did the thing"
+    myoutput = myodr.run()
+    myoutput.pprint()
+    """
 main()

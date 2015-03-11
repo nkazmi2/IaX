@@ -230,7 +230,7 @@ def annot(SNannot,Apt435,Apt555,Ab555,Apt625,Apt814,Ab814,radR,radL,c1plt,c2plt)
                 
     """
 #####################################################################
-def iso(c1plt,c2plt,supname,isoAGE,isonum,f435,f555,f625,f814,h435,h555,h625,h814,a435,a555,a625,a814,isoall,decredhost): 
+def iso(c1plt,c2plt,supname,isoAGE,isonum,f435,f555,f625,f814,h435,h555,h625,h814,a435,a555,a625,a814,isoall,decredhost,decrange): 
                 
     #c1plt.plot(np.subtract(F435W[AGE], F555W[AGE]), F555W[AGE],  
     #          'k--' , label = 'Age = 10$^{' + str(iag) + '}$ yrs')
@@ -245,20 +245,49 @@ def iso(c1plt,c2plt,supname,isoAGE,isonum,f435,f555,f625,f814,h435,h555,h625,h81
     #c2plt.plot(np.subtract(np.subtract(f625[isoAGE],h625), np.subtract(f814[isoAGE],h814)),
            # np.subtract(f814[isoAGE],h814),  
            #'k--', label = 'Age = 10$^{' + str(isonum) + '}$ yrs')   
-    """
-    start = isonum - .01
-    stop  = isonum + .03     
     
-    for i in np.arange(start,stop,0.01):        
-        colors = np.random.rand(4,1)
+    if (decrange == 'y'):
+        num = []
+        start = isonum - .05
+        stop  = isonum + .06 
+    
+        for i in np.arange(start,stop,0.01):
+            #age.append(np.where(LogAge == i))
+            num.append(round(i,2))       
         
-        c1plt.plot(np.subtract((f435[np.where(isoall == i)]-a435-h435), (f555[np.where(isoall == i)]-a555-h555)), 
-             (f555[np.where(isoall == i)]-a555-h555),  
-             c = colors, label = 'Age = 10$^{' + str(i) + '}$ yrs')
-        c2plt.plot(np.subtract((f625[np.where(isoall == i)]-a625-h625), (f814[np.where(isoall == i)]-a814-h814)),
-             (f814[np.where(isoall == i)]-a814-h814),  
-             c = colors, label = 'Age = 10$^{' + str(i) + '}$ yrs')
-    """       
+        # assigning age arrays to one array so that I can loop through it
+        age0    = np.where(isoall == num[0])
+        age1    = np.where(isoall == num[1])
+        age2    = np.where(isoall == num[2])
+        age3    = np.where(isoall == num[3])
+        age4    = np.where(isoall == num[4])
+        age5    = np.where(isoall == num[5])
+        age6    = np.where(isoall == num[6])
+        age7    = np.where(isoall == num[7])
+        age8    = np.where(isoall == num[8])
+        age9    = np.where(isoall == num[9])
+        age10   = np.where(isoall == num[10])
+    
+        age = [age0,age1,age2,age3,age4,age5,age6,age7,age8,age9,age10]
+        if (decredhost == 'y'):
+            for ageInd in xrange(len(age)):
+                colors = np.random.rand(4,1)
+                c1plt.plot(np.subtract((np.add(f435[age[ageInd]],h435)), (np.add(f555[age[ageInd]],h555))), 
+                           (np.add(f555[age[ageInd]],h555)), 
+                            c = colors, label = str(round((10**num[ageInd])*0.000001,2)) + ' Myrs')
+                c2plt.plot(np.subtract((np.add(f625[age[ageInd]],h625)), (np.add(f814[age[ageInd]],h814))),
+                           (np.add(f814[age[ageInd]],h814)), 
+                            c = colors, label = str(round((10**num[ageInd])*0.000001,2)) + ' Myrs')
+        else:
+            for ageInd in xrange(len(age)):
+                colors = np.random.rand(4,1)
+                c1plt.plot(np.subtract(f435[age[ageInd]],f555[age[ageInd]]), 
+                       f555[age[ageInd]], c = colors, label = str(round((10**num[ageInd])*0.000001,2)) + ' Myrs')
+                c2plt.plot(np.subtract(f625[age[ageInd]],f814[age[ageInd]]),
+                       f814[age[ageInd]], c = colors, label = str(round((10**num[ageInd])*0.000001,2)) + ' Myrs')
+    else:
+        print "No age range" 
+        
     if (decredhost == 'y'):
         print "Reddening by the host galaxy"
         c1plt.plot(np.subtract((np.add(f435[isoAGE],h435)), (np.add(f555[isoAGE],h555))), 
@@ -292,7 +321,7 @@ def met(title):
     elif (title == 'sn10el'):
         name = 'Z0224Y26.dat'
     elif (title == 'sn08ge'):
-        name = 'Z0300Y26.dat'
+        name = 'Z0314Y26.dat'
     d.append(np.loadtxt('Metallicity/'+name))
     d = np.array(d)                
     return d, name
@@ -307,7 +336,7 @@ def shade(sn435,sn555,sn625,sn814,yLmax,yRmax,c1plt,c2plt):
     #############
     s1 = -1 
     b1 = -4.0
-    x2 = 3
+    x2 = 5#3
     y1 = (s1*x2) + b1
     x1 = sn435 - sn555 #.48# np.subtract(horz1,b1)/s1
     ptsR = []
@@ -322,7 +351,7 @@ def shade(sn435,sn555,sn625,sn814,yLmax,yRmax,c1plt,c2plt):
     #############
     s4 = -1 
     b4 = -5.0
-    x4 = 3 
+    x4 = 5#3 
     y4 = (s4*x4) + b4
     x3 = sn625 - sn814  #.1#np.subtract(horz,b4)/s4
     ptsL = []
@@ -337,8 +366,9 @@ def shade(sn435,sn555,sn625,sn814,yLmax,yRmax,c1plt,c2plt):
 #####################################################################
 
 def SNinfo(filename):
-    f435f555 = []
-    f625f814 = []  
+    f435f555   = []
+    f625f814   = []  
+    allobjects = []
     # [dist, conver,                 0, 1,
     # yLmax, yLmin, yRmax, yRmin,    2, 3, 4, 5,
     # xLmax, xLmin, xRmax, xRmin,    6, 7, 8, 9,
@@ -348,19 +378,19 @@ def SNinfo(filename):
     # ACS435,ACS555,ACS625,ACS814]   19,20,21,22
     File = []
     if (filename == 'sn08ge'):
-        radius = [35,57.47,115]#[114,183,230]#
+        radius = [16.09,34.47,50.56]#70,150,220  #[34.47,50.56,115]#100.95,200,500
         File = 'SN2008GE'
-        info   = [17.95e7,(4.35), 
-               -3.0,-8.5,-4.0,-9.5,
-               -0.5,  2.0, -0.5,  2.5, 
+        info   = [17.95e6,(4.3512), 
+               -3.0,-8.5,-4.0,-9.5,               
+               -3.0,  5.0, -3.0,  5.0, #-0.5,  2.0, -0.5,  2.5, 
                -4.678,-5.388,-5.566,-5.172,
-                7.17,
+                7.18,
                 0.0,0.0,0.0,0.0, 
                 0.046,0.036,0.028,0.020] 
     elif (filename == 'sn08ha'):
-        radius = [15,30,45]
+        radius = [15,30,45]#72.7221, 145.242, 217.863
         File = 'SN2008HA'
-        info   = [20e7, (5), 
+        info   = [20e6, (4.8414), 
                 -3.50, -6.5, -4.00, -7.0, 
                 -0.75,  2.0, -0.75,  2.0,
                 -4.04, -4.5, -4.30, -4.5,
@@ -368,29 +398,30 @@ def SNinfo(filename):
                  0.0,0.0,0.0,0.0,
                  0.284,0.219,0.174,0.120]
     elif (filename == 'sn10ae'):
-        radius = [4.0,7.08,8.65]#[7.9,15.74,23.61]#
+        radius = [21.5,46,68]#75,146.07,217.863
         File = 'SN2010AE'        
-        info   = [13.1e7, (63.52), 
-                -5.0, -8.0, -5.0, -8.5, 
-                -0.75,  2.0, -0.75,  2.0,
+        info   = [13.1e6, (3.17553), 
+                -5.50, -8.5, -5.00, -9.0,#-4.0, -7.0, -4.5, -7.5,
+                -0.5,  1.8, -0.5,  1.6,#-0.75,  3.5, -0.75,  4.0,
                 -6.088,-5.910,-5.677,-5.518,#-4.036,-4.321,-4.415,-4.651, 
-                 7.20,
+                 7.15,
                  2.052,1.588,1.262,0.867,
                  0.509,0.394,0.313,0.215]
     elif (filename == 'sn10el'):
-        radius = [8.3,10.33,15.52]#[10.34,14.48,18.62]#
+        radius = [29,62,90]#70, 150,220
         File = 'SN2010EL'        
-        info   = [9.97e7, (48.33), 
-                -4.0, -8.0, -4.0, -8.0, 
-                -0.5,  2.0, -0.5,  2.3,
+        info   = [9.97e6, (2.4168), 
+                -4.0, -8.5, -4.0, -8.0, 
+                -0.5,  2.0, -0.75,  2.3,
                 -6.122,-5.887,-5.497,-4.547,#-2.867,-3.370,-3.496,-3.171
-                 7.30,
+                 7.29,
                  3.255,2.517,2.001,1.376,
                  0.033,0.025,0.020,0.014]
-    f435f555.append(pickle.load(open(str(File) + '/' + str(filename) + 'f435f555.p', 'rb')))    
-    f625f814.append(pickle.load(open(str(File) + '/' + str(filename) + 'f625f814.p', 'rb')))    
+    f435f555.append(pickle.load(open(str(File)   + '/' + str(filename) + 'f435f555.p', 'rb')))    
+    f625f814.append(pickle.load(open(str(File)   + '/' + str(filename) + 'f625f814.p', 'rb')))    
+    allobjects.append(pickle.load(open(str(File) + '/' + str(filename) + 'all.p', 'rb')))    
 
-    return radius, info, f435f555, f625f814, File
+    return radius, info, f435f555, f625f814, allobjects, File
 #####################################################################
 ########################### PICK THE SN!! ###########################
 #####################################################################
@@ -432,12 +463,14 @@ def main():
     
     decann  = raw_input('Do you want to annotate the fig   (y/n):')
     decmet  = raw_input('Do you want to plot the isochrone (y/n):')
+    decrange= raw_input('Do you want to plot age range?    (y/n):')
     dechost = raw_input('Isochrone reddening, Host Galaxy  (y/n):')
     decshd  = raw_input('Do you want to shade S/N          (y/n):')
+    deccol  = raw_input('Would you rather make a Col-Col?  (y/n):')
     decsave = raw_input('Do you want to save the figure    (y/n):')
 
     ###########################################################################
-    radius, info, f435f555, f625f814, File = SNinfo(SNname)
+    radius, info, f435f555, f625f814, AllObjects, File = SNinfo(SNname)
     #dist   = info[0]
     conver = info[1]
     
@@ -490,7 +523,32 @@ def main():
     #SN625  = f625f814[0][6] 
     #SN814  = f625f814[0][7] 
     Radr   = f625f814[0][8] 
-
+ 
+    Abs435_all = AllObjects[0][0] 
+    Abs555_all = AllObjects[0][1] 
+    Abs625_all = AllObjects[0][2] 
+    Abs814_all = AllObjects[0][3] 
+    
+    #Apn435_all = AllObjects[0][4]
+    #Apn555_all = AllObjects[0][5]
+    #Apn625_all = AllObjects[0][6]
+    #Apn814_all = AllObjects[0][7]
+    
+    #UncYr_all  = AllObjects[0][8] 
+    #UncXr_all  = AllObjects[0][9] 
+    
+    #unc435_all = AllObjects[0][10]
+    #unc555_all = AllObjects[0][11]
+    #unc625_all = AllObjects[0][12]
+    #unc814_all = AllObjects[0][13]
+    
+    #SN435_all  = AllObjects[0][14] 
+    #SN555_all  = AllObjects[0][15] 
+    #SN625_all  = AllObjects[0][16] 
+    #SN814_all  = AllObjects[0][17] 
+    
+    #Radr_all   = AllObjects[0][18] 
+    
     r0 = np.where(Radr <= radius[0])
     r1 = np.where(Radr <= radius[1])
     r2 = np.where(Radr <= radius[2])
@@ -528,18 +586,22 @@ def main():
     ###########################################################################
     c1plt = plt.subplot2grid((2,2), (0,0), rowspan = 2)
     plt.gca().invert_yaxis()
-    plt.xlabel("F435W - F555W (mag)",fontdict = font)
-    plt.ylabel("M$_{F555W}$ (mag)",fontdict = font)
+    if (deccol == 'y'):
+        plt.xlabel("F435W - F555W (mag)",fontdict = font)
+        plt.ylabel("F625W - F814W (mag)",fontdict = font)
+    else:
+        plt.xlabel("F435W - F555W (mag)",fontdict = font)
+        plt.ylabel("M$_{F555W}$ (mag)",fontdict = font)
 
-    c1plt.xaxis.set_minor_locator(AutoMinorLocator()) 
-    c1plt.yaxis.set_minor_locator(AutoMinorLocator())
+    #c1plt.xaxis.set_minor_locator(AutoMinorLocator()) 
+    #c1plt.yaxis.set_minor_locator(AutoMinorLocator())
 
-    c1plt.yaxis.set_major_locator(MultipleLocator(.5))
-    c1plt.xaxis.set_major_locator(MultipleLocator(.5))
+    #c1plt.yaxis.set_major_locator(MultipleLocator(.5))
+    #c1plt.xaxis.set_major_locator(MultipleLocator(.5))
     ###########################################################################
     
-    #if (SNname == 'sn10el'):  #if (SNname == 'notyet'):  
-    """print "Plotting SN 2010el"
+    if (SNname == 'notyet'):  
+        print "Plotting SN 2010el"
         c1plt.annotate('', xy=(1.1, -5.417), xycoords = 'data',
                  xytext = (1.838, -2.9), textcoords = 'data',
                     arrowprops = {'arrowstyle':'->'})
@@ -551,10 +613,9 @@ def main():
             c1plt.plot(np.subtract((F435W[np.where(ISOALL == age_num[i])]-ACS435-H435), (F555W[np.where(ISOALL == age_num[i])]-ACS555-H555)), 
                        (F555W[np.where(ISOALL == age_num[i])]-ACS555-H555),  
                        c=np.random.rand(3,), label = 'Age = 10$^{' + str(age_num[i]) + '}$ yrs')
-    """
-    #    print "Plotting SN 2010el"
-    #else: 
-    #    print "Plotting SN...."
+        print "Plotting SN 2010el"
+    else: 
+       print "Plotting SN...."
 
     ###########################################################################
     if (dechost == 'y'):
@@ -569,33 +630,59 @@ def main():
                fmt=None, ecolor="k", marker=None, mew=0 )
         c1plt.scatter(np.subtract(np.add(Apn435[s0],H435),   np.add(Apn555[s0],H555)),
                np.add(Abs555[s0],H555), label = 'R = ' + str(round(radius[0]*conver,-1))  + " pc" ,
-               c='k',marker='o',s = 25.0)    
-    else:               
+               c='k',marker='o',s = 25.0)  
+    elif (deccol == 'y'):
+        c1plt.scatter(np.subtract(Abs435_all[s2],Abs555_all[s2]),
+                      np.subtract(Abs625_all[s2],Abs814_all[s2]), label = 'R = ' + str(round(radius[2]*conver,-1)) + " pc" ,
+                      c='w',marker='o',s = 10.0)          
+        c1plt.scatter(np.subtract(Abs435_all[s1],Abs555_all[s1]),
+                      np.subtract(Abs625_all[s1],Abs814_all[s1]), label = 'R = ' + str(round(radius[1]*conver,-1)) + " pc" ,
+                      c='k',marker='o',s = 10.0)  
+        #c1plt.errorbar(np.subtract(Apn435[s0],Apn555[s0]),
+        #               np.subtract(Apn625[r0],Apn814[r0]), 
+        #               np.subtract(UncXl[s0]),
+        #               np.subtract(UncYl[s0]), 
+        #               fmt=None, ecolor="k", marker=None, mew=0 )
+        c1plt.scatter(np.subtract(Abs435_all[s0],Abs555_all[s0]),
+                      np.subtract(Abs625_all[s0],Abs814_all[s0]), label = 'R = ' + str(round(radius[0]*conver,-1))  + " pc" ,
+                      c='k',marker='o',s = 25.0)
+    else: 
+        #c1plt.errorbar(np.subtract(Apn435[s2],Apn555[s2]),Abs555[s2], UncXl[s2],   UncYl[s2], 
+        #       fmt=None, ecolor="k", marker=None, mew=0 )              
         c1plt.scatter(np.subtract(Apn435[s2],Apn555[s2]),Abs555[s2], label = 'R = ' + str(round(radius[2]*conver,-1)) + " pc" ,
-               c='w',marker='o',s = 10.0)          
+               c='w',marker='o',s = 10.0)       
+
+        #c1plt.errorbar(np.subtract(Apn435[s1],Apn555[s1]),Abs555[s1], UncXl[s1],   UncYl[s1], 
+        #       fmt=None, ecolor="k", marker=None, mew=0 )               
         c1plt.scatter(np.subtract(Apn435[s1],Apn555[s1]),Abs555[s1], label = 'R = ' + str(round(radius[1]*conver,-1)) + " pc" ,
                c='k',marker='o',s = 10.0)  
+
         c1plt.errorbar(np.subtract(Apn435[s0],Apn555[s0]),Abs555[s0], UncXl[s0],   UncYl[s0], 
                fmt=None, ecolor="k", marker=None, mew=0 )
         c1plt.scatter(np.subtract(Apn435[s0],Apn555[s0]),Abs555[s0], label = 'R = ' + str(round(radius[0]*conver,-1))  + " pc" ,
-               c='k',marker='o',s = 25.0)    
+               c='k',marker='o',s = 25.0)  
+    
     ###########################################################################
     c2plt = plt.subplot2grid((2,2), (0,1), rowspan = 2)
     plt.gca().invert_yaxis()
-    plt.xlabel("F625W - F814W (mag)",fontdict = font)
-    plt.ylabel("M$_{F814W}$ (mag)",fontdict = font)
+    if (deccol == 'y'):
+        plt.xlabel("F625W - F814W (mag)",fontdict = font)
+        plt.ylabel("F435W - F555W (mag)",fontdict = font)
+    else:
+        plt.xlabel("F625W - F814W (mag)",fontdict = font)
+        plt.ylabel("M$_{F814W}$ (mag)",fontdict = font)
     
     c2plt.tick_params(axis='both',labelbottom = font)
                       
-    c2plt.xaxis.set_minor_locator(AutoMinorLocator()) 
-    c2plt.yaxis.set_minor_locator(AutoMinorLocator())
+    #c2plt.xaxis.set_minor_locator(AutoMinorLocator()) 
+    #c2plt.yaxis.set_minor_locator(AutoMinorLocator())
     
-    c2plt.yaxis.set_major_locator(MultipleLocator(.5))
-    c2plt.xaxis.set_major_locator(MultipleLocator(.5))
+    #c2plt.yaxis.set_major_locator(MultipleLocator(.5))
+    #c2plt.xaxis.set_major_locator(MultipleLocator(.5))
     ###########################################################################
  
-    #if (SNname == 'sn10el'):  #if (SNname == 'notyet'):  
-    """c2plt.annotate('', xy=(1.0, -5.376), xycoords = 'data',
+    if (SNname == 'notyet'):  
+        c2plt.annotate('', xy=(1.0, -5.376), xycoords = 'data',
                  xytext = (1.625, -4), textcoords = 'data',
                     arrowprops = {'arrowstyle':'->'})
         c2plt.annotate('A${_v}}$ = 2.2016', xy=(.9,-3.8), xycoords = 'data',
@@ -610,12 +697,10 @@ def main():
 
             c2plt.plot(np.subtract((F625W[np.where(ISOALL == age_num[i])]-ACS625-H625), (F814W[np.where(ISOALL == age_num[i])]-ACS814-H814)),
                        (F814W[np.where(ISOALL == age_num[i])]-ACS814-H814),  
-                       c=np.random.rand(3,), label = 'Age = 10$^{' + str(age_num[i]) + '}$ yrs')
-
-    """                         
-    #    print "Plotting SN...."       
-    #else: 
-    #    print "Plotting SN...."
+                       c=np.random.rand(3,), label = 'Age = 10$^{' + str(age_num[i]) + '}$ yrs')                   
+        print "Plotting SN...."       
+    else: 
+        print "Plotting SN...."
     ###########################################################################
     if (dechost == 'y'):
         c2plt.scatter(np.subtract(np.add(Apn625[r2],H625),   np.add(Apn814[r2],H814)),
@@ -630,22 +715,46 @@ def main():
         c2plt.scatter(np.subtract(np.add(Apn625[r0],H625),   np.add(Apn814[r0],H814)),
                np.add(Abs814[r0],H814), label = 'R = ' + str(round(radius[0]*conver,-1)) + " pc" ,
                c='k',marker='o',s = 25.0)  
-    else:
-        c2plt.scatter(np.subtract(Apn625[r2],Apn814[r2]),Abs814[r2], 
+    elif (deccol == 'y'):
+        c2plt.scatter(np.subtract(Abs625_all[r2],Abs814_all[r2]),
+                      np.subtract(Abs435_all[r2],Abs555_all[r2]), 
                       label = 'R = ' + str(round(radius[2]*conver,-1)) + " pc" ,
                       c='w',marker='o',s = 10.0)          
+        c2plt.scatter(np.subtract(Abs625_all[r1],Abs814_all[r1]),
+                      np.subtract(Abs435_all[r1],Abs555_all[r1]),
+                      label = 'R = ' + str(round(radius[1]*conver,-1)) + " pc" ,
+                      c='k',marker='o',s = 10.0)
+        #c2plt.errorbar(np.subtract(Apn625[r0],Apn814[r0]),
+        #               np.subtract(Apn435[s0],Apn555[s0]), 
+        #               np.subtract(UncXr[r0]),
+        #               np.subtract(UncYr[r0]), fmt=None, ecolor="k", marker=None, mew=0 )
+        c2plt.scatter(np.subtract(Abs625_all[r0],Abs814_all[r0]),
+                      np.subtract(Abs435_all[r0],Abs555_all[r0]), 
+                      label = 'R = ' + str(round(radius[0]*conver,-1)) + " pc" ,
+                      c='k',marker='o',s = 25.0) 
+    else:
+        #c2plt.errorbar(np.subtract(Apn625[r2],Apn814[r2]),Abs814[r2], 
+        #               UncXr[r2],   UncYr[r2], fmt=None, ecolor="k", marker=None, mew=0 )
+        c2plt.scatter(np.subtract(Apn625[r2],Apn814[r2]),Abs814[r2], 
+                      label = 'R = ' + str(round(radius[2]*conver,-1)) + " pc" ,
+                      c='w',marker='o',s = 10.0)   
+
+        #c2plt.errorbar(np.subtract(Apn625[r1],Apn814[r1]),Abs814[r1], 
+        #               UncXr[r1],   UncYr[r1], fmt=None, ecolor="k", marker=None, mew=0 )        
         c2plt.scatter(np.subtract(Apn625[r1],Apn814[r1]),Abs814[r1], 
                       label = 'R = ' + str(round(radius[1]*conver,-1)) + " pc" ,
                       c='k',marker='o',s = 10.0)
+
         c2plt.errorbar(np.subtract(Apn625[r0],Apn814[r0]),Abs814[r0], 
                        UncXr[r0],   UncYr[r0], fmt=None, ecolor="k", marker=None, mew=0 )
         c2plt.scatter(np.subtract(Apn625[r0],Apn814[r0]),Abs814[r0], 
                       label = 'R = ' + str(round(radius[0]*conver,-1)) + " pc" ,
                       c='k',marker='o',s = 25.0)  
-
+ 
+ 
     ########################################################################### 
     if (decmet  == 'y'):
-        iso(c1plt,c2plt,SNname,AGE,iag,F435W,F555W,F625W,F814W,H435,H555,H625,H814,ACS435,ACS555,ACS625,ACS814,ISOALL,dechost)
+        iso(c1plt,c2plt,SNname,AGE,iag,F435W,F555W,F625W,F814W,H435,H555,H625,H814,ACS435,ACS555,ACS625,ACS814,ISOALL,dechost,decrange)   
     else:
         print "Moving along"
     ###########################################################################  
@@ -678,11 +787,14 @@ def main():
         c1plt.set_xlim(np.subtract(np.add(xLmax,H435),H555)  , np.subtract(np.add(xLmin,H435),H555))
         c2plt.set_ylim(bottom=np.add(yRmax,H814)             , top=np.add(yRmin,H814))          
         c2plt.set_xlim(np.subtract(np.add(xRmax,H625),H814)  , np.subtract(np.add(xRmin,H625),H814))
+    elif (deccol == 'y'):     
+        "No figure formating"
     else:
         c1plt.set_ylim(bottom=yLmax, top=yLmin)
         c1plt.set_xlim(xLmax,xLmin)
         c2plt.set_ylim(bottom=yRmax, top=yRmin)  
         c2plt.set_xlim(xRmax,xRmin)        
+    
     ########################################################################### 
     plt.tight_layout()
     plt.subplots_adjust(top=0.90)

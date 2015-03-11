@@ -58,10 +58,10 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 & ((((1716.4613  - xcoord)**2 + (3163.7546 - ycoord)**2)**.5) >= 7) 
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
     elif (SNname == 'sn08ge'):    
-       cut1  = (np.where((star <= 2) 
-                & (crd814 <= 2)
-                & (((snr625 >= 3) & (snr814 >= 3)) | (( snr435 >= 3) & (snr555 >= 3)))  
-                & (((snr625 >= 0) & (snr814 >= 0)) | (( snr435 >= 0) & (snr555 >= 0)))    
+       cut1  = (np.where((star <= 2)
+                #& (crd814 <= 2)
+                #& (((snr625 >= 3) & (snr814 >= 3)) | (( snr435 >= 3) & (snr555 >= 3)))  
+                #& (((snr625 >= 0) & (snr814 >= 0)) | (( snr435 >= 0) & (snr555 >= 0)))    
                 & ((((3372  - xcoord)**2 + (3388 - ycoord)**2)**.5) >= 25)
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
     else:
@@ -169,7 +169,7 @@ def SNinfo(SNname):
                 0.0,0.0,0.0,0.0,
                 31.33,3249.22,3421.6611,120,
                 'NewCat.reg','NewCatCoord.reg',
-                0.06,-0.35,1.5,0.2]
+                0.06,-0.35,1.5,0.2]#1.0,-1.0,1.5,1.0]#0.06,-0.35,1.5,0.2]
     elif (SNname == "sn08ha"):
         Info = ['SN2008HA', 'sn2008ha_new.phot',
                 20e7, (5),
@@ -185,24 +185,24 @@ def SNinfo(SNname):
                 0.509,0.394,0.313,0.215,
                 0.124,0.5,
                 2.052,1.588,1.262,0.867,
-                30.9,1783.3953,1923.19955,15,
+                30.9,1783.3953,1923.19955,70,
                 'NewCat.reg','NewCatCoord.reg', 
-                9.0,-9.0,9.0,9.0]#.46,-.6,1.0,0.7]
+                .4,-.5,.45,0.5]#0.5,-0.9,1.0,0.8]#9.0,-9.0,9.0,9.0]#
     elif (SNname == "sn10el"):
         Info = ['SN2010EL', 'sn2010el.phot.out',
                 9.97e7, (48.33), 
                 0.033,0.025,0.020,0.014,
                 0.008,0.8,
                 3.255,2.517,2.001,1.376,
-                30.09,2419.791,1563.517,22,
+                30.09,2419.791,1563.517,93,
                 'NewCat.reg','NewCatCoord.reg',
-                .66,-.56,1.16,.72]
+                0.66,-0.40,0.62,0.4]
     return Info
     
 ###################################################
 def save(name):
     #figname = title + '_' + 'Z' + name[1:-7]+ '.png'
-    figname = name + '_' + 'Params_2' + '.png'
+    figname = name + '_' + 'Params_3' + '.png'
     plt.savefig('Figures/'+ figname)
     print "Save and show plot : " + figname
     
@@ -231,7 +231,7 @@ def textfile(folder, name, cuts, star, xsn, ysn,
         crd435[cuts],crd555[cuts],crd625[cuts],crd814[cuts]
         ])
         
-    np.savetxt(folder +'/'+ name[:8] + '.CRS3.txt', dataOut ,delimiter='   ', fmt = "%1.4f",
+    np.savetxt(folder +'/'+ name[:8] + '.CRS4.txt', dataOut ,delimiter='   ', fmt = "%1.4f",
                header ='Object Xpix        Ypix        DisFromSN  '\
                'S/N 435  S/N 555  S/N 625  S/N 814 ' \
                #'  AbsMag 435 AbsMag 555 AbsMag 625 AbsMag 814 '\
@@ -343,6 +343,7 @@ def main():
     data    = data.astype(float)
 
     star    = data[:,10] # object type
+    SigN    = data[:, 5] # total Signal to noise
 
     sharp   = data[:, 6]
     roond   = data[:, 7] # round is already a special word
@@ -386,7 +387,7 @@ def main():
     badY  = []  
     badXL = []
     badYL = []  
-    badX, badY, badXL, badYL = removBad(folder, good_list,coor_list)
+    #badX, badY, badXL, badYL = removBad(folder, good_list,coor_list)
     ###################################################
     """cut1 = cutdata(SNname,sharpmax,sharpmin,roundmax,crowdmax,radius,
             star, crowd, sharp, roond, 
@@ -401,22 +402,52 @@ def main():
             crd435,crd555,crd625,crd814)
     """
     cut1 = (np.where((star <= 2)           
-                #& (crowd <= crowdmax)  
-                #& (sharp <= sharpmax) 
-                #& (sharp >= sharpmin)
-                #& (roond <= roundmax)   
-                & (((snr625 >= 3) & (snr814 >= 3)) 
-                | (( snr435 >= 3) & (snr555 >= 3)))               
-                #& (srp814 >= -3)   
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
-    """cut2 = (np.where((star <= 2) 
-                & (((snr625 >= 3) & (snr814 >= 3)) 
-                | (( snr435 >= 3) & (snr555 >= 3)))                 
-                & (crowd <= crowdmax)  
-                & (sharp <= sharpmax) 
-                & (sharp >= sharpmin)
-                & (roond <= roundmax)               
-                & ((((1716.4613  - xcoord)**2 + (3163.7546 - ycoord)**2)**.5) >= 7) 
+                & (SigN >= 3)
+                & (SigN <= 70)
+                & (crowd <= crowdmax) 
+                & (crd435 <= 1) & (crd555 <= 1)
+                & (crd625 <= 1) & (crd814 <= 1)
+                & (sharp <= sharpmax) & (sharp >= sharpmin)
+                & (srp435 <= .5) & (srp555 <= .5)
+                & (srp625 <= .5) & (srp814 <= .5)
+                & (srp435 >= -.6) & (srp555 >= -.6)
+                & (srp625 >= -.4) & (srp814 >= -.6)
+                & (roond <= roundmax) 
+                & (rnd435 <= .6) & (rnd555 <= .6)
+                & (rnd625 <= .6) & (rnd814 <= .6)
+                & (rnd435 >= -.3) & (rnd555 >= -.3)
+                & (rnd625 >= -.3) & (rnd814 >= -.3)
+                & (np.subtract(f435mag,f555mag) <=  50)
+                & (np.subtract(f435mag,f555mag) >= -50)
+                & (np.subtract(f625mag,f814mag) <=  50)  
+                & (np.subtract(f625mag,f814mag) >= -50) 
+                & ((f435mag <= 90) & (f555mag <= 90))  
+                & ((f625mag <= 90) & (f814mag <= 90))     
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                ))
+    """sn10ae = (np.where((star <= 2) 
+                & (SigN <= 70)
+                & (crowd <= crowdmax) 
+                & (crd435 <= .6) & (crd555 <= .6)
+                & (crd625 <= .6) & (crd814 <= .6)
+                & (sharp <= sharpmax) & (sharp >= sharpmin)
+                & (srp435 <= .5) & (srp555 <= .5)
+                & (srp625 <= .5) & (srp814 <= .5)
+                & (srp435 >= -.5) & (srp555 >= -.5)
+                & (srp625 >= -.5) & (srp814 >= -.5)
+                & (roond <= roundmax) 
+                & (rnd435 <=  .4) & (rnd555 <=  .4)
+                & (rnd625 <=  .4) & (rnd814 <=  .4)
+                & (rnd435 >= 0.0) & (rnd555 >= 0.0)
+                & (rnd625 >= 0.0) & (rnd814 >= 0.0)
+                #& (rnd435 >= -.1) & (rnd555 >= -.1)
+                #& (rnd625 >= -.1) & (rnd814 >= -.1)
+                & (np.subtract(f435mag,f555mag) <= 50)
+                & (np.subtract(f435mag,f555mag) >= -50)
+                & (np.subtract(f625mag,f814mag) <= 50)  
+                & (np.subtract(f625mag,f814mag) >= -50) 
+                & ((f435mag <= 90) & (f555mag <= 90))  
+                & ((f625mag <= 90) & (f814mag <= 90))   
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
     cut3  = (np.where((star <= 2)
                 #& (crowd <= .43 ) 
@@ -436,6 +467,53 @@ def main():
             xcoord, ycoord)
     
     """
+    
+    print "Sharp Max: ", np.max( sharp[cut1])
+    print "Sharp Min: ", np.min( sharp[cut1])
+    print "SharpMean: ", np.mean(sharp[cut1]) 
+    print "Round Max: ", np.max( roond[cut1])
+    print "RoundMean: ", np.mean(roond[cut1])
+    print "Crowd Max: ", np.max( crowd[cut1])
+    print "CrowdMean: ", np.mean(crowd[cut1])
+
+    print "435 values"
+    print "Sharp Max: ", np.max( srp435[cut1])
+    print "Sharp Min: ", np.min( srp435[cut1])
+    print "SharpMean: ", np.mean(srp435[cut1]) 
+    print "Round Max: ", np.max( rnd435[cut1])
+    print "RoundMean: ", np.mean(rnd435[cut1])
+    print "Crowd Max: ", np.max( crd435[cut1])
+    print "CrowdMean: ", np.mean(crd435[cut1])
+
+    print "555 values"
+    print "Sharp Max: ", np.max( srp555[cut1])
+    print "Sharp Min: ", np.min( srp555[cut1])
+    print "SharpMean: ", np.mean(srp555[cut1]) 
+    print "Round Max: ", np.max( rnd555[cut1])
+    print "RoundMean: ", np.mean(rnd555[cut1])
+    print "Crowd Max: ", np.max( crd555[cut1])
+    print "CrowdMean: ", np.mean(crd555[cut1])
+
+    print "625 values"
+    print "Sharp Max: ", np.max( srp625[cut1])
+    print "Sharp Min: ", np.min( srp625[cut1])
+    print "SharpMean: ", np.mean(srp625[cut1]) 
+    print "Round Max: ", np.max( rnd625[cut1])
+    print "RoundMean: ", np.mean(rnd625[cut1])
+    print "Crowd Max: ", np.max( crd625[cut1])
+    print "CrowdMean: ", np.mean(crd625[cut1])
+
+    print "814 values"
+    print "Sharp Max: ", np.max( srp814[cut1])
+    print "Sharp Min: ", np.min( srp814[cut1])
+    print "SharpMean: ", np.mean(srp814[cut1]) 
+    print "Round Max: ", np.max( rnd814[cut1])
+    print "RoundMean: ", np.mean(rnd814[cut1])
+    print "Crowd Max: ", np.max( crd814[cut1])
+    print "CrowdMean: ", np.mean(crd814[cut1])
+    
+    
+    
     h = [6, 6] # height of the plotted figure
     fig = plt.figure(num = 1, dpi = 100, figsize = [9, np.sum(h)], facecolor = 'w')
     gs = gridspec.GridSpec(1, 1, height_ratios = h, hspace = 0.005)
