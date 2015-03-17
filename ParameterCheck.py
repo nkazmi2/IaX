@@ -167,9 +167,9 @@ def SNinfo(SNname):
                 0.046,0.036,0.028,0.020,
                 0.011,0.0,
                 0.0,0.0,0.0,0.0,
-                31.33,3249.22,3421.6611,120,
+                31.33,3249.22,3421.6611,52,
                 'NewCat.reg','NewCatCoord.reg',
-                0.06,-0.35,1.5,0.2]#1.0,-1.0,1.5,1.0]#0.06,-0.35,1.5,0.2]
+                0.6,-0.6,3,2]#0.06,-0.35,1.5,0.2]#1.0,-1.0,1.5,1.0]#0.06,-0.35,1.5,0.2]
     elif (SNname == "sn08ha"):
         Info = ['SN2008HA', 'sn2008ha_new.phot',
                 20e7, (5),
@@ -187,7 +187,7 @@ def SNinfo(SNname):
                 2.052,1.588,1.262,0.867,
                 30.9,1783.3953,1923.19955,70,
                 'NewCat.reg','NewCatCoord.reg', 
-                .4,-.5,.45,0.5]#0.5,-0.9,1.0,0.8]#9.0,-9.0,9.0,9.0]#
+                0.55,-0.44,3,2]#.4,-.5,.45,0.5]#0.5,-0.9,1.0,0.8]#9.0,-9.0,9.0,9.0]#
     elif (SNname == "sn10el"):
         Info = ['SN2010EL', 'sn2010el.phot.out',
                 9.97e7, (48.33), 
@@ -196,7 +196,7 @@ def SNinfo(SNname):
                 3.255,2.517,2.001,1.376,
                 30.09,2419.791,1563.517,93,
                 'NewCat.reg','NewCatCoord.reg',
-                0.66,-0.40,0.62,0.4]
+                0.55,-0.44,3,2]#0.66,-0.40,0.62,0.4]
     return Info
     
 ###################################################
@@ -403,27 +403,41 @@ def main():
     """
     cut1 = (np.where((star <= 2)           
                 & (SigN >= 3)
-                & (SigN <= 70)
-                & (crowd <= crowdmax) 
-                & (crd435 <= 1) & (crd555 <= 1)
-                & (crd625 <= 1) & (crd814 <= 1)
-                & (sharp <= sharpmax) & (sharp >= sharpmin)
-                & (srp435 <= .5) & (srp555 <= .5)
-                & (srp625 <= .5) & (srp814 <= .5)
-                & (srp435 >= -.6) & (srp555 >= -.6)
-                & (srp625 >= -.4) & (srp814 >= -.6)
-                & (roond <= roundmax) 
-                & (rnd435 <= .6) & (rnd555 <= .6)
-                & (rnd625 <= .6) & (rnd814 <= .6)
-                & (rnd435 >= -.3) & (rnd555 >= -.3)
-                & (rnd625 >= -.3) & (rnd814 >= -.3)
-                & (np.subtract(f435mag,f555mag) <=  50)
-                & (np.subtract(f435mag,f555mag) >= -50)
-                & (np.subtract(f625mag,f814mag) <=  50)  
-                & (np.subtract(f625mag,f814mag) >= -50) 
-                & ((f435mag <= 90) & (f555mag <= 90))  
-                & ((f625mag <= 90) & (f814mag <= 90))     
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                & ((snr625 >= 3) | (snr814 >= 3) | (snr435 >= 3) | (snr555 >= 3))
+                & ((((3817 - xcoord)**2 + (2967 - ycoord)**2)**.5) <= 200) 
+                #& (snr625 >= 5) & (snr814 >= 5) & (snr435 >= 5) & (snr555 >= 5)   
+                & (roond <=.3) 
+                #& (crowd <=1) 
+                #& (sharp <= 1) 
+                #& (sharp >= -1)
+                #& (f435mag >= 18) & (f555mag >= 18) & (f625mag >= 18) & (f814mag >= 18)
+                #& ((f435mag <= 23) | (f555mag <= 23) | (f625mag <= 23) | (f814mag <= 23))             
+                #& (roond <=3)
+                #& (crowd <=3)
+                #& (sharp <= .60) & (sharp >= -.60)
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                #& (crowd <= crowdmax ) 
+                #& (snr625 >= 10) & (snr814 >= 10) & (snr435 >= 10) & (snr555 >= 10)     
+                #& (roond <=1) 
+                #& (crowd <=1) 
+                #& (sharp <= 1) 
+                #& (sharp >= -1)
+                #& (f435mag >= 18) & (f555mag >= 18) & (f625mag >= 18) & (f814mag >= 18)
+                #& (srp435 <=  10) & (srp555 <= 5)
+                #& (srp625 <= .8) & (srp814 <= .8)
+                #& (roond <= roundmax)
+                #& (crd435 <= 5) & (crd555 <= 5)
+                #& (crd625 <= .5) & (crd814 <= .75)
+                #& (srp435 <=  10) & (srp555 <= 4.5)
+                #& (srp625 <= .73) & (srp814 <=  .4)
+                #& (srp435 >= -2.55) & (srp555 >= -1.09)
+                #& (srp625 >= -.53) & (srp814 >= -.47)
+                #& (srp435 <=  10) & (srp555 <= 5)
+                #& (srp625 <= .8) & (srp814 <= .8)
+                #& ((rnd435 <= 4.2) & (rnd555 <= 4.2) & (rnd625 <= 4.2) & (rnd814 <= 4.2))
+                #& ((crd435 <= 6.0) & (crd555 <= 6.0) & (crd625 <= 6.0) & (crd814 <= 6.0))
+                #& (((snr625 >= 3) & (snr814 >= 3)) | ((snr435 >= 3) & (snr555 >= 3)))                  
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
                 ))
     """sn10ae = (np.where((star <= 2) 
                 & (SigN <= 70)
@@ -449,8 +463,28 @@ def main():
                 & ((f435mag <= 90) & (f555mag <= 90))  
                 & ((f625mag <= 90) & (f814mag <= 90))   
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
-    cut3  = (np.where((star <= 2)
-                #& (crowd <= .43 ) 
+   sn10el -  
+                & (SigN <= 70)
+                & (crowd <= crowdmax) 
+                & (crd435 <= 1) & (crd555 <= 1)
+                & (crd625 <= 1) & (crd814 <= 1)
+                & (sharp <= sharpmax) & (sharp >= sharpmin)
+                & (srp435 <= .5) & (srp555 <= .5)
+                & (srp625 <= .5) & (srp814 <= .5)
+                & (srp435 >= -.6) & (srp555 >= -.6)
+                & (srp625 >= -.4) & (srp814 >= -.6)
+                & (roond <= roundmax) 
+                & (rnd435 <= .6) & (rnd555 <= .6)
+                & (rnd625 <= .6) & (rnd814 <= .6)
+                & (rnd435 >= -.3) & (rnd555 >= -.3)
+                & (rnd625 >= -.3) & (rnd814 >= -.3)
+                & (np.subtract(f435mag,f555mag) <=  50)
+                & (np.subtract(f435mag,f555mag) >= -50)
+                & (np.subtract(f625mag,f814mag) <=  50)  
+                & (np.subtract(f625mag,f814mag) >= -50) 
+                & ((f435mag <= 90) & (f555mag <= 90))  
+                & ((f625mag <= 90) & (f814mag <= 90))     
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
                 & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) < radius)))
     cut4  = (np.where((star <= 2) 
                 #& (crowd <= .43 ) 

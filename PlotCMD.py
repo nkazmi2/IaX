@@ -378,13 +378,13 @@ def SNinfo(filename):
     # ACS435,ACS555,ACS625,ACS814]   19,20,21,22
     File = []
     if (filename == 'sn08ge'):
-        radius = [16.09,34.47,50.56]#70,150,220  #[34.47,50.56,115]#100.95,200,500
+        radius = [16.09,34.47,200]#70,150,220  #[34.47,50.56,115]#100.95,200,500
         File = 'SN2008GE'
         info   = [17.95e6,(4.3512), 
-               -3.0,-8.5,-4.0,-9.5,               
-               -3.0,  5.0, -3.0,  5.0, #-0.5,  2.0, -0.5,  2.5, 
-               -4.678,-5.388,-5.566,-5.172,
-                7.18,
+                -3.0,-14,-3.0,-14,   #-1.0,-8.5,-3.0,-9.5,   #-4.5, -6.8,-5,-7.7,            
+                -3.0,  5.0, -3.0,  5.0,#-0.5,  2.0, -0.5,  2.5, #
+                -4.678,-5.388,-5.566,-5.172,
+                7.28,
                 0.0,0.0,0.0,0.0, 
                 0.046,0.036,0.028,0.020] 
     elif (filename == 'sn08ha'):
@@ -789,11 +789,12 @@ def main():
         c2plt.set_xlim(np.subtract(np.add(xRmax,H625),H814)  , np.subtract(np.add(xRmin,H625),H814))
     elif (deccol == 'y'):     
         "No figure formating"
-    else:
-        c1plt.set_ylim(bottom=yLmax, top=yLmin)
-        c1plt.set_xlim(xLmax,xLmin)
-        c2plt.set_ylim(bottom=yRmax, top=yRmin)  
-        c2plt.set_xlim(xRmax,xRmin)        
+    else:  
+        "No figure formating"
+        #c1plt.set_ylim(bottom=yLmax, top=yLmin)
+        #c1plt.set_xlim(xLmax,xLmin)
+        #c2plt.set_ylim(bottom=yRmax, top=yRmin)  
+        #c2plt.set_xlim(xRmax,xRmin)        
     
     ########################################################################### 
     plt.tight_layout()
