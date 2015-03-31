@@ -46,44 +46,53 @@ def annot(SNannot,Apt435,Apt555,Ab555,Apt625,Apt814,Ab814,radR,radL,c1plt,c2plt)
     #Annotate!
 
     if (SNannot == 'sn08ge'):
-        """
-        for i in range(8):
-            c1plt.annotate(str(i+1), xy=(np.subtract(Apt435[radL][i], Apt555[radL][i]),Ab555[radL][i]), 
-               xytext=(np.subtract(Apt435[radL][i], Apt555[radL][i])+.2,Ab555[radL][i]-.2),
-                #textcoords='offset points',
-                arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
-                )   
-        c1plt.annotate(str(25), xy=(np.subtract(Apt435[radL][8], Apt555[radL][8]),Ab555[radL][8]), 
-               xytext=(np.subtract(Apt435[radL][8], Apt555[radL][8])+.2,Ab555[radL][8]-.2),
-                #textcoords='offset points',
-                arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
-                )  
-        c1plt.annotate(str(14), xy=(np.subtract(Apt435[radL][9], Apt555[radL][9]),Ab555[radL][9]), 
-               xytext=(np.subtract(Apt435[radL][9], Apt555[radL][9])+.2,Ab555[radL][9]-.2),
+        #for i in range(1):
+        #    c1plt.annotate(str(i+1), xy=(np.subtract(Apt435[radL][i], Apt555[radL][i]),Ab555[radL][i]), 
+        #       xytext=(np.subtract(Apt435[radL][i], Apt555[radL][i])+.2,Ab555[radL][i]-.2),
+        #        #textcoords='offset points',
+        #        arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
+        #        )  
+        c1plt.annotate(str(1), xy=(np.subtract(Apt435[radL][0], Apt555[radL][0]),Ab555[radL][0]), 
+               xytext=(np.subtract(Apt435[radL][0], Apt555[radL][0])+.2,Ab555[radL][0]-.2),
                 #textcoords='offset points',
                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
                 )  
-        c1plt.annotate(str(19), xy=(np.subtract(Apt435[radL][10], Apt555[radL][10]),Ab555[radL][10]), 
-               xytext=(np.subtract(Apt435[radL][10], Apt555[radL][10])+.2,Ab555[radL][10]-.2),
+        c1plt.annotate(str(3), xy=(np.subtract(Apt435[radL][1], Apt555[radL][1]),Ab555[radL][1]), 
+               xytext=(np.subtract(Apt435[radL][1], Apt555[radL][1])+.2,Ab555[radL][1]-.2),
                 #textcoords='offset points',
                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
                 )  
-        c1plt.annotate(str(21), xy=(np.subtract(Apt435[radL][11], Apt555[radL][11]),Ab555[radL][11]), 
-               xytext=(np.subtract(Apt435[radL][11], Apt555[radL][11])+.2,Ab555[radL][11]-.2),
+        c1plt.annotate(str(8), xy=(np.subtract(Apt435[radL][2], Apt555[radL][2]),Ab555[radL][2]), 
+               xytext=(np.subtract(Apt435[radL][2], Apt555[radL][2])+.2,Ab555[radL][2]-.2),
                 #textcoords='offset points',
                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
                 )  
-        c1plt.annotate(str(22), xy=(np.subtract(Apt435[radL][12], Apt555[radL][12]),Ab555[radL][12]), 
-               xytext=(np.subtract(Apt435[radL][12], Apt555[radL][12])+.2,Ab555[radL][12]-.2),
+        c1plt.annotate(str(10), xy=(np.subtract(Apt435[radL][3], Apt555[radL][3]),Ab555[radL][3]), 
+               xytext=(np.subtract(Apt435[radL][3], Apt555[radL][3])+.2,Ab555[radL][3]-.2),
                 #textcoords='offset points',
                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
                 )  
-        c1plt.annotate(str(26), xy=(np.subtract(Apt435[radL][13], Apt555[radL][13]),Ab555[radL][13]), 
-               xytext=(np.subtract(Apt435[radL][13], Apt555[radL][13])+.2,Ab555[radL][13]-.2),
+        c1plt.annotate(str(17), xy=(np.subtract(Apt435[radL][4], Apt555[radL][4]),Ab555[radL][4]), 
+               xytext=(np.subtract(Apt435[radL][4], Apt555[radL][4])+.2,Ab555[radL][4]-.2),
                 #textcoords='offset points',
                 arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
-                ) 
-        """
+                )  
+        c1plt.annotate(str(18), xy=(np.subtract(Apt435[radL][5], Apt555[radL][5]),Ab555[radL][5]), 
+               xytext=(np.subtract(Apt435[radL][5], Apt555[radL][5])+.2,Ab555[radL][5]-.2),
+                #textcoords='offset points',
+                arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
+                )  
+        c1plt.annotate(str(19), xy=(np.subtract(Apt435[radL][6], Apt555[radL][6]),Ab555[radL][6]), 
+               xytext=(np.subtract(Apt435[radL][6], Apt555[radL][6])+.2,Ab555[radL][6]-.2),
+                #textcoords='offset points',
+                arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
+                )  
+        #c1plt.annotate(str(20), xy=(np.subtract(Apt435[radL][7], Apt555[radL][7]),Ab555[radL][7]), 
+        #       xytext=(np.subtract(Apt435[radL][7], Apt555[radL][7])+.2,Ab555[radL][7]-.2),
+        #        #textcoords='offset points',
+        #        arrowprops=dict(arrowstyle="->",)#facecolor='black', shrink=0.005),
+        #        ) 
+        
         for i in range(len(Apt625[radR])):
             c2plt.annotate(str(i+1), xy=(np.subtract(Apt625[radR][i], Apt814[radR][i]),Ab814[radR][i]), 
                 xytext=(np.subtract(Apt625[radR][i], Apt814[radR][i])+.2,Ab814[radR][i]-.2),
@@ -378,12 +387,12 @@ def SNinfo(filename):
     # ACS435,ACS555,ACS625,ACS814]   19,20,21,22
     File = []
     if (filename == 'sn08ge'):
-        radius = [16.09,34.47,200]#70,150,220  #[34.47,50.56,115]#100.95,200,500
+        radius = [16.09,34.47,50.56]#70,150,220  #[200,500,2000]#[34.47,50.56,115]#100.95,200,500 
         File = 'SN2008GE'
         info   = [17.95e6,(4.3512), 
-                -3.0,-14,-3.0,-14,   #-1.0,-8.5,-3.0,-9.5,   #-4.5, -6.8,-5,-7.7,            
-                -3.0,  5.0, -3.0,  5.0,#-0.5,  2.0, -0.5,  2.5, #
-                -4.678,-5.388,-5.566,-5.172,
+                -4.5, -6.8,-5.5,-7.7,  #-3.0,-14,-3.0,-14,   #-1.0,-8.5,-3.0,-9.5,   #          
+                0.5,  3.0, 0.0,  3.0, #-3.0,  5.0, -3.0,  5.0,#
+                -4.5,-5.25,-5.41,-5.8,# sn2.8-3.2#-4.644,-5.205,-5.50,-5.9,#sn3.0##-4.59,-5.37,-4.50,-5.13,#sn3-3.5#-4.678,-5.388,-5.566,-5.172, SN3-4.0
                 7.28,
                 0.0,0.0,0.0,0.0, 
                 0.046,0.036,0.028,0.020] 
