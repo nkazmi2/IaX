@@ -1,5 +1,0 @@
-# Region file format: DS9 version 4.1
-global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
-image
-line(3118.8646,3324.283,3177.1927,3324.2677) # line=0 0 color=white text={3" = 14 pc}
-box(3249.22,3421.6611,99.999998,100.00001,2.5231e-06) # color=white

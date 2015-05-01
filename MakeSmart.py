@@ -10,12 +10,15 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
             xsn, ysn,
             snr435, snr555, snr625, snr814,
             f435mag, f555mag, f625mag, f814mag,
+            f435Abs, f555Abs, f625Abs, f814Abs,
             xcoord, ycoord,
             badX, badY,
             badXL, badYL,
             srp435,srp555,srp625,srp814,
             rnd435,rnd555,rnd625,rnd814,
             crd435,crd555,crd625,crd814,
+            chi435,chi555,chi625,chi814,
+            qf435 ,qf555 ,qf625 ,qf814,
             TotalSigN):
     print "Make final cuts for", SNname 
     cutL = []
@@ -24,123 +27,189 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
     if (SNname == 'sn08ha'):
         cutL.append(np.where((star <= 2) 
                 & (TotalSigN >=3)
-                & (crowd <= crowdmax ) 
-                & (crd435 <= .5) & (crd555 <= .36)
-                & (crd625 <= .46) & (crd814 <= .75)
-                & (sharp <= sharpmax) 
-                & (sharp >= sharpmin)
-                & (srp435 <= .15) & (srp555 <= .42)
-                & (srp625 <= .16) & (srp814 <= .23)
-                & (srp435 >= -.42) & (srp555 >= -.5)
-                & (srp625 >= -.53) & (srp814 >= -.4)
-                & (roond <= roundmax)
-                & (rnd435 >= -.21) & (rnd555 >=  -.25)
-                & (rnd625 >= -.01) & (rnd814 >=   0.0)
+                & (crowd < crowdmax ) 
+                #& (crd435 <= .5) & (crd555 <= .36)
+                #& (crd625 <= .46) & (crd814 <= .75)
+                & (sharp < sharpmax) 
+                & (sharp > sharpmin)
+                #& (srp435 <= .15) & (srp555 <= .42)
+                #& (srp625 <= .16) & (srp814 <= .23)
+                #& (srp435 >= -.42) & (srp555 >= -.5)
+                #& (srp625 >= -.53) & (srp814 >= -.4)
+                & (roond < roundmax)
+                #& (rnd435 >= -.21) & (rnd555 >=  -.25)
+                #& (rnd625 >= -.01) & (rnd814 >=   0.0)
                 & ((snr435 >= 3) & (snr555 >= 3))    
-                & (np.subtract(f435mag, f555mag) < 1.8) #There's a bug in the badlist, stupid-fix
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius)       
-                & ((((1716.4613  - xcoord)**2 + (3163.7546 - ycoord)**2)**.5) >= 7)    
-                & list(np.any(x not in badXL for x in xcoord) and np.any(y not in badYL for y in ycoord)) 
-                ))
-        cutR.append(np.where((star <= 2) 
-                & (TotalSigN >=3)
-                & (crowd <= crowdmax )  
-                & (crd435 <= 10) & (crd555 <= 6.0)
-                & (crd625 <= .5) & (crd814 <= .54)
-                & (sharp <= sharpmax) 
-                & (sharp >= sharpmin)
-                & (srp435 <=  10) & (srp555 <= 4.5)
-                & (srp625 <= .73) & (srp814 <=  .4)
-                & (srp435 >= -2.55) & (srp555 >= -1.09)
-                & (srp625 >= -.53) & (srp814 >= -.47)
-                & (roond <= roundmax) 
-                & (rnd435 >= -.21) & (rnd555 >=  -.83)
-                & (rnd625 >= -.65) & (rnd814 >=  -.01)
-                & ((snr625 >= 3) & (snr814 >= 3))                 
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius)      
-                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
-                ))
-    elif (SNname == 'sn08ge'):    
-        cutL.append(np.where((star <= 2) 
-                #& (TotalSigN >= 3)
-                #& ((snr435 >= 3) | (snr555 >= 3))  
-                & (TotalSigN >= 5)
-                & ((snr435 >= 8) | (snr555 >= 8))  
-                #& (roond < roundmax) 
-                #& (np.abs(sharp) < sharpmax)
-                #& (crowd < crowdmax)
-                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                #& (np.subtract(f435mag, f555mag) < 1.8) #There's a bug in the badlist, stupid-fix
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius)       
+                #& ((((1716.4613  - xcoord)**2 + (3163.7546 - ycoord)**2)**.5) >= 7)    
                 #& list(np.any(x not in badXL for x in xcoord) and np.any(y not in badYL for y in ycoord)) 
                 ))
         cutR.append(np.where((star <= 2) 
-                #& (TotalSigN >= 3)
-                #& ((snr625 >= 3) | (snr814 >= 3))  
-                & (TotalSigN >= 5)
-                & ((snr625 >= 8) | (snr814 >= 8))  
-                #& (roond < roundmax) 
-                #& (np.abs(sharp) < sharpmax)
-                #& (crowd < crowdmax)
-                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                & (TotalSigN >=3)
+                & (crowd < crowdmax )  
+                #& (crd435 <= 10) & (crd555 <= 6.0)
+                #& (crd625 <= .5) & (crd814 <= .54)
+                & (sharp < sharpmax) 
+                & (sharp > sharpmin)
+                #& (srp435 <=  10) & (srp555 <= 4.5)
+                #& (srp625 <= .73) & (srp814 <=  .4)
+                #& (srp435 >= -2.55) & (srp555 >= -1.09)
+                #& (srp625 >= -.53) & (srp814 >= -.47)
+                & (roond < roundmax) 
+                #& (rnd435 >= -.21) & (rnd555 >=  -.83)
+                #& (rnd625 >= -.65) & (rnd814 >=  -.01)
+                & ((snr625 >= 3) & (snr814 >= 3))                 
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius)      
                 #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
+                ))
+    elif (SNname == 'sn08ge'):    
+        cutL.append(np.where((star <= 2)
+                #& ((qf435 < 3.0) & (qf555 < 3.0) & (qf625 < 3.0) & (qf814 < 3.0))
+                & (TotalSigN >= 3)& ((snr435 >= 3) | (snr555 >= 3)) 
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  1000)
+                & (sharp < sharpmax) 
+                & (sharp > sharpmin)
+                & (roond < roundmax)
+                & (crowd < crowdmax)
+                #& (np.subtract(f435mag, f555mag) < 50)
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                & list(np.any(x not in badXL for x in xcoord) and np.any(y not in badYL for y in ycoord)) 
+                ))
+        cutR.append(np.where((star <= 2) 
+                #& ((qf435 < 3.0) & (qf555 < 3.0) & (qf625 < 3.0) & (qf814 < 3.0))
+                & (TotalSigN >= 3)
+                & ((snr625 >= 3) | (snr814 >= 3)) 
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  1000)
+                & (sharp < sharpmax) 
+                & (sharp > sharpmin)
+                & (roond < roundmax)
+                & (crowd < crowdmax)
+                #& (np.subtract(f625mag, f814mag) < 50)
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
                 ))
     elif (SNname == 'sn10ae'): 
         cutL.append(np.where((star <= 2) 
-                & (TotalSigN >=3) 
-                & (snr625 >= 10) & (snr814 >= 10) & (snr435 >= 10) & (snr555 >= 10)       
-                & (roond <=1) 
-                & (crowd <=1) 
-                & (sharp <= 1) 
-                & (sharp >= -1)
-                & (f435mag >= 18) & (f555mag >= 18) & (f625mag >= 18) & (f814mag >= 18)
-                & ((snr435 >= 3) | (snr555 >= 3))        
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
-                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
+                #& ((qf435 < 3.0) & (qf555 < 3.0) & (qf625 < 3.0) & (qf814 < 3.0))
+                & (TotalSigN >= 3)               
+                & ((snr435 >= 10) | (snr555 >= 10))   
+                #& ((snr435 >= 3) | (snr555 >= 3)) 
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  1000)
+                & (sharp < sharpmax) 
+                & (sharp > sharpmin)
+                & (roond < roundmax)
+                & (crowd < crowdmax)
+                & ((f435Abs < -9) | (f555Abs < -9))
+                & (np.subtract(f555Abs, f814Abs) > 0.1)  
+                #& (np.subtract(f555mag, f814mag) > -.8)  
+                #& (np.subtract(f555mag, f814mag) < 2.0)    
+                #& ((f435mag <= 23) | (f555mag <= 23) | (f625mag <= 23) | (f814mag <= 23))
+                #&  (f435mag >= 18) & (f555mag >= 18) & (f625mag >= 18) & (f814mag >= 18)  
+                #& ((f435Abs <= -9) | (f555Abs <= -9) | (f625Abs <= -9) | (f814Abs <= -9))
+                #& (np.subtract(f435mag, f555mag) > .10)  
+                #& (np.subtract(f625mag, f814mag) > 0.0)              
+                #& ((np.subtract(f435mag, f555mag) < 50) | (np.subtract(f625mag, f814mag) < 50))
+                #& (np.subtract(1.50*np.subtract(f435mag, f555mag),0.2875) > np.subtract(f625mag, f814mag))
+                #& (np.subtract(np.subtract(f435mag, f555mag),.45) < np.subtract(f625mag, f814mag)) 
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                #& list(np.any(x not in badXL for x in xcoord) and np.any(y not in badYL for y in ycoord))   
                 ))
         cutR.append(np.where((star <= 2) 
-                & (TotalSigN >=3) 
-                & (crowd <= crowdmax) 
-                & (roond <= roundmax) 
-                & (srp435 <=  10) & (srp555 <= 5)
-                & (srp625 <= .8) & (srp814 <= .8)
-                & (sharp <= sharpmax) & (sharp >= sharpmin)
-                & ((rnd435 >= -.5) & (rnd555 >= -.5) & (rnd625 >= -.5) & (rnd814 >= -.53))
-                & ((rnd435 <= 4.2) & (rnd555 <= 4.2) & (rnd625 <= 4.2) & (rnd814 <= 4.2))
-                & ((crd435 <= 6.0) & (crd555 <= 6.0) & (crd625 <= 6.0) & (crd814 <= 6.0))
-                & ((snr625 >= 3) | (snr814 >= 3))                   
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius)  
-                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
+                #& ((qf435 < 3.0) & (qf555 < 3.0) & (qf625 < 3.0) & (qf814 < 3.0))
+                & (TotalSigN >= 3)                
+                & ((snr625 >= 10) | (snr814 >= 10)) 
+                #& ((snr625 >= 3) | (snr814 >= 3)) 
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  1000)
+                & (sharp < sharpmax) 
+                & (sharp > sharpmin)
+                & (roond < roundmax)
+                & (crowd < crowdmax)    
+                & ((f625Abs < -9) | (f814Abs < -9))
+                & (np.subtract(f555Abs, f814Abs) > 0.1)     
+                #& (np.subtract(f435mag, f555mag) > .10)  
+                #& (np.subtract(f625mag, f814mag) > 0.0)
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))        
                 ))
     elif (SNname == 'sn10el'): 
         cutL.append(np.where((star <= 2) 
-                & (TotalSigN >= 3) 
-                & (sharp <= sharpmax) & (sharp >= sharpmin)
-                & ((snr435 >= 3) | (snr555 >= 3))   
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
-                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
+                #& ((qf435 < 3.0) & (qf555 < 3.0) & (qf625 < 3.0) & (qf814 < 3.0))
+                & (TotalSigN >= 3)
+                & ((snr435 >= 3) | (snr555 >= 3)) 
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  1000)
+                & (sharp < sharpmax) 
+                & (sharp > sharpmin)
+                & (roond < roundmax)
+                & (crowd < crowdmax)
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord)) 
                 ))
         cutR.append(np.where((star <= 2) 
-                & (TotalSigN >= 3)  
-                & (sharp <= sharpmax) & (sharp >= sharpmin)
-                & ((snr625 >= 3) | (snr814 >= 3))    
-                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
-                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))                
+                #& ((qf435 < 3.0) & (qf555 < 3.0) & (qf625 < 3.0) & (qf814 < 3.0))
+                & (TotalSigN >= 3)
+                & ((snr625 >= 3) | (snr814 >= 3)) 
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  1000)
+                & (sharp < sharpmax) 
+                & (sharp > sharpmin)
+                & (roond < roundmax)
+                & (crowd < crowdmax)     
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <= radius) 
+                & list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))     
                 ))
-    cuteverything.append(np.where((star <= 2) #&  (TotalSigN >= 2)  
-                #& (TotalSigN >= 3)
-                #& ((snr625 >= 3) | (snr814 >= 3) | (snr435 >= 3) | (snr555 >= 3))  
+    cuteverything.append(np.where((star <= 2) 
+                #& ((qf435 < 3.0) & (qf555 < 3.0) & (qf625 < 3.0) & (qf814 < 3.0))
+                & (TotalSigN >= 3)
+                #& ((snr435 >= 3) | (snr555 >= 3) | (snr625 >= 3) | (snr814 >= 3)) 
+                & ((snr435 >= 10) & (snr555 >= 10) & (snr625 >= 10) & (snr814 >= 10)) 
+                & ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  1000) 
+                & (np.subtract(f555Abs, f814Abs) > 0.1)  
+                & ((f435Abs < -9) | (f555Abs < -9) | (f625Abs < -9) | (f814Abs < -9))
+                #& (f435Abs < -9) & (f555Abs < -9) & (f625Abs < -9) & (f814Abs < -9)  
+                #& ((qf435 > 3.0) | (qf555 > 3.0) | (qf625 > 3.0) | (qf814 > 3.0))
+                #& ((qf435 < 3.5) & (qf555 < 3.5) & (qf625 < 3.5) & (qf814 < 3.5))
+                #& ((qf435 > 3.5) | (qf555 > 3.5) | (qf625 > 3.5) | (qf814 > 3.5))
+                #& ((qf435 < 4.0) & (qf555 < 4.0) & (qf625 < 4.0) & (qf814 < 4.0))
+                #& (((qf435 < 4) & (qf555 < 4)) | ((qf625 < 4) & (qf814 < 4)))
+                #S/N > 5 & 8
                 #& (TotalSigN >= 5)
-                #& ((snr625 >= 8) | (snr814 >= 8) | (snr435 >= 8) | (snr555 >= 8))  
-                & (TotalSigN >= 10)
-                & ((snr625 >= 10) | (snr814 >= 10) | (snr435 >= 10) | (snr555 >= 10))  
+                #& ((snr625 >= 8) | (snr814 >= 8) | (snr435 >= 8) | (snr555 >= 8))
+                #S/N > 10
+                #& (TotalSigN >= 10)
+                #& ((snr625 >= 10) | (snr814 >= 10) | (snr435 >= 10) | (snr555 >= 10))  
+                #& (sharp < sharpmin)
+                #& (sharp > .45)
+                ##& ((qf435 < 5) & (qf555 < 5) & (qf625 < 5) & (qf814 < 5))
+                ##& ((qf435 > 4) | (qf555 > 4) | (qf625 > 4) | (qf814 > 4))
+                ##& ((snr625 >= 3) & (snr814 >= 3) | (snr435 >= 3) & (snr555 >= 3)) 
+                #& ((sharp > sharpmax) | (sharp < sharpmin))
+                #& (roond > roundmax)
+                #& (crowd > crowdmax)
+                & (sharp < sharpmax) 
+                & (sharp > sharpmin)
+                & (roond < roundmax)
+                & (crowd < crowdmax)
+                #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord)) 
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  1000)  
+                #& (np.subtract(f555mag, f814mag) > -.8)  
+                #& (np.subtract(f555mag, f814mag) < 2.0)              
+                #& ((np.subtract(f435mag, f555mag) > .5) | (np.subtract(f625mag, f814mag) > .3))
+                #& ((f435Abs <= -9) | (f555Abs <= -9) | (f625Abs <= -9) | (f814Abs <= -9))
+                #&  (f435Abs >= 20) & (f555Abs >= 20) & (f625Abs >= 20) & (f814Abs >= 20)  
+                #& ((f435mag <= 30) | (f555mag <= 30) | (f625mag <= 30) | (f814mag <= 30))
+                #&  (f435mag >= 23) & (f555mag >= 23) & (f625mag >= 23) & (f814mag >= 23)  
+                #&  (f435mag >= 20) & (f555mag >= 20) & (f625mag >= 20) & (f814mag >= 20)  
+                #& ((f435mag <= 23) | (f555mag <= 23) | (f625mag <= 23) | (f814mag <= 23))
+                #&  (f435mag >= 18) & (f555mag >= 18) & (f625mag >= 18) & (f814mag >= 18)  
+                #& (TotalSigN >= 25)
+                #& ((snr625 >= 25) | (snr814 >= 25) | (snr435 >= 25) | (snr555 >= 25))  
+                #& (np.subtract(f435mag, f555mag) > .10)  
+                #& (np.subtract(f625mag, f814mag) >= 0.0)              
+                #& ((np.subtract(f435mag, f555mag) < 50) | (np.subtract(f625mag, f814mag) < 50))
+                #& (np.subtract(f435mag, f555mag) <= 0.10)                
+                #S/N > 15
                 #& (TotalSigN >= 15)
                 #& ((snr625 >= 15) | (snr814 >= 15) | (snr435 >= 15) | (snr555 >= 15))  
-                #& ((roond > roundmax) | (np.abs(sharp) > sharpmax) | (crowd > crowdmax))
-                #& (np.abs(sharp) < .60)
-                #& (np.abs(sharp) < sharpmax)
-                #& (roond > .25) 
-                #& (roond < roundmax) 
-                #& (crowd < crowdmax)
-                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  radius) 
                 #& list(np.any(x not in badX for x in xcoord) and np.any(y not in badY for y in ycoord))
                 # Galaxy Edge                
                 #& ((((3331.9013 - xcoord)**2 + (3404.4 - ycoord)**2)**.5) >= 500) 
@@ -151,15 +220,82 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 #& (sharp <= 1) 
                 #& (sharp >= -1)
                 #& ((snr625 >= 5) | (snr814 >= 5) | (snr435 >= 5) | (snr555 >= 5))      
-                #& ((f435mag <= 23) | (f555mag <= 23) | (f625mag <= 23) | (f814mag <= 23))
-                #Bad
+                #& ((f435mag <= 23) | (f555mag <= 23) | (f625mag <= 23) | (f814mag <= 23))    
+                #Self made
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  100)
+                ##& (((snr625 >= 3) & (snr814 >= 3)) | ((snr435 >= 3) | (snr555 >= 3)))
+                #& (snr625 >= 3) & (snr814 >= 3) 
+                #& (snr435 >= 3) & (snr555 >= 3)
+                #& (np.abs(sharp) < sharpmax)
+                #& (roond < roundmax) 
+                #& (crowd < crowdmax)
+                #& (((np.subtract(f435mag, f555mag) > .5)
+                #& (np.subtract(f435mag, f555mag) < .75)
+                #& (np.subtract(f625mag, f814mag) > .3)
+                #& (np.subtract(f625mag, f814mag) < .65))
+                #| ((np.subtract(f435mag, f555mag) > .75)
+                #& (np.subtract(1.50*np.subtract(f435mag, f555mag),0.2875) > np.subtract(f625mag, f814mag))
+                #& (np.subtract(np.subtract(f435mag, f555mag),.45) < np.subtract(f625mag, f814mag))
+                #& (np.subtract(f435mag, f555mag) < 1.75))) 
+                #Bright clusters
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  100)
+                #& (np.subtract(f814mag, 31) < -8)
+                #IndexBC
+                #& ((snr435 >= 3) & (snr555 >= 3)) 
+                #& ((snr625 >= 3) | (snr814 >= 3))
                 #& (roond <=1) 
                 #& (crowd <=1) 
                 #& (sharp <= 1) 
                 #& (sharp >= -1)
+                #& (np.subtract(f435mag, f555mag) > .5)
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  100)
+                #IndexBCC
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  100)
+                #& ((snr435 >= 3) & (snr555 >= 3)) 
+                #& (roond <=1) 
+                #& (crowd <=1) 
+                #& (sharp <= 1) 
+                #& (sharp >= -1)
+                #& (((np.subtract(f435mag, f555mag) > .5)
+                #& (np.subtract(f435mag, f555mag) < .75)
+                #& (np.subtract(f625mag, f814mag) > .3)
+                #& (np.subtract(f625mag, f814mag) < .65))
+                #| ((np.subtract(f435mag, f555mag) > .75)
+                #& (np.subtract(1.25*np.subtract(f435mag, f555mag),0.2875) > np.subtract(f625mag, f814mag))
+                #& (np.subtract(np.subtract(f435mag, f555mag),.45) < np.subtract(f625mag, f814mag))
+                #& (np.subtract(f435mag, f555mag) < 1.75)))
+                #IndexRC
+                #& ((snr625 >= 3) & (snr814 >= 3))
+                #& ((snr435 >= 3) | (snr555 >= 3)) 
+                #& (roond <=1) 
+                #& (crowd <=1) 
+                #& (sharp <= 1) 
+                #& (sharp >= -1)
+                #& (np.subtract(f625mag, f814mag) > .3)
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  100) 
+                #IndexRCC
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  100)
+                #& ((snr625 >= 3) & (snr814 >= 3))
+                #& (roond <=1) 
+                #& (crowd <=1) 
+                #& (sharp <= 1) 
+                #& (sharp >= -1)
+                #& (((np.subtract(f435mag, f555mag) > .5)
+                #& (np.subtract(f435mag, f555mag) < .75)
+                #& (np.subtract(f625mag, f814mag) > .3)
+                #& (np.subtract(f625mag, f814mag) < .65))
+                #| ((np.subtract(f435mag, f555mag) > .75)
+                #& (np.subtract(1.25*np.subtract(f435mag, f555mag),0.2875) > np.subtract(f625mag, f814mag))
+                #& (np.subtract(np.subtract(f435mag, f555mag),.45) < np.subtract(f625mag, f814mag))
+                #& (np.subtract(f435mag, f555mag) < 1.75)))
+                #Bad
+                #& (roond <=  1) 
+                #& (crowd <=  1) 
+                #& (np.abs(sharp) <=  1)
                 #& (snr625 >= 5) & (snr814 >= 5) & (snr435 >= 5) & (snr555 >= 5)      
                 #& (f435mag >= 18) & (f555mag >= 18) & (f625mag >= 18) & (f814mag >= 18)
                 #& ((f435mag <= 23) | (f555mag <= 23) | (f625mag <= 23) | (f814mag <= 23))
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  100)  
                 #index 10
                 #& (snr625 >= 10) & (snr814 >= 10) & (snr435 >= 10) & (snr555 >= 10)      
                 #& (roond <=1) 
@@ -167,6 +303,7 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 #& (sharp <= 1) 
                 #& (sharp >= -1)
                 #& (f435mag >= 18) & (f555mag >= 18) & (f625mag >= 18) & (f814mag >= 18)
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  100)  
                 #Item 5                
                 #& (snr625 >= 5) & (snr814 >= 5) & (snr435 >= 5) & (snr555 >= 5)      
                 #& (roond <=1) 
@@ -174,6 +311,7 @@ def cutdata(SNname, sharpmax,sharpmin,roundmax,crowdmax,radius,
                 #& (sharp <= 1) 
                 #& (sharp >= -1)
                 #& (f435mag >= 18) & (f555mag >= 18) & (f625mag >= 18) & (f814mag >= 18)
+                #& ((((xsn - xcoord)**2 + (ysn - ycoord)**2)**.5) <=  100)  
                 ))
     return cutL, cutR, cuteverything
 ################################################### 
@@ -214,9 +352,9 @@ def regfile(folder, bluecuts, redcuts,xsn,ysn,xcoord,ycoord,allcuts):
             circ.append('circle(')
             comm.append(',')
             clos.append(',5)')#Field_Sharp.48_50
-    np.savetxt(folder +'/Field_sn10.reg', np.c_[circ,xcoord[allcuts]+.5,comm,ycoord[allcuts]+.5,clos],fmt = "%s",
+    np.savetxt(folder +'/Cluster.reg', np.c_[circ,xcoord[allcuts]+.5,comm,ycoord[allcuts]+.5,clos],fmt = "%s",
                header ='# Region file format: DS9 version 4.1 #', 
-               comments = 'global color=blue dashlist=8 3 width=1' \
+               comments = 'global color=green dashlist=8 3 width=1' \
                ' font="helvetica 10 normal" select=1' \
                ' highlite=1 dash=0 fixed=0 edit=1 delete=1 include=1 source=1' \
                '\nimage;' )
@@ -256,7 +394,8 @@ def pcklfile(folder, title, star, bluecuts, redcuts, all_cuts, xsn,ysn,
                         unc625[all_cuts], unc814[all_cuts],
                         snr435[all_cuts], snr555[all_cuts],
                         snr625[all_cuts], snr814[all_cuts],
-                        (((xsn - xcoord[all_cuts])**2 + (ysn - ycoord[all_cuts])**2)**.5)
+                        (((xsn - xcoord[all_cuts])**2 + (ysn - ycoord[all_cuts])**2)**.5),
+                        xcoord[all_cuts],ycoord[all_cuts],
                         ))                
     pickle.dump( snr435_555[0] , open(folder + '/' + title + 'f435f555.p', "wb" ) )
     pickle.dump( snr625_814[0] , open(folder + '/' + title + 'f625f814.p', "wb" ) )
@@ -282,9 +421,9 @@ def SNinfo(SNname):
                 0.0,0.0,0.0,0.0,
                 31.33,
                 3249.22,3421.6611,#3817, 2967,
-                52,
+                100,#52,
                 'NewCat_625814.reg','NewCatCoord.reg',
-                0.45,-0.45,.25,.7]#0.06,-0.35,1.5,0.2] #changing C<.3 to C<.7
+                .62,-.65,0.35,0.7]
     elif (SNname == "sn08ha"):
         Info = ['SN2008HA', 'sn2008ha_new.phot',
                 0.284,0.219,0.174,0.120,
@@ -292,7 +431,7 @@ def SNinfo(SNname):
                 0.0,0.0,0.0,0.0,
                 31.64,1736.199,3171.792,50,
                 'sn2008ha_right.reg','sn2008ha_coord.reg', 
-                0.55,-0.45,.25,.7]#0.55,-0.44,2.7,1.7] # .60,-.60, , ]
+                .55,-.65,2.0,0.6]#.55,-.65,2.0,1.5]
     elif (SNname == "sn10ae"):
         Info = ['SN2010AE', 'sn2010ae.phot.out',
                 0.509,0.394,0.313,0.215,
@@ -300,7 +439,7 @@ def SNinfo(SNname):
                 2.052,1.588,1.262,0.867,
                 30.9,1783.3953,1923.19955,70,
                 'NewCatCoord.reg','NewCat.reg', 
-                0.45,-0.45,.25,.7]#0.6,-0.6,3,1.03]#0.5,-0.9,1.0,0.8]#3.0,-0.9,1.5,0.8]#
+                0.45,-0.65,0.6,0.6]
     elif (SNname == "sn10el"):
         Info = ['SN2010EL', 'sn2010el.phot.out',
                 0.033,0.025,0.020,0.014,
@@ -308,7 +447,7 @@ def SNinfo(SNname):
                 3.255,2.517,2.001,1.376,
                 30.09,2419.791,1563.517,92,
                 'NewCatCoord.reg','NewCat.reg',
-                0.6,-0.6,3,2]
+                0.45,-0.65,0.8,0.6]#0.45,-0.65,0.8,1.7]
     return Info
 ################################################### 
 def removBad(folder, good_list, coord_list):    
@@ -340,7 +479,16 @@ def removBad(folder, good_list, coord_list):
         r         = pyregion.open(str(folder) + '/NewCatCoord.reg')  
         identifyL = pyregion.open(str(folder) + '/NewCat_435555.reg') #left
         origcoord = pyregion.open(str(folder) + '/NewCatCoord.reg') 
-                      
+    elif (folder == "SN2010AE"):
+        saveL = []
+        fixL  = []
+        i = []
+        j = []
+        identify  = pyregion.open(str(folder) + '/NewCat_625814.reg') #right
+        r         = pyregion.open(str(folder) + '/NewCatCoord.reg')  
+        identifyL = pyregion.open(str(folder) + '/NewCat_435555.reg') #left
+        origcoord = pyregion.open(str(folder) + '/NewCatCoord.reg') 
+                
         for i in xrange(len(identifyL)):
             if (pyregion.ShapeList(identifyL[i].attr[1].get("color"))  == ['y', 'e', 'l', 'l', 'o', 'w']):
                 fixL.append(i)
@@ -396,7 +544,9 @@ def textfile(folder, name, star, bluecuts, redcuts, allcuts ,xsn,ysn,
              sharp,roond,crowd,TotalSigN,
              srp435,srp555,srp625,srp814,
              rnd435,rnd555,rnd625,rnd814,
-             crd435,crd555,crd625,crd814): 
+             crd435,crd555,crd625,crd814,
+             chi435,chi555,chi625,chi814,
+             qf435 ,qf555 ,qf625 ,qf814): 
      
     print "Save into text file"
     dataOut_1 = []
@@ -406,6 +556,7 @@ def textfile(folder, name, star, bluecuts, redcuts, allcuts ,xsn,ysn,
         xcoord[bluecuts]+.5 ,ycoord[bluecuts]+.5 ,
         (((xsn - xcoord[bluecuts])**2 + (ysn - ycoord[bluecuts])**2)**.5),
         (f435mag[bluecuts] - f555mag[bluecuts]),
+        TotalSigN[bluecuts],
         snr435[bluecuts] ,snr555[bluecuts] ,
         snr625[bluecuts] ,snr814[bluecuts] ,
         f435Abs[bluecuts],f555Abs[bluecuts],
@@ -415,13 +566,16 @@ def textfile(folder, name, star, bluecuts, redcuts, allcuts ,xsn,ysn,
         crowd[bluecuts],
         srp435[bluecuts],srp555[bluecuts],srp625[bluecuts],srp814[bluecuts],
         rnd435[bluecuts],rnd555[bluecuts],rnd625[bluecuts],rnd814[bluecuts],
-        crd435[bluecuts],crd555[bluecuts],crd625[bluecuts],crd814[bluecuts]
+        crd435[bluecuts],crd555[bluecuts],crd625[bluecuts],crd814[bluecuts],
+        chi435[bluecuts],chi555[bluecuts],chi625[bluecuts],chi814[bluecuts],
+        qf435[bluecuts] ,qf555[bluecuts] ,qf625[bluecuts] ,qf814[bluecuts]
         ])
         
     dataOut_2 = np.array(np.c_[star[redcuts] ,
         xcoord[redcuts]+.5 ,ycoord[redcuts]+.5,
         (((xsn - xcoord[redcuts])**2 + (ysn - ycoord[redcuts])**2)**.5),
         (f625mag[redcuts] - f814mag[redcuts]),
+        TotalSigN[redcuts],
         snr435[redcuts] ,snr555[redcuts] ,
         snr625[redcuts] ,snr814[redcuts] ,
         f435Abs[redcuts],f555Abs[redcuts],
@@ -431,7 +585,9 @@ def textfile(folder, name, star, bluecuts, redcuts, allcuts ,xsn,ysn,
         crowd[redcuts],
         srp435[redcuts],srp555[redcuts],srp625[redcuts],srp814[redcuts],
         rnd435[redcuts],rnd555[redcuts],rnd625[redcuts],rnd814[redcuts],
-        crd435[redcuts],crd555[redcuts],crd625[redcuts],crd814[redcuts]
+        crd435[redcuts],crd555[redcuts],crd625[redcuts],crd814[redcuts],
+        chi435[redcuts],chi555[redcuts],chi625[redcuts],chi814[redcuts],
+        qf435[redcuts] ,qf555[redcuts] ,qf625[redcuts] ,qf814[redcuts]
         ])
         
     dataOut_all = np.array(np.c_[star[allcuts] ,
@@ -449,31 +605,52 @@ def textfile(folder, name, star, bluecuts, redcuts, allcuts ,xsn,ysn,
         crowd[allcuts],
         srp435[allcuts],srp555[allcuts],srp625[allcuts],srp814[allcuts],
         rnd435[allcuts],rnd555[allcuts],rnd625[allcuts],rnd814[allcuts],
-        crd435[allcuts],crd555[allcuts],crd625[allcuts],crd814[allcuts]
+        crd435[allcuts],crd555[allcuts],crd625[allcuts],crd814[allcuts],
+        chi435[allcuts],chi555[allcuts],chi625[allcuts],chi814[allcuts],
+        qf435[allcuts] ,qf555[allcuts] ,qf625[allcuts] ,qf814[allcuts]
         ])
-        
+    #print "1", chi435[allcuts]
+    #print "2", chi555[allcuts]
+    #print "3", chi625[allcuts]
+    #print "4", chi814[allcuts]
+    #print "5", qf435[allcuts]
+    #print "6", qf555[allcuts]
+    #print "7", qf625[allcuts]
+    #print "8", qf814[allcuts]
+    
     np.savetxt(folder +'/'+ name + '.cut435555.txt', dataOut_1 ,delimiter='   ', fmt = "%1.4f",
                header ='Object Xpix        Ypix        DisFromSN   Sub      '\
-               'S/N     S/N 435   S/N 555   S/N 625   S/N 814  AbsMag435  '\
-               'AbsMag555 AbsMag625 AbsMag814  Sharp    Round    Crowd   '\
-               'Sharp 435    555        625      814    Round 435  555       '\
-               '625      814    Crowd 435  555       625     814')
-
+               'S/N     S/N 435   S/N 555   S/N 625   S/N 814  '\
+               'AbsMag435  AbsMag555 AbsMag625 AbsMag814  '\
+               'Sharp    Round    Crowd   '\
+               'Sharp 435    555        625      814    '\
+               'Round 435  555       625      814    '\
+               'Crowd 435  555       625      814    '\
+               'CHI435     555      625     814   '\
+               'QualFlag435  555       625     814')
     
     np.savetxt(folder +'/'+ name + '.cut625814.txt', dataOut_2 ,delimiter='   ', fmt = "%1.4f",
                header ='Object Xpix        Ypix        DisFromSN   Sub      '\
-               'S/N     S/N 435   S/N 555   S/N 625   S/N 814  AbsMag435  '\
-               'AbsMag555 AbsMag625 AbsMag814  Sharp    Round    Crowd   '\
-               'Sharp 435    555        625      814    Round 435  555       '\
-               '625      814    Crowd 435  555       625     814')
-   
+               'S/N     S/N 435   S/N 555   S/N 625   S/N 814  '\
+               'AbsMag435  AbsMag555 AbsMag625 AbsMag814  '\
+               'Sharp    Round    Crowd   '\
+               'Sharp 435    555        625      814    '\
+               'Round 435  555       625      814    '\
+               'Crowd 435  555       625      814    '\
+               'CHI435     555      625     814   '\
+               'QualFlag435  555       625     814')
+               
     f_handle = file(folder +'/'+'all.txt', 'a')
     np.savetxt(f_handle, dataOut_all,delimiter='   ', fmt = "%1.4f",
-               header ='Object Xpix        Ypix       DisFromSN  Sub-4-5  Sub-5-8    '\
-               'S/N     S/N 435   S/N 555   S/N 625   S/N 814  AbsMag435  '\
-               'AbsMag555 AbsMag625 AbsMag814  Sharp    Round    Crowd   '\
-               'Sharp 435    555        625      814    Round 435  555       '\
-               '625      814    Crowd 435  555       625     814')
+               header ='Object Xpix        Ypix       DisFromSN  Sub-4-5  Sub-6-8    '\
+               'S/N     S/N 435   S/N 555   S/N 625   S/N 814  '\
+               'AbsMag435  AbsMag555 AbsMag625 AbsMag814  '\
+               'Sharp    Round    Crowd   '\
+               'Sharp 435    555        625      814    '\
+               'Round 435  555       625      814    '\
+               'Crowd 435  555       625      814    '\
+               'CHI435     555      625     814   '\
+               'QualFlag435  555       625     814')
     f_handle.close()
 
     print "Text files " + name + ".cut435555.txt & "+ name + '.cut625814.txt made'
@@ -534,6 +711,16 @@ def main():
     xcoord  = [] # Column 03 the x pix coordinate
     ycoord  = [] # Column 04 the y pix coordinate
 
+    chi435  = [] 
+    chi555  = []
+    chi625  = [] 
+    chi814  = []
+    
+    qf435  = [] 
+    qf555  = []
+    qf625  = [] 
+    qf814  = []
+    
     unc435  = [] # Column 18 SNR for F435W
     unc555  = [] # Column 31 SNR for F555W
     unc625  = [] # Column 44 SNR for F625W
@@ -583,6 +770,7 @@ def main():
     dectxt  = raw_input('Do you want make a text file         (y/n):')
     decreg  = raw_input('Do you want make a region file       (y/n):')
     decsnr  = raw_input('Do you want to look at the wavebands (y/n):')
+    decbad  = raw_input('Do you want to use the bad list      (y/n):')
     
     SNstuff = SNinfo(SNname)
     
@@ -641,7 +829,12 @@ def main():
     unc555  = data[:,30]
     unc625  = data[:,43]
     unc814  = data[:,56]
-        
+      
+    chi435  = data[:,18] # signal to noise
+    chi555  = data[:,31]
+    chi625  = data[:,44]
+    chi814  = data[:,57]      
+      
     snr435  = data[:,19] # signal to noise
     snr555  = data[:,32]
     snr625  = data[:,45]
@@ -661,6 +854,11 @@ def main():
     crd555  = data[:,35] # Column 36 Crowd for F555W
     crd625  = data[:,48] # Column 49 Crowd for F625W
     crd814  = data[:,61] # Column 62 Crowd for F814W
+    
+    qf435  = data[:,23] 
+    qf555  = data[:,36] 
+    qf625  = data[:,49] 
+    qf814  = data[:,62]    
     
     xcoord  = data[:, 2]
     ycoord  = data[:, 3]
@@ -686,7 +884,15 @@ def main():
     badY  = []  
     badXL = []
     badYL = []  
-    #badX, badY, badXL, badYL = removBad(folder, good_list,coor_list)
+    if (decbad == 'y'):    
+        badX, badY, badXL, badYL = removBad(folder, good_list,coor_list)
+        print "Using bad list"
+    else:
+        badX  = []
+        badY  = []  
+        badXL = []
+        badYL = [] 
+        print "No bad list"
 
 ################################################### 
 ############### Make final filters ################
@@ -700,12 +906,15 @@ def main():
             xsn,ysn,
             snr435, snr555, snr625, snr814,
             f435mag, f555mag, f625mag, f814mag,
+            f435Abs, f555Abs, f625Abs, f814Abs,
             xcoord, ycoord,
             badX, badY,
             badXL, badYL,
             srp435,srp555,srp625,srp814,
             rnd435,rnd555,rnd625,rnd814,
             crd435,crd555,crd625,crd814,
+            chi435,chi555,chi625,chi814,
+            qf435 ,qf555 ,qf625 ,qf814,
             SigN)
             
 ################################################### 
@@ -737,7 +946,9 @@ def main():
              SigN,
              srp435,srp555,srp625,srp814,
              rnd435,rnd555,rnd625,rnd814,
-             crd435,crd555,crd625,crd814)
+             crd435,crd555,crd625,crd814,
+             chi435,chi555,chi625,chi814,
+             qf435 ,qf555 ,qf625 ,qf814)
     else:
         print "Papyrus is going to come back in style."
 

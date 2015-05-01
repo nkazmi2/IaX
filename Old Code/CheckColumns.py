@@ -8,6 +8,7 @@ Read in the data, check which columns are which
 """
 import numpy as np
 import pandas
+
 # Looking at new.phot.columns files
 f = open('../SN2010AE/sn2010ae.phot.columns','r')
 #f = open('../SN2008GE/sn2008ge_20141015_final.out.columns','r')
@@ -21,7 +22,7 @@ print info
 
 """
 # Looking at Isochrone files
-f   = open('../Metallicity/Z0170Y26.dat')
+f   = open('../Metallicity/Z0096Y26.dat')
 row = []
 row = [f.readline().strip().split() for i in range(16776)]
 row = np.array(row)
